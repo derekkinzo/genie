@@ -25,7 +25,7 @@ import java.util.Set;
 @ToString(exclude = { "id" })
 public class Publication implements Serializable {
 
-  @Id
+  @NotBlank
   @JsonProperty(value = "pubmed_id")
   private String id;
 
@@ -38,7 +38,6 @@ public class Publication implements Serializable {
   private Set<String> keywords;
   private String sourceUri;
 
-  @NotBlank
   @JsonProperty(value = "abstract")
   private String abstractContent;
 
@@ -62,11 +61,11 @@ public class Publication implements Serializable {
 
   private String language;
 
-  private String piiId;
+  private String pmid;
+
+  private String piiid;
 
   private String pmcId;
-
-  private String pmiId;
 
   private String publishStatus;
 
