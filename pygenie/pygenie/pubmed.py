@@ -130,7 +130,9 @@ class PubMedArticle():
         chemicals_list = self._pubmed_article.findall(
             self.MEDLINE_TAG + '/ChemicalList/Chemical')
         for chemical in chemicals_list:
-            chemicals.append(chemical.text)
+            chemical_substance = chemical.find('NameOfSubstance')
+            if chemical_substance is not None:
+                chemicals.append(chemical_substance.text)
         return chemicals
 
     @property
@@ -141,7 +143,8 @@ class PubMedArticle():
             self.MEDLINE_TAG + '/MeshHeadingList/MeshHeading')
         for mesh in mesh_list:
             descriptor = mesh.find('DescriptorName')
-            meshes.append(descriptor.text)
+            if descriptor is not None:
+                meshes.append(descriptor.text)
         return meshes
 
     @property
