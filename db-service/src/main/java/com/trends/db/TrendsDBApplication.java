@@ -83,28 +83,29 @@ public class TrendsDBApplication implements CommandLineRunner {
   @Override
   public void run(final String... args) throws Exception {
 
-    // Empty the schema
+//    // Empty the schema
 //    trendRepo.deleteAll();
 //    clinicalTrialRepo.deleteAll();
-//    publicationRepo.deleteAll();
+    publicationRepo.deleteAll();
 //    patentRepo.deleteAll();
 //    geneRepo.deleteAll();
 //    diseaseRepo.deleteAll();
-
-    // Create Schema
-    diseaseRepo.insert(new Disease("Covid-19",
-        Collections.singleton("CoronaVirus"),
-        Collections.singleton("Some Alias"),
-        Collections.singleton("Some Drug"),
-        true,
-        Calendar.getInstance().getTime(),
-        Calendar.getInstance().getTime(),
-        version));
-
-    geneRepo.save(new Gene());
-    patentRepo.save(new Patent());
-    publicationRepo.save(new Publication());
-    clinicalTrialRepo.save(new ClinicalTrial());
-    trendRepo.save(new Trend());
+//
+//    // Create Schema
+//    diseaseRepo.insert(new Disease("Covid-19",
+//        Collections.singleton("CoronaVirus"),
+//        Collections.singleton("Some Alias"),
+//        Collections.singleton("Some Drug"),
+//        true,
+//        Calendar.getInstance().getTime(),
+//        Calendar.getInstance().getTime(),
+//        version));
+//
+//    geneRepo.save(new Gene());
+//    patentRepo.save(new Patent());
+//    publicationRepo.save(new Publication());
+//    clinicalTrialRepo.save(new ClinicalTrial());
+//    trendRepo.save(new Trend());
+//
   }
 }
