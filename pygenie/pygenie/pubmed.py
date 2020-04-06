@@ -15,97 +15,120 @@ class PubMedArticle():
     https: // www.nlm.nih.gov/bsd/licensee/elements_descriptions.html
     """
 
-    __slots__ = ['_article_et']
+    MEDLINE_TAG = 'MedlineCitation'
+    ARTICLE_TAG = MEDLINE_TAG + '/Article'
+    JOURNAL_TAG = ARTICLE_TAG + '/Journal'
 
-    def __init__(self, article_et: ET.Element):
+    __slots__ = ['_pubmed_article']
+
+    def __init__(self, article_tree: ET.Element):
         """Construct object from corresponding article element tree."""
-        self._article_et: ET.Element = article_et
+        self._pubmed_article: ET.Element = article_tree
 
-    @property
-    def _medline_element(self) -> ET.Element:
-        """Retrive medline sub element from pubmedarticle."""
-        return self._article_et.find('MedlineCitation')
+    def _get_xml_element(self, tags: [str], tag_attrib=None) -> str:
+        """
+        Retrieve xml element given full element xml path.
 
-    @property
-    def _article_element(self) -> ET.Element:
-        """Retrieve article sub element medline."""
-        return self._medline_element.find('Article')
+        Arguments:
+            element [str] -- list of xml sub tags to target elmeent
+                                i.e. ['MedlineCitation', 'PMID']
+            tag_attib -- Optional attribute if retrieving atrrib
 
-    @property
-    def _journal_element(self) -> ET.Element:
-        """Retrieve journal sub element article."""
-        return self._article_element.find("Journal")
+        Returns:
+            str -- The text value of the queried element. If element doesn't
+                    exist returns empty string.
+        """
+        element_path = ''
+        for tag in tags:
+            element_path += tag + '/'
+        element_path = element_path[:-1]  # remove last '/'
+        element = self._pubmed_article.find(element_path)
+        if element is None:
+            return ''
+
+        if tag_attrib is None:
+            return element.text
+        else:
+            return element.attrib[tag_attrib]
 
     @property
     def pmid(self) -> str:
         """Pubmed article ID."""
-        pmid = self._medline_element.find('PMID')
-        return pmid.text
+        pmid = self._get_xml_element([self.MEDLINE_TAG, 'PMID'])
+        return pmid
 
     @property
-    def date_completed(self) -> date:
+    def date_completed(self) -> str:
         """Date completed record distributed to PubMed."""
-        # TODO need to ensure consistent date format across, probably best to change implementation and return str
-        date_completed = self._medline_element.find('DateCompleted')
-        year = int(date_completed.find('Year').text)
-        month = int(date_completed.find('Month').text)
-        day = int(date_completed.find('Day').text)
-        return date(year, month, day)
+        year = self._get_xml_element([self.MEDLINE_TAG,
+                                      'DateCompleted',
+                                      'Year'])
+        month = self._get_xml_element([self.MEDLINE_TAG,
+                                       'DateCompleted',
+                                       'Month'])
+        day = self._get_xml_element([self.MEDLINE_TAG,
+                                     'DateCompleted',
+                                     'Day'])
+        return year + '-' + month + '-' + day
 
     @property
     def pub_model(self) -> str:
         """Publication model - medium/media in which article was published."""
-        article = self._article_element
-        pub_model = article.attrib['PubModel']
+        pub_model = self._get_xml_element(
+            [self.ARTICLE_TAG], tag_attrib='PubModel')
         return pub_model
 
     @property
     def title(self) -> str:
         """Full journal title."""
-        journal = self._journal_element
-        title = journal.find('Title')
-        return title.text
+        title = self._get_xml_element([self.JOURNAL_TAG, 'Title'])
+        return title
 
     @property
     def iso_abbreviation(self) -> str:
         """Journal title ISO abbreviation."""
-        iso_abbrev = self._journal_element.find('ISOAbbreviation')
-        return iso_abbrev.text
+        iso_abbrev = self._get_xml_element(
+            [self.JOURNAL_TAG, 'ISOAbbreviation'])
+        return iso_abbrev
 
     @property
     def article_title(self) -> str:
         """Entire title of journal article in English."""
-        article_title = self._article_element.find('ArticleTitle')
-        return article_title.text
+        article_title = self._get_xml_element(
+            [self.ARTICLE_TAG, 'ArticleTitle'])
+        return article_title
 
     @property
     def abstract(self) -> str:
         """Entire abstract taken directly from published article."""
-        abstract = self._article_element.find('Abstract/AbstractText')
-        return abstract.text
+        abstract = self._get_xml_element(
+            [self.ARTICLE_TAG, 'Abstract', 'AbstractText'])
+        return abstract
 
     @property
     def authors(self) -> [str]:
         """Names of authors published with article."""
         authors: [str] = []
-        author_list = self._article_element.findall('AuthorList/Author')
+        author_list = self._pubmed_article.findall(
+            self.ARTICLE_TAG + '/AuthorList/Author')
         for author in author_list:
-            author_lastName = author.find('LastName').text
-            author_foreName = author.find('ForeName').text
-            authors.append(author_lastName + ', ' + author_foreName)
+            author_lastname = author.find('LastName').text
+            author_forename = author.find('ForeName').text
+            authors.append(author_lastname + ', ' + author_forename)
         return authors
 
     @property
     def language(self) -> str:
         """Tha language the article was published in."""
-        language = self._article_element.find('Language')
-        return language.text
+        language = self._get_xml_element([self.ARTICLE_TAG, 'Language'])
+        return language
 
     @property
     def chemicals(self) -> [str]:
         """One or more chemical elements."""
         chemicals: [str] = []
-        chemicals_list = self._medline_element.findall('ChemicalList/Chemical')
+        chemicals_list = self._pubmed_article.findall(
+            self.MEDLINE_TAG + '/ChemicalList/Chemical')
         for chemical in chemicals_list:
             chemicals.append(chemical.text)
         return chemicals
@@ -114,8 +137,8 @@ class PubMedArticle():
     def mesh_list(self) -> [str]:
         """Article's suppl mesh list."""
         meshes: [str] = []
-        mesh_list = self._medline_element.findall(
-            'MeshHeadingList/MeshHeading')
+        mesh_list = self._pubmed_article.findall(
+            self.MEDLINE_TAG + '/MeshHeadingList/MeshHeading')
         for mesh in mesh_list:
             descriptor = mesh.find('DescriptorName')
             meshes.append(descriptor.text)
@@ -124,7 +147,16 @@ class PubMedArticle():
     @property
     def to_dict(self):
         """Generate article model dictionary."""
-        obj_dict = {}
-        obj_dict['date_completed'] = str(self.date_completed)
-        raise NotImplementedError
-        return obj_dict
+        _dict = {}
+        _dict['pmid'] = self.pmid
+        _dict['date_completed'] = self.date_completed
+        _dict['pub_model'] = self.pub_model
+        _dict['title'] = self.title
+        _dict['iso_abbreviation'] = self.iso_abbreviation
+        _dict['article_title'] = self.article_title
+        _dict['abstract'] = self.abstract
+        _dict['authors'] = self.authors
+        _dict['language'] = self.language
+        _dict['chemicals'] = self.chemicals
+        _dict['mesh_list'] = self.mesh_list
+        return _dict

@@ -27,7 +27,7 @@ def test_pmid():
 def test_date_completed():
     """Verify article date completed."""
     expected_date = '1976-01-16'
-    date_completed = str(TEST_ARTICLE.date_completed)
+    date_completed = TEST_ARTICLE.date_completed
     assert date_completed == expected_date
 
 
