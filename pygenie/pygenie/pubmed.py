@@ -27,10 +27,61 @@ class PubMedArticle():
         return self._article_et.find('MedlineCitation')
 
     @property
-    def date_completed(self) -> str:
+    def date_completed(self) -> date:
         """Date completed record distributed to PubMed."""
         date_completed = self.medline_citation.find('DateCompleted')
-        year = date_completed.find('Year').text
-        month = date_completed.find('Month').text
-        day = date_completed.find('Day').text
-        return date(int(year), int(month), int(day))
+        year = int(date_completed.find('Year').text)
+        month = int(date_completed.find('Month').text)
+        day = int(date_completed.find('Day').text)
+        return date(year, month, day)
+
+    @property
+    def pub_model(self) -> str:
+        """Publication model - medium/media in which article was published."""
+        raise NotImplementedError
+
+    @property
+    def date_pub(self) -> date:
+        """Full date on which issue was published."""
+        # consider removing - not standard format
+        raise NotImplementedError
+
+    @property
+    def title(self) -> str:
+        """The full journal title."""
+        raise NotImplementedError
+
+    @property
+    def iso_abbreviation(self) -> str:
+        """The journal title ISO abbreviation."""
+        raise NotImplementedError
+
+    @property
+    def article_title(self) -> str:
+        """Entire title of journal article in English."""
+        raise NotImplementedError
+
+    @property
+    def abstract(self) -> str:
+        """Entire abstract taken directly from published article."""
+        raise NotImplementedError
+
+    @property
+    def authors(self) -> [str]:
+        """Names of authors published with article."""
+        raise NotImplementedError
+
+    @property
+    def language(self) -> str:
+        """Tha language the article was published in."""
+        raise NotImplementedError
+
+    @property
+    def chemicals(self) -> [str]:
+        """One or more chemical elements."""
+        raise NotImplementedError
+
+    @property
+    def mesh_list(self) -> [str]:
+        """Article's suppl mesh list."""
+        raise NotImplementedError
