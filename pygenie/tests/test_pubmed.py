@@ -110,3 +110,9 @@ def test_mesh_list():
                      'Pseudomonas']
     mesh = TEST_ARTICLE.mesh_list
     assert mesh.sort() == expected_mesh.sort()
+
+
+def test_dict():
+    """Test object dictionary."""
+    article_dict = TEST_ARTICLE.to_dict
+    assert article_dict['date_completed'] == '1976-01-16'

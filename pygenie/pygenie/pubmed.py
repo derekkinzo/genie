@@ -85,3 +85,11 @@ class PubMedArticle():
     def mesh_list(self) -> [str]:
         """Article's suppl mesh list."""
         raise NotImplementedError
+
+    @property
+    def to_dict(self):
+        """Generate article model dictionary."""
+        obj_dict = {}
+        obj_dict['date_completed'] = str(self.date_completed)
+        raise NotImplementedError
+        return obj_dict
