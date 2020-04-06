@@ -22,19 +22,31 @@ class PubMedArticle():
         self._article_et: ET.Element = article_et
 
     @property
-    def medline_citation(self) -> ET.Element:
-        """Retrive medline citation xml sub tree."""
+    def _medline_element(self) -> ET.Element:
+        """Retrive medline sub element from pubmedarticle."""
         return self._article_et.find('MedlineCitation')
 
     @property
+    def _article_element(self) -> ET.Element:
+        """Retrieve article sub element medline."""
+        return self._medline_element.find('Article')
+
+    @property
+    def _journal_element(self) -> ET.Element:
+        """Retrieve journal sub element article."""
+        return self._article_element.find("Journal")
+
+    @property
     def pmid(self) -> str:
-        """The pubmed article ID."""
-        raise NotImplementedError
+        """Pubmed article ID."""
+        pmid = self._medline_element.find('PMID')
+        return pmid.text
 
     @property
     def date_completed(self) -> date:
         """Date completed record distributed to PubMed."""
-        date_completed = self.medline_citation.find('DateCompleted')
+        # TODO need to ensure consistent date format across, probably best to change implementation and return str
+        date_completed = self._medline_element.find('DateCompleted')
         year = int(date_completed.find('Year').text)
         month = int(date_completed.find('Month').text)
         day = int(date_completed.find('Day').text)
@@ -43,53 +55,71 @@ class PubMedArticle():
     @property
     def pub_model(self) -> str:
         """Publication model - medium/media in which article was published."""
-        raise NotImplementedError
-
-    @property
-    def date_pub(self) -> date:
-        """Full date on which issue was published."""
-        # consider removing - not standard format
-        raise NotImplementedError
+        article = self._article_element
+        pub_model = article.attrib['PubModel']
+        return pub_model
 
     @property
     def title(self) -> str:
-        """The full journal title."""
-        raise NotImplementedError
+        """Full journal title."""
+        journal = self._journal_element
+        title = journal.find('Title')
+        return title.text
 
     @property
     def iso_abbreviation(self) -> str:
-        """The journal title ISO abbreviation."""
-        raise NotImplementedError
+        """Journal title ISO abbreviation."""
+        iso_abbrev = self._journal_element.find('ISOAbbreviation')
+        return iso_abbrev.text
 
     @property
     def article_title(self) -> str:
         """Entire title of journal article in English."""
-        raise NotImplementedError
+        article_title = self._article_element.find('ArticleTitle')
+        return article_title.text
 
     @property
     def abstract(self) -> str:
         """Entire abstract taken directly from published article."""
-        raise NotImplementedError
+        abstract = self._article_element.find('Abstract/AbstractText')
+        return abstract.text
 
     @property
     def authors(self) -> [str]:
         """Names of authors published with article."""
-        raise NotImplementedError
+        authors: [str] = []
+        author_list = self._article_element.findall('AuthorList/Author')
+        for author in author_list:
+            author_lastName = author.find('LastName').text
+            author_foreName = author.find('ForeName').text
+            authors.append(author_lastName + ', ' + author_foreName)
+        return authors
 
     @property
     def language(self) -> str:
         """Tha language the article was published in."""
-        raise NotImplementedError
+        language = self._article_element.find('Language')
+        return language.text
 
     @property
     def chemicals(self) -> [str]:
         """One or more chemical elements."""
-        raise NotImplementedError
+        chemicals: [str] = []
+        chemicals_list = self._medline_element.findall('ChemicalList/Chemical')
+        for chemical in chemicals_list:
+            chemicals.append(chemical.text)
+        return chemicals
 
     @property
     def mesh_list(self) -> [str]:
         """Article's suppl mesh list."""
-        raise NotImplementedError
+        meshes: [str] = []
+        mesh_list = self._medline_element.findall(
+            'MeshHeadingList/MeshHeading')
+        for mesh in mesh_list:
+            descriptor = mesh.find('DescriptorName')
+            meshes.append(descriptor.text)
+        return meshes
 
     @property
     def to_dict(self):

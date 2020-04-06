@@ -17,11 +17,6 @@ def test_article_constructor():
     assert TEST_ARTICLE is not None
 
 
-def test_medline_citation():
-    """Verify Medline citation available."""
-    assert TEST_ARTICLE.medline_citation is not None
-
-
 def test_pmid():
     """Verify article id."""
     expected_pmid = '1'
@@ -40,13 +35,6 @@ def test_article_pubmodel():
     """Verify PubModel - medium which cited article was published."""
     expected_pub_model = 'Print'
     assert TEST_ARTICLE.pub_model == expected_pub_model
-
-
-def test_date_pub():
-    """Verify article publication date."""
-    expected_date = '1975-Jun'
-    date_pub = str(TEST_ARTICLE.date_pub)
-    assert date_pub == expected_date
 
 
 def test_title():
@@ -84,7 +72,7 @@ def test_authors():
                         'Palese, M',
                         'Tephly, T R']
     authors = TEST_ARTICLE.authors
-    assert authors.sort() == expected_authors.sort()  # need fix this comparisson
+    assert authors.sort() == expected_authors.sort()
 
 
 def test_language():
