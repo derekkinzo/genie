@@ -22,6 +22,13 @@ def test_medline_citation():
     assert TEST_ARTICLE.medline_citation is not None
 
 
+def test_pmid():
+    """Verify article id."""
+    expected_pmid = '1'
+    pmid = TEST_ARTICLE.pmid
+    assert pmid == expected_pmid
+
+
 def test_date_completed():
     """Verify article date completed."""
     expected_date = '1976-01-16'

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2019//EN" "http://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_190101.dtd">
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">15299998</PMID>
+      <DateCompleted>
+        <Year>2006</Year>
+        <Month>02</Month>
+        <Day>03</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>12</Month>
+        <Day>10</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Electronic">1648-9144</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>40</Volume>
+            <Issue>8</Issue>
+            <PubDate>
+              <Year>2004</Year>
+            </PubDate>
+          </JournalIssue>
+          <Title>Medicina (Kaunas, Lithuania)</Title>
+          <ISOAbbreviation>Medicina (Kaunas)</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>[The crop-producing power and chemical composition of the essential oil of the cones of hop cultivars].</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>775-8</MedlinePgn>
+        </Pagination>
+        <Abstract>
+          <AbstractText>The objective of this study was to determine harvest yield and essential oil composition of six hop cultivars ("Fredos derlingieji", "Alta", "Granit", "Marynka", "Dubskij zeleniak" and "Aromat polessja") cultivated in Lithuania. It was found that the highest crop can be obtained from early and middle harvest varieties, which mature during the first decade of September and the third decade of August. Late harvest cultivars are not suitable for cultivation, however they can be used for the development of new cultivars. Essential oils were isolated by hydrodistillation and analyzed by gas chromatography and mass spectrometry. The highest amount of essential oil was determined in Marynka cultivar (2.10 ml/100 g), the lowest one in Dubskij zeleniak 18 (0.46 ml/100 g). Totally, 62 compounds were identified in all cultivars. Myrcene, beta-caryophyllene, alpha-humulene and beta-farnesene (E) were major constituents in the essential oils. The differences in the content of other essential oil constituents were determined. Some cultivars were rich in esters and ketones.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Obelevicius</LastName>
+            <ForeName>Kestutis</ForeName>
+            <Initials>K</Initials>
+            <AffiliationInfo>
+              <Affiliation>Kaunas Botanical Garden, Vytautas Magnus University, Z. E. Zilibero 6, 46324 Kaunas, Lithuania. k.obelevicius@bs.vdu.lt</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Venskutonis</LastName>
+            <ForeName>Rimantas</ForeName>
+            <Initials>R</Initials>
+          </Author>
+        </AuthorList>
+        <Language>lit</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D003160">Comparative Study</PublicationType>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+        <VernacularTitle>Paprastojo apynio veisliu derlingumas ir spurgu eterinio aliejaus chemine sudetis.</VernacularTitle>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>Switzerland</Country>
+        <MedlineTA>Medicina (Kaunas)</MedlineTA>
+        <NlmUniqueID>9425208</NlmUniqueID>
+        <ISSNLinking>1010-660X</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D000081222">Monocyclic Sesquiterpenes</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D009822">Oils, Volatile</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D000081223">Polycyclic Sesquiterpenes</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D012717">Sesquiterpenes</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>18794-84-8</RegistryNumber>
+          <NameOfSubstance UI="C062671">beta-farnesene</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>54W56MD2WD</RegistryNumber>
+          <NameOfSubstance UI="C042686">humulene</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>BHW853AU9H</RegistryNumber>
+          <NameOfSubstance UI="C024714">caryophyllene</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D002849" MajorTopicYN="N">Chromatography, Gas</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002980" MajorTopicYN="N">Climate</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D027582" MajorTopicYN="Y">Humulus</DescriptorName>
+          <QualifierName UI="Q000737" MajorTopicYN="N">chemistry</QualifierName>
+          <QualifierName UI="Q000254" MajorTopicYN="N">growth &amp; development</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008097" MajorTopicYN="N" Type="Geographic">Lithuania</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013058" MajorTopicYN="N">Mass Spectrometry</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000081222" MajorTopicYN="N">Monocyclic Sesquiterpenes</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009822" MajorTopicYN="N">Oils, Volatile</DescriptorName>
+          <QualifierName UI="Q000032" MajorTopicYN="N">analysis</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000081223" MajorTopicYN="N">Polycyclic Sesquiterpenes</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D012621" MajorTopicYN="N">Seasons</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D012717" MajorTopicYN="N">Sesquiterpenes</DescriptorName>
+          <QualifierName UI="Q000032" MajorTopicYN="N">analysis</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>2004</Year>
+          <Month>8</Month>
+          <Day>10</Day>
+          <Hour>5</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>2006</Year>
+          <Month>2</Month>
+          <Day>4</Day>
+          <Hour>9</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>2004</Year>
+          <Month>8</Month>
+          <Day>10</Day>
+          <Hour>5</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">15299998</ArticleId>
+        <ArticleId IdType="pii">0408-14</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>

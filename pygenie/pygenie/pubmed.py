@@ -27,6 +27,11 @@ class PubMedArticle():
         return self._article_et.find('MedlineCitation')
 
     @property
+    def pmid(self) -> str:
+        """The pubmed article ID."""
+        raise NotImplementedError
+
+    @property
     def date_completed(self) -> date:
         """Date completed record distributed to PubMed."""
         date_completed = self.medline_citation.find('DateCompleted')

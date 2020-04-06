@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2019//EN" "http://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_190101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+    <MedlineCitation Status="In-Process" Owner="NLM">
+      <PMID Version="1">31840482</PMID>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>12</Month>
+        <Day>16</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">1001-9332</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>30</Volume>
+            <Issue>12</Issue>
+            <PubDate>
+              <Year>2019</Year>
+              <Month>Dec</Month>
+            </PubDate>
+          </JournalIssue>
+          <Title>Ying yong sheng tai xue bao = The journal of applied ecology</Title>
+          <ISOAbbreviation>Ying Yong Sheng Tai Xue Bao</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>[Research progress on three-dimensional pattern in landscape ecology].</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>4353-4360</MedlinePgn>
+        </Pagination>
+        <ELocationID EIdType="doi" ValidYN="Y">10.13287/j.1001-9332.201912.018</ELocationID>
+        <Abstract>
+          <AbstractText>The close interactions between abiotic and biotic components create a variety of three-dimensional (3-D) landscape patterns. Landscape ecology, as a discipline of studying patterns and ecological processes, has made rapid progress in the exploration of 3-D space with the improvement of data acquirement ability, such as lidar technology. The real surface landscape can be described considering 3-D data, which improves the consistency between landscape indices and ecological process, and has overcome the shortage of ecological meanings of traditional researches. However, the lack of universality of methods and conclusions still exist due to different study backgrounds. The sensitivities of research results will increase with the expansion from two-dimensional to 3-D scale because of the increasing data quantity and accuracy. How to select and process the suitable scaled data to get more scientific conclusions need to be discussed in the future. The integration of multi-scale, multi-source and a long time series data will be the study trend with data acquisition becoming more convenient. In addition to the dynamic monitoring and prediction studies, the sustainable and ecological restoration application combined with landscape planning and design will be an important research direction.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Zhang</LastName>
+            <ForeName>Chu-Yi</ForeName>
+            <Initials>CY</Initials>
+            <AffiliationInfo>
+              <Affiliation>Key Laboratory of Forest Ecology and Management, Institute of Applied Ecology, Chinese Academy of Sciences, Shenyang 110016, China.</Affiliation>
+            </AffiliationInfo>
+            <AffiliationInfo>
+              <Affiliation>University of Chinese Academy of Sciences, Beijing 100049, China.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Hu</LastName>
+            <ForeName>Yuan-Man</ForeName>
+            <Initials>YM</Initials>
+            <AffiliationInfo>
+              <Affiliation>Key Laboratory of Forest Ecology and Management, Institute of Applied Ecology, Chinese Academy of Sciences, Shenyang 110016, China.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Liu</LastName>
+            <ForeName>Miao</ForeName>
+            <Initials>M</Initials>
+            <AffiliationInfo>
+              <Affiliation>Key Laboratory of Forest Ecology and Management, Institute of Applied Ecology, Chinese Academy of Sciences, Shenyang 110016, China.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Li</LastName>
+            <ForeName>Chun-Lin</ForeName>
+            <Initials>CL</Initials>
+            <AffiliationInfo>
+              <Affiliation>Key Laboratory of Forest Ecology and Management, Institute of Applied Ecology, Chinese Academy of Sciences, Shenyang 110016, China.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <Language>chi</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D004740">English Abstract</PublicationType>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+        <VernacularTitle>景观生态学三维格局研究进展.</VernacularTitle>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>China</Country>
+        <MedlineTA>Ying Yong Sheng Tai Xue Bao</MedlineTA>
+        <NlmUniqueID>9425159</NlmUniqueID>
+        <ISSNLinking>1001-9332</ISSNLinking>
+      </MedlineJournalInfo>
+      <CitationSubset>IM</CitationSubset>
+      <OtherAbstract Type="Publisher" Language="chi">
+        <AbstractText>非生物与生物的密切交互造就了多种多样的三维景观格局,景观生态学作为研究格局和生态学过程的学科,其在三维空间的探索随着激光雷达等三维数据提取技术的完善取得了快速进步.三维数据的引入使得研究更贴近真实地表景观,研究结果与相关生态学指标具有更明显的同向趋势.这改善了传统研究缺乏生态学意义的问题.但由于研究背景不同,研究方法和研究结论仍缺乏普适性.另一方面,研究结果对尺度变化的敏感度也因三维数据量的扩大而增加,如何选择并处理适宜尺度的数据使结论更加科学,是未来需要注意并探讨的问题.未来,随着数据获取更加便捷,研究将向长时间多尺度多源数据集成化发展,除动态监测及预测外,结合景观规划设计的可持续规划和生态恢复应用也是重要的研究方向之一.</AbstractText>
+      </OtherAbstract>
+      <KeywordList Owner="NOTNLM">
+        <Keyword MajorTopicYN="N">air pollution</Keyword>
+        <Keyword MajorTopicYN="N">complex terrain</Keyword>
+        <Keyword MajorTopicYN="N">mountain landscape</Keyword>
+        <Keyword MajorTopicYN="N">three-dimensional pattern</Keyword>
+        <Keyword MajorTopicYN="N">urban heat island</Keyword>
+        <Keyword MajorTopicYN="N">urban landscape</Keyword>
+      </KeywordList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>2019</Year>
+          <Month>12</Month>
+          <Day>17</Day>
+          <Hour>6</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">31840482</ArticleId>
+        <ArticleId IdType="doi">10.13287/j.1001-9332.201912.018</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="In-Process" Owner="NLM">
+      <PMID Version="1">31840480</PMID>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>12</Month>
+        <Day>16</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">1001-9332</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>30</Volume>
+            <Issue>12</Issue>
+            <PubDate>
+              <Year>2019</Year>
+              <Month>Dec</Month>
+            </PubDate>
+          </JournalIssue>
+          <Title>Ying yong sheng tai xue bao = The journal of applied ecology</Title>
+          <ISOAbbreviation>Ying Yong Sheng Tai Xue Bao</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>[Stomatal regulation of plants in response to drought stress].</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>4333-4343</MedlinePgn>
+        </Pagination>
+        <ELocationID EIdType="doi" ValidYN="Y">10.13287/j.1001-9332.201912.004</ELocationID>
+        <Abstract>
+          <AbstractText>The regulation on carbon acquisition and water loss plays a critical role in plant growth and survival. Stomata are important portals for plants to control the exchanges of carbon and water between leaves and the atmosphere. Therefore, understanding stomatal control mechanisms and modelling stomatal conductivity are indispensable to accurately simulate carbon and water cycling in terrestrial ecosystems. As global climate change is accelerating in recent years, drought events have become more and more frequent and thus profoundly affect the survival, growth and distribution of plants. In order to deeply understand the underlying mechanism of carbon-water coupling of plants and predict the dynamics of plants and communities under global changes, it is crucial to explore responses of stomatal regulation of plants to drought stress. In this review, we synthesized recent research progress on mechanisms and modeling of plant stomatal regulation under drought stress. First, this review described the active and passive regulation of plant stomatal control in response to drought stress, and discussed the evolution of plant stomatal regulation, including the passive hydraulic regulation of ferns and lycophytes, the active regulation of angiosperms, and the dual-control mechanism of gymnosperms that was proposed as an important transitional type during evolution from ferns to angiosperms. Then, we analyzed the relationship between stomatal and hydraulic regulations, and discussed the debates on the decoupling of plant water potential from stomatal conductivity. The application of stomatal-conductivity optimization models was introduced based on the water use efficiency hypothesis and the maximum carbon gain hypothesis. The model based on the latter had a greater potential of prediction and practical application. Finally, we proposed two issues that should be urgently addressed: 1) to scale up the research of plant stomatal regulation from leaf or individual to ecosystem or even larger scales so as to improve the mechanistic models of carbon and water cycling in terrestrial ecosystems; and 2) to quantify the hydroactive feedback processes of plant stomatal regulation so as to modify current hydraulics models of plant stomatal function.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Luo</LastName>
+            <ForeName>Dan-Dan</ForeName>
+            <Initials>DD</Initials>
+            <AffiliationInfo>
+              <Affiliation>Center for Ecological Research/Ministry of Education Key Laboratory of Sustaina-ble Forest Ecosystem Management, Northeast Forestry University, Harbin 150040, China.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Wang</LastName>
+            <ForeName>Chuan-Kuan</ForeName>
+            <Initials>CK</Initials>
+            <AffiliationInfo>
+              <Affiliation>Center for Ecological Research/Ministry of Education Key Laboratory of Sustaina-ble Forest Ecosystem Management, Northeast Forestry University, Harbin 150040, China.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Jin</LastName>
+            <ForeName>Ying</ForeName>
+            <Initials>Y</Initials>
+            <AffiliationInfo>
+              <Affiliation>Center for Ecological Research/Ministry of Education Key Laboratory of Sustaina-ble Forest Ecosystem Management, Northeast Forestry University, Harbin 150040, China.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <Language>chi</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D004740">English Abstract</PublicationType>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+        <VernacularTitle>植物应对干旱胁迫的气孔调节.</VernacularTitle>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>China</Country>
+        <MedlineTA>Ying Yong Sheng Tai Xue Bao</MedlineTA>
+        <NlmUniqueID>9425159</NlmUniqueID>
+        <ISSNLinking>1001-9332</ISSNLinking>
+      </MedlineJournalInfo>
+      <CitationSubset>IM</CitationSubset>
+      <OtherAbstract Type="Publisher" Language="chi">
+        <AbstractText>气孔是植物控制叶片与大气之间碳、水交换的重要门户,植物的生长和生存都依赖于叶片气孔对碳获取和水散失的调控.因此,气孔调节机理研究与气孔导度模型研发是精确模拟陆地生态系统碳、水循环过程不可或缺的内容.近年来,随着气候变化的加剧,干旱事件愈发频繁,对植物的存活、生长和分布产生深刻影响.为了深入理解植物碳-水耦合机理过程、预测全球变化下植物及群落的动态,开展植物应对干旱胁迫的气孔调节研究尤为重要.本文综述了植物在干旱胁迫条件下气孔调节机制和模型研究进展.首先阐述了植物气孔对干旱胁迫的主动调节与被动调节,讨论了气孔调节的演化过程,包括蕨类和石松类植物的被动水力调节、被子植物的主动调节和裸子植物的双重调节机制,认为裸子植物的气孔调节方式是植物进化过程中介于蕨类、石松类植物和被子植物之间的一种重要过渡类型.然后分析了气孔调节与水力调节的关系,讨论了“植物水势和气孔导度解耦”问题中存在的争议.之后介绍了基于水分利用效率假说和最大碳增益假说所建立的气孔导度优化模型的应用,并指出后者有更强的预测能力和应用前景.最后,为了有效减少植被对气候变化响应预测中的不确定性,提出了2个亟待开展的研究问题:将植物叶片的气孔调节功能研究由个体扩展到生态系统甚至更大尺度,改进陆地生态系统碳水循环机理模型;量化气孔调节的主动水力反馈过程,修正植物气孔功能水力模型.</AbstractText>
+      </OtherAbstract>
+      <KeywordList Owner="NOTNLM">
+        <Keyword MajorTopicYN="N">abscisic acid</Keyword>
+        <Keyword MajorTopicYN="N">hydraulic regulation</Keyword>
+        <Keyword MajorTopicYN="N">stomatal conductivity optimization model</Keyword>
+        <Keyword MajorTopicYN="N">water-regulation strategy</Keyword>
+      </KeywordList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>2019</Year>
+          <Month>12</Month>
+          <Day>17</Day>
+          <Hour>6</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">31840480</ArticleId>
+        <ArticleId IdType="doi">10.13287/j.1001-9332.201912.004</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>
