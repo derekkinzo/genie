@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2019//EN" "http://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_190101.dtd">
+<PubmedArticle>
+    <MedlineCitation Status="In-Process" Owner="NLM">
+      <PMID Version="1">31839728</PMID>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>12</Month>
+        <Day>16</Day>
+      </DateRevised>
+      <Article PubModel="Print-Electronic">
+        <Journal>
+          <ISSN IssnType="Electronic">1846-7482</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>30</Volume>
+            <Issue>1</Issue>
+            <PubDate>
+              <Year>2020</Year>
+              <Month>Feb</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemia medica</Title>
+          <ISOAbbreviation>Biochem Med (Zagreb)</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>High anion gap metabolic acidosis caused by D-lactate: mind the time of blood collection.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>011001</MedlinePgn>
+        </Pagination>
+        <ELocationID EIdType="doi" ValidYN="Y">10.11613/BM.2020.011001</ELocationID>
+        <Abstract>
+          <AbstractText Label="Introduction" NlmCategory="UNASSIGNED">D-lactic acidosis is an uncommon cause of high anion gap acidosis.</AbstractText>
+          <AbstractText Label="Materials and methods" NlmCategory="UNASSIGNED">A 35-year old woman was admitted to the emergency room with somnolence, drowsiness, dizziness, incoherent speech and drunk appearance. Her past medical history included a Roux-en-Y bypass. Point-of-care venous blood analysis revealed a high anion gap acidosis. Based on the clinical presentation, routine laboratory results and negative toxicology screening, D-lactate and 5-oxoprolinuria were considered as the most likely causes of the high anion gap acidosis. Urine organic acid analysis revealed increased lactate, but no 5-oxoproline. Plasma D-lactate was &lt; 1.0 mmol/L and could not confirm D-lactic acidosis.</AbstractText>
+          <AbstractText Label="What happened" NlmCategory="UNASSIGNED">Further investigation revealed that the blood sample for D-lactate was drawn 12 hours after admission, which might explain the false-negative result. Data regarding the half-life of D-lactate are, however, scarce. During a second admission, one month later, D-lactic acidosis could be confirmed with an anion gap of 40.7 mmol/L and a D-lactate of 21.0 mmol/L measured in a sample collected at the time of admission.</AbstractText>
+          <AbstractText Label="Main lesson" NlmCategory="UNASSIGNED">The time of blood collection is of utmost importance to establish the diagnosis of D-lactic acidosis due to the fast clearance of D-lactate in the human body.</AbstractText>
+          <CopyrightInformation>Croatian Society of Medical Biochemistry and Laboratory Medicine.</CopyrightInformation>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Weemaes</LastName>
+            <ForeName>Matthias</ForeName>
+            <Initials>M</Initials>
+            <AffiliationInfo>
+              <Affiliation>Clinical Department of Laboratory Medicine, UZ Leuven, Leuven, Belgium.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Hiele</LastName>
+            <ForeName>Martin</ForeName>
+            <Initials>M</Initials>
+            <AffiliationInfo>
+              <Affiliation>Clinical Department of Gastroenterology, UZ Leuven, Leuven, Belgium.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Vermeersch</LastName>
+            <ForeName>Pieter</ForeName>
+            <Initials>P</Initials>
+            <AffiliationInfo>
+              <Affiliation>Clinical Department of Laboratory Medicine, UZ Leuven, Leuven, Belgium.</Affiliation>
+            </AffiliationInfo>
+            <AffiliationInfo>
+              <Affiliation>Department of Cardiovascular Sciences, University of Leuven, Leuven, Belgium.</Affiliation>
+            </AffiliationInfo>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D002363">Case Reports</PublicationType>
+        </PublicationTypeList>
+        <ArticleDate DateType="Electronic">
+          <Year>2019</Year>
+          <Month>12</Month>
+          <Day>15</Day>
+        </ArticleDate>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>Croatia</Country>
+        <MedlineTA>Biochem Med (Zagreb)</MedlineTA>
+        <NlmUniqueID>9610305</NlmUniqueID>
+        <ISSNLinking>1330-0962</ISSNLinking>
+      </MedlineJournalInfo>
+      <CitationSubset>IM</CitationSubset>
+      <KeywordList Owner="NOTNLM">
+        <Keyword MajorTopicYN="N">D-lactate</Keyword>
+        <Keyword MajorTopicYN="N">D-lactic acidosis</Keyword>
+        <Keyword MajorTopicYN="N">case report</Keyword>
+        <Keyword MajorTopicYN="N">high anion gap acidosis</Keyword>
+        <Keyword MajorTopicYN="N">preanalytical phase</Keyword>
+      </KeywordList>
+      <CoiStatement>Potential conflict of interest: None declared.</CoiStatement>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="received">
+          <Year>2019</Year>
+          <Month>08</Month>
+          <Day>02</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="accepted">
+          <Year>2019</Year>
+          <Month>10</Month>
+          <Day>20</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>2019</Year>
+          <Month>12</Month>
+          <Day>17</Day>
+          <Hour>6</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">31839728</ArticleId>
+        <ArticleId IdType="doi">10.11613/BM.2020.011001</ArticleId>
+        <ArticleId IdType="pii">bm-30-1-011001</ArticleId>
+        <ArticleId IdType="pmc">PMC6904971</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+</PubmedArticle> 
