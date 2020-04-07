@@ -1,7 +1,7 @@
 """Test pub med article model class."""
 import os
 import xml.etree.ElementTree as ET
-from tests import get_resources_path
+from tests import get_resources_path, get_test_output_path
 from pygenie.pubmed import PubMedArticle, ArticleSetParser
 
 SAMPLE_ARTICLE1_NAME = 'sample_article1.xml'
@@ -118,3 +118,11 @@ class TestArticlesSetParser():
         assert articles is not None
         assert len(articles) == 2
         assert isinstance(articles[0], PubMedArticle)
+
+    def test_serialize_articles(self):
+        """Serialize pubmedarticle object into json file."""
+        articles: [PubMedArticle] = ArticleSetParser.extract_articles(
+            self.SAMPLE_ARTICLE_SET1_PATH)
+        target_file_name = 'test_articles.json'
+        target_path = os.path.join(get_test_output_path(), target_file_name)
+        ArticleSetParser.serialize_articles(articles, target_path)

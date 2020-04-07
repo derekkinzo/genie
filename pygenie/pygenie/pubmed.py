@@ -1,6 +1,7 @@
 """PubMed related functionality."""
 import xml.etree.ElementTree as ET
 from datetime import date
+import json
 
 
 class PubMedArticle():
@@ -108,8 +109,14 @@ class PubMedArticle():
         author_list = self._pubmed_article.findall(
             self.ARTICLE_TAG + '/AuthorList/Author')
         for author in author_list:
-            author_lastname = author.find('LastName').text
-            author_forename = author.find('ForeName').text
+
+            author_lastname = author.find(
+                'LastName').text if author.find(
+                'LastName') else ''
+
+            author_forename = author.find(
+                'ForeName').text if author.find('ForeName') else ''
+
             authors.append(author_lastname + ', ' + author_forename)
         return authors
 
@@ -171,7 +178,8 @@ class ArticleSetParser():
     @staticmethod
     def extract_articles(xml_file_path: str) -> [PubMedArticle]:
         """
-        [summary]
+        Extract 
+        TODO function header
 
         Arguments:
             xml_file_path {str} -- [description]
@@ -185,3 +193,13 @@ class ArticleSetParser():
         for article_xml in articles_xml_list:
             pubmed_articles.append(PubMedArticle(article_xml))
         return pubmed_articles
+
+    @staticmethod
+    def serialize_articles(articles: [PubMedArticle], target_file_path: str):
+        """Serialize pubmedarticle objects to json file."""
+        dict_list = []
+        for article in articles:
+            dict_list.append(article.to_dict)
+        articles_json = json.dumps({'articles': dict_list})
+        with open(target_file_path, 'w') as target_file:
+            target_file.write(articles_json)
