@@ -3,7 +3,25 @@ import sys
 import os
 import gzip
 import shutil
+from datetime import datetime
+from itertools import repeat
+from concurrent.futures import ProcessPoolExecutor
 from pubmed import PubMedArticle, ArticleSetParser
+
+
+def is_xml_article_set(filename: str) -> bool:
+    """
+    Check if input file is pubmed xml compressed archive from name.
+
+    Arguments:
+        filename {str} -- the name of the file
+
+    Returns:
+        bool -- true if file is compressed pubmed article set
+    """
+    if filename.endswith('.xml.gz'):
+        return True
+    return False
 
 
 def unzip_article_set(file_path: str, output_file: str):
@@ -13,25 +31,49 @@ def unzip_article_set(file_path: str, output_file: str):
             shutil.copyfileobj(f_in, f_out)
 
 
-def parse_pubmed_baseline(in_dir: str, out_dir: str):
+def parse_pubmed_article_set(in_path: str, out_path: str):
     """Convert xml to json articles."""
-    for filename in os.listdir(in_dir):
-        if not filename.endswith('.gz'):
-            continue
-        in_file = os.path.join(in_dir, filename)
-        xml_file = os.path.join(in_dir, filename.replace('.gz', ''))
-        if not os.path.exists(xml_file):
-            print(f'Extracting {in_file} to {xml_file}')
-            unzip_article_set(in_file, xml_file)
+    in_dir, filename = os.path.split(in_path)
+    if not is_xml_article_set(filename):
+        return
+    xml_file = in_path.replace('.gz', '')
+    if not os.path.exists(xml_file):
+        print(f'Extracting {in_path} to {xml_file}')
+        unzip_article_set(in_path, xml_file)
 
-        print(f'Parsing {xml_file}')
-        article_list: PubMedArticle = ArticleSetParser.extract_articles(
-            xml_file)
+    print(f'Parsing {xml_file}')
+    article_list: PubMedArticle = ArticleSetParser.extract_articles(
+        xml_file)
 
-        output_file = os.path.join(
-            out_dir, filename.replace('.xml.gz', '.pipe'))
-        print(f'Generating {output_file}')
-        ArticleSetParser.articles_to_pipe(article_list, output_file)
+    output_file = os.path.join(
+        out_path, filename.replace('.xml.gz', '.pipe'))
+    print(f'Generating {output_file}')
+    ArticleSetParser.articles_to_pipe(article_list, output_file)
+
+    print(f"PID: {os.getpid()}. File Processed: {output_file}. \
+        Articles Processed {len(article_list)}")
+    return
+
+
+def concurrent_execution(data_in_dir, data_out_dir, max_workers):
+    """Concurrent execution manager. Spawns workers to parse files."""
+    start_time = datetime.now()
+    xml_files: [str] = []
+    for filename in os.listdir(data_in_dir):
+        if is_xml_article_set(filename):
+            xml_files.append(os.path.join(data_in_dir, filename))
+
+    print(f'Found {len(xml_files)} PubMed article sets')
+
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        executor.map(parse_pubmed_article_set,
+                     xml_files,
+                     repeat(data_out_dir))
+
+    end_time = datetime.now()
+    total_time = end_time - start_time
+    print(f'Concurrent Process {max_workers} \
+        Execution: {len(xml_files)} files, in {total_time}')
 
 
 if __name__ == "__main__":
@@ -53,4 +95,19 @@ if __name__ == "__main__":
     else:
         raise Exception("Output data directory is not valid. " + ERROR_MSG)
 
-    parse_pubmed_baseline(DATA_IN_DIR, DATA_OUT_DIR)
+    # check argument for number of parallel processes
+    try:
+        MAX_WORKERS = int(sys.argv[3])
+        if MAX_WORKERS < 1 or MAX_WORKERS > 16:
+            print("Invalid number of workers requested - Setting number of \
+                workers to 1")
+            MAX_WORKERS = 1
+    except TypeError:
+        raise Exception(
+            "Max number of processes should be a valid integer. " + ERROR_MSG)
+
+    # for file_name in os.listdir(DATA_IN_DIR):
+    #     if not file_name.endswith('.gz'):
+    #         continue
+    #     parse_pubmed_baseline(file_name, DATA_IN_DIR, DATA_OUT_DIR)
+    concurrent_execution(DATA_IN_DIR, DATA_OUT_DIR, MAX_WORKERS)
