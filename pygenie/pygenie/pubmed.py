@@ -110,12 +110,11 @@ class PubMedArticle():
             self.ARTICLE_TAG + '/AuthorList/Author')
         for author in author_list:
 
-            author_lastname = author.find(
-                'LastName').text if author.find(
-                'LastName') else ''
+            lastname_el = author.find('LastName')
+            author_lastname = '' if lastname_el is None else lastname_el.text
 
-            author_forename = author.find(
-                'ForeName').text if author.find('ForeName') else ''
+            forename_el = author.find('ForeName')
+            author_forename = '' if forename_el is None else forename_el.text
 
             authors.append(author_lastname + ', ' + author_forename)
         return authors
@@ -223,6 +222,7 @@ class ArticleSetParser():
                 writer = csv.DictWriter(csv_file,
                                         delimiter='|',
                                         fieldnames=csv_columns)
+                writer.writeheader()
                 for article in dict_list:
                     writer.writerow(article)
         except IOError:

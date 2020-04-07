@@ -62,12 +62,12 @@ class TestPubMedArticle():
 
     def test_authors(self):
         """Verify names of authors."""
-        expected_authors = ['Makar, A B',
+        expected_set = set(['Makar, A B',
                             'McMartin, K E',
                             'Palese, M',
-                            'Tephly, T R']
-        authors = TEST_ARTICLE.authors
-        assert authors.sort() == expected_authors.sort()
+                            'Tephly, T R'])
+        authors_set = set(TEST_ARTICLE.authors)
+        assert authors_set == expected_set
 
     def test_language(self):
         """Verify article language."""
@@ -77,26 +77,27 @@ class TestPubMedArticle():
 
     def test_chemical_list(self):
         """Verify list of chemicals."""
-        expected_chemicals = ['Formates', 'D002245', 'D000445', 'D000432']
-        chemicals = TEST_ARTICLE.chemicals
-        assert chemicals.sort() == expected_chemicals.sort()
+        expected_set = set(['Formates', 'Carbon Dioxide',
+                            'Methanol', 'Aldehyde Oxidoreductases'])
+        chemicals_set = set(TEST_ARTICLE.chemicals)
+        assert chemicals_set == expected_set
 
     def test_mesh_list(self):
         """Verify mesh descriptors list."""
-        expected_mesh = ['Aldehyde Oxidoreductases',
-                         'Animals',
-                         'Body Fluids',
-                         'Carbon Dioxide',
-                         'Formates',
-                         'Haplorhini',
-                         'Humans',
-                         'Hydrogen-Ion Concentration',
-                         'Kinetics',
-                         'Methanol',
-                         'Methods',
-                         'Pseudomonas']
-        mesh = TEST_ARTICLE.mesh_list
-        assert mesh.sort() == expected_mesh.sort()
+        expected_set = set(['Aldehyde Oxidoreductases',
+                            'Animals',
+                            'Body Fluids',
+                            'Carbon Dioxide',
+                            'Formates',
+                            'Haplorhini',
+                            'Humans',
+                            'Hydrogen-Ion Concentration',
+                            'Kinetics',
+                            'Methanol',
+                            'Methods',
+                            'Pseudomonas'])
+        mesh_set = set(TEST_ARTICLE.mesh_list)
+        assert mesh_set == expected_set
 
     def test_dict(self):
         """Test object dictionary."""
