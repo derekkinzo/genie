@@ -3,10 +3,6 @@ import xml.etree.ElementTree as ET
 from datetime import date
 
 
-class ArticleSetParser():
-    """Parsing utility for PubMed Article sets."""
-
-
 class PubMedArticle():
     """
     PubMed Article model.
@@ -163,3 +159,29 @@ class PubMedArticle():
         _dict['chemicals'] = self.chemicals
         _dict['mesh_list'] = self.mesh_list
         return _dict
+
+
+class ArticleSetParser():
+    """
+    Parsing utility for PubMed Article sets.
+
+    An article set is an xml file with an array of <PubMedArticles>.
+    """
+
+    @staticmethod
+    def extract_articles(xml_file_path: str) -> [PubMedArticle]:
+        """
+        [summary]
+
+        Arguments:
+            xml_file_path {str} -- [description]
+
+        Returns:
+            [PubMedArticle] -- [description]
+        """
+        xml_root: ET.Element = ET.parse(xml_file_path).getroot()
+        articles_xml_list = xml_root.findall('PubmedArticle')
+        pubmed_articles: [PubMedArticle] = []
+        for article_xml in articles_xml_list:
+            pubmed_articles.append(PubMedArticle(article_xml))
+        return pubmed_articles
