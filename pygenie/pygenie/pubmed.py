@@ -2,6 +2,7 @@
 import xml.etree.ElementTree as ET
 import json
 import csv
+import jsonlines
 
 
 class PubMedArticle():
@@ -207,6 +208,14 @@ class ArticleSetParser():
         articles_json = json.dumps({'articles': dict_list})
         with open(target_file_path, 'w') as target_file:
             target_file.write(articles_json)
+
+    @staticmethod
+    def articles_to_jsonl(articles: [PubMedArticle], target_file_path: str):
+        """Serialize pubmedarticle objects to jsonl file."""
+        dict_list = ArticleSetParser.articles_to_dict(articles)
+        articles_json = json.dumps(dict_list)
+        with jsonlines.open(target_file_path, 'w') as writer:
+            writer.write_all(dict_list)
 
     @staticmethod
     def articles_to_pipe(articles: [PubMedArticle], target_file_path: str):

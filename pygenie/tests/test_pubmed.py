@@ -128,6 +128,15 @@ class TestArticlesSetParser():
         target_path = os.path.join(get_test_output_path(), target_file_name)
         ArticleSetParser.articles_to_json(articles, target_path)
 
+    def test_articles_to_jsonl(self):
+        """Serialize pubmedarticles objects into jsonl file."""
+        articles: [PubMedArticle] = ArticleSetParser.extract_articles(
+            self.SAMPLE_ARTICLE_SET1_PATH
+        )
+        target_file_name = 'test_articles.jsonl'
+        target_path = os.path.join(get_test_output_path(), target_file_name)
+        ArticleSetParser.articles_to_jsonl(articles, target_path)
+
     def test_serialize_to_pipe_delimited(self):
         """Serialize pubmedarticles to csv file."""
         articles: [PubMedArticle] = ArticleSetParser.extract_articles(
