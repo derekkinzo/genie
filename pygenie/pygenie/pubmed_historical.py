@@ -24,7 +24,7 @@ def is_xml_article_set(filename: str) -> bool:
     return False
 
 
-def unzip_article_set(file_path: str, output_file: str):
+def decompress_article_set(file_path: str, output_file: str):
     """Unzip articles sets and create xml file."""
     with gzip.open(file_path, 'rb') as f_in:
         with open(output_file, 'wb') as f_out:
@@ -33,22 +33,36 @@ def unzip_article_set(file_path: str, output_file: str):
 
 def parse_pubmed_article_set(in_path: str, out_path: str):
     """Convert xml to json articles."""
-    in_dir, filename = os.path.split(in_path)
+    filename = os.path.basename(in_path)
     if not is_xml_article_set(filename):
         return
     xml_file = in_path.replace('.gz', '')
     if not os.path.exists(xml_file):
         print(f'Extracting {in_path} to {xml_file}')
-        unzip_article_set(in_path, xml_file)
+        decompress_article_set(in_path, xml_file)
 
     print(f'Parsing {xml_file}')
     article_list: PubMedArticle = ArticleSetParser.extract_articles(
         xml_file)
 
+    # Done with xml - delete to free up space
+    os.remove(xml_file)
+
     output_file = os.path.join(
         out_path, filename.replace('.xml.gz', '.jsonl'))
     print(f'Generating {output_file}')
     ArticleSetParser.articles_to_jsonl(article_list, output_file)
+
+    print(f'Compressing file: {output_file}')
+    with open(output_file, 'rb') as jsonl_data:
+        data_jsonl = jsonl_data.read()
+    compressed_data = gzip.compress(data_jsonl)
+    output_file_compressed = output_file + '.gz'
+    with open(output_file_compressed, 'wb') as out_compressed:
+        out_compressed.write(compressed_data)
+
+    # Done with parsed file - delete to free up space
+    os.remove(output_file)
 
     print(f"PID: {os.getpid()}. File Processed: {output_file}. \
         Articles Processed {len(article_list)}")
