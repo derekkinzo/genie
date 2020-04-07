@@ -1,7 +1,7 @@
 """PubMed related functionality."""
 import xml.etree.ElementTree as ET
-from datetime import date
 import json
+import csv
 
 
 class PubMedArticle():
@@ -178,14 +178,13 @@ class ArticleSetParser():
     @staticmethod
     def extract_articles(xml_file_path: str) -> [PubMedArticle]:
         """
-        Extract 
-        TODO function header
+        Extract articles
 
         Arguments:
-            xml_file_path {str} -- [description]
+            xml_file_path {str} -- absolute path to xml file
 
         Returns:
-            [PubMedArticle] -- [description]
+            [PubMedArticle] -- List of pubmed article objects
         """
         xml_root: ET.Element = ET.parse(xml_file_path).getroot()
         articles_xml_list = xml_root.findall('PubmedArticle')
@@ -195,11 +194,36 @@ class ArticleSetParser():
         return pubmed_articles
 
     @staticmethod
-    def serialize_articles(articles: [PubMedArticle], target_file_path: str):
-        """Serialize pubmedarticle objects to json file."""
+    def articles_to_dict(articles: [PubMedArticle]) -> [dict]:
+        """Generate list of dictionaries from articles."""
         dict_list = []
         for article in articles:
             dict_list.append(article.to_dict)
+        return dict_list
+
+    @staticmethod
+    def articles_to_json(articles: [PubMedArticle], target_file_path: str):
+        """Serialize pubmedarticle objects to json file."""
+        dict_list = ArticleSetParser.articles_to_dict(articles)
         articles_json = json.dumps({'articles': dict_list})
         with open(target_file_path, 'w') as target_file:
             target_file.write(articles_json)
+
+    @staticmethod
+    def articles_to_pipe(articles: [PubMedArticle], target_file_path: str):
+        """Serialize pubmedarticle objects to csv file."""
+        dict_list = ArticleSetParser.articles_to_dict(articles)
+        csv_columns = ['pmid', 'date_completed', 'pub_model',
+                       'title', 'iso_abbreviation', 'article_title',
+                       'abstract', 'authors', 'language', 'chemicals',
+                       'mesh_list']
+
+        try:
+            with open(target_file_path, 'w', encoding='utf-8') as csv_file:
+                writer = csv.DictWriter(csv_file,
+                                        delimiter='|',
+                                        fieldnames=csv_columns)
+                for article in dict_list:
+                    writer.writerow(article)
+        except IOError:
+            print("Unable to write csv file")

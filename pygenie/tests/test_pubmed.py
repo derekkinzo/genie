@@ -119,10 +119,18 @@ class TestArticlesSetParser():
         assert len(articles) == 2
         assert isinstance(articles[0], PubMedArticle)
 
-    def test_serialize_articles(self):
+    def test_articles_to_json(self):
         """Serialize pubmedarticle object into json file."""
         articles: [PubMedArticle] = ArticleSetParser.extract_articles(
             self.SAMPLE_ARTICLE_SET1_PATH)
         target_file_name = 'test_articles.json'
         target_path = os.path.join(get_test_output_path(), target_file_name)
-        ArticleSetParser.serialize_articles(articles, target_path)
+        ArticleSetParser.articles_to_json(articles, target_path)
+
+    def test_serialize_to_pipe_delimited(self):
+        """Serialize pubmedarticles to csv file."""
+        articles: [PubMedArticle] = ArticleSetParser.extract_articles(
+            self.SAMPLE_ARTICLE_SET1_PATH)
+        target_file_name = 'test_articles.csv'
+        target_path = os.path.join(get_test_output_path(), target_file_name)
+        ArticleSetParser.articles_to_pipe(articles, target_path)
