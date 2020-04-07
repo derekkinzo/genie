@@ -19,14 +19,18 @@ def parse_pubmed_baseline(in_dir: str, out_dir: str):
         if not filename.endswith('.gz'):
             continue
         in_file = os.path.join(in_dir, filename)
-        xml_file = os.path.join(out_dir, filename.replace('.gz', ''))
+        xml_file = os.path.join(in_dir, filename.replace('.gz', ''))
         if not os.path.exists(xml_file):
+            print(f'Extracting {in_file} to {xml_file}')
             unzip_article_set(in_file, xml_file)
 
+        print(f'Parsing {xml_file}')
         article_list: PubMedArticle = ArticleSetParser.extract_articles(
             xml_file)
 
-        output_file = xml_file.replace('.xml', '.pipe')
+        output_file = os.path.join(
+            out_dir, filename.replace('.xml.gz', '.pipe'))
+        print(f'Generating {output_file}')
         ArticleSetParser.articles_to_pipe(article_list, output_file)
 
 
