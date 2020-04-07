@@ -1,10 +1,10 @@
 """Flask app dashboard page."""
-from flask import Blueprint
+from flask import Blueprint, render_template
 
-BLUEPRINT = Blueprint('blog', __name__)
+BP = Blueprint('blog', __name__)
 
 
-@bp.route('/')
+@BP.route('/')
 def index():
     """Show genie dashboard page."""
-    return 'New Dashboard'
+    return render_template('dashboard.html')

@@ -1,9 +1,11 @@
+"""Genie WebApp Flask UI Entrypoint."""
 import os
 from flask import Flask, render_template
 from uigenie import dashboard
 
 
 def create_app(test_config=None):
+    """Create Flask App."""
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -24,7 +26,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    app.register_blueprint(dashboard.BLUEPRINT)
+    app.register_blueprint(dashboard.BP)
     app.add_url_rule('/', endpoint='index')
 
     return app
