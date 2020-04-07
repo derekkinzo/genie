@@ -46,9 +46,9 @@ def parse_pubmed_article_set(in_path: str, out_path: str):
         xml_file)
 
     output_file = os.path.join(
-        out_path, filename.replace('.xml.gz', '.pipe'))
+        out_path, filename.replace('.xml.gz', '.jsonl'))
     print(f'Generating {output_file}')
-    ArticleSetParser.articles_to_pipe(article_list, output_file)
+    ArticleSetParser.articles_to_jsonl(article_list, output_file)
 
     print(f"PID: {os.getpid()}. File Processed: {output_file}. \
         Articles Processed {len(article_list)}")
