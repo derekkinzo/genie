@@ -63,7 +63,57 @@ application in methanol poisoning.',
                             'Methanol',
                             'Methods',
                             'Pseudomonas'])),
-    ]
+    TestData(article=create_article('sample_article2.xml'),
+             expected=ExpectedArticle(
+                 pmid='15299998',
+                 date_completed='2006-02-03',
+                 pub_model='Print',
+                 title='Medicina (Kaunas, Lithuania)',
+                 iso_abbrev='Medicina (Kaunas)',
+                 article_title='[The crop-producing power and chemical \
+composition of the essential oil of the cones of hop cultivars].',
+                 abstract='The objective of this study was to determine \
+harvest yield and essential oil composition of six hop cultivars \
+("Fredos derlingieji", "Alta", "Granit", "Marynka", "Dubskij zeleniak" \
+and "Aromat polessja") cultivated in Lithuania. It was found that the highest \
+crop can be obtained from early and middle harvest varieties, which mature \
+during the first decade of September and the third decade of August. Late \
+harvest cultivars are not suitable for cultivation, however they can be used \
+for the development of new cultivars. Essential oils were isolated by \
+hydrodistillation and analyzed by gas chromatography and mass \
+spectrometry. The highest amount of essential oil was determined \
+in Marynka cultivar (2.10 ml/100 g), the lowest one in Dubskij \
+zeleniak 18 (0.46 ml/100 g). Totally, 62 compounds were identified in all \
+cultivars. Myrcene, beta-caryophyllene, alpha-humulene and beta-farnesene \
+(E) were major constituents in the essential oils. The differences in the \
+content of other essential oil constituents were determined. Some cultivars \
+were rich in esters and ketones.',
+                 authors=[
+                     'Obelevicius, Kestutis',
+                     'Venskutonis, Rimantas'
+                 ],
+                 language='lit',
+                 chemicals=[
+                     'Monocyclic Sesquiterpenes',
+                     'Oils, Volatile',
+                     'Polycyclic Sesquiterpenes',
+                     'Sesquiterpenes',
+                     'beta-farnesene',
+                     'humulene',
+                     'caryophyllene'],
+                 mesh_list=[
+                     'Chromatography, Gas',
+                     'Climate',
+                     'Humans',
+                     'Humulus',
+                     'Lithuania',
+                     'Mass Spectrometry',
+                     'Monocyclic Sesquiterpenes',
+                     'Oils, Volatile',
+                     'Polycyclic Sesquiterpenes',
+                     'Seasons',
+                     'Sesquiterpenes'])),
+]
 
 
 class TestPubMedArticle():
