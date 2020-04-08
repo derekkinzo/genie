@@ -1,4 +1,13 @@
-"""Handle pubmed historical data. Parse and update database."""
+"""
+Handle pubmed historical data.
+
+Parse the pubmed baseline article sets and generate jsonl PubMedArticles to be
+used by classifier.
+
+The script expects path to folder containing pubmed baseline .xml.gz files,
+the path to output directory where generated files should be stored, and
+number of concurrent processes to be used [1, 16].
+"""
 import sys
 import os
 import gzip
@@ -120,8 +129,4 @@ if __name__ == "__main__":
         raise Exception(
             "Max number of processes should be a valid integer. " + ERROR_MSG)
 
-    # for file_name in os.listdir(DATA_IN_DIR):
-    #     if not file_name.endswith('.gz'):
-    #         continue
-    #     parse_pubmed_baseline(file_name, DATA_IN_DIR, DATA_OUT_DIR)
     concurrent_execution(DATA_IN_DIR, DATA_OUT_DIR, MAX_WORKERS)
