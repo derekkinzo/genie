@@ -1,108 +1,156 @@
 """Test pub med article model class."""
 import os
+import pytest
+import collections
 import xml.etree.ElementTree as ET
 from tests import get_resources_path, get_test_output_path
 from pygenie.pubmed import PubMedArticle, ArticleSetParser
 
-SAMPLE_ARTICLE1_NAME = 'sample_article1.xml'
-"""Name of sample article 1 file."""
-SAMPLE_ARTICLE1_PATH = os.path.join(get_resources_path(), SAMPLE_ARTICLE1_NAME)
 
-ARTICLE_XML: ET.Element = ET.parse(SAMPLE_ARTICLE1_PATH).getroot()
-TEST_ARTICLE = PubMedArticle(ARTICLE_XML)
+def create_article(article_name: str) -> PubMedArticle:
+    """Create the article object."""
+    article_path = os.path.join(get_resources_path(),
+                                article_name)
+    xml_element = ET.parse(article_path).getroot()
+    return PubMedArticle(xml_element)
+
+
+ExpectedArticle = collections.namedtuple(
+    'ExpectedArticle', 'pmid date_completed pub_model title iso_abbrev article_title abstract authors language chemicals mesh_list')
+TestData = collections.namedtuple('TestData', 'article expected')
+TEST_DATA = [
+    TestData(article=create_article('sample_article1.xml'),
+             expected=ExpectedArticle(pmid='1',
+                                      date_completed='1976-01-16',
+                                      pub_model='Print',
+                                      title='Biochemical medicine',
+                                      iso_abbrev='Biochem Med',
+                                      article_title='Formate assay in body fluids: application in methanol poisoning.',
+                                      abstract='',
+                                      authors=['Makar, A B',
+                                                    'McMartin, K E',
+                                                    'Palese, M',
+                                                    'Tephly, T R'],
+                                      language='eng',
+                                      chemicals=[
+                                          'Formates', 'Carbon Dioxide', 'Methanol', 'Aldehyde Oxidoreductases'],
+                                      mesh_list=['Aldehyde Oxidoreductases',
+                                                 'Animals',
+                                                 'Body Fluids',
+                                                 'Carbon Dioxide',
+                                                 'Formates',
+                                                 'Haplorhini',
+                                                 'Humans',
+                                                 'Hydrogen-Ion Concentration',
+                                                 'Kinetics',
+                                                 'Methanol',
+                                                 'Methods',
+                                                 'Pseudomonas'])),
+    TestData(article=create_article('sample_empty_article.xml'),
+             expected=ExpectedArticle(pmid='',
+                                      date_completed='',
+                                      pub_model='',
+                                      title='',
+                                      iso_abbrev='',
+                                      article_title='',
+                                      abstract='',
+                                      authors=[],
+                                      language='',
+                                      chemicals=[],
+                                      mesh_list=[]))
+]
+
 
 
 class TestPubMedArticle():
     """Test class for functionlities related to PubMedArticle class."""
 
-    def test_article_constructor(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_article_constructor(self, data):
         """Construct pubmed article object from xml."""
-        assert TEST_ARTICLE is not None
+        assert data.article is not None
 
-    def test_pmid(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_pmid(self, data):
         """Verify article id."""
-        expected_pmid = '1'
-        pmid = TEST_ARTICLE.pmid
+        expected_pmid = data.expected.pmid
+        pmid = data.article.pmid
         assert pmid == expected_pmid
 
-    def test_date_completed(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_date_completed(self, data):
         """Verify article date completed."""
-        expected_date = '1976-01-16'
-        date_completed = TEST_ARTICLE.date_completed
+        expected_date = data.expected.date_completed
+        date_completed = data.article.date_completed
         assert date_completed == expected_date
 
-    def test_article_pubmodel(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_article_pubmodel(self, data):
         """Verify PubModel - medium which cited article was published."""
-        expected_pub_model = 'Print'
-        assert TEST_ARTICLE.pub_model == expected_pub_model
+        expected_pub_model = data.expected.pub_model
+        pub_model = data.article.pub_model
+        assert pub_model == expected_pub_model
 
-    def test_title(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_title(self, data):
         """Verify title of journal."""
-        expected_title = 'Biochemical medicine'
-        title = TEST_ARTICLE.title
+        expected_title = data.expected.title
+        title = data.article.title
         assert title == expected_title
 
-    def test_iso_abbrev(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_iso_abbrev(self, data):
         """The title ISO abbreviation."""
-        expected_iso_abbrev = 'Biochem Med'
-        iso_abbrev = TEST_ARTICLE.iso_abbreviation
+        expected_iso_abbrev = data.expected.iso_abbrev
+        iso_abbrev = data.article.iso_abbreviation
         assert iso_abbrev == expected_iso_abbrev
 
-    def test_article_title(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_article_title(self, data):
         """Entire title of journal article in English."""
-        expected_article_title = 'Formate assay in body fluids: application in methanol poisoning.'
-        article_title = TEST_ARTICLE.article_title
+        expected_article_title = data.expected.article_title
+        article_title = data.article.article_title
         assert article_title == expected_article_title
 
-    def test_abstract(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_abstract(self, data):
         """Verify abstract of published article."""
-        expected_abstract = ''
-        abstract = TEST_ARTICLE.abstract
+        expected_abstract = data.expected.abstract
+        abstract = data.article.abstract
         assert abstract == expected_abstract
 
-    def test_authors(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_authors(self, data):
         """Verify names of authors."""
-        expected_set = set(['Makar, A B',
-                            'McMartin, K E',
-                            'Palese, M',
-                            'Tephly, T R'])
-        authors_set = set(TEST_ARTICLE.authors)
+        expected_set = set(data.expected.authors)
+        authors_set = set(data.article.authors)
         assert authors_set == expected_set
 
-    def test_language(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_language(self, data):
         """Verify article language."""
         expected_language = 'eng'
-        language = TEST_ARTICLE.language
+        language = data.article.language
         assert language == expected_language
 
-    def test_chemical_list(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_chemical_list(self, data):
         """Verify list of chemicals."""
-        expected_set = set(['Formates', 'Carbon Dioxide',
-                            'Methanol', 'Aldehyde Oxidoreductases'])
-        chemicals_set = set(TEST_ARTICLE.chemicals)
+        expected_set = set(data.expected.chemicals)
+        chemicals_set = set(data.article.chemicals)
         assert chemicals_set == expected_set
 
-    def test_mesh_list(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_mesh_list(self, data):
         """Verify mesh descriptors list."""
-        expected_set = set(['Aldehyde Oxidoreductases',
-                            'Animals',
-                            'Body Fluids',
-                            'Carbon Dioxide',
-                            'Formates',
-                            'Haplorhini',
-                            'Humans',
-                            'Hydrogen-Ion Concentration',
-                            'Kinetics',
-                            'Methanol',
-                            'Methods',
-                            'Pseudomonas'])
-        mesh_set = set(TEST_ARTICLE.mesh_list)
+        expected_set = set(data.expected.mesh_list)
+        mesh_set = set(data.article.mesh_list)
         assert mesh_set == expected_set
 
-    def test_dict(self):
+    @pytest.mark.parametrize('data', TEST_DATA)
+    def test_dict(self, data):
         """Test object dictionary."""
-        article_dict = TEST_ARTICLE.to_dict
-        assert article_dict['date_completed'] == '1976-01-16'
+        assert data.article.to_dict is not None
 
 
 class TestArticlesSetParser():
