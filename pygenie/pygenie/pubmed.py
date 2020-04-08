@@ -110,7 +110,6 @@ class PubMedArticle():
         author_list = self._pubmed_article.findall(
             self.ARTICLE_TAG + '/AuthorList/Author')
         for author in author_list:
-
             lastname_el = author.find('LastName')
             author_lastname = '' if lastname_el is None else lastname_el.text
 
@@ -178,7 +177,7 @@ class ArticleSetParser():
     @staticmethod
     def extract_articles(xml_file_path: str) -> [PubMedArticle]:
         """
-        Extract articles
+        Extract articles from xml file.
 
         Arguments:
             xml_file_path {str} -- absolute path to xml file
@@ -213,7 +212,6 @@ class ArticleSetParser():
     def articles_to_jsonl(articles: [PubMedArticle], target_file_path: str):
         """Serialize pubmedarticle objects to jsonl file."""
         dict_list = ArticleSetParser.articles_to_dict(articles)
-        articles_json = json.dumps(dict_list)
         with jsonlines.open(target_file_path, 'w') as writer:
             writer.write_all(dict_list)
 
