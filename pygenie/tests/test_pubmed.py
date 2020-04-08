@@ -1,8 +1,8 @@
 """Test pub med article model class."""
 import os
-import pytest
 import collections
 import xml.etree.ElementTree as ET
+import pytest
 from tests import get_resources_path, get_test_output_path
 from pygenie.pubmed import PubMedArticle, ArticleSetParser
 
@@ -16,39 +16,14 @@ def create_article(article_name: str) -> PubMedArticle:
 
 
 ExpectedArticle = collections.namedtuple(
-    'ExpectedArticle', 'pmid date_completed pub_model title iso_abbrev article_title abstract authors language chemicals mesh_list')
+    'ExpectedArticle', 'pmid date_completed pub_model title iso_abbrev \
+                        article_title abstract authors language chemicals \
+                        mesh_list')
 TestData = collections.namedtuple('TestData', 'article expected')
 TEST_DATA = [
-    TestData(article=create_article('sample_article1.xml'),
-             expected=ExpectedArticle(pmid='1',
-                                      date_completed='1976-01-16',
-                                      pub_model='Print',
-                                      title='Biochemical medicine',
-                                      iso_abbrev='Biochem Med',
-                                      article_title='Formate assay in body fluids: application in methanol poisoning.',
-                                      abstract='',
-                                      authors=['Makar, A B',
-                                                    'McMartin, K E',
-                                                    'Palese, M',
-                                                    'Tephly, T R'],
-                                      language='eng',
-                                      chemicals=[
-                                          'Formates', 'Carbon Dioxide', 'Methanol', 'Aldehyde Oxidoreductases'],
-                                      mesh_list=['Aldehyde Oxidoreductases',
-                                                 'Animals',
-                                                 'Body Fluids',
-                                                 'Carbon Dioxide',
-                                                 'Formates',
-                                                 'Haplorhini',
-                                                 'Humans',
-                                                 'Hydrogen-Ion Concentration',
-                                                 'Kinetics',
-                                                 'Methanol',
-                                                 'Methods',
-                                                 'Pseudomonas'])),
     TestData(article=create_article('sample_empty_article.xml'),
              expected=ExpectedArticle(pmid='',
-                                      date_completed='',
+                                      date_completed='--',
                                       pub_model='',
                                       title='',
                                       iso_abbrev='',
@@ -57,9 +32,38 @@ TEST_DATA = [
                                       authors=[],
                                       language='',
                                       chemicals=[],
-                                      mesh_list=[]))
-]
-
+                                      mesh_list=[])),
+    TestData(article=create_article('sample_article1.xml'),
+             expected=ExpectedArticle(
+                 pmid='1',
+                 date_completed='1976-01-16',
+                 pub_model='Print',
+                 title='Biochemical medicine',
+                 iso_abbrev='Biochem Med',
+                 article_title='Formate assay in body fluids: \
+application in methanol poisoning.',
+                 abstract='',
+                 authors=['Makar, A B',
+                          'McMartin, K E',
+                          'Palese, M',
+                          'Tephly, T R'],
+                 language='eng',
+                 chemicals=[
+                     'Formates', 'Carbon Dioxide', 'Methanol',
+                     'Aldehyde Oxidoreductases'],
+                 mesh_list=['Aldehyde Oxidoreductases',
+                            'Animals',
+                            'Body Fluids',
+                            'Carbon Dioxide',
+                            'Formates',
+                            'Haplorhini',
+                            'Humans',
+                            'Hydrogen-Ion Concentration',
+                            'Kinetics',
+                            'Methanol',
+                            'Methods',
+                            'Pseudomonas'])),
+    ]
 
 
 class TestPubMedArticle():
@@ -129,7 +133,7 @@ class TestPubMedArticle():
     @pytest.mark.parametrize('data', TEST_DATA)
     def test_language(self, data):
         """Verify article language."""
-        expected_language = 'eng'
+        expected_language = data.expected.language
         language = data.article.language
         assert language == expected_language
 
