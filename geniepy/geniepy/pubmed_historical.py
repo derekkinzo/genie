@@ -16,7 +16,7 @@ import shutil
 from datetime import datetime
 from itertools import repeat
 from concurrent.futures import ProcessPoolExecutor
-from pubmed import PubMedArticle, ArticleSetParser
+from geniepy.pubmed import PubMedArticle, ArticleSetParser
 
 
 def is_xml_article_set(filename: str) -> bool:

@@ -1,4 +1,7 @@
-#Test output files
+# Auto generated files
+*DS_Store
+
+# Test output files
 tests_output
 
 # Byte-compiled / optimized / DLL files
