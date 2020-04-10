@@ -142,14 +142,14 @@ if __name__ == "__main__":
     try:
         MAX_WORKERS = int(sys.argv[3])
         if MAX_WORKERS < 1 or MAX_WORKERS > 16:
-            logging.error(
+            logging.warning(
                 "Invalid number of workers requested - Setting number of \
                 workers to 1"
             )
             MAX_WORKERS = 1
-    except TypeError:
+
+        concurrent_execution(DATA_IN_DIR, DATA_OUT_DIR, MAX_WORKERS)
+    except ValueError:
         logging.error(
             "Max number of processes should be a valid integer. %s", ERROR_MSG
         )
-
-    concurrent_execution(DATA_IN_DIR, DATA_OUT_DIR, MAX_WORKERS)
