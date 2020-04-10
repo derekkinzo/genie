@@ -4,11 +4,11 @@ from setuptools import setup, find_packages
 with open('LICENSE') as licenseFile:
     LICENSE = licenseFile.read()
 
-with open('AUTHORS') as authorFile:
+with open('AUTHORS') as authorFile/
     AUTHORS = authorFile.read()
 
 setup(
-    name='pygenie',
+    name='geniepy',
     version='0.01',
     description='Gene-disease trend detection',
     author=AUTHORS,
