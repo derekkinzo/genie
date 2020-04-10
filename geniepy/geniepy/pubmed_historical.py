@@ -120,6 +120,9 @@ def concurrent_execution(data_in_dir, data_out_dir, max_workers):
 
 
 if __name__ == "__main__":
+
+    logging.getLogger().setLevel(logging.INFO)
+
     ERROR_MSG = "Command line arguments expected: <path to data dir>, \
         <path to output dir>, <number of parallel processes (2-16)>"
 
@@ -148,6 +151,7 @@ if __name__ == "__main__":
             )
             MAX_WORKERS = 1
 
+        logging.info("Initializing parallel processing . . .")
         concurrent_execution(DATA_IN_DIR, DATA_OUT_DIR, MAX_WORKERS)
     except ValueError:
         logging.error(
