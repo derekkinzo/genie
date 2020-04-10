@@ -96,8 +96,18 @@ def parse_pubmed_article_set(in_path: str, out_path: str):
     return
 
 
-def concurrent_execution(data_in_dir, data_out_dir, max_workers):
-    """Concurrent execution manager. Spawns workers to parse files."""
+def spawn_processes(data_in_dir: str, data_out_dir: str, max_workers: int):
+    """
+    Spawns processes to processes article sets in parallel.
+
+    Creates process pool executor to parse article sets and generate output files.:w
+
+
+    Arguments:
+        data_in_dir {str} -- absolute path to input directory containing all articles
+        data_out_dir {str} -- absolute path to output directory
+        max_workers {int} -- max number of parallel processes to be created
+    """
     start_time = datetime.now()
     xml_files: [str] = []
     for filename in os.listdir(data_in_dir):
@@ -152,7 +162,7 @@ if __name__ == "__main__":
             MAX_WORKERS = 1
 
         logging.info("Initializing parallel processing . . .")
-        concurrent_execution(DATA_IN_DIR, DATA_OUT_DIR, MAX_WORKERS)
+        spawn_processes(DATA_IN_DIR, DATA_OUT_DIR, MAX_WORKERS)
     except ValueError:
         logging.error(
             "Max number of processes should be a valid integer. %s", ERROR_MSG
