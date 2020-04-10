@@ -4,7 +4,7 @@ import collections
 import xml.etree.ElementTree as ET
 import pytest
 from tests import get_resources_path, get_test_output_path
-from pygenie.pubmed import PubMedArticle, ArticleSetParser
+from geniepy.pubmed import PubMedArticle, ArticleSetParser
 
 
 def create_article(article_name: str) -> PubMedArticle:
