@@ -1,15 +1,12 @@
 """Package setup module for setuptools package generation."""
 from setuptools import setup, find_packages
 
+__version__ = "0.0.5"
 setup(
     name="geniepy",
-    version="0.0.3",
+    version=__version__,
     description="Gene-disease trend detection",
-    long_description=open("README.md", "r").read(),
-    author=open("AUTHORS", "r").read(),
-    url="https://github.com/derekkinzo/genie",
-    license=open("LICENSE", "r").read(),
-    packages=find_packages(exclude=["tests*", "docs"]),
+    packages=find_packages(),
     include_package_data=True,
     install_requires=["jsonlines"],
     python_requires=">=3.7",
