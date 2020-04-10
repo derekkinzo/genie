@@ -8,6 +8,7 @@ The script expects path to folder containing pubmed baseline .xml.gz files,
 the path to output directory where generated files should be stored, and
 number of concurrent processes to be used [1, 16].
 """
+import logging
 import sys
 import os
 import gzip
@@ -62,20 +63,20 @@ def parse_pubmed_article_set(in_path: str, out_path: str):
         return
     xml_file = in_path.replace(".gz", "")
     if not os.path.exists(xml_file):
-        print(f"Extracting {in_path} to {xml_file}")
+        logging.info("Extracting %s to %s", in_path, xml_file)
         decompress_article_set(in_path, xml_file)
 
-    print(f"Parsing {xml_file}")
+    logging.info("Parsing %s", xml_file)
     article_list: PubMedArticle = ArticleSetParser.extract_articles(xml_file)
 
     # Done with xml - delete to free up space
     os.remove(xml_file)
 
     output_file = os.path.join(out_path, filename.replace(".xml.gz", ".jsonl"))
-    print(f"Generating {output_file}")
+    logging.info("Generating %s", output_file)
     ArticleSetParser.articles_to_jsonl(article_list, output_file)
 
-    print(f"Compressing file: {output_file}")
+    logging.info("Compressing file: %s", output_file)
     with open(output_file, "rb") as jsonl_data:
         data_jsonl = jsonl_data.read()
     compressed_data = gzip.compress(data_jsonl)
@@ -86,9 +87,11 @@ def parse_pubmed_article_set(in_path: str, out_path: str):
     # Done with parsed file - delete to free up space
     os.remove(output_file)
 
-    print(
-        f"PID: {os.getpid()}. File Processed: {output_file}. \
-        Articles Processed {len(article_list)}"
+    logging.info(
+        "PID: %s. File Processed: %s. Articles Processed %s",
+        os.getpid(),
+        output_file,
+        len(article_list),
     )
     return
 
@@ -101,16 +104,18 @@ def concurrent_execution(data_in_dir, data_out_dir, max_workers):
         if is_xml_article_set(filename):
             xml_files.append(os.path.join(data_in_dir, filename))
 
-    print(f"Found {len(xml_files)} PubMed article sets")
+    logging.info("Found %s PubMed article sets", len(xml_files))
 
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         executor.map(parse_pubmed_article_set, xml_files, repeat(data_out_dir))
 
     end_time = datetime.now()
     total_time = end_time - start_time
-    print(
-        f"Concurrent Process {max_workers} \
-        Execution: {len(xml_files)} files, in {total_time}"
+    logging.info(
+        "Concurrent Process %s Execution: %s files, in %s",
+        max_workers,
+        len(xml_files),
+        total_time,
     )
 
 
@@ -119,32 +124,32 @@ if __name__ == "__main__":
         <path to output dir>, <number of parallel processes (2-16)>"
 
     if not sys.argv or len(sys.argv) < 4:
-        raise Exception(ERROR_MSG)
+        raise ValueError(ERROR_MSG)
 
     # check command line argument for input directory
     if os.path.isdir(sys.argv[1]):
         DATA_IN_DIR = sys.argv[1]
     else:
-        raise Exception("Input data directory is not valid. " + ERROR_MSG)
+        raise ValueError("Input data directory is not valid. " + ERROR_MSG)
 
     # check command line argument for output directory
     if os.path.isdir(sys.argv[2]):
         DATA_OUT_DIR = sys.argv[2]
     else:
-        raise Exception("Output data directory is not valid. " + ERROR_MSG)
+        raise ValueError("Output data directory is not valid. " + ERROR_MSG)
 
     # check argument for number of parallel processes
     try:
         MAX_WORKERS = int(sys.argv[3])
         if MAX_WORKERS < 1 or MAX_WORKERS > 16:
-            print(
+            logging.error(
                 "Invalid number of workers requested - Setting number of \
                 workers to 1"
             )
             MAX_WORKERS = 1
     except TypeError:
-        raise Exception(
-            "Max number of processes should be a valid integer. " + ERROR_MSG
+        logging.error(
+            "Max number of processes should be a valid integer. %s", ERROR_MSG
         )
 
     concurrent_execution(DATA_IN_DIR, DATA_OUT_DIR, MAX_WORKERS)
