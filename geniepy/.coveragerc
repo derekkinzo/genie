@@ -6,7 +6,7 @@ source = geniepy
 
 [paths]
 source =
-    src/
+    ./geniepy
     */site-packages/
 
 [report]
