@@ -11,11 +11,11 @@ certifi==2020.4.5.1
 chardet==3.0.4
 click==7.1.1
 colorama==0.4.3
+coverage==5.0.4
 doc8==0.8.0
 docutils==0.16
 entrypoints==0.3
 flake8==3.7.9
--e git+git@github.com:derekkinzo/genie.git@af323f20cfb4f57389442fdbdadcdd4f50efb40b#egg=geniepy&subdirectory=geniepy
 idna==2.9
 imagesize==1.2.0
 importlib-metadata==1.6.0
@@ -45,6 +45,7 @@ pylint==2.4.4
 pyparsing==2.4.7
 PyScaffold==3.2.3
 pytest==5.4.1
+pytest-cov==2.8.1
 pytz==2019.3
 pywin32-ctypes==0.2.0
 PyYAML==5.3.1
