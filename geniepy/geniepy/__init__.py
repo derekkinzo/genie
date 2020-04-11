@@ -1,6 +1,7 @@
 """GeniePy Package entry point."""
 from pkg_resources import get_distribution, DistributionNotFound
 from geniepy.pubmed_historical import spawn_processes, parse_pubmed_article_set
+from .genie import run_job
 
 try:
     # Change here if project is renamed and does not equal the package name
