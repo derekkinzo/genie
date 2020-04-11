@@ -37,9 +37,13 @@ Installation
 
 ::
 
+    git tag -a {version} 
+
     python setup.py sdist bdist_wheel
 
-    twine upload dist/*
+    twine upload --repository testpypi dist/{package name}
+
+    twine upload dist/{package name}
 
 **Python Package Development**
 
