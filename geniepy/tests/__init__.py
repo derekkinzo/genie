@@ -26,8 +26,8 @@ def get_test_output_path() -> str:
     """
     Get output path to test output directory.
 
-    The test output directory is a temporary, automatically generated, directory
-    to store test output and files.
+    The test output directory is a temporary, automatically generated,
+    directory to store test output and files.
 
     Returns:
         str -- absolute path to test output directory
