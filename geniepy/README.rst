@@ -40,3 +40,13 @@ Installation
     python setup.py sdist bdist_wheel
 
     twine upload dist/*
+
+**Python Package Development**
+
+::
+
+    python setup.py develop
+
+    python setup.py test
+
+    python setup.py docs
