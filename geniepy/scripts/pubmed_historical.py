@@ -12,10 +12,10 @@ import logging
 import sys
 import os
 import gzip
-import shutil
 from datetime import datetime
 from itertools import repeat
 from concurrent.futures import ProcessPoolExecutor
+from genieutils import decompress_gz
 from geniepy.pubmed import PubMedArticle, ArticleSetParser
 
 
@@ -32,19 +32,6 @@ def is_xml_article_set(filename: str) -> bool:
     if filename.endswith(".xml.gz"):
         return True
     return False
-
-
-def decompress_article_set(file_path: str, output_file: str):
-    """
-    Unzip articles sets and create xml file.
-
-    Arguments:
-        file_path {str} -- absolute path to article set gz file
-        output_file {str} -- absolute path to created decompressed file
-    """
-    with gzip.open(file_path, "rb") as f_in:
-        with open(output_file, "wb") as f_out:
-            shutil.copyfileobj(f_in, f_out)
 
 
 def parse_pubmed_article_set(in_path: str, out_path: str):
@@ -64,7 +51,7 @@ def parse_pubmed_article_set(in_path: str, out_path: str):
     xml_file = in_path.replace(".gz", "")
     if not os.path.exists(xml_file):
         logging.info("Extracting %s to %s", in_path, xml_file)
-        decompress_article_set(in_path, xml_file)
+        decompress_gz(in_path, xml_file)
 
     logging.info("Parsing %s", xml_file)
     article_list: PubMedArticle = ArticleSetParser.extract_articles(xml_file)
