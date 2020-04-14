@@ -1,6 +1,5 @@
 """GeniePy Package entry point."""
 from pkg_resources import get_distribution, DistributionNotFound
-from geniepy.pubmed_historical import spawn_processes, parse_pubmed_article_set
 from .genie import run_job
 
 try:
@@ -17,4 +16,4 @@ __copyright__ = "The Harvard LAMP Team"
 __license__ = "MIT"
 
 
-__all__ = ["parse_pubmed_article_set", "spawn_processes"]
+__all__ = ["run_job"]

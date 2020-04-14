@@ -15,6 +15,7 @@ import gzip
 from datetime import datetime
 from itertools import repeat
 from concurrent.futures import ProcessPoolExecutor
+import geniebootsrap
 from genieutils import decompress_gz
 from geniepy.pubmed import PubMedArticle, ArticleSetParser
 
