@@ -1,10 +1,9 @@
 """Clinical Trials Predictive Classifier."""
-from collections import namedtuple
+from typing import NamedTuple
+from geniepy.classifiers.clsfr_base import BaseClsfr
 
-TrialsData = namedtuple("PCPDataSet", "ACTEntry PubMed")
 
-
-class ClinicalTrialsClsfr:
+class ClinicalTrialsClsfr(BaseClsfr):
     """
     Clinical Trials Predictive Classifier.
 
@@ -12,18 +11,25 @@ class ClinicalTrialsClsfr:
     of clinical trials.
     """
 
+    class Attributes(NamedTuple):
+        """Attributes of mock classifier."""
+
+        featureA: int = 1
+        """Example of a integer attribute."""
+        featureB: str = "default"
+        """Example of a string attribute."""
+        label: int = 0
+        """Example of a integer label."""
+
     def __init__(self):
         """
         Initialize classifier.
 
         Restore classifier model from memory if it exists. Otherwise, train classifier.
         """
-        return
 
-    def fit(self, data_set: [TrialsData]):
+    def fit(self, features: [Attributes]):
         """Train classifier given dataset."""
-        return
 
-    def predict(self, data_set: TrialsData) -> int:
+    def predict(self, features: Attributes) -> int:
         """Calculate publication count label."""
-        return
