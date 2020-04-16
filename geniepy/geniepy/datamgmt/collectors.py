@@ -2,23 +2,23 @@
 from abc import ABC, abstractmethod
 from pandas import DataFrame
 from geniepy.errors import SchemaError
-from geniepy.datamgmt.daorepositories import BaseDaoRepo
+from geniepy.datamgmt.daorepositories import BaseDaoRepo, SqliteDaoRepo
 from geniepy.datamgmt.parsers import BaseParser, CtdParser
 
 
 class BaseCollector(ABC):
     """Collectors Abstract Base Class."""
 
-    dao: BaseDaoRepo
+    dao_repo: BaseDaoRepo
     parser: BaseParser
 
     @abstractmethod
     def sync(self):
         """Sync collector database with online sources."""
 
-    @abstractmethod
-    def query(self, **kwargs) -> DataFrame:
-        """Query collector database."""
+    def query(self, searchkey=None, limit=10e3) -> DataFrame:
+        """Query DAO for given record."""
+        return self.dao_repo.query(searchkey, limit)
 
     def save(self, payload: DataFrame):
         """
@@ -40,11 +40,8 @@ class CtdCollector(BaseCollector):
     def __init__(self):
         """Initialize collector state."""
         self.parser = CtdParser()
+        self.dao_repo = SqliteDaoRepo()
 
     def sync(self):
         """Sync collector database with online sources."""
         raise NotImplementedError
-
-    def query(self, **kwargs) -> DataFrame:
-        """Query collector database."""
-        return NotImplementedError

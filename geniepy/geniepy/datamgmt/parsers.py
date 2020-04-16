@@ -1,4 +1,5 @@
 """Data sources parsers."""
+import numpy as np
 from pandas import DataFrame
 from pandas_schema import Column, Schema
 from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
@@ -62,15 +63,18 @@ class CtdParser(BaseParser):
 
     schema: Schema = Schema(
         [
+            Column("Digest", [IsDtypeValidation(np.dtype(int).type)]),
             Column("GeneSymbol"),
-            Column("GeneID", [IsDtypeValidation(int)]),
+            Column("GeneID", [IsDtypeValidation(np.dtype(int).type)]),
             Column("DiseaseName"),
             Column("DiseaseID", [MatchesPatternValidation("^D(\d)+$")]),  # i.e. D000014
             # noqa: W605 pylint: disable=all
-            Column("PubMedIDs", [IsDtypeValidation(int)]),
+            Column("PubMedIDs"),
         ]
     )
 
     @staticmethod
     def parse(data, type=BaseParser.DataType.DEFAULT) -> DataFrame:
         return None
+
+    # I overriding is_valid and computing digest to save computation power
