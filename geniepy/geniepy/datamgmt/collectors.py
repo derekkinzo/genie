@@ -27,3 +27,27 @@ class BaseCollector(ABC):
             SchemaError: dataframe does not conform to table schema.
         """
         raise SchemaError
+
+
+class CtdCollector(BaseCollector):
+    """Collectors Abstract Base Class."""
+
+    def sync(self):
+        """Sync collector database with online sources."""
+        raise NotImplementedError
+
+    def query(self, **kwargs) -> DataFrame:
+        """Query collector database."""
+        return NotImplementedError
+
+    def save(self, payload: DataFrame):
+        """
+        Save payload to database given data is valid.
+
+        Arguments:
+            payload {DataFrame} -- payload to be saved to table
+
+        Raises:
+            SchemaError: dataframe does not conform to table schema.
+        """
+        raise NotImplementedError

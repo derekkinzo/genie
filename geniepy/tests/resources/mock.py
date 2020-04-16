@@ -1,6 +1,12 @@
 """Mock framework for tests."""
+import os
 from typing import NamedTuple
+import pandas as pd
+from tests import get_resources_path
 from geniepy.classifiers.clsfr_base import BaseClsfr
+from geniepy.datamgmt.collectors import CtdCollector
+
+SAMPLE_CTD_DB_NAME = "sample_ctd_db.csv"
 
 
 class MockClsfr(BaseClsfr):
