@@ -30,6 +30,7 @@ mccabe==0.6.1
 more-itertools==8.2.0
 numpy==1.18.2
 packaging==20.3
+pandas==1.0.3
 pathspec==0.8.0
 pathtools==0.1.2
 pbr==5.4.5
@@ -46,6 +47,7 @@ pyparsing==2.4.7
 PyScaffold==3.2.3
 pytest==5.4.1
 pytest-cov==2.8.1
+python-dateutil==2.8.1
 pytz==2019.3
 pywin32-ctypes==0.2.0
 PyYAML==5.3.1
