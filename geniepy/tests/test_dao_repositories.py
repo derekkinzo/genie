@@ -5,7 +5,7 @@ from geniepy.datamgmt.daorepositories import BaseDaoRepository
 from geniepy.exceptions import SchemaError
 
 
-class TestSqliteCollector:
+class TestDaoRepo:
     """PyTest collector test class."""
 
     dao_repo: BaseDaoRepository = None

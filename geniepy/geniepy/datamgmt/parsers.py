@@ -1,12 +1,13 @@
 """Data sources parsers."""
 from pandas import DataFrame
 from abc import ABC, abstractstaticmethod
+from geniepy.exceptions import SchemaError
 
 
 class BaseParser(ABC):
     """Abstract base parser class."""
 
-    @abstractstaticmethod
+    @staticmethod
     def is_valid(payload: DataFrame) -> bool:
         """
         Check if payload is valid schema.
@@ -19,7 +20,7 @@ class BaseParser(ABC):
         """
         if payload is None:
             return False
-        raise NotImplementedError
+        raise SchemaError
 
 
 class CtdParser(BaseParser):
@@ -29,8 +30,3 @@ class CtdParser(BaseParser):
     Comparative Toxicogenomics Gene-Disease Associations Database Parser.
     http://ctdbase.org/
     """
-
-    @staticmethod
-    def is_valid(payload: DataFrame) -> bool:
-        """Check if payload is valid ctd schema."""
-        return super().is_valid(payload)

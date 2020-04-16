@@ -1,14 +1,14 @@
 """Module to test online sources parsers."""
 import pandas as pd
 import pytest
-from geniepy.datamgmt.parsers import BaseParser
+from geniepy.datamgmt.parsers import BaseParser, CtdParser
 from geniepy.exceptions import SchemaError
 
 
-class TestSqliteCollector:
-    """PyTest collector test class."""
+class TestCtdParser:
+    """Pytest CTD Parser class."""
 
-    parser: BaseParser = None
+    parser: BaseParser = CtdParser()
     # invalidDF: pd.DataFrame = pd.DataFrame({"invalid": [1, 2]})
 
     def test_constructor(self):
