@@ -2,10 +2,15 @@
 from abc import ABC, abstractmethod
 from pandas import DataFrame
 from geniepy.exceptions import SchemaError
+from geniepy.datamgmt.daorepositories import BaseDaoRepository
+from geniepy.datamgmt.parsers import BaseParser
 
 
 class BaseCollector(ABC):
     """Collectors Abstract Base Class."""
+
+    dao: BaseDaoRepository
+    parser: BaseParser
 
     @abstractmethod
     def sync(self):
@@ -26,7 +31,8 @@ class BaseCollector(ABC):
         Raises:
             SchemaError: dataframe does not conform to table schema.
         """
-        raise SchemaError
+        if not self.parser.is_valid():
+            raise SchemaError
 
 
 class CtdCollector(BaseCollector):
