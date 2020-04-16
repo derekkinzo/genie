@@ -4,8 +4,16 @@ from pandas import DataFrame
 from geniepy.exceptions import SchemaError
 
 
-class BaseDaoRepository(ABC):
+class BaseDaoRepo(ABC):
     """Base Abstract Class for Data Access Object Repositories."""
+
+    @abstractmethod
+    def query(self, searchkey: str = "*", **kwargs) -> DataFrame:
+        raise SchemaError
+
+
+class SqliteDaoRepo(BaseDaoRepo):
+    """Implementation of Sqlite Data Access Object Repository."""
 
     @abstractmethod
     def query(self, searchkey: str = "*", **kwargs) -> DataFrame:

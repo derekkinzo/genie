@@ -2,14 +2,14 @@
 from abc import ABC, abstractmethod
 from pandas import DataFrame
 from geniepy.exceptions import SchemaError
-from geniepy.datamgmt.daorepositories import BaseDaoRepository
+from geniepy.datamgmt.daorepositories import BaseDaoRepo
 from geniepy.datamgmt.parsers import BaseParser, CtdParser
 
 
 class BaseCollector(ABC):
     """Collectors Abstract Base Class."""
 
-    dao: BaseDaoRepository
+    dao: BaseDaoRepo
     parser: BaseParser
 
     @abstractmethod
@@ -35,7 +35,7 @@ class BaseCollector(ABC):
 
 
 class CtdCollector(BaseCollector):
-    """Collectors Abstract Base Class."""
+    """Implementation of CTD Collector."""
 
     def __init__(self):
         """Initialize collector state."""

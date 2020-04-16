@@ -25,7 +25,7 @@ class BaseParser(ABC):
 
 class CtdParser(BaseParser):
     """
-    CTD Database Parser.
+    Implementation of CTD Database Parser.
 
     Comparative Toxicogenomics Gene-Disease Associations Database Parser.
     http://ctdbase.org/
