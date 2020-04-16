@@ -1,7 +1,7 @@
 """Data Access Repositories to abstract interation with databases."""
 from abc import ABC, abstractmethod
 from pandas import DataFrame
-from geniepy.exceptions import SchemaError
+from geniepy.errors import SchemaError
 
 
 class BaseDaoRepo(ABC):

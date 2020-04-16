@@ -1,4 +1,4 @@
-"""Geniepy Exceptions Classes."""
+"""Geniepy Errors Module."""
 
 
 class GeniePyError(Exception):

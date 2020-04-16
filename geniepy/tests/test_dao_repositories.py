@@ -2,7 +2,7 @@
 import pandas as pd
 import pytest
 from geniepy.datamgmt.daorepositories import BaseDaoRepo, SqliteDaoRepo
-from geniepy.exceptions import SchemaError
+from geniepy.errors import SchemaError
 
 
 class TestDaoRepo:

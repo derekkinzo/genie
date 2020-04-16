@@ -1,7 +1,7 @@
 """Collectors manage a parser and database for a given source."""
 from abc import ABC, abstractmethod
 from pandas import DataFrame
-from geniepy.exceptions import SchemaError
+from geniepy.errors import SchemaError
 from geniepy.datamgmt.daorepositories import BaseDaoRepo
 from geniepy.datamgmt.parsers import BaseParser, CtdParser
 
