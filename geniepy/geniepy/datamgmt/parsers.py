@@ -63,12 +63,13 @@ class CtdParser(BaseParser):
 
     schema: Schema = Schema(
         [
-            Column("Digest", [IsDtypeValidation(np.dtype(int).type)]),
+            Column("Digest", [IsDtypeValidation(np.int64)]),
             Column("GeneSymbol"),
-            Column("GeneID", [IsDtypeValidation(np.dtype(int).type)]),
+            Column("GeneID", [IsDtypeValidation(np.int64)]),
             Column("DiseaseName"),
-            Column("DiseaseID", [MatchesPatternValidation("^D(\d)+$")]),  # i.e. D000014
-            # noqa: W605 pylint: disable=all
+            Column(
+                "DiseaseID", [MatchesPatternValidation("^D[0-9]+$")]
+            ),  # i.e. D000014
             Column("PubMedIDs"),
         ]
     )
