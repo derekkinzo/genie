@@ -1,14 +1,17 @@
 """Data sources parsers."""
 from pandas import DataFrame
-from abc import ABC, abstractstaticmethod
-from geniepy.exceptions import SchemaError
+from pandas_schema import Column, Schema
+from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
+from abc import ABC
 
 
 class BaseParser(ABC):
     """Abstract base parser class."""
 
-    @staticmethod
-    def is_valid(payload: DataFrame) -> bool:
+    schema: Schema = None
+
+    @classmethod
+    def is_valid(cls, payload: DataFrame) -> bool:
         """
         Check if payload is valid schema.
 
@@ -20,7 +23,10 @@ class BaseParser(ABC):
         """
         if payload is None:
             return False
-        raise SchemaError
+        errors: [str] = cls.schema.validate(payload)
+        if errors:
+            return False
+        return True
 
 
 class CtdParser(BaseParser):
@@ -30,3 +36,14 @@ class CtdParser(BaseParser):
     Comparative Toxicogenomics Gene-Disease Associations Database Parser.
     http://ctdbase.org/
     """
+
+    schema: Schema = Schema(
+        [
+            Column("GeneSymbol"),
+            Column("GeneID", [IsDtypeValidation(int)]),
+            Column("DiseaseName"),
+            Column("DiseaseID", [MatchesPatternValidation("^D(\d)+$")]),  # i.e. D000014
+            # noqa: W605 pylint: disable=all
+            Column("PubMedIDs", [IsDtypeValidation(int)]),
+        ]
+    )
