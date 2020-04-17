@@ -20,7 +20,7 @@ class TestDaoRepo:
         with pytest.raises(DaoError):
             self.dao_repo.save(payload)
 
-    # @pytest.mark.parametrize("payload", td.CTD_VALID_DF)
-    # def test_save_valid_df(self, payload):
-    #     """Attempt to save dataframe with valid schema."""
-    #     self.dao_repo.save(payload)  # Don't expect to return anything
+    @pytest.mark.parametrize("payload", td.CTD_VALID_DF)
+    def test_save_valid_df(self, payload):
+        """Attempt to save dataframe with valid schema."""
+        self.dao_repo.save(payload)  # Don't expect to return anything

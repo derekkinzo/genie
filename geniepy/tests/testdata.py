@@ -97,10 +97,10 @@ CTD_VALID_DF = [
     pd.DataFrame(
         {
             "Digest": [
-                b"\xe1 \xbf\xec\xd6\x1e\xe1F\xbb:La\xf8\xdb\xb97T\xb1\xdb%\xf6*\xbaPXr\xefUh\xdd\x15["
+                b"\xb3\x83M\x92\x81(bG\xe3w\xc5p\x0e\x96\x89\xc3f\x04\x12\xdf$\xfa\nI!\xc6\xe3\xc2\x13\xd6\x16\xaa"
             ],
             "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
+            "GeneID": [10174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             "DiseaseID": ["D000014"],
             "PubMedIDs": [22659286],
