@@ -2,13 +2,16 @@
 import pytest
 import tests.testdata as td
 from geniepy.datamgmt.daorepositories import BaseDaoRepo, SqlDaoRepo
+import geniepy.datamgmt.daorepositories as dr
 from geniepy.errors import DaoError
 
 
 class TestDaoRepo:
     """PyTest collector test class."""
 
-    dao_repo: BaseDaoRepo = SqlDaoRepo("sqlite://", "ctd")
+    dao_repo: BaseDaoRepo = SqlDaoRepo(
+        "sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_SCHEMA
+    )
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""
