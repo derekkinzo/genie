@@ -9,7 +9,7 @@ CTD_INVALID_DAO = [
             "GeneID": [100174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
+            "PubMedIDs": ["22659286"],
         }
     ),
     pd.DataFrame(
@@ -20,7 +20,7 @@ CTD_INVALID_DAO = [
             "GeneID": [100174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
+            "PubMedIDs": ["22659286"],
         }
     ),
     pd.DataFrame(
@@ -30,7 +30,7 @@ CTD_INVALID_DAO = [
             # Missing required GeneID
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
+            "PubMedIDs": ["22659286"],
         }
     ),
     pd.DataFrame(
@@ -40,7 +40,7 @@ CTD_INVALID_DAO = [
             "GeneID": [100174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             # Missing required DiseaseID
-            "PubMedIDs": [22659286],
+            "PubMedIDs": ["22659286"],
         }
     ),
     pd.DataFrame(
@@ -66,7 +66,7 @@ CTD_INVALID_DF = [
             "GeneID": ["A100174880"],  # Should be Int
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
+            "PubMedIDs": ["22659286"],
         }
     ),
     pd.DataFrame(
@@ -76,7 +76,7 @@ CTD_INVALID_DF = [
             "GeneID": [100174880.0],  # Should be Int
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
+            "PubMedIDs": ["22659286"],
         }
     ),
     pd.DataFrame(
@@ -86,7 +86,7 @@ CTD_INVALID_DF = [
             "GeneID": [100174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             "DiseaseID": ["MESH:D000014"],  # Should not have "MESH:"
-            "PubMedIDs": [22659286],
+            "PubMedIDs": ["22659286"],
         }
     ),
 ] + CTD_INVALID_DAO
@@ -97,31 +97,31 @@ CTD_VALID_DF = [
     pd.DataFrame(
         {
             "Digest": [
-                b"\xb3\x83M\x92\x81(bG\xe3w\xc5p\x0e\x96\x89\xc3f\x04\x12\xdf$\xfa\nI!\xc6\xe3\xc2\x13\xd6\x16\xaa"
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
             ],
             "GeneSymbol": ["11-BETA-HSD3"],
             "GeneID": [10174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
             "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
+            "PubMedIDs": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
             "Digest": [
-                b"\xe9l\xc1\xeb$#\xda\xd1\xfdoO4\x15t\xfb\xb7\xff\xf0G\x9a39\xc9\xe2\xe4\xf8\x14\xf2\xd9p\xe3\xf0"
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
             ],
             "GeneSymbol": ["1-SF3"],
             "GeneID": [1000494280],
             "DiseaseName": ["Infant Death"],
             "DiseaseID": ["D0660884"],
-            "PubMedIDs": [283930756],  # PubMedId can be int or str
+            "PubMedIDs": ["283930756"],  # PubMedId can be int or str
         }
     ),
     pd.DataFrame(
         {
             "Digest": [
-                b"\xe1 \xbf\xec\xd6\x1e\xe1F\xbb:La\xf8\xdb\xb97T\xb1\xdb%\xf6*\xbaPXr\xefUh\xdd\x15["
+                "e120bfecd61ee146bb3a4c61f8dbb93754b1db25f62aba505872ef5568dd155b"
             ],
             "GeneSymbol": ["11-BETA-HSD3"],
             "GeneID": [100174880],
@@ -133,7 +133,7 @@ CTD_VALID_DF = [
     pd.DataFrame(
         {
             "Digest": [
-                b"\xf8G\xdc\xfe\xaa\xae\x8f\xef\xa9n\x1fn\x97\xddY\x98\xff\xe0se\xd1%K\xad\xae\x92}\x17i\xa2\xee\xbc"
+                "f847dcfeaaae8fefa96e1f6e97dd5998ffe07365d1254badae927d1769a2eebc"
             ],
             "GeneSymbol": ["A1BG3"],
             "GeneID": [1],

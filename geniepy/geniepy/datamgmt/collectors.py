@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 from pandas import DataFrame
 from geniepy.errors import SchemaError
-from geniepy.datamgmt.daorepositories import BaseDaoRepo, SqliteDaoRepo
+from geniepy.datamgmt.daorepositories import BaseDaoRepo, SqlDaoRepo
 from geniepy.datamgmt.parsers import BaseParser, CtdParser
 
 
@@ -40,7 +40,7 @@ class CtdCollector(BaseCollector):
     def __init__(self):
         """Initialize collector state."""
         self.parser = CtdParser()
-        # self.dao_repo = SqliteDaoRepo()
+        # self.dao_repo = SqlDaoRepo()
 
     def sync(self):
         """Sync collector database with online sources."""
