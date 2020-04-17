@@ -81,20 +81,20 @@ class TestCtdCollector:
         result_df = next(generator)
         assert result_df.Digest.count() == chunksize
 
-    def test_update_historical(self):
+    def test_download_historical(self):
         """
-        Test update method for historical info.
+        Test download method for historical data.
 
         The first time update is called (databases are still empty), it should download
-        all historical info from all online sources.
+        all historical info from online sources.
         """
         # Make sure collector's database is empty
         generator = self.read_table()
         with pytest.raises(StopIteration):
             # Generator should not return anything since database should be empty
             next(generator)
-        # Call update method to update scrape and populate databases
-        self.collector.update()
+        # Call download method to update database with data from online sources
+        self.collector.download()
         # Check new data available in database
         generator = self.read_table()
         # Generator should return values

@@ -18,8 +18,8 @@ class BaseCollector(ABC):
         # pylint: disable=no-member
         return self._dao_repo.tablename
 
-    def update(self):
-        """Update collector database with new online sources if available."""
+    def download(self):
+        """Download new data from online sources if available."""
 
     # pylint: disable=bad-continuation
     def query(
