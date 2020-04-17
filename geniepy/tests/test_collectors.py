@@ -1,5 +1,7 @@
 """Module to test collectors."""
 import pytest
+import pandas as pd
+from typing import Generator
 from geniepy.datamgmt.collectors import CtdCollector
 from geniepy.errors import SchemaError
 import tests.testdata as td
@@ -13,6 +15,18 @@ class TestCtdCollector:
     collector = CtdCollector(
         dr.SqlDaoRepo("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_SCHEMA)
     )
+
+    def read_table(self, chunksize=dr.CHUNKSIZE) -> Generator[pd.DataFrame, None, None]:
+        """Read entire database table (tests helper method)."""
+        query_str = f"SELECT * FROM {self.collector.tablename};"
+        generator = self.collector.query(query=query_str, chunksize=chunksize)
+        return generator
+
+    def read_record(self, digest):
+        """Read record(s) from database (tests helper method)."""
+        query_str = f"SELECT * FROM {self.collector.tablename} WHERE Digest='{digest}';"
+        generator = self.collector.query(query=query_str)
+        return generator
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""
@@ -39,8 +53,7 @@ class TestCtdCollector:
             pass
         # Attempt to retrieve record
         digest = payload.Digest[0]
-        query_str = f"SELECT * FROM {self.collector.tablename} WHERE Digest='{digest}';"
-        generator = self.collector.query(query=query_str)
+        generator = self.read_record(digest)
         chunk = next(generator)
         assert chunk.equals(payload)
 
@@ -48,8 +61,7 @@ class TestCtdCollector:
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
         digest = "INVALID DIGEST"
-        query_str = f"SELECT * FROM {self.collector.tablename} WHERE Digest='{digest}';"
-        generator = self.collector.query(query=query_str)
+        generator = self.read_record(digest)
         # Make sure generator doesn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -64,8 +76,27 @@ class TestCtdCollector:
             except DaoError:
                 pass
         # Get all records in database
-        query_str = f"SELECT * FROM {self.collector.tablename};"
-        generator = self.collector.query(query=query_str, chunksize=chunksize)
+        generator = self.read_table(chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.Digest.count() == chunksize
+
+    def test_update_historical(self):
+        """
+        Test update method for historical info.
+
+        The first time update is called (databases are still empty), it should download
+        all historical info from all online sources.
+        """
+        # Make sure collector's database is empty
+        generator = self.read_table()
+        with pytest.raises(StopIteration):
+            # Generator should not return anything since database should be empty
+            next(generator)
+        # Call update method to update scrape and populate databases
+        self.collector.update()
+        # Check new data available in database
+        generator = self.read_table()
+        # Generator should return values
+        result_df = next(generator)
+        assert result_df.Digest.count() > 0

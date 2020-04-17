@@ -18,9 +18,8 @@ class BaseCollector(ABC):
         # pylint: disable=no-member
         return self._dao_repo.tablename
 
-    @abstractmethod
-    def sync(self):
-        """Sync collector database with online sources."""
+    def update(self):
+        """Update collector database with new online sources if available."""
 
     # pylint: disable=bad-continuation
     def query(
@@ -64,7 +63,3 @@ class CtdCollector(BaseCollector):
         """Initialize collector state."""
         self._dao_repo = dao_repo
         self._parser = CtdParser()
-
-    def sync(self):
-        """Sync collector database with online sources."""
-        raise NotImplementedError
