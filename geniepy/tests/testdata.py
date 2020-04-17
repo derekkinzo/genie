@@ -1,6 +1,61 @@
 """Module with data used in tests."""
 import pandas as pd
 
+CTD_INVALID_DAO = [
+    pd.DataFrame(
+        {
+            # Missing Digest required field
+            "GeneSymbol": ["11-BETA-HSD3"],
+            "GeneID": [100174880],
+            "DiseaseName": ["Abnormalities, Drug-Induced"],
+            "DiseaseID": ["D000014"],
+            "PubMedIDs": [22659286],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "OtherField": [22659286],  # Non-existent schema column
+            "Digest": [22659286],
+            "GeneSymbol": ["11-BETA-HSD3"],
+            "GeneID": [100174880],
+            "DiseaseName": ["Abnormalities, Drug-Induced"],
+            "DiseaseID": ["D000014"],
+            "PubMedIDs": [22659286],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "Digest": [22659286],
+            "GeneSymbol": ["11-BETA-HSD3"],
+            # Missing required GeneID
+            "DiseaseName": ["Abnormalities, Drug-Induced"],
+            "DiseaseID": ["D000014"],
+            "PubMedIDs": [22659286],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "Digest": [22659286],
+            "GeneSymbol": ["11-BETA-HSD3"],
+            "GeneID": [100174880],
+            "DiseaseName": ["Abnormalities, Drug-Induced"],
+            # Missing required DiseaseID
+            "PubMedIDs": [22659286],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "Digest": [22659286],
+            "GeneSymbol": ["11-BETA-HSD3"],
+            "GeneID": [100174880],
+            "DiseaseName": ["Abnormalities, Drug-Induced"],
+            "DiseaseID": ["D000014"],
+            # Missing required PubMed
+        }
+    ),
+]
+"""Invalid DAO record."""
+
 CTD_INVALID_DF = [
     None,
     pd.DataFrame({"invalid": [1, 2]}),
@@ -34,41 +89,9 @@ CTD_INVALID_DF = [
             "PubMedIDs": [22659286],
         }
     ),
-]
+] + CTD_INVALID_DAO
 """Array of invalid DataFrames because violate parser rules."""
 
-CTD_INVALID_DAO = [
-    pd.DataFrame(
-        {
-            # Missing first field
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
-        }
-    ),
-    pd.DataFrame(
-        {
-            "OtherField": [22659286],  # Non-existent schema field
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
-        }
-    ),
-    pd.DataFrame(
-        {
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": [22659286],
-        }
-    ),
-]
 
 CTD_VALID_DF = [
     pd.DataFrame(

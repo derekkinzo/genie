@@ -38,10 +38,10 @@ class SqliteDaoRepo(BaseDaoRepo):
             self._metadata,
             Column("Digest", String, primary_key=True, nullable=False),
             Column("GeneSymbol", String),
-            Column("GeneID", Integer),
+            Column("GeneID", Integer, nullable=False),
             Column("DiseaseName", String),
-            Column("DiseaseID", String),
-            Column("PubMedIDs", String),
+            Column("DiseaseID", String, nullable=False),
+            Column("PubMedIDs", String, nullable=False),
         )
         user_table.create(self._engine)
 
