@@ -99,4 +99,4 @@ class TestCtdCollector:
         generator = self.read_table()
         # Generator should return values
         result_df = next(generator)
-        assert result_df.Digest.count() > 0
+        assert not result_df.empty

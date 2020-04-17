@@ -12,12 +12,7 @@ class BaseCollector(ABC):
 
     __slots__ = ["_dao_repo", "_parser"]
 
-    @property
-    def tablename(self):
-        """Return the dao repo tablename."""
-        # pylint: disable=no-member
-        return self._dao_repo.tablename
-
+    @abstractmethod
     def download(self):
         """Download new data from online sources if available."""
 
@@ -53,6 +48,12 @@ class BaseCollector(ABC):
             raise SchemaError
         self._dao_repo.save(payload)
 
+    @property
+    def tablename(self):
+        """Return the dao repo tablename."""
+        # pylint: disable=no-member
+        return self._dao_repo.tablename
+
 
 class CtdCollector(BaseCollector):
     """Implementation of CTD Collector."""
@@ -63,3 +64,10 @@ class CtdCollector(BaseCollector):
         """Initialize collector state."""
         self._dao_repo = dao_repo
         self._parser = CtdParser()
+
+    def download(self):
+        """Download new data from online sources if available."""
+        # TODO implement scraping inside parser in parser
+        # new_data: pd.DataFrame = self._parser.fetch_new_data()
+        # if not new_data.empty:
+        #     self._dao_repo.save(new_data)

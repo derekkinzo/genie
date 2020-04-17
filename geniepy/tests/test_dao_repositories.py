@@ -67,4 +67,4 @@ class TestDaoRepo:
         generator = self.dao_repo.query(query=query_str, chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
-        assert result_df.Digest.count()
+        assert result_df.Digest.count() == chunksize
