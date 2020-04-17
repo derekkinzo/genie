@@ -6,13 +6,13 @@ from geniepy.datamgmt.dao import CtdDao
 from geniepy.errors import SchemaError
 import tests.testdata as td
 from geniepy.errors import DaoError
-import geniepy.datamgmt.daorepositories as dr
+import geniepy.datamgmt.repository as dr
 
 
 class TestCtdDao:
     """PyTest data access object test class."""
 
-    dao = CtdDao(dr.SqlDaoRepo("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_SCHEMA))
+    dao = CtdDao(dr.SqlRepository("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_SCHEMA))
 
     def read_table(self, chunksize=dr.CHUNKSIZE) -> Generator[pd.DataFrame, None, None]:
         """Read entire database table (tests helper method)."""

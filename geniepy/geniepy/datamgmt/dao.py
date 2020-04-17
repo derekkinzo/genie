@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from pandas import DataFrame
 from geniepy.errors import SchemaError
 from geniepy.datamgmt.parsers import BaseParser, CtdParser
-import geniepy.datamgmt.daorepositories as dr
+import geniepy.datamgmt.repository as dr
 
 
 class BaseDao(ABC):
@@ -65,7 +65,7 @@ class CtdDao(BaseDao):
 
     __slots__ = ["_dao_repo", "_parser"]
 
-    def __init__(self, dao_repo: dr.BaseDaoRepo):
+    def __init__(self, dao_repo: dr.BaseRepository):
         """Initialize DAO state."""
         self._dao_repo = dao_repo
         self._parser = CtdParser()

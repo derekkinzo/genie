@@ -25,7 +25,7 @@ CTD_DAO_SCHEMA = Table(
 """CTD DAO Repository Schema."""
 
 
-class BaseDaoRepo(ABC):
+class BaseRepository(ABC):
     """Base Abstract Class for Data Access Object Repositories."""
 
     __slots__ = ["_tablename"]
@@ -64,7 +64,7 @@ class BaseDaoRepo(ABC):
         """
 
 
-class SqlDaoRepo(BaseDaoRepo):
+class SqlRepository(BaseRepository):
     """Implementation of Sqlite Data Access Object Repository."""
 
     __slots__ = ["_tablename", "_engine"]

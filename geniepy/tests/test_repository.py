@@ -1,15 +1,15 @@
 """Module to test data access object repositories."""
 import pytest
 import tests.testdata as td
-from geniepy.datamgmt.daorepositories import BaseDaoRepo, SqlDaoRepo
-import geniepy.datamgmt.daorepositories as dr
+from geniepy.datamgmt.repository import BaseRepository, SqlRepository
+import geniepy.datamgmt.repository as dr
 from geniepy.errors import DaoError
 
 
-class TestDaoRepo:
+class TestRepository:
     """PyTest dao test class."""
 
-    dao_repo: BaseDaoRepo = SqlDaoRepo(
+    dao_repo: BaseRepository = SqlRepository(
         "sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_SCHEMA
     )
 
