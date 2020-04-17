@@ -18,7 +18,7 @@ class BaseCollector(ABC):
 
     def query(self, searchkey=None, limit=10e3) -> DataFrame:
         """Query DAO for given record."""
-        return self.dao_repo.query(searchkey, limit)
+        # return self.dao_repo.query(searchkey, limit)
 
     def save(self, payload: DataFrame):
         """
@@ -40,7 +40,7 @@ class CtdCollector(BaseCollector):
     def __init__(self):
         """Initialize collector state."""
         self.parser = CtdParser()
-        self.dao_repo = SqliteDaoRepo()
+        # self.dao_repo = SqliteDaoRepo()
 
     def sync(self):
         """Sync collector database with online sources."""

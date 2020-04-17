@@ -7,3 +7,7 @@ class GeniePyError(Exception):
 
 class SchemaError(GeniePyError):
     """Invalid database schema."""
+
+
+class DaoError(GeniePyError):
+    """Data Access Object Error."""

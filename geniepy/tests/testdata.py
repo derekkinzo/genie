@@ -34,12 +34,36 @@ CTD_INVALID_DF = [
             "PubMedIDs": [22659286],
         }
     ),
+]
+"""Array of invalid DataFrames because violate parser rules."""
+
+CTD_INVALID_DAO = [
     pd.DataFrame(
         {
-            "Digest": ["22659286"],  # Should be int
+            # Missing first field
             "GeneSymbol": ["11-BETA-HSD3"],
             "GeneID": [100174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
+            "DiseaseID": ["D000014"],
+            "PubMedIDs": [22659286],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "OtherField": [22659286],  # Non-existent schema field
+            "Digest": [22659286],
+            "GeneSymbol": ["11-BETA-HSD3"],
+            "GeneID": [100174880],
+            "DiseaseName": ["Abnormalities, Drug-Induced"],
+            "DiseaseID": ["D000014"],
+            "PubMedIDs": [22659286],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "Digest": [22659286],
+            "GeneSymbol": ["11-BETA-HSD3"],
+            "GeneID": [100174880],
             "DiseaseID": ["D000014"],
             "PubMedIDs": [22659286],
         }
@@ -49,7 +73,9 @@ CTD_INVALID_DF = [
 CTD_VALID_DF = [
     pd.DataFrame(
         {
-            "Digest": [22659286],
+            "Digest": [
+                b"\xe1 \xbf\xec\xd6\x1e\xe1F\xbb:La\xf8\xdb\xb97T\xb1\xdb%\xf6*\xbaPXr\xefUh\xdd\x15["
+            ],
             "GeneSymbol": ["11-BETA-HSD3"],
             "GeneID": [100174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
@@ -59,7 +85,9 @@ CTD_VALID_DF = [
     ),
     pd.DataFrame(
         {
-            "Digest": [22659286],
+            "Digest": [
+                b"\xe9l\xc1\xeb$#\xda\xd1\xfdoO4\x15t\xfb\xb7\xff\xf0G\x9a39\xc9\xe2\xe4\xf8\x14\xf2\xd9p\xe3\xf0"
+            ],
             "GeneSymbol": ["1-SF3"],
             "GeneID": [1000494280],
             "DiseaseName": ["Infant Death"],
@@ -69,7 +97,9 @@ CTD_VALID_DF = [
     ),
     pd.DataFrame(
         {
-            "Digest": [22659286],
+            "Digest": [
+                b"\xe1 \xbf\xec\xd6\x1e\xe1F\xbb:La\xf8\xdb\xb97T\xb1\xdb%\xf6*\xbaPXr\xefUh\xdd\x15["
+            ],
             "GeneSymbol": ["11-BETA-HSD3"],
             "GeneID": [100174880],
             "DiseaseName": ["Abnormalities, Drug-Induced"],
@@ -79,7 +109,9 @@ CTD_VALID_DF = [
     ),
     pd.DataFrame(
         {
-            "Digest": [22659286],
+            "Digest": [
+                b"\xf8G\xdc\xfe\xaa\xae\x8f\xef\xa9n\x1fn\x97\xddY\x98\xff\xe0se\xd1%K\xad\xae\x92}\x17i\xa2\xee\xbc"
+            ],
             "GeneSymbol": ["A1BG3"],
             "GeneID": [1],
             "DiseaseName": ["Muscle Weaknessd"],
@@ -88,3 +120,4 @@ CTD_VALID_DF = [
         }
     ),
 ]
+"""Array of valid DataFrames."""

@@ -63,7 +63,7 @@ class CtdParser(BaseParser):
 
     schema: Schema = Schema(
         [
-            Column("Digest", [IsDtypeValidation(np.int64)]),
+            Column("Digest"),
             Column("GeneSymbol"),
             Column("GeneID", [IsDtypeValidation(np.int64)]),
             Column("DiseaseName"),
