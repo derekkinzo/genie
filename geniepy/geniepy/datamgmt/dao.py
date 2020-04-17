@@ -1,4 +1,9 @@
-"""Collectors manage a parser and database for a given source."""
+"""
+Data Access Managers Module.
+
+DAOs are responsible for scraping, parsing, storing and delivering a specific type of
+data. i.e. Pubmed Publications, Clinical Trials, Gene-Disease Relationships.
+"""
 from typing import Generator
 from abc import ABC, abstractmethod
 from pandas import DataFrame
@@ -7,8 +12,8 @@ from geniepy.datamgmt.parsers import BaseParser, CtdParser
 import geniepy.datamgmt.daorepositories as dr
 
 
-class BaseCollector(ABC):
-    """Collectors Abstract Base Class."""
+class BaseDao(ABC):
+    """Data Access Object Abstract Base Class."""
 
     __slots__ = ["_dao_repo", "_parser"]
 
@@ -55,13 +60,13 @@ class BaseCollector(ABC):
         return self._dao_repo.tablename
 
 
-class CtdCollector(BaseCollector):
-    """Implementation of CTD Collector."""
+class CtdDao(BaseDao):
+    """Implementation of CTD Data Access Object."""
 
     __slots__ = ["_dao_repo", "_parser"]
 
     def __init__(self, dao_repo: dr.BaseDaoRepo):
-        """Initialize collector state."""
+        """Initialize DAO state."""
         self._dao_repo = dao_repo
         self._parser = CtdParser()
 

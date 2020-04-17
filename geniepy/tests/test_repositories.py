@@ -7,7 +7,7 @@ from geniepy.errors import DaoError
 
 
 class TestDaoRepo:
-    """PyTest collector test class."""
+    """PyTest dao test class."""
 
     dao_repo: BaseDaoRepo = SqlDaoRepo(
         "sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_SCHEMA
@@ -19,7 +19,7 @@ class TestDaoRepo:
 
     @pytest.mark.parametrize("payload", td.CTD_INVALID_DAO)
     def test_save_invalid_df(self, payload):
-        """Test save invalid dataframe to collector's DAO."""
+        """Test save invalid dataframe to dao's DAO."""
         with pytest.raises(DaoError):
             self.dao_repo.save(payload)
 
