@@ -40,8 +40,8 @@ class TestDaoRepo:
         digest = payload.Digest[0]
         query_str = f"SELECT * FROM {self.dao_repo.tablename} WHERE Digest='{digest}';"
         generator = self.dao_repo.query(query=query_str)
-        for chunk in generator:
-            assert chunk.equals(payload)
+        chunk = next(generator)
+        assert chunk.equals(payload)
 
     def test_query_non_existent(self):
         """Query non-existent record should return empty."""
@@ -50,8 +50,8 @@ class TestDaoRepo:
         query_str = f"SELECT * FROM {self.dao_repo.tablename} WHERE Digest='{digest}';"
         generator = self.dao_repo.query(query=query_str)
         # Make sure generator doesn't return anything since no records in database
-        for _ in generator:
-            assert False  # Should not get here, because generator should return []
+        with pytest.raises(StopIteration):
+            next(generator)
 
     @pytest.mark.parametrize("chunksize", [1, 2, 3, 4])
     def test_generator_chunk(self, chunksize):

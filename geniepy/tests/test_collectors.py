@@ -34,15 +34,15 @@ class TestCtdCollector:
         """Query valid record."""
         # Try to create records in db for test if don't exist
         try:
-            self.collector._dao_repo.save(payload)
+            self.collector.save(payload)
         except DaoError:
             pass
         # Attempt to retrieve record
         digest = payload.Digest[0]
         query_str = f"SELECT * FROM {self.collector.tablename} WHERE Digest='{digest}';"
         generator = self.collector.query(query=query_str)
-        for chunk in generator:
-            assert chunk.equals(payload)
+        chunk = next(generator)
+        assert chunk.equals(payload)
 
     def test_query_non_existent(self):
         """Query non-existent record should return empty."""
@@ -51,10 +51,10 @@ class TestCtdCollector:
         query_str = f"SELECT * FROM {self.collector.tablename} WHERE Digest='{digest}';"
         generator = self.collector.query(query=query_str)
         # Make sure generator doesn't return anything since no records in database
-        for _ in generator:
-            assert False  # Should not get here, because generator should return []
+        with pytest.raises(StopIteration):
+            next(generator)
 
-    @pytest.mark.parametrize("chunksize", [1, 2, 3, 4])
+    @pytest.mark.parametrize("chunksize", [*range(1, len(td.CTD_VALID_DF) + 1)])
     def test_generator_chunk(self, chunksize):
         """Query all by chunk."""
         # Try to fill database, in case is empty
@@ -68,4 +68,4 @@ class TestCtdCollector:
         generator = self.collector.query(query=query_str, chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
-        assert result_df.Digest.count()
+        assert result_df.Digest.count() == chunksize

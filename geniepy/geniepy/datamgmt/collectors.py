@@ -52,6 +52,7 @@ class BaseCollector(ABC):
         # pylint: disable=no-member
         if not self._parser.is_valid(payload):
             raise SchemaError
+        self._dao_repo.save(payload)
 
 
 class CtdCollector(BaseCollector):
