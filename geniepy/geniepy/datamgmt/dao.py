@@ -15,11 +15,15 @@ import geniepy.datamgmt.repository as dr
 class BaseDao(ABC):
     """Data Access Object Abstract Base Class."""
 
-    __slots__ = ["_dao_repo", "_parser"]
+    __slots__ = ["_repository", "_parser"]
 
     @abstractmethod
     def download(self):
         """Download new data from online sources if available."""
+
+    @abstractmethod
+    def purge_records(self):
+        """Purge all dao's database records."""
 
     # pylint: disable=bad-continuation
     def query(
@@ -36,7 +40,7 @@ class BaseDao(ABC):
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
         # pylint: disable=no-member
-        return self._dao_repo.query(query=query, chunksize=chunksize)
+        return self._repository.query(query=query, chunksize=chunksize)
 
     def save(self, payload: DataFrame):
         """
@@ -51,28 +55,32 @@ class BaseDao(ABC):
         # pylint: disable=no-member
         if not self._parser.is_valid(payload):
             raise SchemaError
-        self._dao_repo.save(payload)
+        self._repository.save(payload)
 
     @property
     def tablename(self):
         """Return the dao repo tablename."""
         # pylint: disable=no-member
-        return self._dao_repo.tablename
+        return self._repository.tablename
 
 
 class CtdDao(BaseDao):
     """Implementation of CTD Data Access Object."""
 
-    __slots__ = ["_dao_repo", "_parser"]
+    __slots__ = ["_repository", "_parser"]
 
-    def __init__(self, dao_repo: dr.BaseRepository):
+    def __init__(self, repository: dr.BaseRepository):
         """Initialize DAO state."""
-        self._dao_repo = dao_repo
+        self._repository = repository
         self._parser = CtdParser()
+
+    def purge_records(self):
+        """Purge all dao's database records."""
+        self._repository.delete_all()
 
     def download(self):
         """Download new data from online sources if available."""
         # TODO implement scraping inside parser in parser
         # new_data: pd.DataFrame = self._parser.fetch_new_data()
         # if not new_data.empty:
-        #     self._dao_repo.save(new_data)
+        #     self._repository.save(new_data)

@@ -12,7 +12,7 @@ CHUNKSIZE: int = 10 ** 4
 
 CTD_TABLE_NAME = "ctd"
 """Name of ctd source table."""
-CTD_DAO_SCHEMA = Table(
+CTD_DAO_TABLE = Table(
     CTD_TABLE_NAME,
     MetaData(),
     Column("Digest", String, primary_key=True, nullable=False),
@@ -48,6 +48,10 @@ class BaseRepository(ABC):
         """
 
     @abstractmethod
+    def delete_all(self):
+        """Delete all records in repository."""
+
+    @abstractmethod
     # pylint: disable=bad-continuation
     def query(
         self, query: str = None, chunksize: int = CHUNKSIZE
@@ -67,14 +71,9 @@ class BaseRepository(ABC):
 class SqlRepository(BaseRepository):
     """Implementation of Sqlite Data Access Object Repository."""
 
-    __slots__ = ["_tablename", "_engine"]
+    __slots__ = ["_table", "_tablename", "_engine"]
 
-    def create_table(self, schema: Table):
-        """Create database table."""
-        table = schema
-        table.create(self._engine)
-
-    def __init__(self, db_loc: str, tablename: str, schema: Table):
+    def __init__(self, db_loc: str, tablename: str, table: Table):
         """
         Initialize DAO repository and create table.
 
@@ -83,9 +82,12 @@ class SqlRepository(BaseRepository):
             tablename {str} -- the dao table name
             schema {Table} -- the table schema
         """
-        self._engine = create_engine(db_loc)
         self._tablename = tablename
-        self.create_table(schema)
+        self._table = table
+        # Create sql engine
+        self._engine = create_engine(db_loc)
+        # Create Table
+        self._table.create(self._engine)
 
     def save(self, payload: DataFrame):
         """
@@ -103,6 +105,11 @@ class SqlRepository(BaseRepository):
             )
         except Exception as sql_exp:
             raise DaoError(sql_exp)
+
+    def delete_all(self):
+        """Delete all records in repository."""
+        self._table.drop(self._engine)
+        self._table.create(self._engine)
 
     # pylint: disable=bad-continuation
     def query(
