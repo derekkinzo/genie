@@ -2,21 +2,27 @@
 import pytest
 import pandas as pd
 from typing import Generator
-from geniepy.datamgmt.dao import CtdDao
+from geniepy.datamgmt.dao import BaseDao, CtdDao
 from geniepy.errors import SchemaError
 import tests.testdata as td
+from tests.resources.mock import MockCtdScraper
+import geniepy
 from geniepy.errors import DaoError
 import geniepy.datamgmt.repository as dr
+from geniepy.datamgmt.parsers import CtdParser
 
 
 class TestCtdDao:
     """PyTest data access object test class."""
 
-    test_dao = CtdDao(
-        dr.SqlRepository("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE)
-    )
+    test_repo = dr.SqlRepository("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE)
+    test_dao: BaseDao = CtdDao(test_repo)
+    # Attach mock scraper to parser for testing
+    CtdParser.scraper = MockCtdScraper()
 
-    def read_table(self, chunksize=dr.CHUNKSIZE) -> Generator[pd.DataFrame, None, None]:
+    def read_table(
+        self, chunksize=geniepy.CHUNKSIZE
+    ) -> Generator[pd.DataFrame, None, None]:
         """Read entire database table (tests helper method)."""
         query_str = f"SELECT * FROM {self.test_dao.tablename};"
         generator = self.test_dao.query(query=query_str, chunksize=chunksize)
@@ -66,6 +72,24 @@ class TestCtdDao:
         with pytest.raises(StopIteration):
             next(generator)
 
+    def test_purge(self):
+        """Test delete all records from repository."""
+        # Try to fill database, in case is empty
+        for record in td.CTD_VALID_DF:
+            try:
+                self.test_dao.save(record)
+            except DaoError:
+                pass
+        # Delete all records
+        self.test_dao.purge()
+        # Make sure no records left
+        generator = self.read_table()
+        # generator shouldn't return anything since no records in database
+        with pytest.raises(StopIteration):
+            next(generator)
+        # Test building and reading from table again, make sure still functional
+        self.test_query(td.CTD_VALID_DF[0])
+
     @pytest.mark.parametrize("chunksize", [*range(1, len(td.CTD_VALID_DF) + 1)])
     def test_generator_chunk(self, chunksize):
         """Query all by chunk."""
@@ -89,15 +113,18 @@ class TestCtdDao:
         all historical info from online sources.
         """
         # Make sure dao's database is empty
-        self.test_dao.purge_record()
+        self.test_dao.purge()
         generator = self.read_table()
+        # Generator should not return anything since database should be empty
         with pytest.raises(StopIteration):
-            # Generator should not return anything since database should be empty
             next(generator)
         # Call download method to update database with data from online sources
+        self.test_dao.chunksize = 3
         self.test_dao.download()
         # Check new data available in database
         generator = self.read_table()
         # Generator should return values
         result_df = next(generator)
         assert not result_df.empty
+        # Rever chunk size so don't affect other tests
+        self.test_dao.chunksize = geniepy.CHUNKSIZE

@@ -11,3 +11,7 @@ class SchemaError(GeniePyError):
 
 class DaoError(GeniePyError):
     """Data Access Object Error."""
+
+
+class ParserError(GeniePyError):
+    """Unable to parse data."""

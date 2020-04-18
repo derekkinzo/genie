@@ -4,18 +4,16 @@ from abc import ABC, abstractmethod
 import pandas as pd
 from pandas import DataFrame
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
+import geniepy
 from geniepy.errors import DaoError
 
-
-CHUNKSIZE: int = 10 ** 4
-"""Standard generator chunk size for DAO queries."""
 
 CTD_TABLE_NAME = "ctd"
 """Name of ctd source table."""
 CTD_DAO_TABLE = Table(
     CTD_TABLE_NAME,
     MetaData(),
-    Column("Digest", String, primary_key=True, nullable=False),
+    Column("Digest", String, primary_key=False, nullable=False),
     Column("GeneSymbol", String),
     Column("GeneID", Integer, nullable=False),
     Column("DiseaseName", String),
@@ -54,7 +52,7 @@ class BaseRepository(ABC):
     @abstractmethod
     # pylint: disable=bad-continuation
     def query(
-        self, query: str = None, chunksize: int = CHUNKSIZE
+        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
     ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
@@ -113,7 +111,7 @@ class SqlRepository(BaseRepository):
 
     # pylint: disable=bad-continuation
     def query(
-        self, query: str = None, chunksize: int = CHUNKSIZE
+        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
     ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.

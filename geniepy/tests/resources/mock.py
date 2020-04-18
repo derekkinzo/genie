@@ -5,8 +5,39 @@ import pandas as pd
 from tests import get_resources_path
 from geniepy.classifiers.clsfr_base import BaseClsfr
 from geniepy.datamgmt.dao import CtdDao
+from geniepy.datamgmt.scraper import CtdScraper
+from geniepy import CHUNKSIZE
+from typing import Generator
+
 
 SAMPLE_CTD_DB_NAME = "sample_ctd_db.csv"
+
+
+class MockCtdScraper(CtdScraper):
+    """Mock CTD scraper for tests."""
+
+    @staticmethod
+    def scrape(chunksize: int = CHUNKSIZE) -> Generator:
+        """Scrape records from online source and return in generator."""
+        sample_ctd_name = "sample_ctd_db.csv"
+        csv_file = os.path.join(get_resources_path(), sample_ctd_name)
+        chunklist = [*range(chunksize)]
+        # Open a connection to the file
+        with open(csv_file) as file:
+            # Read header
+            header = file.readline()
+            # Loop indefinitely until the end of the file
+            while True:
+                data = ""
+                for i in range(chunksize):
+                    line = file.readline()
+                    if not line:
+                        break
+                    data += line
+                if not data:
+                    break
+                chunk = header + data
+                yield chunk
 
 
 class MockClsfr(BaseClsfr):

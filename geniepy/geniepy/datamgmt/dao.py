@@ -7,6 +7,7 @@ data. i.e. Pubmed Publications, Clinical Trials, Gene-Disease Relationships.
 from typing import Generator
 from abc import ABC, abstractmethod
 from pandas import DataFrame
+import geniepy
 from geniepy.errors import SchemaError
 from geniepy.datamgmt.parsers import BaseParser, CtdParser
 import geniepy.datamgmt.repository as dr
@@ -15,19 +16,24 @@ import geniepy.datamgmt.repository as dr
 class BaseDao(ABC):
     """Data Access Object Abstract Base Class."""
 
-    __slots__ = ["_repository", "_parser"]
+    chunksize = geniepy.CHUNKSIZE
+
+    _repository: dr.BaseRepository
+    """Database repository used by DAO to store objects."""
+    _parser: BaseParser
+    """DAO's parser to scraping and validating data."""
 
     @abstractmethod
     def download(self):
         """Download new data from online sources if available."""
 
-    @abstractmethod
-    def purge_records(self):
+    def purge(self):
         """Purge all dao's database records."""
+        self._repository.delete_all()
 
     # pylint: disable=bad-continuation
     def query(
-        self, query: str = None, chunksize: int = dr.CHUNKSIZE
+        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
     ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
@@ -67,20 +73,16 @@ class BaseDao(ABC):
 class CtdDao(BaseDao):
     """Implementation of CTD Data Access Object."""
 
-    __slots__ = ["_repository", "_parser"]
+    __slots__ = ["_repository"]
+
+    _parser: CtdParser = CtdParser()
 
     def __init__(self, repository: dr.BaseRepository):
         """Initialize DAO state."""
         self._repository = repository
-        self._parser = CtdParser()
-
-    def purge_records(self):
-        """Purge all dao's database records."""
-        self._repository.delete_all()
 
     def download(self):
         """Download new data from online sources if available."""
-        # TODO implement scraping inside parser in parser
-        # new_data: pd.DataFrame = self._parser.fetch_new_data()
-        # if not new_data.empty:
-        #     self._repository.save(new_data)
+        parsed_gen = self._parser.fetch(self.chunksize)
+        for chunk_df in parsed_gen:
+            self._repository.save(chunk_df)

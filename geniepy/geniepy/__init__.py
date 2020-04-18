@@ -18,6 +18,10 @@ __license__ = "MIT"
 __all__ = ["run_job"]
 
 
+CHUNKSIZE: int = 10 ** 4
+"""Standard genie generators chunk size."""
+
+
 def update_tables():
     """Scrape internet for new content from sources and update database."""
     raise NotImplementedError
