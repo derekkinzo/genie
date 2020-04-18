@@ -10,7 +10,7 @@ from pandas import DataFrame
 from pandas_schema import Column, Schema
 from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
 from geniepy import CHUNKSIZE
-from geniepy.datamgmt.scraper import CtdScraper
+from geniepy.datamgmt.scrapers import CtdScraper
 from geniepy.errors import ParserError
 
 

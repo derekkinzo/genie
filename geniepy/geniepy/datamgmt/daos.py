@@ -10,7 +10,7 @@ from pandas import DataFrame
 import geniepy
 from geniepy.errors import SchemaError
 from geniepy.datamgmt.parsers import BaseParser, CtdParser
-import geniepy.datamgmt.repository as dr
+import geniepy.datamgmt.repositories as dr
 
 
 class BaseDao(ABC):

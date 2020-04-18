@@ -1,10 +1,10 @@
 """Module to test Data Access Objects."""
 import pytest
-from geniepy.datamgmt.dao import BaseDao, CtdDao
+from geniepy.datamgmt.daos import BaseDao, CtdDao
 from geniepy.errors import SchemaError
 import tests.testdata as td
 from tests.resources.mock import MockCtdScraper
-import geniepy.datamgmt.repository as dr
+import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
 from geniepy.datamgmt.parsers import CtdParser
 

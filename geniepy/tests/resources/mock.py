@@ -1,13 +1,11 @@
 """Mock framework for tests."""
 import os
 from typing import NamedTuple
-import pandas as pd
+from typing import Generator
 from tests import get_resources_path
 from geniepy.classifiers.clsfr_base import BaseClsfr
-from geniepy.datamgmt.dao import CtdDao
-from geniepy.datamgmt.scraper import CtdScraper
+from geniepy.datamgmt.scrapers import CtdScraper
 from geniepy import CHUNKSIZE
-from typing import Generator
 
 
 SAMPLE_CTD_DB_NAME = "sample_ctd_db.csv"
@@ -21,7 +19,6 @@ class MockCtdScraper(CtdScraper):
         """Scrape records from online source and return in generator."""
         sample_ctd_name = "sample_ctd_db.csv"
         csv_file = os.path.join(get_resources_path(), sample_ctd_name)
-        chunklist = [*range(chunksize)]
         # Open a connection to the file
         with open(csv_file) as file:
             # Read header
@@ -29,7 +26,7 @@ class MockCtdScraper(CtdScraper):
             # Loop indefinitely until the end of the file
             while True:
                 data = ""
-                for i in range(chunksize):
+                for _ in range(chunksize):
                     line = file.readline()
                     if not line:
                         break

@@ -1,8 +1,8 @@
 """Module to test data access object repositories."""
 import pytest
 import tests.testdata as td
-from geniepy.datamgmt.repository import BaseRepository, SqlRepository
-import geniepy.datamgmt.repository as dr
+from geniepy.datamgmt.repositories import BaseRepository, SqlRepository
+import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
 
 
