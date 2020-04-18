@@ -1,7 +1,7 @@
 """Data sources parsers."""
 from typing import Generator
 import hashlib
-from abc import ABC, abstractstaticmethod, abstractclassmethod
+from abc import ABC, abstractstaticmethod
 from enum import Enum, auto
 from io import StringIO
 import numpy as np
@@ -10,7 +10,7 @@ from pandas import DataFrame
 from pandas_schema import Column, Schema
 from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
 from geniepy import CHUNKSIZE
-from geniepy.datamgmt.scrapers import CtdScraper
+from geniepy.datamgmt.scrapers import BaseScraper, CtdScraper, PubMedScraper
 from geniepy.errors import ParserError
 
 
@@ -24,7 +24,9 @@ class DataType(Enum):
 class BaseParser(ABC):
     """Abstract base parser class."""
 
-    schema: Schema = None
+    scraper: BaseScraper
+    schema: Schema
+    default_type: DataType = None
 
     @classmethod
     def validate(cls, payload: DataFrame) -> [str]:
@@ -56,7 +58,7 @@ class BaseParser(ABC):
             DataFrame -- The parsed dataframe.
         """
 
-    @abstractclassmethod
+    @classmethod
     def fetch(cls, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
         """
         Fetch new data, if available from online sources.
@@ -67,6 +69,10 @@ class BaseParser(ABC):
         Returns:
             Generator[DataFrame, None, None] -- Generator yielding fetched data
         """
+        raw_gen = cls.scraper.scrape(chunksize)
+        for data_chunk in raw_gen:
+            parsed_df = cls.parse(data_chunk, cls.default_type)
+            yield parsed_df
 
 
 class CtdParser(BaseParser):
@@ -77,6 +83,7 @@ class CtdParser(BaseParser):
     http://ctdbase.org/
     """
 
+    default_type: DataType = DataType.CSV
     scraper: CtdScraper = CtdScraper()
     schema: Schema = Schema(
         [
@@ -141,18 +148,45 @@ class CtdParser(BaseParser):
             raise ParserError(errors)
         return parsed_df
 
-    @classmethod
-    def fetch(cls, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
+
+class PubMedParser(BaseParser):
+    """
+    Implementation of PubMed Articles Parser.
+
+    https://www.ncbi.nlm.nih.gov/pubmed/
+    https://www.nlm.nih.gov/bsd/licensee/elements_descriptions.html
+    """
+
+    default_type: DataType = DataType.XML
+    scraper: PubMedScraper()
+    schema: Schema = Schema(
+        [
+            Column("pmid", [IsDtypeValidation(np.int64)]),
+            Column("date_completed"),
+            Column("pub_model"),
+            Column("title"),
+            Column("iso_abbreviation"),
+            Column("article_title"),
+            Column("abstract"),
+            Column("authors"),
+            Column("language"),
+            Column("chemicals"),
+            Column("mesh_list"),
+        ]
+    )
+
+    @staticmethod
+    def parse(data, dtype: DataType = None) -> DataFrame:
         """
-        Fetch new data, if available from online sources.
+        Parse data and convert according to parser schema.
+
+        Arguments:
+            data {Implementation dependent} -- Data to be parsed
 
         Keyword Arguments:
-            chunksize {int} -- the returned generator chunk size (default: {CHUNKSIZE})
+            dtype {DataType} -- Type of data to be parsed (default: {DataType.CSV})
 
         Returns:
-            Generator[DataFrame, None, None] -- Generator yielding fetched data
+            DataFrame -- The parsed dataframe.
         """
-        raw_gen = cls.scraper.scrape(chunksize)
-        for data_chunk in raw_gen:
-            parsed_df = cls.parse(data_chunk)
-            yield parsed_df
+        return NotImplementedError

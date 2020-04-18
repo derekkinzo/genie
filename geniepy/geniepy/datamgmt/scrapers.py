@@ -14,9 +14,24 @@ class BaseScraper(ABC):
 
 class CtdScraper(BaseScraper):
     """
-    CTD Gene-Disease Relationship Scraper.
+    Implementation of CTD Gene-Disease Relationship Scraper.
 
     http://ctdbase.org/
+    """
+
+    @staticmethod
+    def scrape(chunksize: int = CHUNKSIZE) -> Generator:
+        """Scrape records from online source and return in generator."""
+        raise NotImplementedError
+
+
+class PubMedScraper(BaseScraper):
+    """
+    Implementation of PubMed Articles Scraper.
+
+    https://www.ncbi.nlm.nih.gov/pubmed/
+    https://www.nlm.nih.gov/bsd/licensee/elements_descriptions.html
+
     """
 
     @staticmethod
