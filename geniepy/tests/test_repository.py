@@ -31,6 +31,8 @@ class TestRepository:
     @pytest.mark.parametrize("payload", td.CTD_VALID_DF)
     def test_query(self, payload):
         """Query valid record."""
+        # Start with empty table
+        self.repo.delete_all()
         # Try to create records in db for test if don't exist
         try:
             self.repo.save(payload)
@@ -56,6 +58,8 @@ class TestRepository:
     @pytest.mark.parametrize("chunksize", [1, 2, 3, 4])
     def test_generator_chunk(self, chunksize):
         """Query all by chunk."""
+        # Start with empty table
+        self.repo.delete_all()
         # Try to fill database, in case is empty
         for record in td.CTD_VALID_DF:
             try:

@@ -16,16 +16,23 @@ import geniepy.datamgmt.repository as dr
 class BaseDao(ABC):
     """Data Access Object Abstract Base Class."""
 
-    chunksize = geniepy.CHUNKSIZE
-
     _repository: dr.BaseRepository
     """Database repository used by DAO to store objects."""
     _parser: BaseParser
     """DAO's parser to scraping and validating data."""
 
     @abstractmethod
-    def download(self):
-        """Download new data from online sources if available."""
+    def download(self, chunksize=geniepy.CHUNKSIZE):
+        """
+        Download new data from online sources if available.
+
+        Keyword Arguments:
+            chunksize {[type]} -- The download method can be very computationally and
+            memory intentive since it could possibly need to download and parse all
+            records if the tables are empty. The chunksize allows the caller to limit
+            how much memory is processed at a time while downloading and parsing the
+            data. (default: {geniepy.CHUNKSIZE})
+        """
 
     def purge(self):
         """Purge all dao's database records."""
@@ -81,8 +88,17 @@ class CtdDao(BaseDao):
         """Initialize DAO state."""
         self._repository = repository
 
-    def download(self):
-        """Download new data from online sources if available."""
-        parsed_gen = self._parser.fetch(self.chunksize)
+    def download(self, chunksize=geniepy.CHUNKSIZE):
+        """
+        Download new data from online sources if available.
+
+        Keyword Arguments:
+            chunksize {[type]} -- The download method can be very computationally and
+            memory intentive since it could possibly need to download and parse all
+            records if the tables are empty. The chunksize allows the caller to limit
+            how much memory is processed at a time while downloading and parsing the
+            data. (default: {geniepy.CHUNKSIZE})
+        """
+        parsed_gen = self._parser.fetch(chunksize)
         for chunk_df in parsed_gen:
             self._repository.save(chunk_df)

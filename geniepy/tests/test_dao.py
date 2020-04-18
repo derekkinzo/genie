@@ -20,14 +20,6 @@ class TestCtdDao:
     # Attach mock scraper to parser for testing
     CtdParser.scraper = MockCtdScraper()
 
-    def read_table(
-        self, chunksize=geniepy.CHUNKSIZE
-    ) -> Generator[pd.DataFrame, None, None]:
-        """Read entire database table (tests helper method)."""
-        query_str = f"SELECT * FROM {self.test_dao.tablename};"
-        generator = self.test_dao.query(query=query_str, chunksize=chunksize)
-        return generator
-
     def read_record(self, digest):
         """Read record(s) from database (tests helper method)."""
         query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE Digest='{digest}';"
@@ -52,6 +44,8 @@ class TestCtdDao:
     @pytest.mark.parametrize("payload", td.CTD_VALID_DF)
     def test_query(self, payload):
         """Query valid record."""
+        # Start with empty table
+        self.test_dao.purge()
         # Try to create records in db for test if don't exist
         try:
             self.test_dao.save(payload)
@@ -83,7 +77,7 @@ class TestCtdDao:
         # Delete all records
         self.test_dao.purge()
         # Make sure no records left
-        generator = self.read_table()
+        generator = self.test_dao.query()
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -100,12 +94,13 @@ class TestCtdDao:
             except DaoError:
                 pass
         # Get all records in database
-        generator = self.read_table(chunksize)
+        generator = self.test_dao.query(chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.Digest.count() == chunksize
 
-    def test_download_historical(self):
+    @pytest.mark.parametrize("chunksize", [*range(1, 10)])
+    def test_download_historical(self, chunksize):
         """
         Test download method for historical data.
 
@@ -114,17 +109,15 @@ class TestCtdDao:
         """
         # Make sure dao's database is empty
         self.test_dao.purge()
-        generator = self.read_table()
+        generator = self.test_dao.query()
         # Generator should not return anything since database should be empty
         with pytest.raises(StopIteration):
             next(generator)
         # Call download method to update database with data from online sources
-        self.test_dao.chunksize = 3
-        self.test_dao.download()
-        # Check new data available in database
-        generator = self.read_table()
+        self.test_dao.download(chunksize)
+        # Read entire table
+        generator = self.test_dao.query(chunksize=chunksize)
         # Generator should return values
         result_df = next(generator)
         assert not result_df.empty
         # Rever chunk size so don't affect other tests
-        self.test_dao.chunksize = geniepy.CHUNKSIZE

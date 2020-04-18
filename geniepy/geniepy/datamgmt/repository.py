@@ -13,6 +13,7 @@ CTD_TABLE_NAME = "ctd"
 CTD_DAO_TABLE = Table(
     CTD_TABLE_NAME,
     MetaData(),
+    # No primary key allows duplicate records
     Column("Digest", String, primary_key=False, nullable=False),
     Column("GeneSymbol", String),
     Column("GeneID", Integer, nullable=False),
@@ -99,7 +100,11 @@ class SqlRepository(BaseRepository):
         """
         try:
             payload.to_sql(
-                self._tablename, con=self._engine, if_exists="append", index=False
+                self._tablename,
+                con=self._engine,
+                if_exists="append",
+                index=False,
+                method="multi",
             )
         except Exception as sql_exp:
             raise DaoError(sql_exp)
