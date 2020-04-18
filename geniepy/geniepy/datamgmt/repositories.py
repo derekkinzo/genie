@@ -30,16 +30,16 @@ PUBMED_DAO_TABLE = Table(
     MetaData(),
     # No primary key allows duplicate records
     Column("pmid", Integer, primary_key=False, nullable=False),
-    Column("title", String),
     Column("date_completed", String),
-    Column("language", String),
     Column("pub_model", String),
-    Column("authors", String),
+    Column("title", String),
     Column("iso_abbreviation", String),
     Column("article_title", String),
-    Column("mesh_list", String),
     Column("abstract", String),
+    Column("authors", String),
+    Column("language", String),
     Column("chemicals", String),
+    Column("mesh_list", String),
 )
 """PUBMED DAO Repository Schema."""
 

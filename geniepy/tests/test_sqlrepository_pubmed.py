@@ -7,7 +7,7 @@ from geniepy.errors import DaoError
 
 VALID_DF = td.PUBMED_VALID_DF
 INVALID_DF = td.PUBMED_INVALID_DF
-INVALID_DAO = td.PUBMED_INVALID_DF
+INVALID_DAO = td.PUBMED_INVALID_DAO
 
 
 class TestSqlPubMedRepository:
@@ -52,7 +52,7 @@ class TestSqlPubMedRepository:
     def test_query_non_existent(self):
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
-        pmid = "INVALID DIGEST"
+        pmid = 0
         query_str = f"SELECT * FROM {self.repo.tablename} WHERE pmid={pmid};"
         generator = self.repo.query(query=query_str)
         # Make sure generator doesn't return anything since no matching records
@@ -74,7 +74,7 @@ class TestSqlPubMedRepository:
         generator = self.repo.query(chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
-        assert result_df.Digest.count() == chunksize
+        assert result_df.pmid.count() == chunksize
 
     def test_delete_all(self):
         """Test delete all records from repository."""

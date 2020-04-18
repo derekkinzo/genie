@@ -1,6 +1,50 @@
 """Module with data used in tests."""
 import pandas as pd
 
+PUBMED_INVALID_DAO = [
+    pd.DataFrame(
+        {
+            # Missing required column
+            "date_completed": ["--"],
+            "pub_model": ["Print-Electronic"],
+            "title": ["Biochemia medica"],
+            "iso_abbreviation": ["Biochem Med (Zagreb)"],
+            "article_title": [
+                "High anion gap metabolic acidosis caused by D-lactate: mind the time of blood collection."
+            ],
+            "abstract": [
+                "D-lactic acidosis is an uncommon cause of high anion gap acidosis."
+            ],
+            "authors": ["Weemaes, Matthias, Hiele, Martin, Vermeersch, Pieter"],
+            "language": ["eng"],
+            "chemicals": [""],
+            "mesh_list": [""],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "pmid": 31839729,
+            "not column": [""],  # Invalid Column
+            "pub_model": ["Print-Electronic"],
+            "title": ["Biochemia medica"],
+            "iso_abbreviation": ["Biochem Med (Zagreb)"],
+            "article_title": [
+                "Unexpected abnormal coagulation test results in a 2-year-old child: A case report."
+            ],
+            "abstract": [
+                "Rejection of the sample with repeated blood withdrawal is always an unwanted consequence of sample nonconformity and preanalytical errors, especially in the most vulnerable population - children. Here is presented a case with unexpected abnormal coagulation test results in a 2-year-old child with no previously documented coagulation disorder. Child is planned for tympanostomy tubes removal under the anaesthesia driven procedure, and preoperative coagulation tests revealed prolonged prothrombin time, activated partial thromboplastin time and thrombin time, with fibrinogen and antithrombin within reference intervals. From the anamnestic and clinical data, congenital coagulation disorder was excluded, and with further investigation, sample mismatch, clot presence and accidental ingestion of oral anticoagulant, heparin contamination or vitamin K deficiency were excluded too. Due to suspected EDTA carryover during blood sampling another sample was taken the same day and all tests were performed again. The results for all tests were within reference intervals confirming EDTA effect on falsely prolongation of the coagulation times in the first sample. This case can serve as alert to avoid unnecessary loss in terms of blood withdrawal repetitions and discomfort of the patients and their relatives, tests repeating, prolonging medical procedures, and probably delaying diagnosis or proper medical treatment. It is the responsibility of the laboratory specialists to continuously educate laboratory staff and other phlebotomists on the correct blood collection as well as on its importance for the patient's safety."
+            ],
+            "authors": [
+                "Banković Radovanović, Patricija, Živković Mikulčić, Tanja, Simović Medica, Jasmina"
+            ],
+            "language": ["eng"],
+            "chemicals": [""],
+            "mesh_list": [""],
+        }
+    ),
+]
+
+
 PUBMED_INVALID_DF = [
     pd.DataFrame(
         {
