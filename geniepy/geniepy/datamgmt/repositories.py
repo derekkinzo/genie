@@ -23,6 +23,26 @@ CTD_DAO_TABLE = Table(
 )
 """CTD DAO Repository Schema."""
 
+PUBMED_TABLE_NAME = "pubmed"
+"""Name of pubmed source table."""
+PUBMED_DAO_TABLE = Table(
+    PUBMED_TABLE_NAME,
+    MetaData(),
+    # No primary key allows duplicate records
+    Column("pmid", Integer, primary_key=False, nullable=False),
+    Column("title", String),
+    Column("date_completed", String),
+    Column("language", String),
+    Column("pub_model", String),
+    Column("authors", String),
+    Column("iso_abbreviation", String),
+    Column("article_title", String),
+    Column("mesh_list", String),
+    Column("abstract", String),
+    Column("chemicals", String),
+)
+"""PUBMED DAO Repository Schema."""
+
 
 class BaseRepository(ABC):
     """Base Abstract Class for Data Access Object Repositories."""
