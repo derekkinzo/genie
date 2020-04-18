@@ -67,8 +67,7 @@ class TestRepository:
             except DaoError:
                 pass
         # Get all records in database
-        query_str = f"SELECT * FROM {self.repo.tablename};"
-        generator = self.repo.query(query=query_str, chunksize=chunksize)
+        generator = self.repo.query(chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.Digest.count() == chunksize
@@ -84,10 +83,12 @@ class TestRepository:
         # Delete all records
         self.repo.delete_all()
         # Make sure no records left
-        query_str = f"SELECT * FROM {self.repo.tablename};"
-        generator = self.repo.query(query=query_str)
+        generator = self.repo.query()
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
-        # Test building and reading from table again, make sure still functional
-        self.test_query(td.CTD_VALID_DF[0])
+        # Test saving and reading from table again, make sure still functional
+        self.repo.save(td.CTD_VALID_DF[0])
+        generator = self.repo.query()
+        # Generator should return value
+        next(generator)

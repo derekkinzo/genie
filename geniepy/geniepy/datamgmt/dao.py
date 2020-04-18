@@ -67,7 +67,8 @@ class BaseDao(ABC):
             SchemaError: dataframe does not conform to table schema.
         """
         # pylint: disable=no-member
-        if not self._parser.is_valid(payload):
+        errors = self._parser.validate(payload)
+        if errors:
             raise SchemaError
         self._repository.save(payload)
 
