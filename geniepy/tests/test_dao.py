@@ -1,14 +1,11 @@
 """Module to test Data Access Objects."""
 import pytest
-import pandas as pd
-from typing import Generator
 from geniepy.datamgmt.dao import BaseDao, CtdDao
 from geniepy.errors import SchemaError
 import tests.testdata as td
 from tests.resources.mock import MockCtdScraper
-import geniepy
-from geniepy.errors import DaoError
 import geniepy.datamgmt.repository as dr
+from geniepy.errors import DaoError
 from geniepy.datamgmt.parsers import CtdParser
 
 
@@ -85,7 +82,7 @@ class TestCtdDao:
         self.test_query(td.CTD_VALID_DF[0])
 
     @pytest.mark.parametrize("chunksize", [*range(1, len(td.CTD_VALID_DF) + 1)])
-    def test_generator_chunk(self, chunksize):
+    def test_query_chunksize(self, chunksize):
         """Query all by chunk."""
         # Try to fill database, in case is empty
         for record in td.CTD_VALID_DF:
@@ -100,7 +97,7 @@ class TestCtdDao:
         assert result_df.Digest.count() == chunksize
 
     @pytest.mark.parametrize("chunksize", [*range(1, 10)])
-    def test_download_historical(self, chunksize):
+    def test_download(self, chunksize):
         """
         Test download method for historical data.
 
@@ -120,4 +117,3 @@ class TestCtdDao:
         # Generator should return values
         result_df = next(generator)
         assert not result_df.empty
-        # Rever chunk size so don't affect other tests

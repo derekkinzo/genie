@@ -5,7 +5,7 @@ DAOs are responsible for scraping, parsing, storing and delivering a specific ty
 data. i.e. Pubmed Publications, Clinical Trials, Gene-Disease Relationships.
 """
 from typing import Generator
-from abc import ABC, abstractmethod
+from abc import ABC
 from pandas import DataFrame
 import geniepy
 from geniepy.errors import SchemaError
@@ -21,7 +21,6 @@ class BaseDao(ABC):
     _parser: BaseParser
     """DAO's parser to scraping and validating data."""
 
-    @abstractmethod
     def download(self, chunksize=geniepy.CHUNKSIZE):
         """
         Download new data from online sources if available.
@@ -33,6 +32,8 @@ class BaseDao(ABC):
             how much memory is processed at a time while downloading and parsing the
             data. (default: {geniepy.CHUNKSIZE})
         """
+        for chunk_df in self._parser.fetch(chunksize):
+            self._repository.save(chunk_df)
 
     def purge(self):
         """Purge all dao's database records."""
@@ -46,7 +47,7 @@ class BaseDao(ABC):
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
-            query {str} -- Query string. (default: {None} returns all values)
+            query {str} -- Query string. (default: {None} reads entire table)
             chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
 
         Returns:
@@ -87,18 +88,3 @@ class CtdDao(BaseDao):
     def __init__(self, repository: dr.BaseRepository):
         """Initialize DAO state."""
         self._repository = repository
-
-    def download(self, chunksize=geniepy.CHUNKSIZE):
-        """
-        Download new data from online sources if available.
-
-        Keyword Arguments:
-            chunksize {[type]} -- The download method can be very computationally and
-            memory intentive since it could possibly need to download and parse all
-            records if the tables are empty. The chunksize allows the caller to limit
-            how much memory is processed at a time while downloading and parsing the
-            data. (default: {geniepy.CHUNKSIZE})
-        """
-        parsed_gen = self._parser.fetch(chunksize)
-        for chunk_df in parsed_gen:
-            self._repository.save(chunk_df)
