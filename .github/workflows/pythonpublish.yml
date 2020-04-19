@@ -4,8 +4,8 @@
 name: Upload Python Package
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [ master ]
 
 jobs:
   deploy:
@@ -17,11 +17,16 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
-        python-version: '3.x'
+        python-version: '3.7'
     - name: Install dependencies
+      working-directory: geniepy
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools wheel twine
+        pip install -r requirements.txt
+    - name: Test with pytest
+      working-directory: geniepy
+      run: |
+        python setup.py test
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
