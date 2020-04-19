@@ -37,3 +37,7 @@ jobs:
       run: |
         pip install pytest
         pytest
+    - name: Test build docs
+      working-directory: geniepy
+      run: |
+        python setup.py docs
