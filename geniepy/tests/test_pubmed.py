@@ -20,9 +20,9 @@ ExpectedArticle = collections.namedtuple(
                         article_title abstract authors language chemicals \
                         mesh_list",
 )
-TestData = collections.namedtuple("TestData", "article expected")
+ActualExpected = collections.namedtuple("TestData", "article expected")
 TEST_DATA = [
-    TestData(
+    ActualExpected(
         article=create_article("sample_empty_article.xml"),
         expected=ExpectedArticle(
             pmid="",
@@ -38,7 +38,7 @@ TEST_DATA = [
             mesh_list=[],
         ),
     ),
-    TestData(
+    ActualExpected(
         article=create_article("sample_article1.xml"),
         expected=ExpectedArticle(
             pmid="1",
@@ -73,7 +73,7 @@ application in methanol poisoning.",
             ],
         ),
     ),
-    TestData(
+    ActualExpected(
         article=create_article("sample_article2.xml"),
         expected=ExpectedArticle(
             pmid="15299998",
