@@ -28,6 +28,7 @@ jobs:
       run: |
         python setup.py test
     - name: Build and publish
+      working-directory: geniepy
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
