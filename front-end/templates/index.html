@@ -1,0 +1,45 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div style="display:flex">
+  <table id="table"><thead></thead><tbody></tbody><tfoot></tfoot></table>
+  <div><a id="export">Export</a></div>
+</div>
+
+<div style="display:flex">
+  <div id="histogram"></div>
+  <div id="scatter"></div>
+</div>
+
+<script type="text/javascript" charset="utf8" src="js/data.js"></script>
+<style>
+#table {
+  max-width:980px;
+  table-layout:fixed;
+  margin:auto;
+
+  th {
+    text-align: "left";
+  }
+}
+
+thead, tfoot {
+  background:#f9f9f9;
+  display:table;
+  width:100%;
+  width:calc(100% - 18px);
+}
+tbody {
+  height:300px;
+  overflow:auto;
+  overflow-x:hidden;
+  display:block;
+  width:100%;
+}
+tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
+</style>

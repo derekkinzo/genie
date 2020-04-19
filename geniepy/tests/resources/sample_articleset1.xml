@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2019//EN" "http://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_190101.dtd">
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">2</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>10</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>12</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Electronic">1090-2104</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>66</Volume>
+            <Issue>4</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Oct</Month>
+              <Day>27</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical and biophysical research communications</Title>
+          <ISOAbbreviation>Biochem. Biophys. Res. Commun.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Delineation of the intimate details of the backbone conformation of pyridine nucleotide coenzymes in aqueous solution.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1173-9</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Bose</LastName>
+            <ForeName>K S</ForeName>
+            <Initials>KS</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Sarma</LastName>
+            <ForeName>R H</ForeName>
+            <Initials>RH</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D013486">Research Support, U.S. Gov't, Non-P.H.S.</PublicationType>
+          <PublicationType UI="D013487">Research Support, U.S. Gov't, P.H.S.</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>United States</Country>
+        <MedlineTA>Biochem Biophys Res Commun</MedlineTA>
+        <NlmUniqueID>0372516</NlmUniqueID>
+        <ISSNLinking>0006-291X</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0U46U6E8UK</RegistryNumber>
+          <NameOfSubstance UI="D009243">NAD</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>53-59-8</RegistryNumber>
+          <NameOfSubstance UI="D009249">NADP</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <CommentsCorrectionsList>
+        <CommentsCorrections RefType="ErratumIn">
+          <RefSource>Biochem Pharmacol. 1975 Aug 15;24(16):1517-21</RefSource>
+          <PMID Version="1">8</PMID>
+        </CommentsCorrections>
+      </CommentsCorrectionsList>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D005583" MajorTopicYN="N">Fourier Analysis</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009682" MajorTopicYN="N">Magnetic Resonance Spectroscopy</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008958" MajorTopicYN="N">Models, Molecular</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008968" MajorTopicYN="N">Molecular Conformation</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009243" MajorTopicYN="Y">NAD</DescriptorName>
+          <QualifierName UI="Q000031" MajorTopicYN="N">analogs &amp; derivatives</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009249" MajorTopicYN="Y">NADP</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013329" MajorTopicYN="N">Structure-Activity Relationship</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013696" MajorTopicYN="N">Temperature</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">2</ArticleId>
+        <ArticleId IdType="pii">0006-291X(75)90482-9</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-291x(75)90482-9</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">30969</PMID>
+      <DateCompleted>
+        <Year>1979</Year>
+        <Month>01</Month>
+        <Day>24</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2013</Year>
+        <Month>11</Month>
+        <Day>21</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0301-1518</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>7</Volume>
+            <Issue>31</Issue>
+            <PubDate>
+              <Year>1978</Year>
+              <Month>Sep</Month>
+              <Day>20</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>La Nouvelle presse medicale</Title>
+          <ISOAbbreviation>Nouv Presse Med</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>[Beta-blockers and arterial hypertension in the aged patient].</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>2803-6</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Emeriau</LastName>
+            <ForeName>J P</ForeName>
+            <Initials>JP</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Rumeau</LastName>
+            <ForeName>M</ForeName>
+            <Initials>M</Initials>
+          </Author>
+        </AuthorList>
+        <Language>fre</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+        <VernacularTitle>Bêta-bloquants et hypertension artérielle du sujet âgé.</VernacularTitle>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>France</Country>
+        <MedlineTA>Nouv Presse Med</MedlineTA>
+        <NlmUniqueID>0312552</NlmUniqueID>
+        <ISSNLinking>0301-1518</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D000319">Adrenergic beta-Antagonists</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>67P356D8GH</RegistryNumber>
+          <NameOfSubstance UI="D000070">Acebutolol</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>817W3C6175</RegistryNumber>
+          <NameOfSubstance UI="D013999">Timolol</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>BJ4HF6IU1D</RegistryNumber>
+          <NameOfSubstance UI="D010869">Pindolol</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000070" MajorTopicYN="N">Acebutolol</DescriptorName>
+          <QualifierName UI="Q000627" MajorTopicYN="N">therapeutic use</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000319" MajorTopicYN="N">Adrenergic beta-Antagonists</DescriptorName>
+          <QualifierName UI="Q000627" MajorTopicYN="Y">therapeutic use</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000368" MajorTopicYN="N">Aged</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004562" MajorTopicYN="N">Electrocardiography</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005260" MajorTopicYN="N">Female</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006339" MajorTopicYN="N">Heart Rate</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006973" MajorTopicYN="N">Hypertension</DescriptorName>
+          <QualifierName UI="Q000188" MajorTopicYN="Y">drug therapy</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010869" MajorTopicYN="N">Pindolol</DescriptorName>
+          <QualifierName UI="Q000627" MajorTopicYN="N">therapeutic use</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013999" MajorTopicYN="N">Timolol</DescriptorName>
+          <QualifierName UI="Q000627" MajorTopicYN="N">therapeutic use</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1978</Year>
+          <Month>9</Month>
+          <Day>20</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1978</Year>
+          <Month>9</Month>
+          <Day>20</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1978</Year>
+          <Month>9</Month>
+          <Day>20</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">30969</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>
