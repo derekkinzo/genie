@@ -58,8 +58,7 @@ class BaseParser(ABC):
             DataFrame -- The parsed dataframe.
         """
 
-    @classmethod
-    def fetch(cls, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
+    def fetch(self, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
         """
         Fetch new data, if available from online sources.
 
@@ -69,9 +68,9 @@ class BaseParser(ABC):
         Returns:
             Generator[DataFrame, None, None] -- Generator yielding fetched data
         """
-        raw_gen = cls.scraper.scrape(chunksize)
+        raw_gen = self.scraper.scrape(chunksize)
         for data_chunk in raw_gen:
-            parsed_df = cls.parse(data_chunk, cls.default_type)
+            parsed_df = self.parse(data_chunk, self.default_type)
             yield parsed_df
 
 
@@ -126,27 +125,33 @@ class CtdParser(BaseParser):
 
         Returns:
             DataFrame -- The parsed dataframe.
+
+        Raises:
+            ParserError -- If unable to parse data
         """
-        parsed_df = pd.read_csv(StringIO(data))
-        # Remove unused columns
-        parsed_df = parsed_df.drop(
-            columns=[
-                "DirectEvidence",
-                "InferenceChemicalName",
-                "InferenceScore",
-                "OmimIDs",
-            ]
-        )
-        # Remove prefix 'MESH:' from DiseaseIDs
-        parsed_df["DiseaseID"] = parsed_df.apply(
-            lambda x: x.DiseaseID.replace("MESH:", ""), axis=1
-        )
-        # Compute and add the digest
-        parsed_df["Digest"] = parsed_df.apply(CtdParser.hash_record, axis=1)
-        errors = CtdParser.validate(parsed_df)
-        if errors:
-            raise ParserError(errors)
-        return parsed_df
+        try:
+            parsed_df = pd.read_csv(StringIO(data))
+            # Remove unused columns
+            parsed_df = parsed_df.drop(
+                columns=[
+                    "DirectEvidence",
+                    "InferenceChemicalName",
+                    "InferenceScore",
+                    "OmimIDs",
+                ]
+            )
+            # Remove prefix 'MESH:' from DiseaseIDs
+            parsed_df["DiseaseID"] = parsed_df.apply(
+                lambda x: x.DiseaseID.replace("MESH:", ""), axis=1
+            )
+            # Compute and add the digest
+            parsed_df["Digest"] = parsed_df.apply(CtdParser.hash_record, axis=1)
+            errors = CtdParser.validate(parsed_df)
+            if errors:
+                raise ParserError(errors)
+            return parsed_df
+        except Exception as parse_exp:
+            raise ParserError(parse_exp)
 
 
 class PubMedParser(BaseParser):

@@ -14,11 +14,11 @@ SAMPLE_CTD_DB_NAME = "sample_ctd_db.csv"
 class MockCtdScraper(CtdScraper):
     """Mock CTD scraper for tests."""
 
-    @staticmethod
-    def scrape(chunksize: int = CHUNKSIZE) -> Generator:
+    filename: str = "sample_ctd_db.csv"
+
+    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
         """Scrape records from online source and return in generator."""
-        sample_ctd_name = "sample_ctd_db.csv"
-        csv_file = os.path.join(get_resources_path(), sample_ctd_name)
+        csv_file = os.path.join(get_resources_path(), self.filename)
         # Open a connection to the file
         with open(csv_file) as file:
             # Read header

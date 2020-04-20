@@ -1,14 +1,14 @@
 """Scraping module to fetch data from online sources."""
 from typing import Generator
-from abc import ABC, abstractstaticmethod
+from abc import ABC, abstractmethod
 from geniepy import CHUNKSIZE
 
 
 class BaseScraper(ABC):
     """Scraper Abstract Base Class."""
 
-    @abstractstaticmethod
-    def scrape(chunksize: int = CHUNKSIZE) -> Generator:
+    @abstractmethod
+    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
         """Scrape data from online source."""
 
 
@@ -19,8 +19,7 @@ class CtdScraper(BaseScraper):
     http://ctdbase.org/
     """
 
-    @staticmethod
-    def scrape(chunksize: int = CHUNKSIZE) -> Generator:
+    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
         """Scrape records from online source and return in generator."""
         raise NotImplementedError
 
@@ -34,7 +33,6 @@ class PubMedScraper(BaseScraper):
 
     """
 
-    @staticmethod
-    def scrape(chunksize: int = CHUNKSIZE) -> Generator:
+    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
         """Scrape records from online source and return in generator."""
         raise NotImplementedError

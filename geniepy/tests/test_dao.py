@@ -15,7 +15,8 @@ class TestCtdDao:
     test_repo = dr.SqlRepository("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE)
     test_dao: BaseDao = CtdDao(test_repo)
     # Attach mock scraper to parser for testing
-    CtdParser.scraper = MockCtdScraper()
+    mock_scraper = MockCtdScraper()
+    CtdParser.scraper = mock_scraper
 
     def read_record(self, digest):
         """Read record(s) from database (tests helper method)."""
