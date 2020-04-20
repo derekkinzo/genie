@@ -1,4 +1,6 @@
 """Module with data used in tests."""
+# flake8: noqa
+# pylint: skip-file
 import pandas as pd
 
 PUBMED_INVALID_DAO = [
@@ -10,7 +12,7 @@ PUBMED_INVALID_DAO = [
             "title": ["Biochemia medica"],
             "iso_abbreviation": ["Biochem Med (Zagreb)"],
             "article_title": [
-                "High anion gap metabolic acidosis caused by D-lactate: mind the time of blood collection."
+                "High anion gap metabolic acidosis caused by D-lactate: mind the time of blood collection."  # NOQA
             ],
             "abstract": [
                 "D-lactic acidosis is an uncommon cause of high anion gap acidosis."

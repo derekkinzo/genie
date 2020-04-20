@@ -8,6 +8,8 @@ The script expects path to folder containing pubmed baseline .xml.gz files,
 the path to output directory where generated files should be stored, and
 number of concurrent processes to be used [1, 16].
 """
+# pylint: disable=wrong-import-order, unused-import
+import geniebootsrap  # noqa: F401
 import logging
 import sys
 import os
@@ -15,8 +17,7 @@ import gzip
 from datetime import datetime
 from itertools import repeat
 from concurrent.futures import ProcessPoolExecutor
-import geniebootsrap
-from genieutils import decompress_gz
+from geniepy.scripts.genieutils import decompress_gz
 from geniepy.pubmed import PubMedArticle, ArticleSetParser
 
 
