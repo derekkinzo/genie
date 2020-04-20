@@ -4,20 +4,44 @@ from typing import NamedTuple
 from typing import Generator
 from tests import get_resources_path
 from geniepy.classifiers.clsfr_base import BaseClsfr
-from geniepy.datamgmt.scrapers import CtdScraper
+from geniepy.datamgmt.scrapers import BaseScraper
+import xml.etree.ElementTree as ET
 from geniepy import CHUNKSIZE
+from geniepy.pubmed import ArticleSetParser, PubMedArticle
 
 
-SAMPLE_CTD_DB_NAME = "sample_ctd_db.csv"
+class MockPubMedScraper(BaseScraper):
+    """Mock PubMed scraper for tests."""
+
+    filename: str = "sample_articleset1.xml"
+
+    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
+        """Simulate scraping pubmed baseline and returning xml objs."""
+        xml_file_path = os.path.join(get_resources_path(), self.filename)
+        xml_root: ET.Element = ET.parse(xml_file_path).getroot()
+
+        xml_list = xml_root.findall("PubmedArticle")
+        pubmed_articles: [PubMedArticle] = []
+        for article_xml in xml_list:
+            pubmed_articles.append(PubMedArticle(article_xml))
+
+        while True:
+            articles_chunk = []
+            for _ in range(chunksize):
+                if len(xml_list) > 0:
+                    articles_chunk.append(xml_list.pop())
+                else:
+                    yield articles_chunk
+            yield articles_chunk
 
 
-class MockCtdScraper(CtdScraper):
+class MockCtdScraper(BaseScraper):
     """Mock CTD scraper for tests."""
 
     filename: str = "sample_ctd_db.csv"
 
     def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
-        """Scrape records from online source and return in generator."""
+        """Simulate scraping records and returning csv str."""
         csv_file = os.path.join(get_resources_path(), self.filename)
         # Open a connection to the file
         with open(csv_file) as file:

@@ -29,7 +29,6 @@ class TestCtdParser:
         # Should return empty list
         assert not self.parser.validate(payload)
 
-    # TODO Test Parse Method
     def test_parse_valid(self):
         """Test parsing valid recrods."""
         mock_scraper = MockCtdScraper()

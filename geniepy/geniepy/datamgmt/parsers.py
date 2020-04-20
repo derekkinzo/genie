@@ -12,12 +12,13 @@ from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
 from geniepy import CHUNKSIZE
 from geniepy.datamgmt.scrapers import BaseScraper, CtdScraper, PubMedScraper
 from geniepy.errors import ParserError
+from geniepy.pubmed import PubMedArticle
 
 
 class DataType(Enum):
     """Possible parsable datatypes."""
 
-    CSV = auto()
+    CSV_STR = auto()
     XML = auto()
 
 
@@ -82,7 +83,7 @@ class CtdParser(BaseParser):
     http://ctdbase.org/
     """
 
-    default_type: DataType = DataType.CSV
+    default_type: DataType = DataType.CSV_STR
     scraper: CtdScraper = CtdScraper()
     schema: Schema = Schema(
         [
@@ -113,7 +114,7 @@ class CtdParser(BaseParser):
         return str(hexdigest)
 
     @staticmethod
-    def parse(data, dtype=DataType.CSV) -> DataFrame:
+    def parse(data, dtype=DataType.CSV_STR) -> DataFrame:
         """
         Parse data and convert according to parser schema.
 
@@ -194,4 +195,75 @@ class PubMedParser(BaseParser):
         Returns:
             DataFrame -- The parsed dataframe.
         """
-        return NotImplementedError
+        # Data passed in should be a list of xml element trees
+        xml_list = data
+
+        # The keys of the dataframe
+        keys = [
+            "pmid",
+            "date_completed",
+            "pub_model",
+            "title",
+            "iso_abbreviation",
+            "article_title",
+            "abstract",
+            "authors",
+            "language",
+            "chemicals",
+            "mesh_list",
+        ]
+
+        # Temp array variables to store from each xml element tree
+        pmid_list = []
+        date_completed_list = []
+        pub_model_list = []
+        title_list = []
+        iso_abbreviation_list = []
+        article_title_list = []
+        abstract_list = []
+        authors_list = []
+        language_list = []
+        chemicals_list = []
+        mesh_list_list = []
+
+        try:
+            # General XML Tags
+            for xml_article in xml_list:
+                article = PubMedArticle(xml_article)
+                pmid_list.append(np.int64(article.pmid))
+                date_completed_list.append(article.date_completed)
+                pub_model_list.append(article.pub_model)
+                title_list.append(article.title)
+                iso_abbreviation_list.append(article.iso_abbreviation)
+                article_title_list.append(article.article_title)
+                abstract_list.append(article.abstract)
+                authors_list.append(str(article.authors).strip("[]"))
+                language_list.append(article.language)
+                chemicals_list.append(str(article.chemicals).strip("[]"))
+                mesh_list_list.append(str(article.mesh_list).strip("[]"))
+
+            # Create the array of arrays of values in dataframe
+            values = [
+                pmid_list,
+                date_completed_list,
+                pub_model_list,
+                title_list,
+                iso_abbreviation_list,
+                article_title_list,
+                abstract_list,
+                authors_list,
+                language_list,
+                chemicals_list,
+                mesh_list_list,
+            ]
+
+            # Zip df keys and values and create dataframe
+            zipped = list(zip(keys, values))
+            parsed_df = pd.DataFrame(dict(zipped))
+
+            errors = PubMedParser.validate(parsed_df)
+            if errors:
+                raise ParserError(errors)
+            return parsed_df
+        except Exception as parse_exp:
+            raise ParserError(parse_exp)
