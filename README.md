@@ -50,7 +50,7 @@ The services are availble under `com.trends.db.controller` package and are divid
 - v1/api/trend/add
 - v1/api/trend/update/{id}
 
-###How to make API calls?
+## How to make API calls?
 
 ## Get Diseases
 
@@ -70,7 +70,7 @@ The services are availble under `com.trends.db.controller` package and are divid
 
 #### Body
 ```
-
+[{"id":"5e89657007b1171349d6584a","diseaseName":"Covid-19","keywords":["CoronaVirus"],"aliases":["Some Alias"]
 ```
 
 ## GeniePy
