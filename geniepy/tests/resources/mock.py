@@ -28,10 +28,13 @@ class MockPubMedScraper(BaseScraper):
         while True:
             articles_chunk = []
             for _ in range(chunksize):
+                # Append articles to create chunk sized array
                 if len(xml_list) > 0:
                     articles_chunk.append(xml_list.pop())
-                else:
-                    yield articles_chunk
+            # If no more articles return
+            if not articles_chunk:
+                return
+            # If still articles, yield to generator
             yield articles_chunk
 
 
