@@ -14,7 +14,13 @@ import geniepy.datamgmt.repositories as dr
 
 
 class BaseDao(ABC):
-    """Data Access Object Abstract Base Class."""
+    """
+    Implementation of Data Access Object Abstract Base Class.
+
+    Each DAO is composed of one or more repositories and a parser which is used to
+    structure and validate the DAO's data. Consult the parser's schema to check the
+    format of the data stored in the repositories.
+    """
 
     _repository: dr.BaseRepository
     """Database repository used by DAO to store objects."""
