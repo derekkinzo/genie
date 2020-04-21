@@ -1,5 +1,6 @@
 package com.trends.db.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,8 +20,7 @@ import java.util.Set;
  * The type Patent.
  */
 @Document(collection = "patent")
-@Getter
-@Setter
+@Data
 @ToString(exclude = { "id" })
 public class Patent implements Serializable {
 
@@ -48,4 +48,23 @@ public class Patent implements Serializable {
 
   @Version
   private Integer version;
+
+  public Patent(@NotBlank final String drugName, final Set<String> keywords, final Set<String> aliases,
+                final Set<String> participants, final String patent, final String patentNumber, final boolean isActive,
+                final Date acquiredOn,
+                final Date expiresOn, final Date createdOn, final Date updatedOn, final Integer version) {
+
+    this.drugName = drugName;
+    this.keywords = keywords;
+    this.aliases = aliases;
+    this.participants = participants;
+    this.patent = patent;
+    this.patentNumber = patentNumber;
+    this.isActive = isActive;
+    this.acquiredOn = acquiredOn;
+    this.expiresOn = expiresOn;
+    this.createdOn = createdOn;
+    this.updatedOn = updatedOn;
+    this.version = version;
+  }
 }

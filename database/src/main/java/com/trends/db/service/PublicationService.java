@@ -14,9 +14,7 @@ public interface PublicationService {
 
   List<Publication> findAllPublications();
 
-  void savePublications(final Set<Publication> publications);
-
   void savePublication(final Publication publication);
 
-  void updatePublication(final Publication publication);
+  Publication updatePublication(Publication publication, final Publication payload);
 }

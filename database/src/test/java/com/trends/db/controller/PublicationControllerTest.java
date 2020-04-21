@@ -5,15 +5,18 @@ import com.trends.db.service.PublicationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -34,95 +37,215 @@ class PublicationControllerTest {
   @Test
   void testGetPublications() {
     // Setup
+    final ResponseEntity<List<Publication>> expectedResult = new ResponseEntity<>(
+        Arrays.asList(new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0)), HttpStatus.OK);
 
-    // Configure PublicationService.findPublicationsByKeyword(...).
-    final Publication publication = new Publication();
-    publication.setId("id");
-    publication.setAbstractTitle("abstractTitle");
-    publication.setKeywords(new HashSet<>(Arrays.asList("value")));
-    publication.setSourceUri("sourceUri");
-    publication.setAbstractContent("abstractContent");
-    publication.setChemicals(new HashSet<>(Arrays.asList("value")));
-    publication.setAuthors(new HashSet<>(Arrays.asList("value")));
-    publication.setDateAccepted(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    publication.setDateCompleted(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    publication.setDateEntered(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    final Set<Publication> publications = new HashSet<>(Arrays.asList(publication));
-    when(mockPublicationService.findPublicationsByKeyword("keyword")).thenReturn(publications);
+    // Configure PublicationService.findAllPublications(...).
+    final List<Publication> publications = Arrays.asList(
+        new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
+    when(mockPublicationService.findAllPublications()).thenReturn(publications);
 
     // Run the test
-    final Set<Publication> result = publicationControllerUnderTest.getPublications("keyword");
+    final ResponseEntity<List<Publication>> result = publicationControllerUnderTest.getPublications();
 
     // Verify the results
+    assertEquals(expectedResult, result);
   }
 
   @Test
-  void testGetPublication() {
+  void testGetPublicationsByKeyword() {
     // Setup
+    final ResponseEntity<Set<Publication>> expectedResult = new ResponseEntity<>(new HashSet<>(
+        Arrays.asList(new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0))), HttpStatus.OK);
+
+    // Configure PublicationService.findPublicationsByKeyword(...).
+    final Set<Publication> publications = new HashSet<>(
+        Arrays.asList(new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0)));
+    when(mockPublicationService.findPublicationsByKeyword("keyword")).thenReturn(publications);
+
+    // Run the test
+    final ResponseEntity<Set<Publication>> result = publicationControllerUnderTest.getPublicationsByKeyword("keyword");
+
+    // Verify the results
+    assertEquals(expectedResult, result);
+  }
+
+  @Test
+  void testGetPublicationById() {
+    // Setup
+    final ResponseEntity<Publication> expectedResult = new ResponseEntity<>(new Publication("abstractTitle", new HashSet<>(
+        Arrays.asList("value")), "sourceUri", "abstractContent", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+        Arrays.asList("value")), new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+        "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0), HttpStatus.OK);
 
     // Configure PublicationService.findPublicationsById(...).
-    final Publication publication1 = new Publication();
-    publication1.setId("id");
-    publication1.setAbstractTitle("abstractTitle");
-    publication1.setKeywords(new HashSet<>(Arrays.asList("value")));
-    publication1.setSourceUri("sourceUri");
-    publication1.setAbstractContent("abstractContent");
-    publication1.setChemicals(new HashSet<>(Arrays.asList("value")));
-    publication1.setAuthors(new HashSet<>(Arrays.asList("value")));
-    publication1.setDateAccepted(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    publication1.setDateCompleted(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    publication1.setDateEntered(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    final Optional<Publication> publication = Optional.of(publication1);
+    final Optional<Publication> publication = Optional
+        .of(new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
     when(mockPublicationService.findPublicationsById("id")).thenReturn(publication);
 
     // Run the test
-    final Optional<Publication> result = publicationControllerUnderTest.getPublication("id");
+    final ResponseEntity<Publication> result = publicationControllerUnderTest.getPublicationById("id");
 
     // Verify the results
+    assertEquals(expectedResult, result);
   }
-
 
   @Test
   void testAddPublication() {
     // Setup
-    final Publication publication = new Publication();
-    publication.setId("id");
-    publication.setAbstractTitle("abstractTitle");
-    publication.setKeywords(new HashSet<>(Arrays.asList("value")));
-    publication.setSourceUri("sourceUri");
-    publication.setAbstractContent("abstractContent");
-    publication.setChemicals(new HashSet<>(Arrays.asList("value")));
-    publication.setAuthors(new HashSet<>(Arrays.asList("value")));
-    publication.setDateAccepted(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    publication.setDateCompleted(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    publication.setDateEntered(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+    final Publication publication =
+        new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
 
     // Run the test
     publicationControllerUnderTest.addPublication(publication);
 
     // Verify the results
-    verify(mockPublicationService).savePublication(any(Publication.class));
+    verify(mockPublicationService).savePublication(
+        new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
   }
 
   @Test
   void testUpdatePublications() {
     // Setup
-    final Publication publication = new Publication();
-    publication.setId("id");
-    publication.setAbstractTitle("abstractTitle");
-    publication.setKeywords(new HashSet<>(Arrays.asList("value")));
-    publication.setSourceUri("sourceUri");
-    publication.setAbstractContent("abstractContent");
-    publication.setChemicals(new HashSet<>(Arrays.asList("value")));
-    publication.setAuthors(new HashSet<>(Arrays.asList("value")));
-    publication.setDateAccepted(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    publication.setDateCompleted(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    publication.setDateEntered(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+    final Publication publication =
+        new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
+    final ResponseEntity<Publication> expectedResult = new ResponseEntity<>(new Publication("abstractTitle", new HashSet<>(
+        Arrays.asList("value")), "sourceUri", "abstractContent", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+        Arrays.asList("value")), new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+        "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0), HttpStatus.OK);
+
+    // Configure PublicationService.findPublicationsById(...).
+    final Optional<Publication> publication1 = Optional
+        .of(new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
+    when(mockPublicationService.findPublicationsById("id")).thenReturn(publication1);
+
+    // Configure PublicationService.updatePublication(...).
+    final Publication publication2 =
+        new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
+    when(mockPublicationService.updatePublication(
+        new Publication("abstractTitle", new HashSet<>(Arrays.asList("value")), "sourceUri", "abstractContent",
+            new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0), new Publication("abstractTitle", new HashSet<>(
+            Arrays.asList("value")), "sourceUri", "abstractContent", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+            Arrays.asList("value")), new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), "doiId", "language", "piiId", "pmcId", "pmiId",
+            "publishStatus", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0))).thenReturn(publication2);
 
     // Run the test
-    publicationControllerUnderTest.updatePublications(0, publication);
+    final ResponseEntity<Publication> result = publicationControllerUnderTest.updatePublications("id", publication);
 
     // Verify the results
-    verify(mockPublicationService).updatePublication(any(Publication.class));
+    assertEquals(expectedResult, result);
   }
 }

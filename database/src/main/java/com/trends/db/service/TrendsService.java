@@ -14,9 +14,7 @@ public interface TrendsService {
 
   List<Trend> findAllTrends();
 
-  void saveTrends(final Set<Trend> trends);
-
   void saveTrend(final Trend trend);
 
-  void updateTrend(final Trend trend);
+  Trend updateTrend(Trend trend, final Trend payload);
 }

@@ -23,18 +23,11 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @ExceptionHandler({ DiseaseNotFoundException.class })
-  public final ResponseEntity<Object> handleDiseaseNotFoundException(final Exception exception,
-                                                                     final WebRequest webRequest) {
-
-    ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), exception.getMessage(),
-        webRequest.getDescription(false));
-
-    return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
-  }
-
-  @ExceptionHandler({ TrendNotFoundException.class })
-  public final ResponseEntity<Object> handleTrendNotFoundException(final Exception exception, final WebRequest webRequest) {
+  @ExceptionHandler({ DiseaseException.class, TrendException.class, GeneException.class, PatentException.class,
+                      PublicationException.class, TrialException.class
+  })
+  public final ResponseEntity<Object> handleNotFoundException(final Exception exception,
+                                                              final WebRequest webRequest) {
 
     ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), exception.getMessage(),
         webRequest.getDescription(false));
