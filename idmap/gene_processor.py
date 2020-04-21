@@ -3,7 +3,7 @@ import pdb
 from nltk.corpus import words
 
 words = set(words.words())
-words.add("pdb")
+words.add("pdf")
 
 with open("data/genes.csv", "r") as file:
     reader = csv.reader(file)

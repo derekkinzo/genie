@@ -17,18 +17,24 @@ limit = 5000
 
 def map():
     results = client.query("""
-        SELECT pmid, abstract FROM `harvard-599-trendsetters.pubmed.baseline_02032020` LIMIT 1000
+        SELECT pmid, abstract FROM `harvard-599-trendsetters.pubmed.baseline_02032020`
     """).result()
-    for row in results:
-        abstract = row[1].lower() + " "
-        for i in range(len(abstract) - 1):
-            if not abstract[i - 1].isalpha():
-                current = dictionary
-                for k in range(i, len(abstract)):
-                    if abstract[k] not in current:
-                        break
-                    current = current[abstract[k]]
-                    if chr(0) in current and not abstract[k + 1].isalpha():
-                        print(row[0], abstract[i:k + 2])
+    with open("data/abstract_genes.csv", "w") as file:
+        writer = csv.writer(file)
+        for row in results:
+            if not row[1]:
+                continue
+            abstract = row[1].lower() + " "
+            results = [row[0]]
+            for i in range(len(abstract) - 1):
+                if not abstract[i - 1].isalpha():
+                    current = dictionary
+                    for k in range(i, len(abstract)):
+                        if abstract[k] not in current:
+                            break
+                        current = current[abstract[k]]
+                        if chr(0) in current and not abstract[k + 1].isalpha():
+                            results.append(row[1][i:k + 1])
+            writer.writerow(results)
 
 map()
