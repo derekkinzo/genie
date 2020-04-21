@@ -61,7 +61,7 @@ class TrendsControllerTest {
     when(mockTrendsService.findAllTrends()).thenReturn(trends);
 
     // Run the test
-    final ResponseEntity<List<Trend>> result = trendsControllerUnderTest.getTrends("keyword");
+    final ResponseEntity<List<Trend>> result = trendsControllerUnderTest.getTrends();
 
     // Verify the results
     assertEquals(expectedResult, result);

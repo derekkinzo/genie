@@ -41,12 +41,11 @@ public class TrendsController {
   /**
    * Gets trends.
    *
-   * @param keyword the keyword
    * @return the trends
    */
-  @ApiOperation(value = "Get Trends by keyword", nickname = "Get Trends by keyword", response = Trend.class)
-  @GetMapping(path = "/trends/keyword/{keyword}", produces = "application/json")
-  public ResponseEntity<List<Trend>> getTrends(@PathVariable final String keyword) {
+  @ApiOperation(value = "Get Trends", nickname = "Get all trends", response = Trend.class)
+  @GetMapping(path = "/trends", produces = "application/json")
+  public ResponseEntity<List<Trend>> getTrends() {
 
     _logger.info("Getting all Trends...");
 
