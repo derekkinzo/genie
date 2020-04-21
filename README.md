@@ -10,7 +10,7 @@ The database URL and logging level is configured under `src\main\resources\appli
 
 Run the application by executing `mvn spring-boot:run` from the `database/src` directory.
 
-The services are availble under `com.trends.db.controller` package and are divided into the following groups:
+The services are available under `com.trends.db.controller` package and are divided into the following groups:
 
 **Clinical Trial API**
 
