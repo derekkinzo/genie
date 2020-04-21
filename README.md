@@ -8,13 +8,24 @@ The database URL and logging level is configured under `src\main\resources\appli
 
 The services are availble under `com.trends.db.controller` package and are divided into the following groups:
 
-- Clinical Trial
-- Diseases
-- Genes
-- Patents
-- Publications
-- Trends
+**Clinical Trial API**
 
+> 
+**Disease API**
+
+>
+**Gene API **
+
+>
+**Patent API**
+
+>
+**Publication API**
+
+>
+**Trends API**
+
+>
 
 ## GeniePy
 GeniePy is a standard python package that implements the trend-detection application. This application relies on data from PubMed.com and ClinicalTrials.gov to build machine learning classifiers to predict gene-disease relationship breakouts.
