@@ -9,7 +9,7 @@ from abc import ABC
 from pandas import DataFrame
 import geniepy
 from geniepy.errors import SchemaError
-from geniepy.datamgmt.parsers import BaseParser, CtdParser
+from geniepy.datamgmt.parsers import BaseParser, CtdParser, PubMedParser
 import geniepy.datamgmt.repositories as dr
 
 
@@ -85,6 +85,18 @@ class CtdDao(BaseDao):
     __slots__ = ["_repository"]
 
     _parser: CtdParser = CtdParser()
+
+    def __init__(self, repository: dr.BaseRepository):
+        """Initialize DAO state."""
+        self._repository = repository
+
+
+class PubMedDao(BaseDao):
+    """Implementation of CTD Data Access Object."""
+
+    __slots__ = ["_repository"]
+
+    _parser: PubMedParser = PubMedParser()
 
     def __init__(self, repository: dr.BaseRepository):
         """Initialize DAO state."""

@@ -1,7 +1,9 @@
 """Module to test online sources parsers."""
 import pytest
 from geniepy.datamgmt.parsers import BaseParser, PubMedParser
+from geniepy.errors import ParserError
 import tests.testdata as td
+from tests.resources.mock import MockPubMedScraper
 
 
 VALID_DF = td.PUBMED_VALID_DF
@@ -12,6 +14,8 @@ class TestPubMedParser:
     """Pytest CTD Parser class."""
 
     parser: BaseParser = PubMedParser()
+    mock_scraper = MockPubMedScraper()
+    parser.scraper = mock_scraper
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""
@@ -29,6 +33,14 @@ class TestPubMedParser:
         # Should return empty list
         assert not self.parser.validate(payload)
 
-    # TODO Test Parse Method
+    def test_parse_valid(self):
+        """Test parsing valid recrods."""
+        scrape_gen = self.parser.scraper.scrape()
+        xml_articles = next(scrape_gen)
+        parsed_df = self.parser.parse(xml_articles)
+        assert parsed_df.shape[0] == 2
 
-    # TODO Test Fetch Method
+    def test_parse_invalid_file(self):
+        """Attempt to parse invalid data."""
+        with pytest.raises(ParserError):
+            self.parser.parse("invalid xml")
