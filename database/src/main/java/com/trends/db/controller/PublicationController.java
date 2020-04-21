@@ -55,7 +55,7 @@ public class PublicationController {
     try {
       publications = publicationService.findAllPublications();
     } catch (PublicationException e) {
-      _logger.error("Disease fetch failed");
+      _logger.error("Publication fetch failed");
       return ResponseEntity.notFound().build();
     }
 

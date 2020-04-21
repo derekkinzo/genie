@@ -117,6 +117,7 @@ public class DiseaseController {
    *
    * @param disease the disease
    */
+  @ApiOperation(value = "Add Disease", nickname = "Add a disease", response = Disease.class)
   @PostMapping(path = "/disease/add", consumes = "application/json")
   public void addDisease(@RequestBody @Valid final Disease disease) {
 
@@ -128,6 +129,7 @@ public class DiseaseController {
    *
    * @param disease the disease to be updated
    */
+  @ApiOperation(value = "Update a disease", nickname = "Update a disease by id", response = Disease.class)
   @PutMapping(path = "/diseases/update/{id}", consumes = "application/json")
   public ResponseEntity<Disease> updateDisease(@PathVariable final String id, @RequestBody final Disease disease) {
 
