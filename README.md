@@ -14,7 +14,7 @@ The services are availble under `com.trends.db.controller` package and are divid
 **Disease API**
 
 >
-**Gene API **
+**Gene API**
 
 >
 **Patent API**
