@@ -1,19 +1,24 @@
 package com.trends.db.controller;
 
 import com.trends.db.model.ClinicalTrial;
+import com.trends.db.model.enums.TrialOutcome;
 import com.trends.db.model.enums.TrialStatus;
 import com.trends.db.service.ClinicalTrialService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -34,120 +39,170 @@ class ClinicalTrialControllerTest {
   @Test
   void testGetAllTrials() {
     // Setup
+    final ResponseEntity<List<ClinicalTrial>> expectedResult = new ResponseEntity<>(
+        Arrays.asList(
+            new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(Arrays.asList("value")),
+                new HashSet<>(
+                    Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+                false, "whyStopped", false, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0)), HttpStatus.OK);
 
     // Configure ClinicalTrialService.findAllClinicalTrials(...).
-    final ClinicalTrial clinicalTrial = new ClinicalTrial();
-    clinicalTrial.setId("id");
-    clinicalTrial.setPubMedId("pubMedId");
-    clinicalTrial.setTrialType("trialType");
-    clinicalTrial.setStatus(TrialStatus.IN_PROGRESS);
-    clinicalTrial.setKeywords(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial.setLeadSponsors(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial.setCitations(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial.setCollaborators(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial.setStopped(false);
-    clinicalTrial.setWhyStopped("whyStopped");
-    final List<ClinicalTrial> clinicalTrials = Arrays.asList(clinicalTrial);
+    final List<ClinicalTrial> clinicalTrials =
+        Arrays.asList(new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "whyStopped", false,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
     when(mockClinicalTrialService.findAllClinicalTrials()).thenReturn(clinicalTrials);
 
     // Run the test
-    final List<ClinicalTrial> result = clinicalTrialControllerUnderTest.getAllTrials();
+    final ResponseEntity<List<ClinicalTrial>> result = clinicalTrialControllerUnderTest.getAllTrials();
 
     // Verify the results
+    assertEquals(expectedResult, result);
   }
 
   @Test
-  void testGetTrials() {
+  void testGetTrialsByKeyword() {
     // Setup
+    final ResponseEntity<Set<ClinicalTrial>> expectedResult = new ResponseEntity<>(new HashSet<>(
+        Arrays.asList(
+            new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(Arrays.asList("value")),
+                new HashSet<>(
+                    Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+                false, "whyStopped", false, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0))), HttpStatus.OK);
 
     // Configure ClinicalTrialService.findClinicalTrialsByKeyword(...).
-    final ClinicalTrial clinicalTrial = new ClinicalTrial();
-    clinicalTrial.setId("id");
-    clinicalTrial.setPubMedId("pubMedId");
-    clinicalTrial.setTrialType("trialType");
-    clinicalTrial.setStatus(TrialStatus.IN_PROGRESS);
-    clinicalTrial.setKeywords(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial.setLeadSponsors(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial.setCitations(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial.setCollaborators(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial.setStopped(false);
-    clinicalTrial.setWhyStopped("whyStopped");
-    final Set<ClinicalTrial> clinicalTrials = new HashSet<>(Arrays.asList(clinicalTrial));
-    when(mockClinicalTrialService.findClinicalTrialsByKeyword("keyword")).thenReturn(clinicalTrials);
+    final Set<ClinicalTrial> trials = new HashSet<>(
+        Arrays.asList(
+            new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(Arrays.asList("value")),
+                new HashSet<>(
+                    Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+                false, "whyStopped", false, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0)));
+    when(mockClinicalTrialService.findClinicalTrialsByKeyword("keyword")).thenReturn(trials);
 
     // Run the test
-    final Set<ClinicalTrial> result = clinicalTrialControllerUnderTest.getTrials("keyword");
+    final ResponseEntity<Set<ClinicalTrial>> result = clinicalTrialControllerUnderTest.getTrialsByKeyword("keyword");
 
     // Verify the results
+    assertEquals(expectedResult, result);
   }
 
   @Test
-  void testGetTrial() {
+  void testGetTrialById() {
     // Setup
+    final ResponseEntity<ClinicalTrial> expectedResult =
+        new ResponseEntity<>(new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "whyStopped", false,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0), HttpStatus.OK);
 
     // Configure ClinicalTrialService.findClinicalTrialsById(...).
-    final ClinicalTrial clinicalTrial1 = new ClinicalTrial();
-    clinicalTrial1.setId("id");
-    clinicalTrial1.setPubMedId("pubMedId");
-    clinicalTrial1.setTrialType("trialType");
-    clinicalTrial1.setStatus(TrialStatus.IN_PROGRESS);
-    clinicalTrial1.setKeywords(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial1.setLeadSponsors(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial1.setCitations(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial1.setCollaborators(new HashSet<>(Arrays.asList("value")));
-    clinicalTrial1.setStopped(false);
-    clinicalTrial1.setWhyStopped("whyStopped");
-    final Optional<ClinicalTrial> clinicalTrial = Optional.of(clinicalTrial1);
+    final Optional<ClinicalTrial> clinicalTrial =
+        Optional.of(new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "whyStopped", false,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
     when(mockClinicalTrialService.findClinicalTrialsById("id")).thenReturn(clinicalTrial);
 
     // Run the test
-    final Optional<ClinicalTrial> result = clinicalTrialControllerUnderTest.getTrial("id");
+    final ResponseEntity<ClinicalTrial> result = clinicalTrialControllerUnderTest.getTrialById("id");
 
     // Verify the results
+    assertEquals(expectedResult, result);
   }
-
 
   @Test
   void testAddTrial() {
     // Setup
-    final ClinicalTrial trial = new ClinicalTrial();
-    trial.setId("id");
-    trial.setPubMedId("pubMedId");
-    trial.setTrialType("trialType");
-    trial.setStatus(TrialStatus.IN_PROGRESS);
-    trial.setKeywords(new HashSet<>(Arrays.asList("value")));
-    trial.setLeadSponsors(new HashSet<>(Arrays.asList("value")));
-    trial.setCitations(new HashSet<>(Arrays.asList("value")));
-    trial.setCollaborators(new HashSet<>(Arrays.asList("value")));
-    trial.setStopped(false);
-    trial.setWhyStopped("whyStopped");
+    final ClinicalTrial trial = new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+        Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(
+        Arrays.asList("value")), false, "whyStopped", false, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        TrialOutcome.FAILED, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
 
     // Run the test
     clinicalTrialControllerUnderTest.addTrial(trial);
 
     // Verify the results
-    verify(mockClinicalTrialService).saveClinicalTrial(any(ClinicalTrial.class));
+    verify(mockClinicalTrialService)
+        .saveClinicalTrial(new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "whyStopped", false,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
   }
 
   @Test
   void testUpdateTrial() {
     // Setup
-    final ClinicalTrial trial = new ClinicalTrial();
-    trial.setId("id");
-    trial.setPubMedId("pubMedId");
-    trial.setTrialType("trialType");
-    trial.setStatus(TrialStatus.IN_PROGRESS);
-    trial.setKeywords(new HashSet<>(Arrays.asList("value")));
-    trial.setLeadSponsors(new HashSet<>(Arrays.asList("value")));
-    trial.setCitations(new HashSet<>(Arrays.asList("value")));
-    trial.setCollaborators(new HashSet<>(Arrays.asList("value")));
-    trial.setStopped(false);
-    trial.setWhyStopped("whyStopped");
+    final ClinicalTrial trial = new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+        Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(
+        Arrays.asList("value")), false, "whyStopped", false, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        TrialOutcome.FAILED, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
+    final ResponseEntity<ClinicalTrial> expectedResult =
+        new ResponseEntity<>(new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "whyStopped", false,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0), HttpStatus.OK);
+
+    // Configure ClinicalTrialService.findClinicalTrialsById(...).
+    final Optional<ClinicalTrial> clinicalTrial =
+        Optional.of(new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "whyStopped", false,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
+    when(mockClinicalTrialService.findClinicalTrialsById("id")).thenReturn(clinicalTrial);
+
+    // Configure ClinicalTrialService.updateClinicalTrial(...).
+    final ClinicalTrial clinicalTrial1 = new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+        Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(
+        Arrays.asList("value")), false, "whyStopped", false, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        TrialOutcome.FAILED, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
+    when(mockClinicalTrialService
+        .updateClinicalTrial(new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+                new HashSet<>(
+                    Arrays.asList("value")), false, "whyStopped", false,
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0),
+            new ClinicalTrial("pubMedId", "trialType", TrialStatus.IN_PROGRESS, new HashSet<>(
+                Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+                new HashSet<>(
+                    Arrays.asList("value")), false, "whyStopped", false,
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), TrialOutcome.FAILED,
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0))).thenReturn(clinicalTrial1);
 
     // Run the test
-    clinicalTrialControllerUnderTest.updateTrial(0, trial);
+    final ResponseEntity<ClinicalTrial> result = clinicalTrialControllerUnderTest.updateTrial("id", trial);
 
     // Verify the results
-    verify(mockClinicalTrialService).updateClinicalTrial(any(ClinicalTrial.class));
+    assertEquals(expectedResult, result);
   }
 }

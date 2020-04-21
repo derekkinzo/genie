@@ -14,9 +14,7 @@ public interface PatentService {
 
   List<Patent> findAllPatents();
 
-  void savePatents(final Set<Patent> patents);
-
   void savePatent(final Patent patent);
 
-  void updatePatent(final Patent patent);
+  Patent updatePatent(Patent patent, final Patent payload);
 }

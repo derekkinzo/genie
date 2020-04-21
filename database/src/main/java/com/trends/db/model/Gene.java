@@ -1,5 +1,6 @@
 package com.trends.db.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,8 +20,7 @@ import java.util.Set;
  * The type Gene.
  */
 @Document(collection = "gene")
-@Getter
-@Setter
+@Data
 @ToString(exclude = { "id" })
 public class Gene implements Serializable {
 
@@ -47,4 +47,22 @@ public class Gene implements Serializable {
 
   @Version
   private Integer version;
+
+  public Gene(@NotBlank final String approvedGeneName, final Set<String> approvedSymbols, final Set<String> keywords,
+              final Set<String> aliases, final boolean symbolStatus, final String chromosomalLocation,
+              final String geneGroup, final String geneId,
+              final Date createdOn, final Date updatedOn, final Integer version) {
+
+    this.approvedGeneName = approvedGeneName;
+    this.approvedSymbols = approvedSymbols;
+    this.keywords = keywords;
+    this.aliases = aliases;
+    this.symbolStatus = symbolStatus;
+    this.chromosomalLocation = chromosomalLocation;
+    this.geneGroup = geneGroup;
+    this.geneId = geneId;
+    this.createdOn = createdOn;
+    this.updatedOn = updatedOn;
+    this.version = version;
+  }
 }

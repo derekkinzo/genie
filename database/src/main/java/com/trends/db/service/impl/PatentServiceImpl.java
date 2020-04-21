@@ -35,20 +35,15 @@ public class PatentServiceImpl implements PatentService {
   }
 
   @Override
-  public void savePatents(final Set<Patent> genes) {
+  public void savePatent(final Patent patent) {
 
-    dao.insert(genes);
+    dao.insert(patent);
   }
 
   @Override
-  public void savePatent(final Patent gene) {
+  public Patent updatePatent(final Patent patent, final Patent payload) {
 
-    dao.insert(gene);
+     return dao.insert(patent);
   }
 
-  @Override
-  public void updatePatent(final Patent gene) {
-
-    dao.insert(gene);
-  }
 }

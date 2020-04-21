@@ -8,15 +8,13 @@ import java.util.Set;
 
 public interface DiseaseService {
 
-  Optional<Disease> findDiseasesById(final String id);
+  Optional<Disease> findDiseaseById(final String id);
 
   Set<Disease> findDiseasesByKeyword(final String keyword);
 
   List<Disease> findAllDiseases();
 
-  void saveDiseases(final Set<Disease> diseases);
-
   void saveDisease(final Disease disease);
 
-  void updateDisease(final Disease disease);
+  Disease updateDisease(Disease disease, final Disease payload);
 }

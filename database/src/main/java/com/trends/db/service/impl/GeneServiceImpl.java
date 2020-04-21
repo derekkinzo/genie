@@ -35,20 +35,15 @@ public class GeneServiceImpl implements GeneService {
   }
 
   @Override
-  public void saveGenes(final Set<Gene> genes) {
-
-    dao.insert(genes);
-  }
-
-  @Override
   public void saveGene(final Gene gene) {
 
     dao.insert(gene);
   }
 
   @Override
-  public void updateGene(final Gene gene) {
+  public Gene updateGene(final Gene gene, final Gene payload) {
 
-    dao.insert(gene);
+    return dao.insert(gene);
   }
+
 }

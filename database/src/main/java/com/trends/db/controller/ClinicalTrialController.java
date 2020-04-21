@@ -1,11 +1,14 @@
 package com.trends.db.controller;
 
 import com.trends.db.model.ClinicalTrial;
+import com.trends.db.model.exception.DiseaseException;
+import com.trends.db.model.exception.TrialException;
 import com.trends.db.service.ClinicalTrialService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,20 +31,33 @@ public class ClinicalTrialController {
 
   private static final Logger _logger = LoggerFactory.getLogger(ClinicalTrialController.class);
 
-  @Autowired
   private final ClinicalTrialService clinicalTrialService;
 
-  public ClinicalTrialController(
-      final ClinicalTrialService clinicalTrialService) {
+  public ClinicalTrialController(final ClinicalTrialService clinicalTrialService) {
 
     this.clinicalTrialService = clinicalTrialService;
   }
 
   @ApiOperation(value = "Get Trials by Keyword", nickname = "Get Trials by keyword", response = ClinicalTrial.class)
-  @GetMapping(path = "/trials")
-  public List<ClinicalTrial> getAllTrials() {
+  @GetMapping(path = "/trials", produces = "application/json")
+  public ResponseEntity<List<ClinicalTrial>> getAllTrials() {
 
-    return clinicalTrialService.findAllClinicalTrials();
+    _logger.info("Getting all Trials...");
+
+    final List<ClinicalTrial> trials;
+
+    try {
+      trials = clinicalTrialService.findAllClinicalTrials();
+    } catch (TrialException e) {
+      _logger.error("Trials fetch failed");
+      return ResponseEntity.notFound().build();
+    }
+
+    if (!trials.isEmpty()) {
+      return ResponseEntity.ok().body(trials);
+
+    }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 
   /**
@@ -51,10 +67,24 @@ public class ClinicalTrialController {
    * @return the trials
    */
   @ApiOperation(value = "Get Trials by Keyword", nickname = "Get Trials by keyword", response = ClinicalTrial.class)
-  @GetMapping(path = "/trials/keyword/{keyword}")
-  public Set<ClinicalTrial> getTrials(@PathVariable final String keyword) {
+  @GetMapping(path = "/trials/keyword/{keyword}", produces = "application/json")
+  public ResponseEntity<Set<ClinicalTrial>> getTrialsByKeyword(@PathVariable final String keyword) {
 
-    return clinicalTrialService.findClinicalTrialsByKeyword(keyword);
+    _logger.info("Getting trials for keyword: {}", keyword);
+    final Set<ClinicalTrial> trials;
+
+    try {
+      trials = clinicalTrialService.findClinicalTrialsByKeyword(keyword);
+    } catch (TrialException e) {
+      _logger.error("Trial fetch failed");
+      return ResponseEntity.notFound().build();
+    }
+
+    if (!trials.isEmpty()) {
+      return ResponseEntity.ok().body(trials);
+
+    }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 
   /**
@@ -63,24 +93,23 @@ public class ClinicalTrialController {
    * @param id the id
    * @return the trial
    */
-  @ApiOperation(value = "Get Trials by Id", nickname = "Get Trials by id", response = ClinicalTrial.class)
-  @GetMapping(path = "/trial/id/{id}")
-  public Optional<ClinicalTrial> getTrial(@PathVariable final String id) {
+  @ApiOperation(value = "Get Trial by Id", nickname = "Get Trial by id", response = ClinicalTrial.class)
+  @GetMapping(path = "/trial/id/{id}", produces = "application/json")
+  public ResponseEntity<ClinicalTrial> getTrialById(@PathVariable final String id) {
 
-    return clinicalTrialService.findClinicalTrialsById(id);
-  }
+    _logger.info("Getting trial by id: {}", id);
 
-  /**
-   * Add trials set.
-   *
-   * @param trials the trials
-   * @return the set
-   */
-  @ApiOperation(value = "Add Trials", nickname = "Add Bulk Trials")
-  @PostMapping(path = "/trials")
-  public void addTrials(@RequestBody @Valid final Set<ClinicalTrial> trials) {
+    final Optional<ClinicalTrial> trial;
 
-    clinicalTrialService.saveClinicalTrials(trials);
+    try {
+      trial = clinicalTrialService.findClinicalTrialsById(id);
+    } catch (DiseaseException e) {
+      _logger.error("Trial fetch failed");
+      return ResponseEntity.notFound().build();
+    }
+
+    return trial.map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
   }
 
   /**
@@ -90,22 +119,29 @@ public class ClinicalTrialController {
    * @return the set
    */
   @ApiOperation(value = "Add Trial", nickname = "Add a single Trial")
-  @PostMapping(path = "/trials/add")
+  @PostMapping(path = "/trial/add", consumes = "application/json")
   public void addTrial(@RequestBody @Valid final ClinicalTrial trial) {
 
     clinicalTrialService.saveClinicalTrial(trial);
   }
 
   /**
-   * Update trials set.
+   * Update a trial
    *
    * @param trial the trial
    * @return the set
    */
   @ApiOperation(value = "UpdateTrial", nickname = "Update a Trial")
-  @PutMapping(path = "/trials/update/{id}")
-  public void updateTrial(@PathVariable final Integer id, @RequestBody @Valid final ClinicalTrial trial) {
+  @PutMapping(path = "/trial/update/{id}", consumes = "application/json")
+  public ResponseEntity<ClinicalTrial> updateTrial(@PathVariable final String id,
+                                                   @RequestBody @Valid final ClinicalTrial trial) {
 
-    clinicalTrialService.updateClinicalTrial(trial);
+    Optional<ClinicalTrial> foundTrial =
+        Optional.ofNullable(clinicalTrialService.findClinicalTrialsById(id)
+                                                .orElseThrow(
+                                                    () -> new TrialException(String.format("Trial id %s not found", id))));
+    final ClinicalTrial updatedTrial = clinicalTrialService.updateClinicalTrial(foundTrial.get(), trial);
+    return ResponseEntity.ok(updatedTrial);
+
   }
 }
