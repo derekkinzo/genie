@@ -6,6 +6,12 @@ The database directory is a java maven project to implement a mongodb database s
 
 The database URL and logging level is configured under `src\main\resources\application.properties`. In order to test the database api services, please point the property `spring.data.mongodb.uri` to a running instance of a mongodb database. The database uri must begin with `mongodb://` followed by `url:port/database-name`. The services and the models are accessible via swagger as well: http://localhost:8080/swagger-ui.html#/ 
 
+The database is protected with Basic Auth. 
+> username: user
+> password: password
+
+For API calls use the Basic Auth header with value of `Basic dXNlcjpwYXNzd29yZA==`
+
 *Pre-requisites: Maven v3.6.3*
 
 Run the application by executing `mvn spring-boot:run` from the `database/src` directory.
@@ -55,7 +61,7 @@ The services are available under `com.trends.db.controller` package and are divi
 - POST v1/api/trend/add
 - PUT  v1/api/trend/update/{id}
 ```
-## How to make API calls?
+## Example: How to make an API call?
 
 ## Get Diseases
 
