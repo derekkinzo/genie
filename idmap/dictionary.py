@@ -4,7 +4,6 @@ import pdb
 import csv
 import pdb
 
-
 dictionary = dict()
 min_ord = 256
 max_ord = 0
