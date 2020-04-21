@@ -4,7 +4,11 @@ Gene-Disease trend detection application
 ## Database
 The database directory is a java maven project to implement a mongodb database service.
 
-The database URL and logging level is configured under `src\main\resources\application.properties`. In order to test the database api services, please point the property `spring.data.mongodb.uri` to a running instance of a mongodb database. The database uri must begin with `mongodb://` followed by `url:port/database-name`. The services will be accessible via swagger as well soon since swagger is enabled in the project, however, there are some library issues at the moment that is causing swagger to not load properly.
+The database URL and logging level is configured under `src\main\resources\application.properties`. In order to test the database api services, please point the property `spring.data.mongodb.uri` to a running instance of a mongodb database. The database uri must begin with `mongodb://` followed by `url:port/database-name`. The services and the models are accessible via swagger as well: http://localhost:8080/swagger-ui.html#/ 
+
+*Pre-requisites: Maven v3.6.3*
+
+Run the application by executing `mvn spring-boot:run` from the `database/src` directory.
 
 The services are availble under `com.trends.db.controller` package and are divided into the following groups:
 
