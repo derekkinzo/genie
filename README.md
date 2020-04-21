@@ -12,43 +12,43 @@ The services are availble under `com.trends.db.controller` package and are divid
 
 > 
 **Disease API**
-- v1/api/diseases
-- v1/api/diseases/keyword/{keyword}
-- v1/api/diseases/id/{id}
-- v1/api/disease/add
-- v1/api/disease/update/{id}
+- GET  v1/api/diseases
+- GET  v1/api/diseases/keyword/{keyword}
+- GET  v1/api/diseases/id/{id}
+- POST v1/api/disease/add
+- PUT  v1/api/disease/update/{id}
 
 **Gene API**
 
-- v1/api/genes
-- v1/api/genes/keyword/{keyword}
-- v1/api/genes/id/{id}
-- v1/api/gene/add
-- v1/api/gene/update/{id}
+- GET  v1/api/genes
+- GET  v1/api/genes/keyword/{keyword}
+- GET  v1/api/genes/id/{id}
+- POST v1/api/gene/add
+- PUT  v1/api/genes/update/{id}
 
 **Patent API**
 
-- v1/api/patents
-- v1/api/patents/keyword/{keyword}
-- v1/api/patents/id/{id}
-- v1/api/patent/add
-- v1/api/patent/update/{id}
+- GET  v1/api/patents
+- GET  v1/api/patents/keyword/{keyword}
+- GET  v1/api/patents/id/{id}
+- POST v1/api/patent/add
+- PUT  v1/api/patent/update/{id}
 
 **Publication API**
 
-- v1/api/publications
-- v1/api/publications/keyword/{keyword}
-- v1/api/publications/id/{id}
-- v1/api/publication/add
-- v1/api/publication/update/{id}
+- GET  v1/api/publications
+- GET  v1/api/publications/keyword/{keyword}
+- GET  v1/api/publications/id/{id}
+- POST v1/api/publication/add
+- PUT  v1/api/publication/update/{id}
 
 **Trends API**
 
-- v1/api/trends
-- v1/api/trends/keyword/{keyword}
-- v1/api/trends/id/{id}
-- v1/api/trend/add
-- v1/api/trend/update/{id}
+- GET  v1/api/trends
+- GET  v1/api/trends/keyword/{keyword}
+- GET  v1/api/trends/id/{id}
+- POST v1/api/trend/add
+- PUT  v1/api/trend/update/{id}
 
 ## How to make API calls?
 
