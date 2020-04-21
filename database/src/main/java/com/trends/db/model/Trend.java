@@ -1,5 +1,6 @@
 package com.trends.db.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,8 +19,7 @@ import java.util.Set;
  * The type Trend.
  */
 @Document(collection = "trend")
-@Getter
-@Setter
+@Data
 @ToString(exclude = { "id" })
 public class Trend implements Serializable {
 
@@ -42,4 +42,17 @@ public class Trend implements Serializable {
   @Version
   private Integer version;
 
+  public Trend(final Set<String> keywords, final Set<String> geneSymbols, final Set<Disease> associatedDiseases,
+               final long totalAssociations,
+               final String chromosomalLocation, final Date createdOn, final Date updatedOn, final Integer version) {
+
+    this.keywords = keywords;
+    this.geneSymbols = geneSymbols;
+    this.associatedDiseases = associatedDiseases;
+    this.totalAssociations = totalAssociations;
+    this.chromosomalLocation = chromosomalLocation;
+    this.createdOn = createdOn;
+    this.updatedOn = updatedOn;
+    this.version = version;
+  }
 }

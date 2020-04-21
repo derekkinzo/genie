@@ -5,6 +5,8 @@ import com.trends.db.service.GeneService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -35,120 +37,141 @@ class GeneControllerTest {
   @Test
   void testGetAllGenes() {
     // Setup
+    final ResponseEntity<List<Gene>> expectedResult = new ResponseEntity<>(
+        Arrays.asList(
+            new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+                new HashSet<>(
+                    Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0)), HttpStatus.OK);
 
     // Configure GeneService.findAllGenes(...).
-    final Gene gene = new Gene();
-    gene.setId("id");
-    gene.setApprovedGeneName("approvedGeneName");
-    gene.setApprovedSymbols(new HashSet<>(Arrays.asList("value")));
-    gene.setKeywords(new HashSet<>(Arrays.asList("value")));
-    gene.setAliases(new HashSet<>(Arrays.asList("value")));
-    gene.setSymbolStatus(false);
-    gene.setChromosomalLocation("chromosomalLocation");
-    gene.setGeneGroup("geneGroup");
-    gene.setCreatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    gene.setUpdatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    final List<Gene> genes = Arrays.asList(gene);
+    final List<Gene> genes = Arrays.asList(new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+        Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
     when(mockGeneService.findAllGenes()).thenReturn(genes);
 
     // Run the test
-    final List<Gene> result = geneControllerUnderTest.getAllGenes();
+    final ResponseEntity<List<Gene>> result = geneControllerUnderTest.getAllGenes();
 
     // Verify the results
+    assertEquals(expectedResult, result);
   }
 
   @Test
-  void testGetGenes() {
+  void testGetGenesByKeyword() {
     // Setup
+    final ResponseEntity<Set<Gene>> expectedResult = new ResponseEntity<>(new HashSet<>(
+        Arrays.asList(
+            new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+                new HashSet<>(
+                    Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0))), HttpStatus.OK);
 
     // Configure GeneService.findGenesByKeyword(...).
-    final Gene gene = new Gene();
-    gene.setId("id");
-    gene.setApprovedGeneName("approvedGeneName");
-    gene.setApprovedSymbols(new HashSet<>(Arrays.asList("value")));
-    gene.setKeywords(new HashSet<>(Arrays.asList("value")));
-    gene.setAliases(new HashSet<>(Arrays.asList("value")));
-    gene.setSymbolStatus(false);
-    gene.setChromosomalLocation("chromosomalLocation");
-    gene.setGeneGroup("geneGroup");
-    gene.setCreatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    gene.setUpdatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    final Set<Gene> genes = new HashSet<>(Arrays.asList(gene));
+    final Set<Gene> genes = new HashSet<>(
+        Arrays.asList(
+            new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+                new HashSet<>(
+                    Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+                new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0)));
     when(mockGeneService.findGenesByKeyword("keyword")).thenReturn(genes);
 
     // Run the test
-    final Set<Gene> result = geneControllerUnderTest.getGenes("keyword");
+    final ResponseEntity<Set<Gene>> result = geneControllerUnderTest.getGenesByKeyword("keyword");
 
     // Verify the results
+    assertEquals(expectedResult, result);
   }
 
   @Test
-  void testGetGene() {
+  void testGetGeneById() {
     // Setup
+    final ResponseEntity<Gene> expectedResult = new ResponseEntity<>(new Gene("approvedGeneName", new HashSet<>(
+        Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), false,
+        "chromosomalLocation", "geneGroup", "geneId", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0), HttpStatus.OK);
 
     // Configure GeneService.findGenesById(...).
-    final Gene gene1 = new Gene();
-    gene1.setId("id");
-    gene1.setApprovedGeneName("approvedGeneName");
-    gene1.setApprovedSymbols(new HashSet<>(Arrays.asList("value")));
-    gene1.setKeywords(new HashSet<>(Arrays.asList("value")));
-    gene1.setAliases(new HashSet<>(Arrays.asList("value")));
-    gene1.setSymbolStatus(false);
-    gene1.setChromosomalLocation("chromosomalLocation");
-    gene1.setGeneGroup("geneGroup");
-    gene1.setCreatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    gene1.setUpdatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    final Optional<Gene> gene = Optional.of(gene1);
+    final Optional<Gene> gene =
+        Optional.of(new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), false, "chromosomalLocation", "geneGroup",
+            "geneId", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
     when(mockGeneService.findGenesById("id")).thenReturn(gene);
 
     // Run the test
-    final Optional<Gene> result = geneControllerUnderTest.getGene("id");
+    final ResponseEntity<Gene> result = geneControllerUnderTest.getGeneById("id");
 
     // Verify the results
+    assertEquals(expectedResult, result);
   }
-
 
   @Test
   void testAddGene() {
     // Setup
-    final Gene gene = new Gene();
-    gene.setId("id");
-    gene.setApprovedGeneName("approvedGeneName");
-    gene.setApprovedSymbols(new HashSet<>(Arrays.asList("value")));
-    gene.setKeywords(new HashSet<>(Arrays.asList("value")));
-    gene.setAliases(new HashSet<>(Arrays.asList("value")));
-    gene.setSymbolStatus(false);
-    gene.setChromosomalLocation("chromosomalLocation");
-    gene.setGeneGroup("geneGroup");
-    gene.setCreatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    gene.setUpdatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+    final Gene gene =
+        new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
 
     // Run the test
     geneControllerUnderTest.addGene(gene);
 
     // Verify the results
-    verify(mockGeneService).saveGene(any(Gene.class));
+    verify(mockGeneService).saveGene(new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+        Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
   }
 
   @Test
-  void testUpdateGenes() {
+  void testUpdateGene() {
     // Setup
-    final Gene gene = new Gene();
-    gene.setId("id");
-    gene.setApprovedGeneName("approvedGeneName");
-    gene.setApprovedSymbols(new HashSet<>(Arrays.asList("value")));
-    gene.setKeywords(new HashSet<>(Arrays.asList("value")));
-    gene.setAliases(new HashSet<>(Arrays.asList("value")));
-    gene.setSymbolStatus(false);
-    gene.setChromosomalLocation("chromosomalLocation");
-    gene.setGeneGroup("geneGroup");
-    gene.setCreatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
-    gene.setUpdatedOn(new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime());
+    final Gene gene =
+        new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
+    final ResponseEntity<Gene> expectedResult =
+        new ResponseEntity<>(new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), false, "chromosomalLocation", "geneGroup",
+            "geneId", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0), HttpStatus.OK);
+
+    // Configure GeneService.findGenesById(...).
+    final Optional<Gene> gene1 =
+        Optional.of(new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+            Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), false, "chromosomalLocation", "geneGroup",
+            "geneId", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0));
+    when(mockGeneService.findGenesById("id")).thenReturn(gene1);
+
+    // Configure GeneService.updateGene(...).
+    final Gene gene2 =
+        new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")),
+            new HashSet<>(
+                Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+            new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0);
+    when(mockGeneService.updateGene(new Gene("approvedGeneName", new HashSet<>(Arrays.asList("value")), new HashSet<>(
+        Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), false, "chromosomalLocation", "geneGroup", "geneId",
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0), new Gene("approvedGeneName", new HashSet<>(
+        Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), new HashSet<>(Arrays.asList("value")), false,
+        "chromosomalLocation", "geneGroup", "geneId", new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(),
+        new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), 0))).thenReturn(gene2);
 
     // Run the test
-    geneControllerUnderTest.updateGenes(0, gene);
+    final ResponseEntity<Gene> result = geneControllerUnderTest.updateGene("id", gene);
 
     // Verify the results
-    verify(mockGeneService).updateGene(any(Gene.class));
+    assertEquals(expectedResult, result);
   }
 }
