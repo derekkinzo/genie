@@ -25,7 +25,7 @@ class TestPubMedDao:
         return generator
 
     def test_constructor(self):
-        """Ensure scraper obj constructed successfully."""
+        """Ensure obj constructed successfully."""
         assert self.test_dao is not None
 
     @pytest.mark.parametrize("payload", td.PUBMED_INVALID_DF)
