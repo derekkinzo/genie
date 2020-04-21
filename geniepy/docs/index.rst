@@ -22,6 +22,9 @@ This is the documentation of **GeniePy**.
     you include documentation from docstrings. Docstrings can be written in
     `Google style`_ (recommended!), `NumPy style`_ and `classical style`_.
 
+.. image:: ./_static/GeniePyArchitectureDiagram.png
+
+.. image:: ./_static/GeniePyDataMgmtClassDiagram.png
 
 Contents
 ========
