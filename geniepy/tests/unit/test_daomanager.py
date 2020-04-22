@@ -42,3 +42,12 @@ class TestDaoManager:
         gen_df = self.dao_mgr.gen_records()
         records = next(gen_df)
         assert records is not None
+
+    @pytest.mark.parametrize("chunksize", [*range(1, 10)])
+    def test_get_records_chunksize(self, chunksize):
+        """Test get records chunksizes."""
+        self.dao_mgr.download()
+        gen_df = self.dao_mgr.gen_records(chunksize=chunksize)
+        records = next(gen_df)
+        # Make sure records contain correct chunk
+        assert records.shape[0] == chunksize
