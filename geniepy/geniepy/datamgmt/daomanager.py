@@ -36,7 +36,7 @@ class DaoManager:
         self._ctd_dao.download()
         self._pubmed_dao.download()
 
-    def _get_pubmeds_df(self, pmids: str, chunksize: int):
+    def _get_pubmeds_df(self, pmids: str):
         """
         Get pubmed dao dataframes.
 
@@ -49,18 +49,17 @@ class DaoManager:
         pmids = pmids.split("|")
         pubmed_df = pd.DataFrame()
         for pmid in pmids:
-            query_str = (
+            pmid_query = (
                 f"SELECT * FROM {self._pubmed_dao.tablename} WHERE pmid='{pmid}';"
             )
             try:
-                pmid_gen = self._pubmed_dao.query(query_str, chunksize)
+                # Only care about 1 pmid entry (table shouldn't have duplicates)
+                pmid_gen = self._pubmed_dao.query(pmid_query, 1)
                 pmid_df = next(pmid_gen)
-                print(pmid_df.head())
-            except Exception as pmid_ex:
-                print(pmid_ex)
-                # TODO handle exception if can't extract pubmed article (log?)
-                pass
-
+                pubmed_df = pubmed_df.append(pmid_df)
+            except StopIteration:
+                # TODO log instead of print
+                print(f"PMID: {pmid} not found!")
         return pubmed_df
 
     def gen_records(self, chunksize=CHUNKSIZE) -> Generator[pd.DataFrame, None, None]:
@@ -77,7 +76,16 @@ class DaoManager:
                     internal tables.
         """
         # iterate over ctd table
+        record_keys = ["gene", "disease", "pubmeds", "stages"]
+        genes = []
+        diseases = []
+        pubmeds = []
+        stages = []
         for ctd_df in self._ctd_dao.query(chunksize=chunksize):
-            for index, row in ctd_df.iterrows():
-                pubmed_df = self._get_pubmeds_df(row.PubMedIDs, chunksize)
-                print(row)
+            for _, row in ctd_df.iterrows():
+                genes.append(row.gene)
+                pubmeds.append(self._get_pubmeds_df(row.PubMedIDs))
+                print(pubmeds)
+        record_vals = [genes, diseases, pubmeds, stages]
+        record_df = pd.DataFrame(dict(zip(record_keys, record_vals)))
+        return record_df

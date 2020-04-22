@@ -1,4 +1,4 @@
 """Data Management Sub-system entry point."""
-from geniepy.datamgmt.daomgr import DaoManager
+from geniepy.datamgmt.daomanager import DaoManager
 
 __all__ = ["DaoManager"]
