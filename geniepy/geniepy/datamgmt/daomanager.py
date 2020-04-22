@@ -6,8 +6,6 @@ generate the dataframe usef by the classifiers to calculate a prediction score.
 """
 from typing import Generator
 import pandas as pd
-from pandas_schema import Column, Schema
-from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
 import geniepy.datamgmt.daos as daos
 from geniepy import CHUNKSIZE
 
@@ -56,9 +54,8 @@ class DaoManager:
             )
             try:
                 # Only care about 1 pmid entry (table shouldn't have duplicates)
-                pmid_gen = self._pubmed_dao.query(pmid_query, 1)
-                pmid_df = next(pmid_gen)
-                pubmed_df = pubmed_df.append(pmid_df)
+                pmid_df = next(self._pubmed_dao.query(pmid_query, 1))
+                pubmed_df = pubmed_df.append(pmid_df, ignore_index=True)
             except StopIteration:
                 # TODO log instead of print
                 print(f"PMID: {pmid} not found!")
@@ -79,23 +76,8 @@ class DaoManager:
         """
         # iterate over ctd table
         record_df = pd.DataFrame()
-        for ctd_df in self._ctd_dao.query(chunksize=chunksize):
-            for _, row in ctd_df.iterrows():
-                series = row
-                pubmeds = self._get_pubmeds_df(row.PubMedIDs)
-                # series.append(pubmeds)
-                # record_df.append(series)
-        return record_df
-
-    # record_schema: Schema = Schema(
-    #     [
-    #         Column("digest"),
-    #         Column("genesymbol"),
-    #         Column("geneid", [IsDtypeValidation(np.int64)]),
-    #         Column("diseasename"),
-    #         Column(
-    #             "diseaseid", [MatchesPatternValidation("^D[0-9]+$")]
-    #         ),  # i.e. D000014
-    #         Column("pmids"),
-    #     ]
-    # )
+        for record_df in self._ctd_dao.query(chunksize=chunksize):
+            record_df["pubmeds"] = record_df.apply(
+                lambda row: self._get_pubmeds_df(row.pmids), axis=1
+            )
+            yield record_df

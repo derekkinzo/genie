@@ -1,4 +1,5 @@
 """Test Data Access Object Manager."""
+import pytest
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
 from geniepy.datamgmt import DaoManager
@@ -33,11 +34,11 @@ class TestDaoManager:
         """Test download and get_records functionality of DAO Mgr."""
         gen_df = self.dao_mgr.gen_records()
         # After instantiation dao's tables should be empty, so nothing is returned.
-        assert gen_df is None
+        with pytest.raises(StopIteration):
+            next(gen_df)
         # Call download function to scrape data and generate internal tables.
         self.dao_mgr.download()
         # Make sure gen_df is not none and conforms to expected schema
         gen_df = self.dao_mgr.gen_records()
-        assert gen_df is not None
         records = next(gen_df)
         assert records is not None
