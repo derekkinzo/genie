@@ -5,7 +5,7 @@ from geniepy.datamgmt.repositories import BaseRepository, SqlRepository
 import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
 
-INVALID_DAO = td.CTD_INVALID_DAO
+INVALID_DAO = td.CTD_INVALID_SCHEMA
 VALID_DF = td.CTD_VALID_DF
 INVALID_DF = td.CTD_INVALID_DF
 

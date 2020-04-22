@@ -9,7 +9,12 @@ from abc import ABC
 from pandas import DataFrame
 import geniepy
 from geniepy.errors import SchemaError
-from geniepy.datamgmt.parsers import BaseParser, CtdParser, PubMedParser, OutputParser
+from geniepy.datamgmt.parsers import (
+    BaseParser,
+    CtdParser,
+    PubMedParser,
+    ClassifierParser,
+)
 import geniepy.datamgmt.repositories as dr
 
 
@@ -105,9 +110,9 @@ class PubMedDao(BaseDao):
     _parser: PubMedParser = PubMedParser()
 
 
-class OutputDao(BaseDao):
+class ClassifierDao(BaseDao):
     """Implementation of DAO to handle output data used by UI for visualizations."""
 
     __slots__ = ["_repository"]
 
-    _parser: OutputParser = OutputParser()
+    _parser: ClassifierParser = ClassifierParser()

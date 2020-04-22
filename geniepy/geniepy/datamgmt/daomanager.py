@@ -24,21 +24,21 @@ class DaoManager:
     the classifiers.
     """
 
-    __slots__ = ["_ctd_dao", "_pubmed_dao", "_output_dao"]
+    __slots__ = ["_ctd_dao", "_pubmed_dao", "_classifier_dao"]
 
     # pylint: disable=bad-continuation
     def __init__(
         self,
         ctd_dao: daos.CtdDao,
         pubmed_dao: daos.PubMedDao,
-        output_dao: daos.OutputDao,
+        classifier_dao: daos.ClassifierDao,
     ):
         """Initializa DAO mgr with corresponding DAO children."""
         self._ctd_dao = ctd_dao
         """The CTD DAO handles data from CTD databases."""
         self._pubmed_dao = pubmed_dao
         """The PubMed DAO handles data from PubMed databases."""
-        self._output_dao = output_dao
+        self._classifier_dao = classifier_dao
         """The output DAO stores output data after classifiers calc predictions."""
 
     def download(self):

@@ -24,14 +24,16 @@ class TestDaoManager:
     pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Create and configure mock pubmed dao
-    output_dao = daos.PubMedDao(
+    classifier_dao = daos.PubMedDao(
         dr.SqlRepository("sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE)
     )
     # pylint: disable=protected-access
     # pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Construct mock dao manager for testing
-    dao_mgr = DaoManager(ctd_dao=ctd_dao, pubmed_dao=pubmed_dao, output_dao=output_dao)
+    dao_mgr = DaoManager(
+        ctd_dao=ctd_dao, pubmed_dao=pubmed_dao, classifier_dao=classifier_dao
+    )
 
     def test_constructor(self):
         """Test obj construction."""

@@ -280,12 +280,12 @@ class PubMedParser(BaseParser):
             raise ParserError(parse_exp)
 
 
-class OutputParser(BaseParser):
+class ClassifierParser(BaseParser):
     """
-    Implementation of Output dao Parser.
+    Implementation of classifier dao Parser.
 
-    The output tables contain the output data from geniepy after the classifiers
-    have calculated desired predictions.
+    The classifier output tables contain the output data from geniepy after the
+    classifiers have calculated desired predictions.
     """
 
     schema: Schema

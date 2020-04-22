@@ -3,7 +3,8 @@
 # pylint: skip-file
 import pandas as pd
 
-PUBMED_INVALID_DAO = [
+
+PUBMED_INVALID_SCHEMA = [
     pd.DataFrame(
         {
             # Missing required column
@@ -257,7 +258,7 @@ PUBMED_VALID_DF = [
 ]
 """Array of valid PubMed dataframes."""
 
-CTD_INVALID_DAO = [
+CTD_INVALID_SCHEMA = [
     pd.DataFrame(
         {
             # Missing Digest required field
@@ -310,7 +311,7 @@ CTD_INVALID_DAO = [
         }
     ),
 ]
-"""Invalid DAO record."""
+"""Invalid SCHEMA record."""
 
 CTD_INVALID_DF = [
     None,
@@ -345,7 +346,7 @@ CTD_INVALID_DF = [
             "pmids": ["22659286"],
         }
     ),
-] + CTD_INVALID_DAO
+] + CTD_INVALID_SCHEMA
 """Array of invalid CTD DataFrames because violate parser rules."""
 
 
@@ -371,7 +372,7 @@ CTD_VALID_DF = [
             "geneid": [1000494280],
             "diseasename": ["Infant Death"],
             "diseaseid": ["D0660884"],
-            "pmids": ["283930756"],  # PubMedId can be int or str
+            "pmids": ["283930756"],
         }
     ),
     pd.DataFrame(
@@ -383,7 +384,7 @@ CTD_VALID_DF = [
             "geneid": [100174880],
             "diseasename": ["Abnormalities, Drug-Induced"],
             "diseaseid": ["D000014"],
-            "pmids": ["22659286"],  # PubMedId can be int or str
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
@@ -400,3 +401,96 @@ CTD_VALID_DF = [
     ),
 ]
 """Array of valid CTD DataFrames."""
+
+CLSFR_VALID_DF = [
+    pd.DataFrame(
+        {
+            "digest": [
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
+            ],
+            "geneid": [10174880],
+            "diseaseid": ["D000014"],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "geneid": [1000494280],
+            "diseaseid": ["D000014"],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "geneid": [1000494280],
+            "diseaseid": ["D000014"],
+        }
+    ),
+]
+"""Array of valid classifier dataframes."""
+
+
+CLSFR_INVALID_DF = [
+    pd.DataFrame(
+        {
+            "digest": [
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
+            ],
+            "geneid": ["10174880"],  # GeneID should be int
+            "diseaseid": ["D000014"],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [10191],  # Digest should be a string
+            "geneid": [1000494280],
+            "diseaseid": ["D000014"],
+            "diseaseid": ["1-SF3"],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "geneid": [1000494280],
+            "diseaseid": ["MESH:D000014"],  # Should not have "MESH:"
+        }
+    ),
+]
+"""Array of invalid classifier dataframes."""
+
+
+CLSFR_INVALID_SCHEMA = [
+    pd.DataFrame(
+        {
+            "digest": [
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
+            ],
+            # Missing GeneID
+            "diseaseid": ["D000014"],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "geneid": [1000494280],
+            "diseaseid": ["D000014"],
+            "newcol": "newcol",
+        }
+    ),
+    pd.DataFrame(
+        {
+            # missing digest
+            "geneid": [1000494280],
+            "diseaseid": ["D000014"],
+        }
+    ),
+]
+"""Array of valid classifier SCHEMA table schema."""

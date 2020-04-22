@@ -7,7 +7,7 @@ from geniepy.errors import DaoError
 
 VALID_DF = td.PUBMED_VALID_DF
 INVALID_DF = td.PUBMED_INVALID_DF
-INVALID_DAO = td.PUBMED_INVALID_DAO
+INVALID_DAO = td.PUBMED_INVALID_SCHEMA
 
 
 class TestSqlPubMedRepository:
