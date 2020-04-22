@@ -26,6 +26,8 @@ This is the documentation of **GeniePy**.
 
 .. image:: ./_static/GeniePyDataMgmtClassDiagram.png
 
+.. image:: ./_static/CloudFunctionsDiagram.png
+
 Contents
 ========
 
