@@ -24,12 +24,22 @@ class DaoManager:
     the classifiers.
     """
 
-    __slots__ = ["_ctd_dao", "_pubmed_dao"]
+    __slots__ = ["_ctd_dao", "_pubmed_dao", "_output_dao"]
 
-    def __init__(self, ctd_dao: daos.CtdDao, pubmed_dao: daos.PubMedDao):
+    # pylint: disable=bad-continuation
+    def __init__(
+        self,
+        ctd_dao: daos.CtdDao,
+        pubmed_dao: daos.PubMedDao,
+        output_dao: daos.OutputDao,
+    ):
         """Initializa DAO mgr with corresponding DAO children."""
         self._ctd_dao = ctd_dao
+        """The CTD DAO handles data from CTD databases."""
         self._pubmed_dao = pubmed_dao
+        """The PubMed DAO handles data from PubMed databases."""
+        self._output_dao = output_dao
+        """The output DAO stores output data after classifiers calc predictions."""
 
     def download(self):
         """Download (scrapes) data for DAOs and creates internal tables."""
@@ -73,6 +83,17 @@ class DaoManager:
                 classifiers according to the geniepy dataframe schema.
             None -- If DAOs have not downloaded data from online sources and generated
                     internal tables.
+
+        Record Schema:
+            {
+                digest: String,
+                genesymbol: String,
+                geneid: Integer,
+                diseasename: String,
+                diseaseid: String,
+                pmids: String,
+                pubmeds: DataFrame(PubMedParser)
+            }
         """
         # iterate over ctd table
         record_df = pd.DataFrame()
@@ -81,3 +102,11 @@ class DaoManager:
                 lambda row: self._get_pubmeds_df(row.pmids), axis=1
             )
             yield record_df
+
+    def save_predictions(self, predictions: pd.DataFrame):
+        """
+        Save computed predictions and supporting data into output tables.
+
+        Arguments:
+            records {DataFrame} -- [description]
+        """

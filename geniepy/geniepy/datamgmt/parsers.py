@@ -278,3 +278,33 @@ class PubMedParser(BaseParser):
             return parsed_df
         except Exception as parse_exp:
             raise ParserError(parse_exp)
+
+
+class OutputParser(BaseParser):
+    """
+    Implementation of Output dao Parser.
+
+    The output tables contain the output data from geniepy after the classifiers
+    have calculated desired predictions.
+    """
+
+    schema: Schema
+
+    @staticmethod
+    def parse(data, dtype=DataType.CSV_STR) -> DataFrame:
+        """
+        Parse data and convert according to parser schema.
+
+        Arguments:
+            data {Implementation dependent} -- Data to be parsed
+
+        Keyword Arguments:
+            dtype {DataType} -- Type of data to be parsed (default: {DataType.CSV})
+
+        Returns:
+            DataFrame -- The parsed dataframe.
+
+        Raises:
+            ParserError -- If unable to parse data
+        """
+        raise NotImplementedError

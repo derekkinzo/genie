@@ -23,8 +23,15 @@ class TestDaoManager:
     # pylint: disable=protected-access
     pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
+    # Create and configure mock pubmed dao
+    output_dao = daos.PubMedDao(
+        dr.SqlRepository("sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE)
+    )
+    # pylint: disable=protected-access
+    # pubmed_dao._parser.scraper = mock.MockPubMedScraper()
+
     # Construct mock dao manager for testing
-    dao_mgr = DaoManager(ctd_dao=ctd_dao, pubmed_dao=pubmed_dao)
+    dao_mgr = DaoManager(ctd_dao=ctd_dao, pubmed_dao=pubmed_dao, output_dao=output_dao)
 
     def test_constructor(self):
         """Test obj construction."""
@@ -51,3 +58,12 @@ class TestDaoManager:
         records = next(gen_df)
         # Make sure records contain correct chunk
         assert records.shape[0] == chunksize
+
+    def test_save_predictions(self):
+        """Test writing predictions to output tables."""
+        self.dao_mgr.download()
+        gen_df = self.dao_mgr.gen_records()
+        records = next(gen_df)
+        self.dao_mgr.save_predictions(records)
+        # Read data back from output tables to make sure records were saved
+        # TODO read data

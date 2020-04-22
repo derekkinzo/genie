@@ -9,13 +9,13 @@ from abc import ABC
 from pandas import DataFrame
 import geniepy
 from geniepy.errors import SchemaError
-from geniepy.datamgmt.parsers import BaseParser, CtdParser, PubMedParser
+from geniepy.datamgmt.parsers import BaseParser, CtdParser, PubMedParser, OutputParser
 import geniepy.datamgmt.repositories as dr
 
 
 class BaseDao(ABC):
     """
-    Implementation of Data Access Object Abstract Base Class.
+    Data Access Object Abstract Base Class.
 
     Each DAO is composed of one or more repositories and a parser which is used to
     structure and validate the DAO's data. Consult the parser's schema to check the
@@ -26,6 +26,10 @@ class BaseDao(ABC):
     """Database repository used by DAO to store objects."""
     _parser: BaseParser
     """DAO's parser to scraping and validating data."""
+
+    def __init__(self, repository: dr.BaseRepository):
+        """Initialize DAO state."""
+        self._repository = repository
 
     def download(self, chunksize=geniepy.CHUNKSIZE):
         """
@@ -92,10 +96,6 @@ class CtdDao(BaseDao):
 
     _parser: CtdParser = CtdParser()
 
-    def __init__(self, repository: dr.BaseRepository):
-        """Initialize DAO state."""
-        self._repository = repository
-
 
 class PubMedDao(BaseDao):
     """Implementation of CTD Data Access Object."""
@@ -104,6 +104,10 @@ class PubMedDao(BaseDao):
 
     _parser: PubMedParser = PubMedParser()
 
-    def __init__(self, repository: dr.BaseRepository):
-        """Initialize DAO state."""
-        self._repository = repository
+
+class OutputDao(BaseDao):
+    """Implementation of DAO to handle output data used by UI for visualizations."""
+
+    __slots__ = ["_repository"]
+
+    _parser: OutputParser = OutputParser()
