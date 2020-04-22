@@ -2,20 +2,20 @@
 import os
 from typing import NamedTuple
 from typing import Generator
+import xml.etree.ElementTree as ET
 from tests import get_resources_path
 from geniepy.classifiers.clsfr_base import BaseClsfr
 from geniepy.datamgmt.scrapers import BaseScraper
-import xml.etree.ElementTree as ET
 from geniepy import CHUNKSIZE
-from geniepy.pubmed import ArticleSetParser, PubMedArticle
+from geniepy.pubmed import PubMedArticle
 
 
 class MockPubMedScraper(BaseScraper):
     """Mock PubMed scraper for tests."""
 
-    filename: str = "sample_articleset1.xml"
+    filename: str = "sample_articleset2.xml"
 
-    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
+    def scrape(self, chunksize: int = 2, **kwargs) -> Generator:
         """Simulate scraping pubmed baseline and returning xml objs."""
         xml_file_path = os.path.join(get_resources_path(), self.filename)
         xml_root: ET.Element = ET.parse(xml_file_path).getroot()

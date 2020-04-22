@@ -1,5 +1,4 @@
 """Test Data Access Object Manager."""
-from typing import Generator
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
 from geniepy.datamgmt import DaoManager

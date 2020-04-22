@@ -4,7 +4,7 @@ Data Access Object Manager.
 The DAO manager coordinates the DAOs from each one of the necessary sources to
 generate the dataframe usef by the classifiers to calculate a prediction score.
 """
-from typing import Generator, NamedTuple
+from typing import Generator
 import pandas as pd
 import geniepy.datamgmt.daos as daos
 from geniepy import CHUNKSIZE
@@ -36,6 +36,33 @@ class DaoManager:
         self._ctd_dao.download()
         self._pubmed_dao.download()
 
+    def _get_pubmeds_df(self, pmids: str, chunksize: int):
+        """
+        Get pubmed dao dataframes.
+
+        Arguments:
+            pubmeds {str} -- pipe delimtied string with pmids
+            chunksize {int} -- limits max chunksize internally to limit memory usage
+
+        Returns: Dataframe with pubmed dao dataframe.
+        """
+        pmids = pmids.split("|")
+        pubmed_df = pd.DataFrame()
+        for pmid in pmids:
+            query_str = (
+                f"SELECT * FROM {self._pubmed_dao.tablename} WHERE pmid='{pmid}';"
+            )
+            try:
+                pmid_gen = self._pubmed_dao.query(query_str, chunksize)
+                pmid_df = next(pmid_gen)
+                print(pmid_df.head())
+            except Exception as pmid_ex:
+                print(pmid_ex)
+                # TODO handle exception if can't extract pubmed article (log?)
+                pass
+
+        return pubmed_df
+
     def gen_records(self, chunksize=CHUNKSIZE) -> Generator[pd.DataFrame, None, None]:
         """
         Generate the dataframe records for classifiers.
@@ -52,4 +79,5 @@ class DaoManager:
         # iterate over ctd table
         for ctd_df in self._ctd_dao.query(chunksize=chunksize):
             for index, row in ctd_df.iterrows():
+                pubmed_df = self._get_pubmeds_df(row.PubMedIDs, chunksize)
                 print(row)
