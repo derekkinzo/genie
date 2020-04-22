@@ -6,6 +6,8 @@ generate the dataframe usef by the classifiers to calculate a prediction score.
 """
 from typing import Generator
 import pandas as pd
+from pandas_schema import Column, Schema
+from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
 import geniepy.datamgmt.daos as daos
 from geniepy import CHUNKSIZE
 
@@ -76,16 +78,24 @@ class DaoManager:
                     internal tables.
         """
         # iterate over ctd table
-        record_keys = ["gene", "disease", "pubmeds", "stages"]
-        genes = []
-        diseases = []
-        pubmeds = []
-        stages = []
+        record_df = pd.DataFrame()
         for ctd_df in self._ctd_dao.query(chunksize=chunksize):
             for _, row in ctd_df.iterrows():
-                genes.append(row.gene)
-                pubmeds.append(self._get_pubmeds_df(row.PubMedIDs))
-                print(pubmeds)
-        record_vals = [genes, diseases, pubmeds, stages]
-        record_df = pd.DataFrame(dict(zip(record_keys, record_vals)))
+                series = row
+                pubmeds = self._get_pubmeds_df(row.PubMedIDs)
+                # series.append(pubmeds)
+                # record_df.append(series)
         return record_df
+
+    # record_schema: Schema = Schema(
+    #     [
+    #         Column("digest"),
+    #         Column("genesymbol"),
+    #         Column("geneid", [IsDtypeValidation(np.int64)]),
+    #         Column("diseasename"),
+    #         Column(
+    #             "diseaseid", [MatchesPatternValidation("^D[0-9]+$")]
+    #         ),  # i.e. D000014
+    #         Column("pmids"),
+    #     ]
+    # )

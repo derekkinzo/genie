@@ -87,14 +87,14 @@ class CtdParser(BaseParser):
     scraper: CtdScraper = CtdScraper()
     schema: Schema = Schema(
         [
-            Column("Digest"),
-            Column("GeneSymbol"),
-            Column("GeneID", [IsDtypeValidation(np.int64)]),
-            Column("DiseaseName"),
+            Column("digest"),
+            Column("genesymbol"),
+            Column("geneid", [IsDtypeValidation(np.int64)]),
+            Column("diseasename"),
             Column(
-                "DiseaseID", [MatchesPatternValidation("^D[0-9]+$")]
+                "diseaseid", [MatchesPatternValidation("^D[0-9]+$")]
             ),  # i.e. D000014
-            Column("PubMedIDs"),
+            Column("pmids"),
         ]
     )
 
@@ -109,7 +109,7 @@ class CtdParser(BaseParser):
         Returns:
             str -- the hex string of the computed digest
         """
-        message = str.encode(str(record.GeneID) + record.DiseaseID)
+        message = str.encode(str(record.geneid) + record.diseaseid)
         hexdigest = hashlib.sha256(message).hexdigest()
         return str(hexdigest)
 
@@ -145,8 +145,19 @@ class CtdParser(BaseParser):
             parsed_df["DiseaseID"] = parsed_df.apply(
                 lambda x: x.DiseaseID.replace("MESH:", ""), axis=1
             )
+            # Rename columns based on schema
+            parsed_df.rename(
+                columns={
+                    "GeneSymbol": "genesymbol",
+                    "GeneID": "geneid",
+                    "DiseaseName": "diseasename",
+                    "DiseaseID": "diseaseid",
+                    "PubMedIDs": "pmids",
+                },
+                inplace=True,
+            )
             # Compute and add the digest
-            parsed_df["Digest"] = parsed_df.apply(CtdParser.hash_record, axis=1)
+            parsed_df["digest"] = parsed_df.apply(CtdParser.hash_record, axis=1)
             errors = CtdParser.validate(parsed_df)
             if errors:
                 raise ParserError(errors)

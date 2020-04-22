@@ -43,8 +43,8 @@ class TestSqlCtdRepository:
         except DaoError:
             pass
         # Attempt to retrieve record
-        digest = payload.Digest[0]
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE Digest='{digest}';"
+        digest = payload.digest[0]
+        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
         generator = self.repo.query(query=query_str)
         chunk = next(generator)
         assert chunk.equals(payload)
@@ -53,7 +53,7 @@ class TestSqlCtdRepository:
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
         digest = "INVALID DIGEST"
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE Digest='{digest}';"
+        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
         generator = self.repo.query(query=query_str)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):
@@ -74,7 +74,7 @@ class TestSqlCtdRepository:
         generator = self.repo.query(chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
-        assert result_df.Digest.count() == chunksize
+        assert result_df.digest.count() == chunksize
 
     def test_delete_all(self):
         """Test delete all records from repository."""

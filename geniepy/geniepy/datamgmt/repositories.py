@@ -14,12 +14,12 @@ CTD_DAO_TABLE = Table(
     CTD_TABLE_NAME,
     MetaData(),
     # No primary key allows duplicate records
-    Column("Digest", String, primary_key=False, nullable=False),
-    Column("GeneSymbol", String),
-    Column("GeneID", Integer, nullable=False),
-    Column("DiseaseName", String),
-    Column("DiseaseID", String, nullable=False),
-    Column("PubMedIDs", String, nullable=False),
+    Column("digest", String, primary_key=False, nullable=False),
+    Column("genesymbol", String),
+    Column("geneid", Integer, nullable=False),
+    Column("diseasename", String),
+    Column("diseaseid", String, nullable=False),
+    Column("pmids", String, nullable=False),
 )
 """CTD DAO Repository Schema."""
 

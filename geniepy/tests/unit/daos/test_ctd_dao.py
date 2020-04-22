@@ -20,7 +20,7 @@ class TestCtdDao:
 
     def read_record(self, digest):
         """Read record(s) from database (tests helper method)."""
-        query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE Digest='{digest}';"
+        query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE digest='{digest}';"
         generator = self.test_dao.query(query=query_str)
         return generator
 
@@ -50,7 +50,7 @@ class TestCtdDao:
         except DaoError:
             pass
         # Attempt to retrieve record
-        digest = payload.Digest[0]
+        digest = payload.digest[0]
         generator = self.read_record(digest)
         chunk = next(generator)
         assert chunk.equals(payload)
@@ -95,7 +95,7 @@ class TestCtdDao:
         generator = self.test_dao.query(chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
-        assert result_df.Digest.count() == chunksize
+        assert result_df.digest.count() == chunksize
 
     @pytest.mark.parametrize("chunksize", [*range(1, 10)])
     def test_download(self, chunksize):
