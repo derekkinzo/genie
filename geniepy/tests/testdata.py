@@ -408,8 +408,8 @@ CLSFR_VALID_DF = [
             "digest": [
                 "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
             ],
-            "geneid": [10174880],
-            "diseaseid": ["D000014"],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
         }
     ),
     pd.DataFrame(
@@ -417,8 +417,8 @@ CLSFR_VALID_DF = [
             "digest": [
                 "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
             ],
-            "geneid": [1000494280],
-            "diseaseid": ["D000014"],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
         }
     ),
     pd.DataFrame(
@@ -426,8 +426,8 @@ CLSFR_VALID_DF = [
             "digest": [
                 "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
             ],
-            "geneid": [1000494280],
-            "diseaseid": ["D000014"],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
         }
     ),
 ]
@@ -440,16 +440,17 @@ CLSFR_INVALID_DF = [
             "digest": [
                 "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
             ],
-            "geneid": ["10174880"],  # GeneID should be int
-            "diseaseid": ["D000014"],
+            "pub_score": ["1.2"],  # GeneID should be float
+            "ct_score": [0.7],
         }
     ),
     pd.DataFrame(
         {
-            "digest": [10191],  # Digest should be a string
-            "geneid": [1000494280],
-            "diseaseid": ["D000014"],
-            "diseaseid": ["1-SF3"],
+            "digest": [
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
+            ],
+            # Missing pub_score
+            "ct_score": [0.7],
         }
     ),
     pd.DataFrame(
@@ -457,8 +458,8 @@ CLSFR_INVALID_DF = [
             "digest": [
                 "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
             ],
-            "geneid": [1000494280],
-            "diseaseid": ["MESH:D000014"],  # Should not have "MESH:"
+            "pub_score": [0.8],
+            "ct_score": ["0.75"],  # Should be float
         }
     ),
 ]
@@ -472,7 +473,7 @@ CLSFR_INVALID_SCHEMA = [
                 "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
             ],
             # Missing GeneID
-            "diseaseid": ["D000014"],
+            "ct_score": [0.7],
         }
     ),
     pd.DataFrame(
@@ -480,16 +481,16 @@ CLSFR_INVALID_SCHEMA = [
             "digest": [
                 "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
             ],
-            "geneid": [1000494280],
-            "diseaseid": ["D000014"],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
             "newcol": "newcol",
         }
     ),
     pd.DataFrame(
         {
             # missing digest
-            "geneid": [1000494280],
-            "diseaseid": ["D000014"],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
         }
     ),
     pd.DataFrame(
@@ -497,7 +498,7 @@ CLSFR_INVALID_SCHEMA = [
             "digest": [
                 "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
             ],
-            "geneid": [1000494280],
+            "pub_score": [0.8],
             # Missing DiseaseID
         }
     ),

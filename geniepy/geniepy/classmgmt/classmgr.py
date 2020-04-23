@@ -7,6 +7,7 @@ the ClassifierParser schema.
 """
 import pandas as pd
 from geniepy.classmgmt.classifiers import BaseClassifier
+from geniepy.errors import ClassifierError
 
 
 class ClassificationMgr:
@@ -19,15 +20,18 @@ class ClassificationMgr:
 
     __slots__ = ["_classifiers"]
 
-    def __init__(self, classifiers: BaseClassifier):
+    def __init__(self, classifiers: [BaseClassifier]):
         """
         Initialize classification manager and train classifiers.
 
         Arguments:
             classifiers {[type]} -- The list of classifiers to be managed.
         """
-        self._classifiers: BaseClassifier = classifiers
-        # Train or restore classifiers.
+        self._classifiers: [BaseClassifier] = classifiers
+        # TODO Train or restore classifiers.
+        for classifier in self._classifiers:
+            # TODO Replace to load correct model
+            classifier.load(True)
 
     def predict(self, records: pd.DataFrame):
         """
@@ -37,7 +41,13 @@ class ClassificationMgr:
             records {pd.DataFrame} -- The records to be predicted as a dataframe.
         """
         # Generate prediction dataframe keys
-        prediction_df = pd.DataFrame()
-        for classifier in self._classifiers:
-            prediction_df[classifier.name] = records.apply(classifier.predict, axis=1)
-        raise NotImplementedError
+        try:
+            prediction_df = pd.DataFrame()
+            prediction_df["digest"] = records["digest"]
+            for classifier in self._classifiers:
+                prediction_df[classifier.col_name] = records.apply(
+                    classifier.predict, axis=1
+                )
+            return prediction_df
+        except Exception as exp:
+            raise ClassifierError("Unable to predict records: " + str(exp))

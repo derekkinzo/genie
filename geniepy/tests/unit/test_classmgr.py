@@ -1,13 +1,10 @@
 """Test Classification Manager Module."""
-from typing import Generator
-from geniepy.classmgmt import ClassificationMgr
-
-# from geniepy.classmgmt.classifiers import PcpClassifier
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
 import tests.resources.mock as mock
 from geniepy.datamgmt import DaoManager
 from geniepy.datamgmt.parsers import ClassifierParser
+from tests.resources.mock import MOCK_CLSFRMGR
 
 
 class TestClassMgr:
@@ -35,15 +32,13 @@ class TestClassMgr:
     # pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Construct mock dao manager for testing
-    daomgr = DaoManager(
+    dao_mgr = DaoManager(
         ctd_dao=ctd_dao, pubmed_dao=pubmed_dao, classifier_dao=classifier_dao
     )
 
-    classmgr: ClassificationMgr = ClassificationMgr(None)
-
     def test_constructor(self):
         """Test obj construction."""
-        assert self.classmgr is not None
+        assert MOCK_CLSFRMGR is not None
 
     def test_predict_records(self):
         """
@@ -56,10 +51,10 @@ class TestClassMgr:
         self.dao_mgr.download()
         gen_df = self.dao_mgr.gen_records()
         raw_df = next(gen_df)
-        predicted_df = self.classmgr.predict(raw_df)
+        predicted_df = MOCK_CLSFRMGR.predict(raw_df)
         # Make sure predicted all rows
-        expected_rows = raw_df.shape()[1]
-        actual_rows = predicted_df.shape()[1]
+        expected_rows = raw_df.shape[0]
+        actual_rows = predicted_df.shape[0]
         assert actual_rows == expected_rows
         # Make sure predicted df is valid (should return no errors)
         assert not ClassifierParser.validate(predicted_df)
@@ -67,7 +62,6 @@ class TestClassMgr:
         cols = predicted_df.columns
         # Make sure has a digest column
         assert "digest" in cols
-        num_cols = len(cols)
         # Make sure has one prediction column per classifier
-        for classifier in self.classmgr._classifiers:
-            assert classifier.name in cols
+        for classifier in MOCK_CLSFRMGR._classifiers:
+            assert classifier.col_name in cols

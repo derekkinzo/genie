@@ -1,13 +1,19 @@
 """Mock framework for tests."""
 import os
-from typing import NamedTuple
 from typing import Generator
 import xml.etree.ElementTree as ET
 from tests import get_resources_path
-from geniepy.classmgmt.classifiers import BaseClassifier
 from geniepy.datamgmt.scrapers import BaseScraper
 from geniepy import CHUNKSIZE
 from geniepy.pubmed import PubMedArticle
+from geniepy.classmgmt import ClassificationMgr
+from geniepy.classmgmt.classifiers import PcpClassifier
+
+PCPCLSFR = PcpClassifier()
+CTCLSFR = PcpClassifier()
+# pylint: disable=protected-access
+CTCLSFR._col_name = "ct_score"
+MOCK_CLSFRMGR: ClassificationMgr = ClassificationMgr([PCPCLSFR, CTCLSFR])
 
 
 class MockPubMedScraper(BaseScraper):

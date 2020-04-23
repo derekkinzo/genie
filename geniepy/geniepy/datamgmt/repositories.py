@@ -3,7 +3,7 @@ from typing import Generator
 from abc import ABC, abstractmethod
 import pandas as pd
 from pandas import DataFrame
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, Float, String
 import geniepy
 from geniepy.errors import DaoError
 
@@ -51,8 +51,8 @@ CLSFR_DAO_TABLE = Table(
     MetaData(),
     # No primary key allows duplicate records
     Column("digest", String, primary_key=False, nullable=False),
-    Column("geneid", Integer, nullable=False),
-    Column("diseaseid", String, nullable=False),
+    Column("pub_score", Float, nullable=False),
+    Column("ct_score", Float, nullable=False),
 )
 """Classifier Output DAO Repository Schema."""
 

@@ -294,10 +294,8 @@ class ClassifierParser(BaseParser):
     schema: Schema = Schema(
         [
             Column("digest"),
-            Column("geneid", [IsDtypeValidation(np.int64)]),
-            Column(
-                "diseaseid", [MatchesPatternValidation("^D[0-9]+$")]
-            ),  # i.e. D000014
+            Column("pub_score", [IsDtypeValidation(np.float)]),
+            Column("ct_score", [IsDtypeValidation(np.float)]),
         ]
     )
 

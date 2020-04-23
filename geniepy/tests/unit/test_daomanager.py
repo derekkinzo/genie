@@ -23,9 +23,9 @@ class TestDaoManager:
     # pylint: disable=protected-access
     pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
-    # Create and configure mock pubmed dao
-    classifier_dao = daos.PubMedDao(
-        dr.SqlRepository("sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE)
+    # Create and configure mock classifier dao
+    classifier_dao = daos.ClassifierDao(
+        dr.SqlRepository("sqlite://", dr.CLSFR_TABLE_NAME, dr.CLSFR_DAO_TABLE)
     )
     # pylint: disable=protected-access
     # pubmed_dao._parser.scraper = mock.MockPubMedScraper()
@@ -66,8 +66,8 @@ class TestDaoManager:
         self.dao_mgr.download()
         gen_df = self.dao_mgr.gen_records()
         records = next(gen_df)
-        # TODO make predictions
-        self.dao_mgr.save_predictions(records)
+        predictions_df = mock.MOCK_CLSFRMGR.predict(records)
+        self.dao_mgr.save_predictions(predictions_df)
         # Read data back from output tables to make sure records were saved
-        saved_df = self.dao_mgr._classifier_dao.query()
-        assert saved_df.equals(records)
+        saved_df = next(self.dao_mgr._classifier_dao.query())
+        assert saved_df.equals(predictions_df)
