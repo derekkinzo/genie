@@ -6,6 +6,10 @@ from tests.resources.mock import MockCtdScraper
 import tests.testdata as td
 
 
+VALID_DF = td.CTD_VALID_DF
+INVALID_DF = td.CTD_INVALID_DF
+
+
 class TestCtdParser:
     """Pytest CTD Parser class."""
 
@@ -23,7 +27,7 @@ class TestCtdParser:
         # Should return list with errors
         assert self.parser.validate(payload)
 
-    @pytest.mark.parametrize("payload", td.CTD_VALID_DF)
+    @pytest.mark.parametrize("payload", VALID_DF)
     def test_valid_payload(self, payload):
         """Test valid dataframe."""
         # Should return empty list

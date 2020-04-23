@@ -288,6 +288,9 @@ class ClassifierParser(BaseParser):
     classifiers have calculated desired predictions.
     """
 
+    default_type: DataType = None
+    scraper: None
+    """No online sources for classifiers output."""
     schema: Schema = Schema(
         [
             Column("digest"),
@@ -298,6 +301,10 @@ class ClassifierParser(BaseParser):
         ]
     )
 
+    def fetch(self, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
+        """No online sources to fetch from for classifiers outputs."""
+        raise NotImplementedError("Classifier Output Parser has no Scrapers")
+
     @staticmethod
     def parse(data, dtype=DataType.CSV_STR) -> DataFrame:
         """
@@ -307,4 +314,4 @@ class ClassifierParser(BaseParser):
             NotImplementedError -- Function not implemented since classifiers return
                 dataframes that only need to be validated.
         """
-        raise NotImplementedError
+        raise NotImplementedError("Classifier Output Parser has no Scrapers")

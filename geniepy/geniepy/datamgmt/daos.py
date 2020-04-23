@@ -116,3 +116,7 @@ class ClassifierDao(BaseDao):
     __slots__ = ["_repository"]
 
     _parser: ClassifierParser = ClassifierParser()
+
+    def download(self, chunksize=geniepy.CHUNKSIZE):
+        """Classifiers don't need scrapers, so method not implemented."""
+        raise NotImplementedError

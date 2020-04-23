@@ -8,7 +8,7 @@ VALID_DF = td.CLSFR_VALID_DF
 INVALID_DF = td.CLSFR_INVALID_DF
 
 
-class TestPubMedParser:
+class TestClassifierParser:
     """Pytest CTD Parser class."""
 
     parser: BaseParser = ClassifierParser()
@@ -28,3 +28,13 @@ class TestPubMedParser:
         """Test valid dataframe."""
         # Should return empty list
         assert not self.parser.validate(payload)
+
+    def test_parse_not_impl(self):
+        """Parse method should not be implemented in classifier parser."""
+        with pytest.raises(NotImplementedError):
+            self.parser.parse(None)
+
+    def test_fetch_not_impl(self):
+        """Fetch method should not be implemented in classifier parser."""
+        with pytest.raises(NotImplementedError):
+            self.parser.fetch()
