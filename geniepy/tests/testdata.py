@@ -492,5 +492,14 @@ CLSFR_INVALID_SCHEMA = [
             "diseaseid": ["D000014"],
         }
     ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "geneid": [1000494280],
+            # Missing DiseaseID
+        }
+    ),
 ]
 """Array of valid classifier SCHEMA table schema."""

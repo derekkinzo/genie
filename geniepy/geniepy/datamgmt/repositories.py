@@ -44,25 +44,17 @@ PUBMED_DAO_TABLE = Table(
 """PUBMED DAO Repository Schema."""
 
 
-OUTPUT_TABLE_NAME = "output"
-"""Name of geniepy output table."""
-OUTPUT_DAO_TABLE = Table(
-    PUBMED_TABLE_NAME,
+CLSFR_TABLE_NAME = "classifier"
+"""Name of geniepy classifier output table."""
+CLSFR_DAO_TABLE = Table(
+    CLSFR_TABLE_NAME,
     MetaData(),
     # No primary key allows duplicate records
-    Column("pmid", Integer, primary_key=False, nullable=False),
-    Column("date_completed", String),
-    Column("pub_model", String),
-    Column("title", String),
-    Column("iso_abbreviation", String),
-    Column("article_title", String),
-    Column("abstract", String),
-    Column("authors", String),
-    Column("language", String),
-    Column("chemicals", String),
-    Column("mesh_list", String),
+    Column("digest", String, primary_key=False, nullable=False),
+    Column("geneid", Integer, nullable=False),
+    Column("diseaseid", String, nullable=False),
 )
-"""Output DAO Repository Schema."""
+"""Classifier Output DAO Repository Schema."""
 
 
 class BaseRepository(ABC):

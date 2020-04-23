@@ -6,12 +6,11 @@ import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
 
 VALID_DF = td.PUBMED_VALID_DF
-INVALID_DF = td.PUBMED_INVALID_DF
-INVALID_DAO = td.PUBMED_INVALID_SCHEMA
+INVALID_SCHEMA = td.PUBMED_INVALID_SCHEMA
 
 
 class TestSqlPubMedRepository:
-    """PyTest dao test class."""
+    """PyTest repository test class."""
 
     repo: BaseRepository = SqlRepository(
         "sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE
@@ -21,7 +20,7 @@ class TestSqlPubMedRepository:
         """Ensure scraper obj constructed successfully."""
         assert self.repo is not None
 
-    @pytest.mark.parametrize("payload", INVALID_DAO)
+    @pytest.mark.parametrize("payload", INVALID_SCHEMA)
     def test_save_invalid_df(self, payload):
         """Test save invalid dataframe to dao's DAO."""
         with pytest.raises(DaoError):
