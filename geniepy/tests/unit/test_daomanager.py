@@ -66,6 +66,8 @@ class TestDaoManager:
         self.dao_mgr.download()
         gen_df = self.dao_mgr.gen_records()
         records = next(gen_df)
+        # TODO make predictions
         self.dao_mgr.save_predictions(records)
         # Read data back from output tables to make sure records were saved
-        # TODO read data
+        saved_df = self.dao_mgr._classifier_dao.query()
+        assert saved_df.equals(records)

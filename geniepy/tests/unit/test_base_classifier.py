@@ -1,12 +1,12 @@
 """Test base classifier class."""
-from geniepy.classifiers.clsfr_base import BaseClsfr
+from geniepy.classmgmt.classifiers import BaseClassifier
 from tests.resources.mock import MockClsfr
 
 
 class TestBaseClassifier:
     """Base Classifier pytest class."""
 
-    classifier: BaseClsfr = MockClsfr()
+    classifier: BaseClassifier = MockClsfr()
 
     def test_constructor(self):
         """Test classifier object is created."""

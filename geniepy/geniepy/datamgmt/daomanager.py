@@ -110,3 +110,4 @@ class DaoManager:
         Arguments:
             records {DataFrame} -- [description]
         """
+        self._classifier_dao.save(predictions)

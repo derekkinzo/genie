@@ -1,9 +1,9 @@
-"""Base Classifier Module."""
+"""Implementation of predictive classifiers."""
 from abc import ABC, abstractmethod
 from typing import NamedTuple
 
 
-class BaseClsfr(ABC):
+class BaseClassifier(ABC):
     """Base Classifier Abstract Class."""
 
     class Attributes(NamedTuple):

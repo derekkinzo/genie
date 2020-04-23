@@ -4,7 +4,7 @@ from typing import NamedTuple
 from typing import Generator
 import xml.etree.ElementTree as ET
 from tests import get_resources_path
-from geniepy.classifiers.clsfr_base import BaseClsfr
+from geniepy.classmgmt.classifiers import BaseClassifier
 from geniepy.datamgmt.scrapers import BaseScraper
 from geniepy import CHUNKSIZE
 from geniepy.pubmed import PubMedArticle
@@ -64,7 +64,7 @@ class MockCtdScraper(BaseScraper):
                 yield chunk
 
 
-class MockClsfr(BaseClsfr):
+class MockClsfr(BaseClassifier):
     """Implementation of Mock Classifier."""
 
     class Attributes(NamedTuple):
