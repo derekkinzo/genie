@@ -1,4 +1,6 @@
 """Test Classification Manager Module."""
+import pytest
+from geniepy.errors import ClassifierError
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
 import tests.resources.mock as mock
@@ -65,3 +67,8 @@ class TestClassMgr:
         # Make sure has one prediction column per classifier
         for classifier in MOCK_CLSFRMGR._classifiers:
             assert classifier.col_name in cols
+
+    def test_predict_invalid_records(self):
+        """Test attempting to predict with invalid records."""
+        with pytest.raises(ClassifierError):
+            MOCK_CLSFRMGR.predict(None)
