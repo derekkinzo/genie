@@ -288,23 +288,23 @@ class ClassifierParser(BaseParser):
     classifiers have calculated desired predictions.
     """
 
-    schema: Schema
+    schema: Schema = Schema(
+        [
+            Column("digest"),
+            Column("geneid", [IsDtypeValidation(np.int64)]),
+            Column(
+                "diseaseid", [MatchesPatternValidation("^D[0-9]+$")]
+            ),  # i.e. D000014
+        ]
+    )
 
     @staticmethod
     def parse(data, dtype=DataType.CSV_STR) -> DataFrame:
         """
-        Parse data and convert according to parser schema.
-
-        Arguments:
-            data {Implementation dependent} -- Data to be parsed
-
-        Keyword Arguments:
-            dtype {DataType} -- Type of data to be parsed (default: {DataType.CSV})
-
-        Returns:
-            DataFrame -- The parsed dataframe.
+        Parser function from base class.
 
         Raises:
-            ParserError -- If unable to parse data
+            NotImplementedError -- Function not implemented since classifiers return
+                dataframes that only need to be validated.
         """
         raise NotImplementedError
