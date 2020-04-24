@@ -294,8 +294,8 @@ class ClassifierParser(BaseParser):
     schema: Schema = Schema(
         [
             Column("digest"),
-            Column("pub_score", [IsDtypeValidation(np.float)]),
-            Column("ct_score", [IsDtypeValidation(np.float)]),
+            Column("pub_score", [IsDtypeValidation(np.float64)]),
+            Column("ct_score", [IsDtypeValidation(np.float64)]),
         ]
     )
 
