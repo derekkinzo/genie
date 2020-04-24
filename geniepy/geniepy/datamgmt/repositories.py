@@ -3,7 +3,7 @@ from typing import Generator
 from abc import ABC, abstractmethod
 import pandas as pd
 from pandas import DataFrame
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, Float, String
 import geniepy
 from geniepy.errors import DaoError
 
@@ -14,12 +14,12 @@ CTD_DAO_TABLE = Table(
     CTD_TABLE_NAME,
     MetaData(),
     # No primary key allows duplicate records
-    Column("Digest", String, primary_key=False, nullable=False),
-    Column("GeneSymbol", String),
-    Column("GeneID", Integer, nullable=False),
-    Column("DiseaseName", String),
-    Column("DiseaseID", String, nullable=False),
-    Column("PubMedIDs", String, nullable=False),
+    Column("digest", String, primary_key=False, nullable=False),
+    Column("genesymbol", String),
+    Column("geneid", Integer, nullable=False),
+    Column("diseasename", String),
+    Column("diseaseid", String, nullable=False),
+    Column("pmids", String, nullable=False),
 )
 """CTD DAO Repository Schema."""
 
@@ -42,6 +42,19 @@ PUBMED_DAO_TABLE = Table(
     Column("mesh_list", String),
 )
 """PUBMED DAO Repository Schema."""
+
+
+CLSFR_TABLE_NAME = "classifier"
+"""Name of geniepy classifier output table."""
+CLSFR_DAO_TABLE = Table(
+    CLSFR_TABLE_NAME,
+    MetaData(),
+    # No primary key allows duplicate records
+    Column("digest", String, primary_key=False, nullable=False),
+    Column("pub_score", Float, nullable=False),
+    Column("ct_score", Float, nullable=False),
+)
+"""Classifier Output DAO Repository Schema."""
 
 
 class BaseRepository(ABC):

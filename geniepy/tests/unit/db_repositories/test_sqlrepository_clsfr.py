@@ -5,15 +5,15 @@ from geniepy.datamgmt.repositories import BaseRepository, SqlRepository
 import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
 
-VALID_DF = td.PUBMED_VALID_DF
-INVALID_SCHEMA = td.PUBMED_INVALID_SCHEMA
+VALID_DF = td.CLSFR_VALID_DF
+INVALID_SCHEMA = td.CLSFR_INVALID_SCHEMA
 
 
-class TestSqlPubMedRepository:
+class TestSqlClsfrRepository:
     """PyTest repository test class."""
 
     repo: BaseRepository = SqlRepository(
-        "sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE
+        "sqlite://", dr.CLSFR_TABLE_NAME, dr.CLSFR_DAO_TABLE
     )
 
     def test_constructor(self):
@@ -21,7 +21,7 @@ class TestSqlPubMedRepository:
         assert self.repo is not None
 
     @pytest.mark.parametrize("payload", INVALID_SCHEMA)
-    def test_save_invalid_df(self, payload):
+    def test_save_invalid_schema(self, payload):
         """Test save invalid dataframe to dao's DAO."""
         with pytest.raises(DaoError):
             self.repo.save(payload)
@@ -42,8 +42,8 @@ class TestSqlPubMedRepository:
         except DaoError:
             pass
         # Attempt to retrieve record
-        pmid = payload.pmid[0]
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE pmid={pmid};"
+        digest = payload.digest[0]
+        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
         generator = self.repo.query(query=query_str)
         chunk = next(generator)
         assert chunk.equals(payload)
@@ -51,14 +51,14 @@ class TestSqlPubMedRepository:
     def test_query_non_existent(self):
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
-        pmid = 0
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE pmid={pmid};"
+        digest = 0
+        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
         generator = self.repo.query(query=query_str)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):
             next(generator)
 
-    @pytest.mark.parametrize("chunksize", [1, 2, 3, 4])
+    @pytest.mark.parametrize("chunksize", [1, 2, 3])
     def test_generator_chunk(self, chunksize):
         """Query all by chunk."""
         # Start with empty table
@@ -73,7 +73,7 @@ class TestSqlPubMedRepository:
         generator = self.repo.query(chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
-        assert result_df.pmid.count() == chunksize
+        assert result_df.digest.count() == chunksize
 
     def test_delete_all(self):
         """Test delete all records from repository."""

@@ -15,3 +15,7 @@ class DaoError(GeniePyError):
 
 class ParserError(GeniePyError):
     """Unable to parse data."""
+
+
+class ClassifierError(GeniePyError):
+    """Classifier unable to execute command."""

@@ -5,13 +5,12 @@ from geniepy.datamgmt.repositories import BaseRepository, SqlRepository
 import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
 
-INVALID_DAO = td.CTD_INVALID_DAO
+INVALID_SCHEMA = td.CTD_INVALID_SCHEMA
 VALID_DF = td.CTD_VALID_DF
-INVALID_DF = td.CTD_INVALID_DF
 
 
 class TestSqlCtdRepository:
-    """PyTest dao test class."""
+    """PyTest repository test class."""
 
     repo: BaseRepository = SqlRepository(
         "sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE
@@ -21,7 +20,7 @@ class TestSqlCtdRepository:
         """Ensure scraper obj constructed successfully."""
         assert self.repo is not None
 
-    @pytest.mark.parametrize("payload", INVALID_DAO)
+    @pytest.mark.parametrize("payload", INVALID_SCHEMA)
     def test_save_invalid_df(self, payload):
         """Test save invalid dataframe to dao's DAO."""
         with pytest.raises(DaoError):
@@ -43,8 +42,8 @@ class TestSqlCtdRepository:
         except DaoError:
             pass
         # Attempt to retrieve record
-        digest = payload.Digest[0]
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE Digest='{digest}';"
+        digest = payload.digest[0]
+        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
         generator = self.repo.query(query=query_str)
         chunk = next(generator)
         assert chunk.equals(payload)
@@ -53,7 +52,7 @@ class TestSqlCtdRepository:
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
         digest = "INVALID DIGEST"
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE Digest='{digest}';"
+        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
         generator = self.repo.query(query=query_str)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):
@@ -74,7 +73,7 @@ class TestSqlCtdRepository:
         generator = self.repo.query(chunksize=chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
-        assert result_df.Digest.count() == chunksize
+        assert result_df.digest.count() == chunksize
 
     def test_delete_all(self):
         """Test delete all records from repository."""

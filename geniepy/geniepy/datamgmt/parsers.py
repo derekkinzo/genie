@@ -87,14 +87,14 @@ class CtdParser(BaseParser):
     scraper: CtdScraper = CtdScraper()
     schema: Schema = Schema(
         [
-            Column("Digest"),
-            Column("GeneSymbol"),
-            Column("GeneID", [IsDtypeValidation(np.int64)]),
-            Column("DiseaseName"),
+            Column("digest"),
+            Column("genesymbol"),
+            Column("geneid", [IsDtypeValidation(np.int64)]),
+            Column("diseasename"),
             Column(
-                "DiseaseID", [MatchesPatternValidation("^D[0-9]+$")]
+                "diseaseid", [MatchesPatternValidation("^D[0-9]+$")]
             ),  # i.e. D000014
-            Column("PubMedIDs"),
+            Column("pmids"),
         ]
     )
 
@@ -109,7 +109,7 @@ class CtdParser(BaseParser):
         Returns:
             str -- the hex string of the computed digest
         """
-        message = str.encode(str(record.GeneID) + record.DiseaseID)
+        message = str.encode(str(record.geneid) + record.diseaseid)
         hexdigest = hashlib.sha256(message).hexdigest()
         return str(hexdigest)
 
@@ -145,8 +145,19 @@ class CtdParser(BaseParser):
             parsed_df["DiseaseID"] = parsed_df.apply(
                 lambda x: x.DiseaseID.replace("MESH:", ""), axis=1
             )
+            # Rename columns based on schema
+            parsed_df.rename(
+                columns={
+                    "GeneSymbol": "genesymbol",
+                    "GeneID": "geneid",
+                    "DiseaseName": "diseasename",
+                    "DiseaseID": "diseaseid",
+                    "PubMedIDs": "pmids",
+                },
+                inplace=True,
+            )
             # Compute and add the digest
-            parsed_df["Digest"] = parsed_df.apply(CtdParser.hash_record, axis=1)
+            parsed_df["digest"] = parsed_df.apply(CtdParser.hash_record, axis=1)
             errors = CtdParser.validate(parsed_df)
             if errors:
                 raise ParserError(errors)
@@ -267,3 +278,38 @@ class PubMedParser(BaseParser):
             return parsed_df
         except Exception as parse_exp:
             raise ParserError(parse_exp)
+
+
+class ClassifierParser(BaseParser):
+    """
+    Implementation of classifier dao Parser.
+
+    The classifier output tables contain the output data from geniepy after the
+    classifiers have calculated desired predictions.
+    """
+
+    default_type: DataType = None
+    scraper: None
+    """No online sources for classifiers output."""
+    schema: Schema = Schema(
+        [
+            Column("digest"),
+            Column("pub_score", [IsDtypeValidation(np.float)]),
+            Column("ct_score", [IsDtypeValidation(np.float)]),
+        ]
+    )
+
+    def fetch(self, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
+        """No online sources to fetch from for classifiers outputs."""
+        raise NotImplementedError("Classifier Output Parser has no Scrapers")
+
+    @staticmethod
+    def parse(data, dtype=DataType.CSV_STR) -> DataFrame:
+        """
+        Parser function from base class.
+
+        Raises:
+            NotImplementedError -- Function not implemented since classifiers return
+                dataframes that only need to be validated.
+        """
+        raise NotImplementedError("Classifier Output Parser has no Scrapers")

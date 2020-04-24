@@ -1,21 +1,27 @@
 """Mock framework for tests."""
 import os
-from typing import NamedTuple
 from typing import Generator
-from tests import get_resources_path
-from geniepy.classifiers.clsfr_base import BaseClsfr
-from geniepy.datamgmt.scrapers import BaseScraper
 import xml.etree.ElementTree as ET
+from tests import get_resources_path
+from geniepy.datamgmt.scrapers import BaseScraper
 from geniepy import CHUNKSIZE
-from geniepy.pubmed import ArticleSetParser, PubMedArticle
+from geniepy.pubmed import PubMedArticle
+from geniepy.classmgmt import ClassificationMgr
+from geniepy.classmgmt.classifiers import PcpClassifier
+
+PCPCLSFR = PcpClassifier()
+CTCLSFR = PcpClassifier()
+# pylint: disable=protected-access
+CTCLSFR._col_name = "ct_score"
+MOCK_CLSFRMGR: ClassificationMgr = ClassificationMgr([PCPCLSFR, CTCLSFR])
 
 
 class MockPubMedScraper(BaseScraper):
     """Mock PubMed scraper for tests."""
 
-    filename: str = "sample_articleset1.xml"
+    filename: str = "sample_articleset2.xml"
 
-    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
+    def scrape(self, chunksize: int = 2, **kwargs) -> Generator:
         """Simulate scraping pubmed baseline and returning xml objs."""
         xml_file_path = os.path.join(get_resources_path(), self.filename)
         xml_root: ET.Element = ET.parse(xml_file_path).getroot()
@@ -62,54 +68,3 @@ class MockCtdScraper(BaseScraper):
                     break
                 chunk = header + data
                 yield chunk
-
-
-class MockClsfr(BaseClsfr):
-    """Implementation of Mock Classifier."""
-
-    class Attributes(NamedTuple):
-        """Attributes of mock classifier."""
-
-        featureA: int = 1
-        """Example of a integer attribute."""
-        featureB: str = "default"
-        """Example of a string attribute."""
-        label: int = 0
-        """Example of a integer label."""
-
-    def restore_model(self) -> bool:
-        """
-        Load classifier model from memory.
-
-        Returns:
-            bool -- True if model loaded successfully, False otherwise.
-        """
-        return True
-
-    def store_model(self) -> bool:
-        """
-        Store classifier model into memory.
-
-        Returns:
-            bool -- True if model saves successfully, False otherwise.
-        """
-        return True
-
-    def __init__(self):
-        # pylint: disable=W0235
-        """
-        Initialize classifier.
-
-        Restore classifier model from memory if it exists. Otherwise, train classifier.
-        """
-        super().__init__()
-        self.mock_prediction = 1
-
-    def fit(self, features: [Attributes]) -> str:
-        """Train classifier given dataset."""
-        self.mock_prediction = 2
-        self._is_trained = "String containing training stats"
-
-    def predict(self, features: Attributes):
-        """Calculate publication count label."""
-        return self.mock_prediction

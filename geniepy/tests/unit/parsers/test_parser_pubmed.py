@@ -35,10 +35,11 @@ class TestPubMedParser:
 
     def test_parse_valid(self):
         """Test parsing valid recrods."""
-        scrape_gen = self.parser.scraper.scrape()
+        chunksize = 3
+        scrape_gen = self.parser.scraper.scrape(chunksize=chunksize)
         xml_articles = next(scrape_gen)
         parsed_df = self.parser.parse(xml_articles)
-        assert parsed_df.shape[0] == 2
+        assert parsed_df.shape[0] == chunksize
 
     def test_parse_invalid_file(self):
         """Attempt to parse invalid data."""
