@@ -6,13 +6,12 @@ GeniePy
 Gene-Disease relationship trend detection application.
 
 
-Python package available on PyPi_
+.. note::
 
-.. _PyPi: https://pypi.org/project/geniepy/0.5/
+    Python package available on PyPi_
 
-Project documentation here_
+    Project documentation here_
 
-.. _here: https://geniepy.readthedocs.io/en/latest/
 
 
 Installation
@@ -71,3 +70,8 @@ Commands to generate python package and upload it to PyPi (setup PyPi account an
     python setup.py sdist bdist_wheel
     twine upload --repository testpypi dist/{package name}
     twine upload dist/{package name}
+
+
+
+.. _PyPi: https://pypi.org/project/geniepy/
+.. _here: https://geniepy.readthedocs.io/en/latest/
