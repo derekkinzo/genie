@@ -173,7 +173,39 @@ class SqlRepository(BaseRepository):
 class GbqRepository(BaseRepository):
     """Implementation of Sqlite Data Access Object Repository."""
 
-    __slots__ = ["_proj", "_credentials"]
+    __slots__ = ["_proj", "_credentials_path"]
+
+    def connect(self):
+        """Connect to Google BigQuery."""
+        bgq_credentials = service_account.Credentials.from_service_account_file(
+            self._credentials_path,
+        )
+        pandas_gbq.context.credentials = bgq_credentials
+        pandas_gbq.context.project = self._proj
+
+    @staticmethod
+    def get_dict_schema(table_schema: Table) -> [dict]:
+        """Convert Table Schema into GBQ dict expected format."""
+        # flake8: noqa
+        coldict = lambda col: {
+            "name": col.key,
+            "type": col.type.__class__.__name__.upper(),
+            "mode": "NULLABLE" if col.nullable else "REQUIRED",
+        }
+        dictschema = []
+
+        for column in table_schema.get_children():
+            dictschema.append(coldict(column))
+        return dictschema
+
+    def create_table(self):
+        """Create table in GBQ."""
+        pandas_gbq.to_gbq(
+            pd.DataFrame(),
+            self.tablename,
+            if_exists="replace",
+            table_schema=self._table,
+        )
 
     def __init__(
         self, db_loc: str, tablename: str, table: Table, credentials_path: str
@@ -187,14 +219,12 @@ class GbqRepository(BaseRepository):
             schema {Table} -- the table schema
             credentials_path {str} -- path to gcp credentials json
         """
-        self._tablename = tablename
-        self._table = table
         self._proj = db_loc
-        # self._credentials = service_account.Credentials.from_service_account_file(
-        # credentials_path,
-        # )
-        # pandas_gbq.context.credentials = self._credentials
-        # pandas_gbq.context.project = self._proj
+        self._tablename = tablename
+        self._table = self.get_dict_schema(table)
+        self._credentials_path = credentials_path
+        self.connect()
+        self.create_table()
 
     def save(self, payload: DataFrame):
         """
@@ -206,23 +236,16 @@ class GbqRepository(BaseRepository):
         Raises:
             DaoError: if cannot save payload to db
         """
-        # try:
-        #     payload.to_sql(
-        #         self._tablename,
-        #         con=self._engine,
-        #         if_exists="append",
-        #         index=False,
-        #         method="multi",
-        #     )
-        # except Exception as sql_exp:
-        #     raise DaoError(sql_exp)
-        raise NotImplementedError
+        try:
+            pandas_gbq.to_gbq(
+                payload, self._tablename, if_exists="append", table_schema=self._table,
+            )
+        except Exception as sql_exp:
+            raise DaoError(sql_exp)
 
     def delete_all(self):
         """Delete all records in repository."""
-        # self._table.drop(self._engine)
-        # self._table.create(self._engine)
-        raise NotImplementedError
+        self.create_table()
 
     # pylint: disable=bad-continuation
     def query(
@@ -238,9 +261,20 @@ class GbqRepository(BaseRepository):
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
-        # if query is None:
-        #     return pd.read_sql(self._tablename, con=self._engine, chunksize=chunksize)
-        # # If query string provided
-        # generator = pd.read_sql_query(query, self._engine, chunksize=chunksize)
-        # return generator
-        raise NotImplementedError
+        try:
+            primary_key = "pmid"
+            if query is None:
+                query = f"SELECT * FROM {self._tablename} WHERE pmid={primary_key};"
+            offset = 0
+            # Remove semicolon if exists and add extra params
+            query = query.strip(";")
+            while True:
+                add_query = f" ORDER BY {primary_key} LIMIT {chunksize} OFFSET {offset}"
+                gbq_query = query + add_query
+                df = pandas_gbq.read_gbq(gbq_query)
+                if df.empty:
+                    return
+                offset += chunksize
+                yield df
+        except Exception as gbq_exp:
+            raise DaoError(gbq_exp)
