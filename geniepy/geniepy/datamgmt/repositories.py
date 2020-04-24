@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 import pandas as pd
 from pandas import DataFrame
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, Float, String
+from google.oauth2 import service_account
+import pandas_gbq
 import geniepy
 from geniepy.errors import DaoError
 
@@ -60,7 +62,7 @@ CLSFR_DAO_TABLE = Table(
 class BaseRepository(ABC):
     """Base Abstract Class for Data Access Object Repositories."""
 
-    __slots__ = ["_tablename"]
+    __slots__ = ["_table", "_tablename"]
 
     @property
     def tablename(self):
@@ -103,7 +105,7 @@ class BaseRepository(ABC):
 class SqlRepository(BaseRepository):
     """Implementation of Sqlite Data Access Object Repository."""
 
-    __slots__ = ["_table", "_tablename", "_engine"]
+    __slots__ = ["_engine"]
 
     def __init__(self, db_loc: str, tablename: str, table: Table):
         """
@@ -166,3 +168,79 @@ class SqlRepository(BaseRepository):
         # If query string provided
         generator = pd.read_sql_query(query, self._engine, chunksize=chunksize)
         return generator
+
+
+class GbqRepository(BaseRepository):
+    """Implementation of Sqlite Data Access Object Repository."""
+
+    __slots__ = ["_proj", "_credentials"]
+
+    def __init__(
+        self, db_loc: str, tablename: str, table: Table, credentials_path: str
+    ):
+        """
+        Initialize DAO repository and create table.
+
+        Arguments:
+            db_loc {str} -- name of BigQuery project
+            tablename {str} -- the dao table name including dataset (i.e. test.table)
+            schema {Table} -- the table schema
+            credentials_path {str} -- path to gcp credentials json
+        """
+        self._tablename = tablename
+        self._table = table
+        self._proj = db_loc
+        # self._credentials = service_account.Credentials.from_service_account_file(
+        # credentials_path,
+        # )
+        # pandas_gbq.context.credentials = self._credentials
+        # pandas_gbq.context.project = self._proj
+
+    def save(self, payload: DataFrame):
+        """
+        Save payload to database table.
+
+        Arguments:
+            payload {DataFrame} -- the payload to be stored in db
+
+        Raises:
+            DaoError: if cannot save payload to db
+        """
+        # try:
+        #     payload.to_sql(
+        #         self._tablename,
+        #         con=self._engine,
+        #         if_exists="append",
+        #         index=False,
+        #         method="multi",
+        #     )
+        # except Exception as sql_exp:
+        #     raise DaoError(sql_exp)
+        raise NotImplementedError
+
+    def delete_all(self):
+        """Delete all records in repository."""
+        # self._table.drop(self._engine)
+        # self._table.create(self._engine)
+        raise NotImplementedError
+
+    # pylint: disable=bad-continuation
+    def query(
+        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
+    ) -> Generator[DataFrame, None, None]:
+        """
+        Query DAO repo and returns a generator of DataFrames with query results.
+
+        Keyword Arguments:
+            query {str} -- Query string. (default: {None} returns all values)
+            chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
+
+        Returns:
+            Generator[DataFrame] -- Generator to iterate over DataFrame results.
+        """
+        # if query is None:
+        #     return pd.read_sql(self._tablename, con=self._engine, chunksize=chunksize)
+        # # If query string provided
+        # generator = pd.read_sql_query(query, self._engine, chunksize=chunksize)
+        # return generator
+        raise NotImplementedError
