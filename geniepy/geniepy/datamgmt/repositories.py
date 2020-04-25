@@ -170,7 +170,7 @@ class SqlRepository(BaseRepository):
         return generator
 
 
-class GbqRepository(BaseRepository):
+class GbqRepository(BaseRepository):  # pragma: no cover
     """Implementation of Sqlite Data Access Object Repository."""
 
     __slots__ = ["_proj", "_credentials_path"]

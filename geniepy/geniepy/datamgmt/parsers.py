@@ -274,7 +274,7 @@ class PubMedParser(BaseParser):
 
             errors = PubMedParser.validate(parsed_df)
             if errors:
-                raise ParserError(errors)
+                raise ParserError(errors)  # pragma: no cover - should never reach
             return parsed_df
         except Exception as parse_exp:
             raise ParserError(parse_exp)
