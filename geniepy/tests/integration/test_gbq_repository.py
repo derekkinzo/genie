@@ -1,8 +1,5 @@
 """Pytest module to test Google BigQuery Repository."""
 import os
-import pandas as pd
-from google.oauth2 import service_account
-import pandas_gbq
 import pytest
 import tests.testdata as td
 import geniepy.datamgmt.repositories as dr

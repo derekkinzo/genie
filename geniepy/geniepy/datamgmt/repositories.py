@@ -192,11 +192,7 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             "type": col.type.__class__.__name__.upper(),
             "mode": "NULLABLE" if col.nullable else "REQUIRED",
         }
-        dictschema = []
-
-        for column in table_schema.get_children():
-            dictschema.append(coldict(column))
-        return dictschema
+        return [coldict(col) for col in table_schema.get_children()]
 
     def create_table(self):
         """Create table in GBQ."""
@@ -207,9 +203,7 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             table_schema=self._table,
         )
 
-    def __init__(
-        self, db_loc: str, tablename: str, table: Table, credentials_path: str
-    ):
+    def __init__(self, db_loc: str, tablename: str, table: Table, credentials: str):
         """
         Initialize DAO repository and create table.
 
@@ -222,7 +216,7 @@ class GbqRepository(BaseRepository):  # pragma: no cover
         self._proj = db_loc
         self._tablename = tablename
         self._table = self.get_dict_schema(table)
-        self._credentials_path = credentials_path
+        self._credentials_path = credentials
         self.connect()
         self.create_table()
 
