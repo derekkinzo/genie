@@ -1,6 +1,7 @@
 """Data Access Repositories to abstract interation with databases."""
 from typing import Generator
 from abc import ABC, abstractmethod
+from collections import namedtuple
 import pandas as pd
 from pandas import DataFrame
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, Float, String
@@ -8,7 +9,9 @@ from google.oauth2 import service_account
 import pandas_gbq
 from geniepy.errors import DaoError
 
+# DaoProperties = namedtuple('DaoProperties', 'tablename pkey schema')
 
+CTD_PKEY = "digest"
 CTD_TABLE_NAME = "ctd"
 """Name of ctd source table."""
 CTD_DAO_TABLE = Table(
@@ -24,6 +27,7 @@ CTD_DAO_TABLE = Table(
 )
 """CTD DAO Repository Schema."""
 
+PUBMED_PKEY = "pmid"
 PUBMED_TABLE_NAME = "pubmed"
 """Name of pubmed source table."""
 PUBMED_DAO_TABLE = Table(
@@ -44,7 +48,7 @@ PUBMED_DAO_TABLE = Table(
 )
 """PUBMED DAO Repository Schema."""
 
-
+CLSFR_PKEY = "digest"
 CLSFR_TABLE_NAME = "classifier"
 """Name of geniepy classifier output table."""
 CLSFR_DAO_TABLE = Table(
@@ -61,7 +65,7 @@ CLSFR_DAO_TABLE = Table(
 class BaseRepository(ABC):
     """Base Abstract Class for Data Access Object Repositories."""
 
-    __slots__ = ["_table", "_tablename"]
+    __slots__ = ["_table", "_tablename", "_pkey"]
 
     @property
     def tablename(self):
@@ -104,7 +108,7 @@ class SqlRepository(BaseRepository):
 
     __slots__ = ["_engine"]
 
-    def __init__(self, db_loc: str, tablename: str, table: Table):
+    def __init__(self, db_loc: str, tablename: str, table: Table, pkey: str):
         """
         Initialize DAO repository and create table.
 
@@ -112,9 +116,11 @@ class SqlRepository(BaseRepository):
             db_loc {str} -- location of underlying database
             tablename {str} -- the dao table name
             schema {Table} -- the table schema
+            pkey {str} -- the table's primary key, or field to be ordered by
         """
         self._tablename = tablename
         self._table = table
+        self._pkey = pkey
         # Create sql engine
         self._engine = create_engine(db_loc)
         # Create Table

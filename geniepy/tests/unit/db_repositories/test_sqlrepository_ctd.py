@@ -14,7 +14,7 @@ class TestSqlCtdRepository:
     """PyTest repository test class."""
 
     repo: BaseRepository = SqlRepository(
-        "sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE
+        "sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE, dr.CTD_PKEY
     )
 
     def test_constructor(self):

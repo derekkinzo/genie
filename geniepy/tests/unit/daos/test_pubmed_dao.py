@@ -12,7 +12,9 @@ from geniepy.errors import DaoError
 class TestPubMedDao:
     """PyTest data access object test class."""
 
-    test_repo = dr.SqlRepository("sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE)
+    test_repo = dr.SqlRepository(
+        "sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE, dr.PUBMED_PKEY
+    )
     test_dao: BaseDao = PubMedDao(test_repo)
     # Attach mock scraper to parser for testing
     mock_scraper = MockPubMedScraper()

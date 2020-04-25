@@ -14,21 +14,25 @@ class TestClassMgr:
 
     # Create and configure mock ctd dao
     ctd_dao = daos.CtdDao(
-        dr.SqlRepository("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE)
+        dr.SqlRepository("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE, dr.CTD_PKEY)
     )
     # pylint: disable=protected-access
     ctd_dao._parser.scraper = mock.MockCtdScraper()
 
     # Create and configure mock pubmed dao
     pubmed_dao = daos.PubMedDao(
-        dr.SqlRepository("sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE)
+        dr.SqlRepository(
+            "sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE, dr.PUBMED_PKEY
+        )
     )
     # pylint: disable=protected-access
     pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Create and configure mock pubmed dao
-    classifier_dao = daos.PubMedDao(
-        dr.SqlRepository("sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE)
+    classifier_dao = daos.ClassifierDao(
+        dr.SqlRepository(
+            "sqlite://", dr.CLSFR_TABLE_NAME, dr.CLSFR_DAO_TABLE, dr.CLSFR_PKEY
+        )
     )
     # pylint: disable=protected-access
     # pubmed_dao._parser.scraper = mock.MockPubMedScraper()
@@ -67,6 +71,7 @@ class TestClassMgr:
         # Make sure has one prediction column per classifier
         for classifier in MOCK_CLSFRMGR._classifiers:
             assert classifier.col_name in cols
+        # TODO validate classifier predicted dataframe
 
     def test_predict_invalid_records(self):
         """Test attempting to predict with invalid records."""
