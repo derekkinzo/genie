@@ -55,7 +55,7 @@ class TestSqlPubMedRepository:
             pass
         # Attempt to retrieve record
         pmid = payload.pmid[0]
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE pmid={pmid};"
+        query_str = self.repo.query_pkey(pmid)
         generator = self.repo.query(query_str, TEST_CHUNKSIZE)
         chunk = next(generator)
         assert chunk.equals(payload)
@@ -64,7 +64,7 @@ class TestSqlPubMedRepository:
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
         pmid = 0
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE pmid={pmid};"
+        query_str = self.repo.query_pkey(pmid)
         generator = self.repo.query(query_str, TEST_CHUNKSIZE)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):

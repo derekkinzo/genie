@@ -22,7 +22,7 @@ class TestPubMedDao:
 
     def read_record(self, pmid):
         """Read record(s) from database (tests helper method)."""
-        query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE pmid='{pmid}';"
+        query_str = self.test_dao.query_pkey(pmid)
         generator = self.test_dao.query(query_str, TEST_CHUNKSIZE)
         return generator
 

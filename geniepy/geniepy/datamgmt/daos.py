@@ -40,6 +40,18 @@ class BaseDao(ABC):
         """Generate query string to query entire table."""
         return self._repository.query_all
 
+    def query_pkey(self, val) -> str:
+        """
+        Generate query by primary key string
+
+        Arguments:
+            val  -- value of primary key
+
+        Returns:
+            str -- The query str
+        """
+        return self._repository.query_pkey(val)
+
     def download(self, chunksize: int):
         """
         Download new data from online sources if available.

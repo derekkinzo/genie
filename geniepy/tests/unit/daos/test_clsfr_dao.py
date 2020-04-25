@@ -20,7 +20,7 @@ class TestClassifierDao:
 
     def read_record(self, digest):
         """Read record(s) from database (tests helper method)."""
-        query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE digest='{digest}';"
+        query_str = self.test_dao.query_pkey(digest)
         generator = self.test_dao.query(query_str, TEST_CHUNKSIZE)
         return generator
 

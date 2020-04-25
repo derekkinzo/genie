@@ -55,7 +55,7 @@ class TestSqlClsfrRepository:
             pass
         # Attempt to retrieve record
         digest = payload.digest[0]
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
+        query_str = self.repo.query_pkey(digest)
         generator = self.repo.query(query_str, TEST_CHUNKSIZE)
         chunk = next(generator)
         assert chunk.equals(payload)
@@ -64,7 +64,7 @@ class TestSqlClsfrRepository:
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
         digest = 0
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
+        query_str = self.repo.query_pkey(digest)
         generator = self.repo.query(query_str, TEST_CHUNKSIZE)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):

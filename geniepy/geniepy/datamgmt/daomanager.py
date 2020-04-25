@@ -58,9 +58,7 @@ class DaoManager:
         pmids = pmids.split("|")
         pubmed_df = pd.DataFrame()
         for pmid in pmids:
-            pmid_query = (
-                f"SELECT * FROM {self._pubmed_dao.tablename} WHERE pmid='{pmid}';"
-            )
+            pmid_query = self._pubmed_dao.query_pkey(pmid)
             try:
                 # Only care about 1 pmid entry (table shouldn't have duplicates)
                 pmid_df = next(self._pubmed_dao.query(pmid_query, 1))

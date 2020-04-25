@@ -40,7 +40,6 @@ class TestGbqRepository:
         """Test constructing object."""
         assert self.pubmed_repo is not None
 
-
     @pytest.mark.parametrize("payload", INVALID_SCHEMA)
     def test_save_invalid_df(self, payload):
         """Test save invalid dataframe to dao's DAO."""
@@ -64,7 +63,7 @@ class TestGbqRepository:
             pass
         # Attempt to retrieve record
         pmid = payload.pmid[0]
-        query_str = f"SELECT * FROM {self.pubmed_repo.tablename} WHERE pmid={pmid};"
+        query_str = self.pubmed_repo.query_pkey(pmid)
         generator = self.pubmed_repo.query(query_str, TEST_CHUNKSIZE)
         chunk = next(generator)
         assert chunk.pmid.equals(payload.pmid)
@@ -79,7 +78,7 @@ class TestGbqRepository:
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
         pmid = 0
-        query_str = f"SELECT * FROM {self.pubmed_repo.tablename} WHERE pmid={pmid};"
+        query_str - self.pubmed_repo.query_pkey(pmid)
         generator = self.pubmed_repo.query(TEST_CHUNKSIZE, query=query_str)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):

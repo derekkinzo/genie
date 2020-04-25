@@ -26,7 +26,6 @@ class TestClassMgr:
     # Create and configure mock pubmed dao
     classifier_dao = daos.ClassifierDao(dr.SqlRepository("sqlite://", CLSFR_PROPTY))
     # pylint: disable=protected-access
-    # pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Construct mock dao manager for testing
     dao_mgr = DaoManager(
