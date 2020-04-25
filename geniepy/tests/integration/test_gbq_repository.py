@@ -29,7 +29,11 @@ class TestGbqRepository:
     def setup_class(cls):
         """Initialize GBQ repo."""
         cls.repo = dr.GbqRepository(
-            project_name, table_name, dr.PUBMED_DAO_TABLE, credentials_path
+            project_name,
+            table_name,
+            dr.PUBMED_DAO_TABLE,
+            dr.PUBMED_PKEY,
+            credentials_path,
         )
 
     def test_constructor(self):

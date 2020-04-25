@@ -9,9 +9,11 @@ from google.oauth2 import service_account
 import pandas_gbq
 from geniepy.errors import DaoError
 
-# DaoProperties = namedtuple('DaoProperties', 'tablename pkey schema')
+RepoProperties = namedtuple("RepoProperties", "tablename pkey table")
+"""General properties of a given repository."""
 
 CTD_PKEY = "digest"
+"""CTD table primary key."""
 CTD_TABLE_NAME = "ctd"
 """Name of ctd source table."""
 CTD_DAO_TABLE = Table(
@@ -26,9 +28,14 @@ CTD_DAO_TABLE = Table(
     Column("pmids", String, nullable=False),
 )
 """CTD DAO Repository Schema."""
+CTD_PROPTY = RepoProperties(
+    tablename=CTD_TABLE_NAME, pkey=CTD_PKEY, table=CTD_DAO_TABLE
+)
 
-PUBMED_PKEY = "pmid"
+
 PUBMED_TABLE_NAME = "pubmed"
+"""PUBMED table primary key."""
+PUBMED_PKEY = "pmid"
 """Name of pubmed source table."""
 PUBMED_DAO_TABLE = Table(
     PUBMED_TABLE_NAME,
@@ -47,8 +54,14 @@ PUBMED_DAO_TABLE = Table(
     Column("mesh_list", String),
 )
 """PUBMED DAO Repository Schema."""
+PUBMED_PROPTY = RepoProperties(
+    tablename=PUBMED_TABLE_NAME, pkey=PUBMED_PKEY, table=PUBMED_DAO_TABLE
+)
 
 CLSFR_PKEY = "digest"
+"""Classifier table primary key."""
+CLSFR_TABLE_NAME = "classifier"
+"""Classifier table name."""
 CLSFR_TABLE_NAME = "classifier"
 """Name of geniepy classifier output table."""
 CLSFR_DAO_TABLE = Table(
@@ -60,6 +73,9 @@ CLSFR_DAO_TABLE = Table(
     Column("ct_score", Float, nullable=False),
 )
 """Classifier Output DAO Repository Schema."""
+CLSFR_PROPTY = RepoProperties(
+    tablename=CLSFR_TABLE_NAME, pkey=CLSFR_PKEY, table=CLSFR_DAO_TABLE
+)
 
 
 class BaseRepository(ABC):
@@ -108,19 +124,17 @@ class SqlRepository(BaseRepository):
 
     __slots__ = ["_engine"]
 
-    def __init__(self, db_loc: str, tablename: str, table: Table, pkey: str):
+    def __init__(self, db_loc: str, propty: RepoProperties):
         """
         Initialize DAO repository and create table.
 
         Arguments:
             db_loc {str} -- location of underlying database
-            tablename {str} -- the dao table name
-            schema {Table} -- the table schema
-            pkey {str} -- the table's primary key, or field to be ordered by
+            propty {RepoProperties} -- Repository properties structure
         """
-        self._tablename = tablename
-        self._table = table
-        self._pkey = pkey
+        self._tablename = propty.tablename
+        self._table = propty.table
+        self._pkey = propty.pkey
         # Create sql engine
         self._engine = create_engine(db_loc)
         # Create Table
@@ -176,6 +190,27 @@ class GbqRepository(BaseRepository):  # pragma: no cover
 
     __slots__ = ["_proj", "_credentials_path"]
 
+    def __init__(
+        self, db_loc: str, tablename: str, table: Table, pkey: str, credentials: str
+    ):
+        """
+        Initialize DAO repository and create table.
+
+        Arguments:
+            db_loc {str} -- name of BigQuery project
+            tablename {str} -- the dao table name including dataset (i.e. test.table)
+            schema {Table} -- the table schema
+            pkey {str} -- the table's primary key, or field to be ordered by
+            credentials_path {str} -- path to gcp credentials json
+        """
+        self._proj = db_loc
+        self._tablename = tablename
+        self._pkey = pkey
+        self._table = self.get_dict_schema(table)
+        self._credentials_path = credentials
+        self.connect()
+        self.create_table()
+
     def connect(self):
         """Connect to Google BigQuery."""
         bgq_credentials = service_account.Credentials.from_service_account_file(
@@ -203,23 +238,6 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             if_exists="replace",
             table_schema=self._table,
         )
-
-    def __init__(self, db_loc: str, tablename: str, table: Table, credentials: str):
-        """
-        Initialize DAO repository and create table.
-
-        Arguments:
-            db_loc {str} -- name of BigQuery project
-            tablename {str} -- the dao table name including dataset (i.e. test.table)
-            schema {Table} -- the table schema
-            credentials_path {str} -- path to gcp credentials json
-        """
-        self._proj = db_loc
-        self._tablename = tablename
-        self._table = self.get_dict_schema(table)
-        self._credentials_path = credentials
-        self.connect()
-        self.create_table()
 
     def save(self, payload: DataFrame):
         """

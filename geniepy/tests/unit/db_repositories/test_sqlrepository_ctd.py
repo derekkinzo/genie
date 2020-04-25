@@ -13,9 +13,7 @@ VALID_DF = td.CTD_VALID_DF
 class TestSqlCtdRepository:
     """PyTest repository test class."""
 
-    repo: BaseRepository = SqlRepository(
-        "sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE, dr.CTD_PKEY
-    )
+    repo: BaseRepository = SqlRepository("sqlite://", dr.CTD_PROPTY)
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""

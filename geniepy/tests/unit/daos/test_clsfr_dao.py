@@ -14,9 +14,7 @@ INVALID_DF = td.CLSFR_INVALID_DF
 class TestClassifierDao:
     """PyTest data access object test class."""
 
-    test_repo = dr.SqlRepository(
-        "sqlite://", dr.CLSFR_TABLE_NAME, dr.CLSFR_DAO_TABLE, dr.CLSFR_PKEY
-    )
+    test_repo = dr.SqlRepository("sqlite://", dr.CLSFR_PROPTY)
     test_dao: BaseDao = ClassifierDao(test_repo)
 
     def read_record(self, digest):

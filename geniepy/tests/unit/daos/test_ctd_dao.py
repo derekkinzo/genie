@@ -13,9 +13,7 @@ from tests.resources.mock import TEST_CHUNKSIZE
 class TestCtdDao:
     """PyTest data access object test class."""
 
-    test_repo = dr.SqlRepository(
-        "sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE, dr.CTD_PKEY
-    )
+    test_repo = dr.SqlRepository("sqlite://", dr.CTD_PROPTY)
     test_dao: BaseDao = CtdDao(test_repo)
     # Attach mock scraper to parser for testing
     mock_scraper = MockCtdScraper()

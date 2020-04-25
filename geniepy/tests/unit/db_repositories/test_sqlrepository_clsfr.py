@@ -13,9 +13,7 @@ INVALID_SCHEMA = td.CLSFR_INVALID_SCHEMA
 class TestSqlClsfrRepository:
     """PyTest repository test class."""
 
-    repo: BaseRepository = SqlRepository(
-        "sqlite://", dr.CLSFR_TABLE_NAME, dr.CLSFR_DAO_TABLE, dr.CLSFR_PKEY
-    )
+    repo: BaseRepository = SqlRepository("sqlite://", dr.CLSFR_PROPTY)
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""

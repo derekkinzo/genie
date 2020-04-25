@@ -13,9 +13,7 @@ INVALID_SCHEMA = td.PUBMED_INVALID_SCHEMA
 class TestSqlPubMedRepository:
     """PyTest repository test class."""
 
-    repo: BaseRepository = SqlRepository(
-        "sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE, dr.PUBMED_PKEY
-    )
+    repo: BaseRepository = SqlRepository("sqlite://", dr.PUBMED_PROPTY)
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""
