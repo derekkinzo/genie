@@ -16,14 +16,22 @@ class BaseRepository(ABC):
     __slots__ = ["_table", "_tablename", "_pkey"]
 
     @property
-    def tablename(self):
+    def tablename(self) -> str:
         """Return DAO repo's tablename."""
         return self._tablename  # pylint: no-member
 
     @property
-    def query_all(self):
+    def query_all(self) -> str:
         """Generate query string to query entire table."""
         return f"SELECT * FROM {self.tablename};"
+
+    def query_pkey(self, val) -> str:
+        """Generate query string to query by primary key."""
+        if isinstance(val, str):
+            return f"SELECT * FROM {self.tablename} WHERE {self._pkey}='{val}';"
+        else:
+            # Don't need quotes surrounding val if not a str
+            return f"SELECT * FROM {self.tablename} WHERE {self._pkey}={val};"
 
     @abstractmethod
     def save(self, payload: DataFrame):

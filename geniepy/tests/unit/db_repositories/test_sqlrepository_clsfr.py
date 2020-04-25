@@ -19,6 +19,19 @@ class TestSqlClsfrRepository:
         """Ensure scraper obj constructed successfully."""
         assert self.repo is not None
 
+    def test_query_all(self):
+        """Test gen query all str."""
+        expected = "SELECT * FROM classifier;"
+        actual = self.repo.query_all
+        assert actual == expected
+
+    def test_query_pkey(self):
+        """Test gen query all str."""
+        digest = "0x1"
+        expected = "SELECT * FROM classifier WHERE digest='0x1';"
+        actual = self.repo.query_pkey(digest)
+        assert actual == expected
+
     @pytest.mark.parametrize("payload", INVALID_SCHEMA)
     def test_save_invalid_schema(self, payload):
         """Test save invalid dataframe to dao's DAO."""

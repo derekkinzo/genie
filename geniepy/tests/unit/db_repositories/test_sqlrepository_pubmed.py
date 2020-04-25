@@ -19,6 +19,19 @@ class TestSqlPubMedRepository:
         """Ensure scraper obj constructed successfully."""
         assert self.repo is not None
 
+    def test_query_all(self):
+        """Test gen query all str."""
+        expected = "SELECT * FROM pubmed;"
+        actual = self.repo.query_all
+        assert actual == expected
+
+    def test_query_pkey(self):
+        """Test gen query all str."""
+        pmid = 1
+        expected = "SELECT * FROM pubmed WHERE pmid=1;"
+        actual = self.repo.query_pkey(pmid)
+        assert actual == expected
+
     @pytest.mark.parametrize("payload", INVALID_SCHEMA)
     def test_save_invalid_df(self, payload):
         """Test save invalid dataframe to dao's DAO."""
