@@ -20,7 +20,7 @@ class TestClassifierDao:
     def read_record(self, digest):
         """Read record(s) from database (tests helper method)."""
         query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE digest='{digest}';"
-        generator = self.test_dao.query(TEST_CHUNKSIZE, query=query_str)
+        generator = self.test_dao.query(query_str, TEST_CHUNKSIZE)
         return generator
 
     def test_constructor(self):
@@ -74,7 +74,7 @@ class TestClassifierDao:
         # Delete all records
         self.test_dao.purge()
         # Make sure no records left
-        generator = self.test_dao.query(TEST_CHUNKSIZE)
+        generator = self.test_dao.query(None, TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -91,7 +91,7 @@ class TestClassifierDao:
             except DaoError:
                 pass
         # Get all records in database
-        generator = self.test_dao.query(chunksize)
+        generator = self.test_dao.query(None, chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.digest.count() == chunksize

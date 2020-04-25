@@ -6,7 +6,6 @@ from pandas import DataFrame
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, Float, String
 from google.oauth2 import service_account
 import pandas_gbq
-import geniepy
 from geniepy.errors import DaoError
 
 

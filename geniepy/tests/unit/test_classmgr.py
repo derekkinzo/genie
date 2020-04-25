@@ -3,10 +3,10 @@ import pytest
 from geniepy.errors import ClassifierError
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
-import tests.resources.mock as mock
 from geniepy.datamgmt import DaoManager
 from geniepy.datamgmt.parsers import ClassifierParser
 from tests.resources.mock import MOCK_CLSFRMGR, TEST_CHUNKSIZE
+import tests.resources.mock as mock
 
 
 class TestClassMgr:

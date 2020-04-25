@@ -63,7 +63,7 @@ class DaoManager:
             )
             try:
                 # Only care about 1 pmid entry (table shouldn't have duplicates)
-                pmid_df = next(self._pubmed_dao.query(1, query=pmid_query))
+                pmid_df = next(self._pubmed_dao.query(pmid_query, 1))
                 pubmed_df = pubmed_df.append(pmid_df, ignore_index=True)
             except StopIteration:
                 # TODO log instead of print
@@ -96,7 +96,7 @@ class DaoManager:
         """
         # iterate over ctd table
         record_df = pd.DataFrame()
-        for record_df in self._ctd_dao.query(chunksize=chunksize):
+        for record_df in self._ctd_dao.query(None, chunksize):
             record_df["pubmeds"] = record_df.apply(
                 lambda row: self._get_pubmeds_df(row.pmids), axis=1
             )

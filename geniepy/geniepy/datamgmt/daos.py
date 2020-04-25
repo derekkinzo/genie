@@ -55,21 +55,19 @@ class BaseDao(ABC):
         self._repository.delete_all()
 
     # pylint: disable=bad-continuation
-    def query(
-        self, chunksize: int, query: str = None
-    ) -> Generator[DataFrame, None, None]:
+    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
+            query {str} -- Query string.
             chunksize {int} -- Number of rows of dataframe per chunk
-            query {str} -- Query string. (default: {None} reads entire table)
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
         # pylint: disable=no-member
-        return self._repository.query(chunksize=chunksize, query=query)
+        return self._repository.query(query=query, chunksize=chunksize)
 
     def save(self, payload: DataFrame):
         """

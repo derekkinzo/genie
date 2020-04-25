@@ -70,5 +70,5 @@ class TestDaoManager:
         predictions_df = mock.MOCK_CLSFRMGR.predict(records)
         self.dao_mgr.save_predictions(predictions_df)
         # Read data back from output tables to make sure records were saved
-        saved_df = next(self.dao_mgr._classifier_dao.query(TEST_CHUNKSIZE))
+        saved_df = next(self.dao_mgr._classifier_dao.query(None, TEST_CHUNKSIZE))
         assert saved_df.equals(predictions_df)

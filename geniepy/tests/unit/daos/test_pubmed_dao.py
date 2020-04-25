@@ -4,9 +4,9 @@ from geniepy.datamgmt.daos import BaseDao, PubMedDao
 from geniepy.errors import SchemaError
 import tests.testdata as td
 from tests.resources.mock import MockPubMedScraper
+from tests.resources.mock import TEST_CHUNKSIZE
 import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
-from tests.resources.mock import TEST_CHUNKSIZE
 
 
 class TestPubMedDao:
@@ -22,7 +22,7 @@ class TestPubMedDao:
     def read_record(self, pmid):
         """Read record(s) from database (tests helper method)."""
         query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE pmid='{pmid}';"
-        generator = self.test_dao.query(TEST_CHUNKSIZE, query=query_str)
+        generator = self.test_dao.query(query_str, TEST_CHUNKSIZE)
         return generator
 
     def test_constructor(self):
@@ -76,7 +76,7 @@ class TestPubMedDao:
         # Delete all records
         self.test_dao.purge()
         # Make sure no records left
-        generator = self.test_dao.query(TEST_CHUNKSIZE)
+        generator = self.test_dao.query(None, TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -93,7 +93,7 @@ class TestPubMedDao:
             except DaoError:
                 pass
         # Get all records in database
-        generator = self.test_dao.query(chunksize=chunksize)
+        generator = self.test_dao.query(None, chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.pmid.count() == chunksize
@@ -108,14 +108,14 @@ class TestPubMedDao:
         """
         # Make sure dao's database is empty
         self.test_dao.purge()
-        generator = self.test_dao.query(TEST_CHUNKSIZE)
+        generator = self.test_dao.query(None, TEST_CHUNKSIZE)
         # Generator should not return anything since database should be empty
         with pytest.raises(StopIteration):
             next(generator)
         # Call download method to update database with data from online sources
         self.test_dao.download(chunksize)
         # Read entire table
-        generator = self.test_dao.query(chunksize=chunksize)
+        generator = self.test_dao.query(None, chunksize)
         # Generator should return values
         result_df = next(generator)
         assert not result_df.empty
