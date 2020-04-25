@@ -36,7 +36,7 @@ class BaseDao(ABC):
         """Initialize DAO state."""
         self._repository = repository
 
-    def download(self, chunksize=geniepy.CHUNKSIZE):
+    def download(self, chunksize: int):
         """
         Download new data from online sources if available.
 
@@ -45,7 +45,7 @@ class BaseDao(ABC):
             memory intentive since it could possibly need to download and parse all
             records if the tables are empty. The chunksize allows the caller to limit
             how much memory is processed at a time while downloading and parsing the
-            data. (default: {geniepy.CHUNKSIZE})
+            data.
         """
         for chunk_df in self._parser.fetch(chunksize):
             self._repository.save(chunk_df)
@@ -56,14 +56,14 @@ class BaseDao(ABC):
 
     # pylint: disable=bad-continuation
     def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
+        self, chunksize: int, query: str = None
     ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
+            chunksize {int} -- Number of rows of dataframe per chunk
             query {str} -- Query string. (default: {None} reads entire table)
-            chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.

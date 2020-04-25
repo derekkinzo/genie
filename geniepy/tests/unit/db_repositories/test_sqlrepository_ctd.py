@@ -4,6 +4,7 @@ import tests.testdata as td
 from geniepy.datamgmt.repositories import BaseRepository, SqlRepository
 import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
+from tests.resources.mock import TEST_CHUNKSIZE
 
 INVALID_SCHEMA = td.CTD_INVALID_SCHEMA
 VALID_DF = td.CTD_VALID_DF

@@ -30,7 +30,7 @@ def run_job():
     # daomgr: DaoManager = config.get_daomgr()
     # classmgr: ClassificationMgr = config.get_classmgr()
     # # Download all new data
-    # daomgr.download()
+    # daomgr.download(TEST_CHUNKSIZE)
     # # Start parsing table
     # for records in daomgr.gen_records(get_chunksize()):
     #     predicted_df = classmgr.predict(records)

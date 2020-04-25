@@ -40,10 +40,10 @@ class DaoManager:
         self._classifier_dao = classifier_dao
         """The output DAO stores output data after classifiers calc predictions."""
 
-    def download(self):
+    def download(self, chunksize: int):
         """Download (scrapes) data for DAOs and creates internal tables."""
-        self._ctd_dao.download()
-        self._pubmed_dao.download()
+        self._ctd_dao.download(chunksize)
+        self._pubmed_dao.download(chunksize)
 
     def _get_pubmeds_df(self, pmids: str):
         """
@@ -63,7 +63,7 @@ class DaoManager:
             )
             try:
                 # Only care about 1 pmid entry (table shouldn't have duplicates)
-                pmid_df = next(self._pubmed_dao.query(pmid_query, 1))
+                pmid_df = next(self._pubmed_dao.query(1, query=pmid_query))
                 pubmed_df = pubmed_df.append(pmid_df, ignore_index=True)
             except StopIteration:
                 # TODO log instead of print

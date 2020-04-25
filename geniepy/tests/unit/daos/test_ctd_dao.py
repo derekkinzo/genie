@@ -7,6 +7,7 @@ from tests.resources.mock import MockCtdScraper
 import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
 from geniepy.datamgmt.parsers import CtdParser
+from tests.resources.mock import TEST_CHUNKSIZE
 
 
 class TestCtdDao:
@@ -21,7 +22,7 @@ class TestCtdDao:
     def read_record(self, digest):
         """Read record(s) from database (tests helper method)."""
         query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE digest='{digest}';"
-        generator = self.test_dao.query(query=query_str)
+        generator = self.test_dao.query(TEST_CHUNKSIZE, query=query_str)
         return generator
 
     def test_constructor(self):
@@ -75,7 +76,7 @@ class TestCtdDao:
         # Delete all records
         self.test_dao.purge()
         # Make sure no records left
-        generator = self.test_dao.query()
+        generator = self.test_dao.query(TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -107,7 +108,7 @@ class TestCtdDao:
         """
         # Make sure dao's database is empty
         self.test_dao.purge()
-        generator = self.test_dao.query()
+        generator = self.test_dao.query(TEST_CHUNKSIZE)
         # Generator should not return anything since database should be empty
         with pytest.raises(StopIteration):
             next(generator)

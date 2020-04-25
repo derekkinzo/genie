@@ -47,7 +47,7 @@ class TestDaoManager:
         with pytest.raises(StopIteration):
             next(gen_df)
         # Call download function to scrape data and generate internal tables.
-        self.dao_mgr.download()
+        self.dao_mgr.download(TEST_CHUNKSIZE)
         # Make sure gen_df is not none and conforms to expected schema
         gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
         records = next(gen_df)
@@ -56,7 +56,7 @@ class TestDaoManager:
     @pytest.mark.parametrize("chunksize", [*range(1, 10)])
     def test_get_records_chunksize(self, chunksize):
         """Test get records chunksizes."""
-        self.dao_mgr.download()
+        self.dao_mgr.download(TEST_CHUNKSIZE)
         gen_df = self.dao_mgr.gen_records(chunksize=chunksize)
         records = next(gen_df)
         # Make sure records contain correct chunk
@@ -64,11 +64,11 @@ class TestDaoManager:
 
     def test_save_predictions(self):
         """Test writing predictions to output tables."""
-        self.dao_mgr.download()
+        self.dao_mgr.download(TEST_CHUNKSIZE)
         gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
         records = next(gen_df)
         predictions_df = mock.MOCK_CLSFRMGR.predict(records)
         self.dao_mgr.save_predictions(predictions_df)
         # Read data back from output tables to make sure records were saved
-        saved_df = next(self.dao_mgr._classifier_dao.query())
+        saved_df = next(self.dao_mgr._classifier_dao.query(TEST_CHUNKSIZE))
         assert saved_df.equals(predictions_df)

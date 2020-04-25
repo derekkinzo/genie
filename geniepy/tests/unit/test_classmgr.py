@@ -50,7 +50,7 @@ class TestClassMgr:
         returns a dataframe containing the corresponding predictions.
         """
         # Generate records to be fed into classifiers
-        self.dao_mgr.download()
+        self.dao_mgr.download(TEST_CHUNKSIZE)
         gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
         raw_df = next(gen_df)
         predicted_df = MOCK_CLSFRMGR.predict(raw_df)
