@@ -10,7 +10,7 @@ from geniepy.errors import DaoError
 from tests import get_test_output_path
 
 # Name of credential file (assumed to be in tests/tests_output dir)
-credentials_file = "genie-0c2c441a9640.json"
+credentials_file = "genie_credentials.json"
 credentials_path = os.path.join(get_test_output_path(), credentials_file)
 # Google BigQuery Project Name
 project_name = "genie-275215"
@@ -21,32 +21,34 @@ VALID_DF = td.PUBMED_VALID_DF
 INVALID_SCHEMA = td.PUBMED_INVALID_SCHEMA
 
 
+@pytest.mark.slow_integration_test
 class TestGbqRepository:
     """Test db repository on Google BigQuery."""
 
-    repo: dr.BaseRepository = dr.GbqRepository(
-        project_name, table_name, dr.PUBMED_DAO_TABLE, credentials_path
-    )
+    repo: dr.BaseRepository = None
 
-    @pytest.mark.slow_integration_test
+    @classmethod
+    def setup_class(cls):
+        """Initialize GBQ repo."""
+        cls.repo = dr.GbqRepository(
+            project_name, table_name, dr.PUBMED_DAO_TABLE, credentials_path
+        )
+
     def test_constructor(self):
         """Test constructing object."""
         assert self.repo is not None
 
-    @pytest.mark.slow_integration_test
     @pytest.mark.parametrize("payload", INVALID_SCHEMA)
     def test_save_invalid_df(self, payload):
         """Test save invalid dataframe to dao's DAO."""
         with pytest.raises(DaoError):
             self.repo.save(payload)
 
-    @pytest.mark.slow_integration_test
     @pytest.mark.parametrize("payload", VALID_DF)
     def test_save_valid_df(self, payload):
         """Attempt to save dataframe with valid schema."""
         self.repo.save(payload)  # Don't expect to return anything
 
-    @pytest.mark.slow_integration_test
     def test_query(self):
         """Query valid record."""
         payload = VALID_DF[0]
@@ -64,14 +66,12 @@ class TestGbqRepository:
         chunk = next(generator)
         assert chunk.pmid.equals(payload.pmid)
 
-    @pytest.mark.slow_integration_test
     def test_invalid_query(self):
         """Test making invalid queries."""
         query_str = "Invalid"
         with pytest.raises(DaoError):
             next(self.repo.query(query=query_str))
 
-    @pytest.mark.slow_integration_test
     def test_query_non_existent(self):
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
@@ -82,7 +82,6 @@ class TestGbqRepository:
         with pytest.raises(StopIteration):
             next(generator)
 
-    @pytest.mark.slow_integration_test
     @pytest.mark.parametrize("chunksize", [1, 2, 3])
     def test_generator_chunk(self, chunksize):
         """Query all by chunk."""
@@ -100,7 +99,6 @@ class TestGbqRepository:
         result_df = next(generator)
         assert result_df.pmid.count() == chunksize
 
-    @pytest.mark.slow_integration_test
     def test_delete_all(self):
         """Test delete all records from repository."""
         # Try to fill database, in case is empty
