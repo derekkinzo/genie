@@ -9,7 +9,25 @@ class BaseScraper(ABC):
 
     @abstractmethod
     def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
-        """Scrape data from online source."""
+        """
+        Download any new information not yet downloaded.
+
+        The first time this method is called, it should download and return
+        all available information from the online source to build the internal
+        databases. Subsequent calls to the scrape function should only return
+        data that is new and has not yet been downloaded.
+
+        Since the data downloaded can be too large to be loaded into memory at
+        once, it should be yielded incrementally in chunks. Refer to the chunksize
+        argument to determine how much data should be yielded at a time.
+
+        Keyword Arguments:
+            chunksize {int} -- the size of each chunk the data should be returned
+                               (default: {CHUNKSIZE})
+
+        Returns:
+            Generator -- The generator yielding the data in given chunksizes.
+        """
 
 
 class CtdScraper(BaseScraper):
@@ -20,7 +38,16 @@ class CtdScraper(BaseScraper):
     """
 
     def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
-        """Scrape records from online source and return in generator."""
+        """
+        Implement base scrape method to download records from CTD database.
+
+        Keyword Arguments:
+            chunksize {int} -- the size of each chunk the data should be returned
+                               (default: {CHUNKSIZE})
+
+        Returns:
+            Generator -- The generator yielding the data in given chunksizes.
+        """
         raise NotImplementedError
 
 
@@ -34,5 +61,14 @@ class PubMedScraper(BaseScraper):
     """
 
     def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
-        """Scrape records from online source and return in generator."""
+        """
+        Implement base scrape method to download records from PubMed database.
+
+        Keyword Arguments:
+            chunksize {int} -- the size of each chunk the data should be returned
+                               (default: {CHUNKSIZE})
+
+        Returns:
+            Generator -- The generator yielding the data in given chunksizes.
+        """
         raise NotImplementedError

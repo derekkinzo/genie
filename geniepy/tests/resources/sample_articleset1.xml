@@ -77,29 +77,6 @@
       </CommentsCorrectionsList>
       <MeshHeadingList>
         <MeshHeading>
-          <DescriptorName UI="D005583" MajorTopicYN="N">Fourier Analysis</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D009682" MajorTopicYN="N">Magnetic Resonance Spectroscopy</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D008958" MajorTopicYN="N">Models, Molecular</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D008968" MajorTopicYN="N">Molecular Conformation</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D009243" MajorTopicYN="Y">NAD</DescriptorName>
-          <QualifierName UI="Q000031" MajorTopicYN="N">analogs &amp; derivatives</QualifierName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D009249" MajorTopicYN="Y">NADP</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D013329" MajorTopicYN="N">Structure-Activity Relationship</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D013696" MajorTopicYN="N">Temperature</DescriptorName>
         </MeshHeading>
       </MeshHeadingList>
     </MedlineCitation>

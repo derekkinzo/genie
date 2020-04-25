@@ -233,5 +233,5 @@ class ArticleSetParser:
                 writer.writeheader()
                 for article in dict_list:
                     writer.writerow(article)
-        except IOError:
+        except IOError:  # pragma: no cover
             print("Unable to write csv file")
