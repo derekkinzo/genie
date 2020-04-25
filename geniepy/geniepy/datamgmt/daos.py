@@ -69,7 +69,7 @@ class BaseDao(ABC):
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
         # pylint: disable=no-member
-        return self._repository.query(query=query, chunksize=chunksize)
+        return self._repository.query(chunksize=chunksize, query=query)
 
     def save(self, payload: DataFrame):
         """
@@ -117,6 +117,6 @@ class ClassifierDao(BaseDao):
 
     _parser: ClassifierParser = ClassifierParser()
 
-    def download(self, chunksize=geniepy.CHUNKSIZE):
+    def download(self, chunksize):
         """Classifiers don't need scrapers, so method not implemented."""
         raise NotImplementedError

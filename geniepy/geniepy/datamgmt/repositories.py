@@ -88,14 +88,14 @@ class BaseRepository(ABC):
     @abstractmethod
     # pylint: disable=bad-continuation
     def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
+        self, chunksize: int, query: str = None
     ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
+            chunksize {int} -- Number of rows of dataframe per chunk
             query {str} -- Query string. (default: {None} returns all values)
-            chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
@@ -151,7 +151,7 @@ class SqlRepository(BaseRepository):
 
     # pylint: disable=bad-continuation
     def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
+        self, chunksize: int, query: str = None
     ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
@@ -243,7 +243,7 @@ class GbqRepository(BaseRepository):  # pragma: no cover
 
     # pylint: disable=bad-continuation
     def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
+        self, chunksize: int, query: str = None
     ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.

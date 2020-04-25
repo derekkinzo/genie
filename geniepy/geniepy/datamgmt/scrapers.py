@@ -1,14 +1,13 @@
 """Scraping module to fetch data from online sources."""
 from typing import Generator
 from abc import ABC, abstractmethod
-from geniepy import CHUNKSIZE
 
 
 class BaseScraper(ABC):
     """Scraper Abstract Base Class."""
 
     @abstractmethod
-    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
+    def scrape(self, chunksize: int, **kwargs) -> Generator:
         """
         Download any new information not yet downloaded.
 
@@ -23,7 +22,6 @@ class BaseScraper(ABC):
 
         Keyword Arguments:
             chunksize {int} -- the size of each chunk the data should be returned
-                               (default: {CHUNKSIZE})
 
         Returns:
             Generator -- The generator yielding the data in given chunksizes.
@@ -37,13 +35,12 @@ class CtdScraper(BaseScraper):
     http://ctdbase.org/
     """
 
-    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
+    def scrape(self, chunksize: int, **kwargs) -> Generator:
         """
         Implement base scrape method to download records from CTD database.
 
         Keyword Arguments:
             chunksize {int} -- the size of each chunk the data should be returned
-                               (default: {CHUNKSIZE})
 
         Returns:
             Generator -- The generator yielding the data in given chunksizes.
@@ -60,13 +57,12 @@ class PubMedScraper(BaseScraper):
 
     """
 
-    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
+    def scrape(self, chunksize: int, **kwargs) -> Generator:
         """
         Implement base scrape method to download records from PubMed database.
 
         Keyword Arguments:
             chunksize {int} -- the size of each chunk the data should be returned
-                               (default: {CHUNKSIZE})
 
         Returns:
             Generator -- The generator yielding the data in given chunksizes.

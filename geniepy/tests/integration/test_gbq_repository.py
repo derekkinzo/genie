@@ -5,6 +5,7 @@ import tests.testdata as td
 import geniepy.datamgmt.repositories as dr
 from geniepy.errors import DaoError
 from tests import get_test_output_path
+from tests.resources.mock import TEST_CHUNKSIZE
 
 # Name of credential file (assumed to be in tests/tests_output dir)
 credentials_file = "genie_credentials.json"
@@ -59,7 +60,7 @@ class TestGbqRepository:
         # Attempt to retrieve record
         pmid = payload.pmid[0]
         query_str = f"SELECT * FROM {self.repo.tablename} WHERE pmid={pmid};"
-        generator = self.repo.query(query=query_str)
+        generator = self.repo.query(TEST_CHUNKSIZE, query=query_str)
         chunk = next(generator)
         assert chunk.pmid.equals(payload.pmid)
 
@@ -67,14 +68,14 @@ class TestGbqRepository:
         """Test making invalid queries."""
         query_str = "Invalid"
         with pytest.raises(DaoError):
-            next(self.repo.query(query=query_str))
+            next(self.repo.query(TEST_CHUNKSIZE, query=query_str))
 
     def test_query_non_existent(self):
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
         pmid = 0
         query_str = f"SELECT * FROM {self.repo.tablename} WHERE pmid={pmid};"
-        generator = self.repo.query(query=query_str)
+        generator = self.repo.query(TEST_CHUNKSIZE, query=query_str)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):
             next(generator)
@@ -107,12 +108,12 @@ class TestGbqRepository:
         # Delete all records
         self.repo.delete_all()
         # Make sure no records left
-        generator = self.repo.query()
+        generator = self.repo.query(TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
         # Test saving and reading from table again, make sure still functional
         self.repo.save(VALID_DF[0])
-        generator = self.repo.query()
+        generator = self.repo.query(TEST_CHUNKSIZE)
         # Generator should return value
         next(generator)

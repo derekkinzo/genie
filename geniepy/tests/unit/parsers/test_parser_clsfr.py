@@ -2,6 +2,7 @@
 import pytest
 from geniepy.datamgmt.parsers import BaseParser, ClassifierParser
 import tests.testdata as td
+from tests.resources.mock import TEST_CHUNKSIZE
 
 
 VALID_DF = td.CLSFR_VALID_DF
@@ -37,4 +38,4 @@ class TestClassifierParser:
     def test_fetch_not_impl(self):
         """Fetch method should not be implemented in classifier parser."""
         with pytest.raises(NotImplementedError):
-            self.parser.fetch()
+            self.parser.fetch(TEST_CHUNKSIZE)

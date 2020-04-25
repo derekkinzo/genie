@@ -45,7 +45,7 @@ class TestSqlCtdRepository:
         # Attempt to retrieve record
         digest = payload.digest[0]
         query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
-        generator = self.repo.query(query=query_str)
+        generator = self.repo.query(TEST_CHUNKSIZE, query=query_str)
         chunk = next(generator)
         assert chunk.equals(payload)
 
@@ -54,7 +54,7 @@ class TestSqlCtdRepository:
         # Attempt to retrieve record
         digest = "INVALID DIGEST"
         query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
-        generator = self.repo.query(query=query_str)
+        generator = self.repo.query(TEST_CHUNKSIZE, query=query_str)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):
             next(generator)
@@ -87,12 +87,12 @@ class TestSqlCtdRepository:
         # Delete all records
         self.repo.delete_all()
         # Make sure no records left
-        generator = self.repo.query()
+        generator = self.repo.query(TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
         # Test saving and reading from table again, make sure still functional
         self.repo.save(VALID_DF[0])
-        generator = self.repo.query()
+        generator = self.repo.query(TEST_CHUNKSIZE)
         # Generator should return value
         next(generator)

@@ -9,7 +9,6 @@ import pandas as pd
 from pandas import DataFrame
 from pandas_schema import Column, Schema
 from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
-from geniepy import CHUNKSIZE
 from geniepy.datamgmt.scrapers import BaseScraper, CtdScraper, PubMedScraper
 from geniepy.errors import ParserError
 from geniepy.pubmed import PubMedArticle
@@ -59,12 +58,12 @@ class BaseParser(ABC):
             DataFrame -- The parsed dataframe.
         """
 
-    def fetch(self, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
+    def fetch(self, chunksize: int) -> Generator[DataFrame, None, None]:
         """
         Fetch new data, if available from online sources.
 
         Keyword Arguments:
-            chunksize {int} -- the returned generator chunk size (default: {CHUNKSIZE})
+            chunksize {int} -- the returned generator chunk size
 
         Returns:
             Generator[DataFrame, None, None] -- Generator yielding fetched data
@@ -299,7 +298,7 @@ class ClassifierParser(BaseParser):
         ]
     )
 
-    def fetch(self, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
+    def fetch(self, chunksize: int) -> Generator[DataFrame, None, None]:
         """No online sources to fetch from for classifiers outputs."""
         raise NotImplementedError("Classifier Output Parser has no Scrapers")
 
