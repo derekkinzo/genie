@@ -35,6 +35,11 @@ class BaseDao(ABC):
         """Initialize DAO state."""
         self._repository = repository
 
+    @property
+    def query_all(self):
+        """Generate query string to query entire table."""
+        return self._repository.query_all
+
     def download(self, chunksize: int):
         """
         Download new data from online sources if available.

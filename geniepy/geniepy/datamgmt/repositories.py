@@ -18,7 +18,12 @@ class BaseRepository(ABC):
     @property
     def tablename(self):
         """Return DAO repo's tablename."""
-        return self._tablename  # pylint: disable=E1101
+        return self._tablename  # pylint: no-member
+
+    @property
+    def query_all(self):
+        """Generate query string to query entire table."""
+        return f"SELECT * FROM {self.tablename};"
 
     @abstractmethod
     def save(self, payload: DataFrame):
@@ -111,7 +116,7 @@ class SqlRepository(BaseRepository):
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
         if query is None:
-            return pd.read_sql(self._tablename, con=self._engine, chunksize=chunksize)
+            raise DaoError
         # If query string provided
         generator = pd.read_sql_query(query, self._engine, chunksize=chunksize)
         return generator
@@ -200,15 +205,14 @@ class GbqRepository(BaseRepository):  # pragma: no cover
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
+        if query is None:
+            raise DaoError
         try:
-            primary_key = "pmid"
-            if query is None:
-                query = f"SELECT * FROM {self._tablename} WHERE pmid={primary_key};"
             offset = 0
-            # Remove semicolon if exists and add extra params
+            # Remove semicolon if exists in original query to add ordering to query
             query = query.strip(";")
             while True:
-                add_query = f" ORDER BY {primary_key} LIMIT {chunksize} OFFSET {offset}"
+                add_query = f" ORDER BY {self._pkey} LIMIT {chunksize} OFFSET {offset}"
                 gbq_query = query + add_query
                 query_df = pandas_gbq.read_gbq(gbq_query)
                 if query_df.empty:

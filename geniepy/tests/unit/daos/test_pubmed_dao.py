@@ -77,7 +77,7 @@ class TestPubMedDao:
         # Delete all records
         self.test_dao.purge()
         # Make sure no records left
-        generator = self.test_dao.query(None, TEST_CHUNKSIZE)
+        generator = self.test_dao.query(self.test_dao.query_all, TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -94,7 +94,7 @@ class TestPubMedDao:
             except DaoError:
                 pass
         # Get all records in database
-        generator = self.test_dao.query(None, chunksize)
+        generator = self.test_dao.query(self.test_dao.query_all, chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.pmid.count() == chunksize
@@ -109,14 +109,14 @@ class TestPubMedDao:
         """
         # Make sure dao's database is empty
         self.test_dao.purge()
-        generator = self.test_dao.query(None, TEST_CHUNKSIZE)
+        generator = self.test_dao.query(self.test_dao.query_all, TEST_CHUNKSIZE)
         # Generator should not return anything since database should be empty
         with pytest.raises(StopIteration):
             next(generator)
         # Call download method to update database with data from online sources
         self.test_dao.download(chunksize)
         # Read entire table
-        generator = self.test_dao.query(None, chunksize)
+        generator = self.test_dao.query(self.test_dao.query_all, chunksize)
         # Generator should return values
         result_df = next(generator)
         assert not result_df.empty

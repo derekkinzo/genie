@@ -96,7 +96,8 @@ class DaoManager:
         """
         # iterate over ctd table
         record_df = pd.DataFrame()
-        for record_df in self._ctd_dao.query(None, chunksize):
+        query_all = self._ctd_dao.query_all
+        for record_df in self._ctd_dao.query(query_all, chunksize):
             record_df["pubmeds"] = record_df.apply(
                 lambda row: self._get_pubmeds_df(row.pmids), axis=1
             )

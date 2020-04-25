@@ -69,7 +69,7 @@ class TestSqlPubMedRepository:
             except DaoError:
                 pass
         # Get all records in database
-        generator = self.repo.query(None, chunksize)
+        generator = self.repo.query(self.repo.query_all, chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.pmid.count() == chunksize
@@ -85,12 +85,12 @@ class TestSqlPubMedRepository:
         # Delete all records
         self.repo.delete_all()
         # Make sure no records left
-        generator = self.repo.query(None, TEST_CHUNKSIZE)
+        generator = self.repo.query(self.repo.query_all, TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
         # Test saving and reading from table again, make sure still functional
         self.repo.save(VALID_DF[0])
-        generator = self.repo.query(None, TEST_CHUNKSIZE)
+        generator = self.repo.query(self.repo.query_all, TEST_CHUNKSIZE)
         # Generator should return value
         next(generator)

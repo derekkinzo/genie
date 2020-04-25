@@ -75,7 +75,7 @@ class TestClassifierDao:
         # Delete all records
         self.test_dao.purge()
         # Make sure no records left
-        generator = self.test_dao.query(None, TEST_CHUNKSIZE)
+        generator = self.test_dao.query(self.test_dao.query_all, TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -92,7 +92,7 @@ class TestClassifierDao:
             except DaoError:
                 pass
         # Get all records in database
-        generator = self.test_dao.query(None, chunksize)
+        generator = self.test_dao.query(self.test_dao.query_all, chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.digest.count() == chunksize
