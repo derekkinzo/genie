@@ -4,6 +4,7 @@ import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
 from geniepy.datamgmt import DaoManager
 import tests.resources.mock as mock
+from tests.resources.mock import TEST_CHUNKSIZE
 
 
 class TestDaoManager:
@@ -41,14 +42,14 @@ class TestDaoManager:
 
     def test_dowload_and_get_records(self):
         """Test download and get_records functionality of DAO Mgr."""
-        gen_df = self.dao_mgr.gen_records()
+        gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
         # After instantiation dao's tables should be empty, so nothing is returned.
         with pytest.raises(StopIteration):
             next(gen_df)
         # Call download function to scrape data and generate internal tables.
         self.dao_mgr.download()
         # Make sure gen_df is not none and conforms to expected schema
-        gen_df = self.dao_mgr.gen_records()
+        gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
         records = next(gen_df)
         assert records is not None
 
@@ -64,7 +65,7 @@ class TestDaoManager:
     def test_save_predictions(self):
         """Test writing predictions to output tables."""
         self.dao_mgr.download()
-        gen_df = self.dao_mgr.gen_records()
+        gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
         records = next(gen_df)
         predictions_df = mock.MOCK_CLSFRMGR.predict(records)
         self.dao_mgr.save_predictions(predictions_df)

@@ -6,7 +6,7 @@ import geniepy.datamgmt.repositories as dr
 import tests.resources.mock as mock
 from geniepy.datamgmt import DaoManager
 from geniepy.datamgmt.parsers import ClassifierParser
-from tests.resources.mock import MOCK_CLSFRMGR
+from tests.resources.mock import MOCK_CLSFRMGR, TEST_CHUNKSIZE
 
 
 class TestClassMgr:
@@ -51,7 +51,7 @@ class TestClassMgr:
         """
         # Generate records to be fed into classifiers
         self.dao_mgr.download()
-        gen_df = self.dao_mgr.gen_records()
+        gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
         raw_df = next(gen_df)
         predicted_df = MOCK_CLSFRMGR.predict(raw_df)
         # Make sure predicted all rows

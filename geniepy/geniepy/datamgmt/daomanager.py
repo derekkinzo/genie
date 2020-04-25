@@ -7,7 +7,6 @@ generate the dataframe usef by the classifiers to calculate a prediction score.
 from typing import Generator
 import pandas as pd
 import geniepy.datamgmt.daos as daos
-from geniepy import CHUNKSIZE
 
 
 class DaoManager:
@@ -71,7 +70,7 @@ class DaoManager:
                 print(f"PMID: {pmid} not found!")
         return pubmed_df
 
-    def gen_records(self, chunksize=CHUNKSIZE) -> Generator[pd.DataFrame, None, None]:
+    def gen_records(self, chunksize: int) -> Generator[pd.DataFrame, None, None]:
         """
         Generate the dataframe records for classifiers.
 

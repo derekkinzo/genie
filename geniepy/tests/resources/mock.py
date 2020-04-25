@@ -9,6 +9,9 @@ from geniepy.pubmed import PubMedArticle
 from geniepy.classmgmt import ClassificationMgr
 from geniepy.classmgmt.classifiers import PcpClassifier
 
+TEST_CHUNKSIZE = 5
+"""Default chunksize for tests."""
+
 PCPCLSFR = PcpClassifier()
 CTCLSFR = PcpClassifier()
 # pylint: disable=protected-access
