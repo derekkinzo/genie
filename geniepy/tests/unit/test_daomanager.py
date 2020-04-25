@@ -2,6 +2,7 @@
 import pytest
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
+from geniepy.datamgmt.tables import PUBMED_PROPTY, CTD_PROPTY, CLSFR_PROPTY
 from geniepy.datamgmt import DaoManager
 import tests.resources.mock as mock
 from tests.resources.mock import TEST_CHUNKSIZE
@@ -11,17 +12,17 @@ class TestDaoManager:
     """Pytest data access object manager test class."""
 
     # Create and configure mock ctd dao
-    ctd_dao = daos.CtdDao(dr.SqlRepository("sqlite://", dr.CTD_PROPTY))
+    ctd_dao = daos.CtdDao(dr.SqlRepository("sqlite://", CTD_PROPTY))
     # pylint: disable=protected-access
     ctd_dao._parser.scraper = mock.MockCtdScraper()
 
     # Create and configure mock pubmed dao
-    pubmed_dao = daos.PubMedDao(dr.SqlRepository("sqlite://", dr.PUBMED_PROPTY))
+    pubmed_dao = daos.PubMedDao(dr.SqlRepository("sqlite://", PUBMED_PROPTY))
     # pylint: disable=protected-access
     pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Create and configure mock classifier dao
-    classifier_dao = daos.ClassifierDao(dr.SqlRepository("sqlite://", dr.CLSFR_PROPTY))
+    classifier_dao = daos.ClassifierDao(dr.SqlRepository("sqlite://", CLSFR_PROPTY))
     # pylint: disable=protected-access
 
     # Construct mock dao manager for testing

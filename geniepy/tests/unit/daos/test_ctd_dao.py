@@ -2,18 +2,19 @@
 import pytest
 from geniepy.datamgmt.daos import BaseDao, CtdDao
 from geniepy.errors import SchemaError
-import tests.testdata as td
-from tests.resources.mock import MockCtdScraper
 import geniepy.datamgmt.repositories as dr
+from geniepy.datamgmt.tables import CTD_PROPTY
 from geniepy.errors import DaoError
 from geniepy.datamgmt.parsers import CtdParser
+import tests.testdata as td
+from tests.resources.mock import MockCtdScraper
 from tests.resources.mock import TEST_CHUNKSIZE
 
 
 class TestCtdDao:
     """PyTest data access object test class."""
 
-    test_repo = dr.SqlRepository("sqlite://", dr.CTD_PROPTY)
+    test_repo = dr.SqlRepository("sqlite://", CTD_PROPTY)
     test_dao: BaseDao = CtdDao(test_repo)
     # Attach mock scraper to parser for testing
     mock_scraper = MockCtdScraper()

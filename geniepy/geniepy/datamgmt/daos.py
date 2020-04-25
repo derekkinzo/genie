@@ -7,7 +7,6 @@ data. i.e. Pubmed Publications, Clinical Trials, Gene-Disease Relationships.
 from typing import Generator
 from abc import ABC
 from pandas import DataFrame
-import geniepy
 from geniepy.errors import SchemaError
 from geniepy.datamgmt.parsers import (
     BaseParser,

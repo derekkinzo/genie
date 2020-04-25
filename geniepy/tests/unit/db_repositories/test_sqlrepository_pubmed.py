@@ -2,7 +2,7 @@
 import pytest
 import tests.testdata as td
 from geniepy.datamgmt.repositories import BaseRepository, SqlRepository
-import geniepy.datamgmt.repositories as dr
+from geniepy.datamgmt.tables import PUBMED_PROPTY
 from geniepy.errors import DaoError
 from tests.resources.mock import TEST_CHUNKSIZE
 
@@ -13,7 +13,7 @@ INVALID_SCHEMA = td.PUBMED_INVALID_SCHEMA
 class TestSqlPubMedRepository:
     """PyTest repository test class."""
 
-    repo: BaseRepository = SqlRepository("sqlite://", dr.PUBMED_PROPTY)
+    repo: BaseRepository = SqlRepository("sqlite://", PUBMED_PROPTY)
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""

@@ -6,13 +6,14 @@ import tests.testdata as td
 from tests.resources.mock import MockPubMedScraper
 from tests.resources.mock import TEST_CHUNKSIZE
 import geniepy.datamgmt.repositories as dr
+from geniepy.datamgmt.tables import PUBMED_PROPTY
 from geniepy.errors import DaoError
 
 
 class TestPubMedDao:
     """PyTest data access object test class."""
 
-    test_repo = dr.SqlRepository("sqlite://", dr.PUBMED_PROPTY)
+    test_repo = dr.SqlRepository("sqlite://", PUBMED_PROPTY)
     test_dao: BaseDao = PubMedDao(test_repo)
     # Attach mock scraper to parser for testing
     mock_scraper = MockPubMedScraper()

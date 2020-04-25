@@ -3,16 +3,18 @@ import os
 import pytest
 import tests.testdata as td
 import geniepy.datamgmt.repositories as dr
+from geniepy.datamgmt.tables import PUBMED_PROPTY
 from geniepy.errors import DaoError
 from tests import get_test_output_path
 from tests.resources.mock import TEST_CHUNKSIZE
+
 
 # Name of credential file (assumed to be in tests/tests_output dir)
 credentials_file = "genie_credentials.json"
 credentials_path = os.path.join(get_test_output_path(), credentials_file)
 # Google BigQuery Project Name
 project_name = "genie-275215"
-table_name = "test." + dr.PUBMED_TABLE_NAME
+table_name = "test." + PUBMED_PROPTY.tablename
 
 
 VALID_DF = td.PUBMED_VALID_DF
@@ -28,13 +30,7 @@ class TestGbqRepository:
     @classmethod
     def setup_class(cls):
         """Initialize GBQ repo."""
-        cls.repo = dr.GbqRepository(
-            project_name,
-            table_name,
-            dr.PUBMED_DAO_TABLE,
-            dr.PUBMED_PKEY,
-            credentials_path,
-        )
+        cls.repo = dr.GbqRepository(project_name, PUBMED_PROPTY, credentials_path,)
 
     def test_constructor(self):
         """Test constructing object."""

@@ -3,6 +3,7 @@ import pytest
 from geniepy.datamgmt.daos import BaseDao, ClassifierDao
 from geniepy.errors import SchemaError
 import geniepy.datamgmt.repositories as dr
+from geniepy.datamgmt.tables import CLSFR_PROPTY
 from geniepy.errors import DaoError
 import tests.testdata as td
 from tests.resources.mock import TEST_CHUNKSIZE
@@ -14,7 +15,7 @@ INVALID_DF = td.CLSFR_INVALID_DF
 class TestClassifierDao:
     """PyTest data access object test class."""
 
-    test_repo = dr.SqlRepository("sqlite://", dr.CLSFR_PROPTY)
+    test_repo = dr.SqlRepository("sqlite://", CLSFR_PROPTY)
     test_dao: BaseDao = ClassifierDao(test_repo)
 
     def read_record(self, digest):
