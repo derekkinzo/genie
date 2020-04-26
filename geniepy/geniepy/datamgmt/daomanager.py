@@ -63,7 +63,7 @@ class DaoManager:
                 # Only care about 1 pmid entry (table shouldn't have duplicates)
                 pmid_df = next(self._pubmed_dao.query(pmid_query, 1))
                 pubmed_df = pubmed_df.append(pmid_df, ignore_index=True)
-            except StopIteration:
+            except StopIteration:  # pragma: no cover
                 # TODO log instead of print
                 print(f"PMID: {pmid} not found!")
         return pubmed_df

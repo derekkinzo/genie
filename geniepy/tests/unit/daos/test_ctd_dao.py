@@ -41,6 +41,12 @@ class TestCtdDao:
         """Test save valid dataframe to dao's repo doesn't raise error."""
         self.test_dao.save(payload)
 
+    def test_tablename(self):
+        """Test tablename property."""
+        expected = "ctd"
+        actual = self.test_dao.tablename
+        assert actual == expected
+
     @pytest.mark.parametrize("payload", td.CTD_VALID_DF)
     def test_query(self, payload):
         """Query valid record."""

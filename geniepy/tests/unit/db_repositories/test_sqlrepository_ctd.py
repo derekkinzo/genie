@@ -60,6 +60,11 @@ class TestSqlCtdRepository:
         chunk = next(generator)
         assert chunk.equals(payload)
 
+    def test_none_query(self):
+        """Test none query."""
+        with pytest.raises(DaoError):
+            self.repo.query(None, TEST_CHUNKSIZE)
+
     def test_query_non_existent(self):
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
