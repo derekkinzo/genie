@@ -23,7 +23,7 @@ __copyright__ = "The Harvard LAMP Team"
 __license__ = "MIT"
 
 
-__all__ = ["run_job", "run_predictions", "update_tables"]
+__all__ = ["run", "run_predictions", "update_tables"]
 
 
 def run_predictions():
@@ -43,10 +43,7 @@ def update_tables():
     daomgr.download(chunksize)
 
 
-def run_job():
+def run():
     """Cron-job function to scrape sources for updated data and update predictions."""
-    # Download all new data
-    update_tables()
-    # Start parsing table
-    run_predictions()
+    print("Running...")
     print("Done")
