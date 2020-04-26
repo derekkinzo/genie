@@ -46,7 +46,7 @@ def update_tables():
 def run_job():
     """Cron-job function to scrape sources for updated data and update predictions."""
     # Download all new data
-    run_downloads()
+    update_tables()
     # Start parsing table
     run_predictions()
     print("Done")
