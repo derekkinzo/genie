@@ -1,6 +1,6 @@
 """Test cron job functionalities."""
-import geniepy
 import pytest
+import geniepy
 
 
 @pytest.mark.slow_integration_test

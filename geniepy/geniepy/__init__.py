@@ -23,7 +23,7 @@ __copyright__ = "The Harvard LAMP Team"
 __license__ = "MIT"
 
 
-__all__ = ["runjob"]
+__all__ = ["run_job", "run_predictions", "update_tables"]
 
 
 def run_predictions():
@@ -36,7 +36,7 @@ def run_predictions():
         daomgr.save_predictions(predicted_df)
 
 
-def run_downloads():
+def update_tables():
     """Call scrapes to download data and create/append tables."""
     daomgr: DaoManager = config.get_daomgr()
     chunksize = config.get_classmgr()
