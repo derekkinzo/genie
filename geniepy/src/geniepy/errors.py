@@ -19,3 +19,7 @@ class ParserError(GeniePyError):
 
 class ClassifierError(GeniePyError):
     """Classifier unable to execute command."""
+
+
+class ConfigError(GeniePyError):
+    """Configuration error."""
