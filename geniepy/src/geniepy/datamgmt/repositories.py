@@ -138,6 +138,7 @@ class GbqRepository(BaseRepository):  # pragma: no cover
 
     __slots__ = ["_proj", "_credentials_path"]
 
+    # pylint: disable=bad-continuation
     def __init__(
         self, db_loc: str, propty: RepoProperties, dataset: str, credentials: str
     ):

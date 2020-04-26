@@ -23,7 +23,7 @@ __copyright__ = "The Harvard LAMP Team"
 __license__ = "MIT"
 
 
-__all__ = ["runjob"]
+__all__ = ["run", "run_predictions", "update_tables"]
 
 
 def run_predictions():
@@ -36,17 +36,14 @@ def run_predictions():
         daomgr.save_predictions(predicted_df)
 
 
-def run_downloads():
+def update_tables():
     """Call scrapes to download data and create/append tables."""
     daomgr: DaoManager = config.get_daomgr()
     chunksize = config.get_classmgr()
     daomgr.download(chunksize)
 
 
-def run_job():
+def run():
     """Cron-job function to scrape sources for updated data and update predictions."""
-    # Download all new data
-    run_downloads()
-    # Start parsing table
-    run_predictions()
+    print("Running...")
     print("Done")
