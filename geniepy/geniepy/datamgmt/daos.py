@@ -42,7 +42,7 @@ class BaseDao(ABC):
 
     def query_pkey(self, val) -> str:
         """
-        Generate query by primary key string
+        Generate query by primary key string.
 
         Arguments:
             val  -- value of primary key

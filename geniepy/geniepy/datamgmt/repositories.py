@@ -135,17 +135,20 @@ class GbqRepository(BaseRepository):  # pragma: no cover
 
     __slots__ = ["_proj", "_credentials_path"]
 
-    def __init__(self, db_loc: str, propty: RepoProperties, credentials: str):
+    def __init__(
+        self, db_loc: str, propty: RepoProperties, dataset: str, credentials: str
+    ):
         """
         Initialize DAO repository and create table.
 
         Arguments:
             db_loc {str} -- name of BigQuery project
             propty {RepoProperties} -- Repository properties structure
+            dataset {str} -- The GBQ dataset the table belongs to
             credentials_path {str} -- path to gcp credentials json
         """
         self._proj = db_loc
-        self._tablename = propty.tablename
+        self._tablename = dataset + "." + propty.tablename
         self._pkey = propty.pkey
         self._table = self.get_dict_schema(propty.table)
         self._credentials_path = credentials
