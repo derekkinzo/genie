@@ -3,35 +3,29 @@ import pytest
 from geniepy.errors import ClassifierError
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
-import tests.resources.mock as mock
+from geniepy.datamgmt.tables import PUBMED_PROPTY, CTD_PROPTY, CLSFR_PROPTY
 from geniepy.datamgmt import DaoManager
 from geniepy.datamgmt.parsers import ClassifierParser
-from tests.resources.mock import MOCK_CLSFRMGR
+from tests.resources.mock import MOCK_CLSFRMGR, TEST_CHUNKSIZE
+import tests.resources.mock as mock
 
 
 class TestClassMgr:
     """PyTest Class to test Classification manager."""
 
     # Create and configure mock ctd dao
-    ctd_dao = daos.CtdDao(
-        dr.SqlRepository("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE)
-    )
+    ctd_dao = daos.CtdDao(dr.SqlRepository("sqlite://", CTD_PROPTY))
     # pylint: disable=protected-access
     ctd_dao._parser.scraper = mock.MockCtdScraper()
 
     # Create and configure mock pubmed dao
-    pubmed_dao = daos.PubMedDao(
-        dr.SqlRepository("sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE)
-    )
+    pubmed_dao = daos.PubMedDao(dr.SqlRepository("sqlite://", PUBMED_PROPTY))
     # pylint: disable=protected-access
     pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Create and configure mock pubmed dao
-    classifier_dao = daos.PubMedDao(
-        dr.SqlRepository("sqlite://", dr.PUBMED_TABLE_NAME, dr.PUBMED_DAO_TABLE)
-    )
+    classifier_dao = daos.ClassifierDao(dr.SqlRepository("sqlite://", CLSFR_PROPTY))
     # pylint: disable=protected-access
-    # pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Construct mock dao manager for testing
     dao_mgr = DaoManager(
@@ -50,8 +44,8 @@ class TestClassMgr:
         returns a dataframe containing the corresponding predictions.
         """
         # Generate records to be fed into classifiers
-        self.dao_mgr.download()
-        gen_df = self.dao_mgr.gen_records()
+        self.dao_mgr.download(TEST_CHUNKSIZE)
+        gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
         raw_df = next(gen_df)
         predicted_df = MOCK_CLSFRMGR.predict(raw_df)
         # Make sure predicted all rows
@@ -67,6 +61,7 @@ class TestClassMgr:
         # Make sure has one prediction column per classifier
         for classifier in MOCK_CLSFRMGR._classifiers:
             assert classifier.col_name in cols
+        # TODO validate classifier predicted dataframe
 
     def test_predict_invalid_records(self):
         """Test attempting to predict with invalid records."""

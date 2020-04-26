@@ -4,10 +4,12 @@ from typing import Generator
 import xml.etree.ElementTree as ET
 from tests import get_resources_path
 from geniepy.datamgmt.scrapers import BaseScraper
-from geniepy import CHUNKSIZE
 from geniepy.pubmed import PubMedArticle
 from geniepy.classmgmt import ClassificationMgr
 from geniepy.classmgmt.classifiers import PcpClassifier
+
+TEST_CHUNKSIZE = 5
+"""Default chunksize for tests."""
 
 PCPCLSFR = PcpClassifier()
 CTCLSFR = PcpClassifier()
@@ -49,7 +51,7 @@ class MockCtdScraper(BaseScraper):
 
     filename: str = "sample_ctd_db.csv"
 
-    def scrape(self, chunksize: int = CHUNKSIZE, **kwargs) -> Generator:
+    def scrape(self, chunksize: int, **kwargs) -> Generator:
         """Simulate scraping records and returning csv str."""
         csv_file = os.path.join(get_resources_path(), self.filename)
         # Open a connection to the file

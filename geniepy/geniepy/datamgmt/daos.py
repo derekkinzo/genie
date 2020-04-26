@@ -7,7 +7,6 @@ data. i.e. Pubmed Publications, Clinical Trials, Gene-Disease Relationships.
 from typing import Generator
 from abc import ABC
 from pandas import DataFrame
-import geniepy
 from geniepy.errors import SchemaError
 from geniepy.datamgmt.parsers import (
     BaseParser,
@@ -36,7 +35,24 @@ class BaseDao(ABC):
         """Initialize DAO state."""
         self._repository = repository
 
-    def download(self, chunksize=geniepy.CHUNKSIZE):
+    @property
+    def query_all(self):
+        """Generate query string to query entire table."""
+        return self._repository.query_all
+
+    def query_pkey(self, val) -> str:
+        """
+        Generate query by primary key string.
+
+        Arguments:
+            val  -- value of primary key
+
+        Returns:
+            str -- The query str
+        """
+        return self._repository.query_pkey(val)
+
+    def download(self, chunksize: int):
         """
         Download new data from online sources if available.
 
@@ -45,7 +61,7 @@ class BaseDao(ABC):
             memory intentive since it could possibly need to download and parse all
             records if the tables are empty. The chunksize allows the caller to limit
             how much memory is processed at a time while downloading and parsing the
-            data. (default: {geniepy.CHUNKSIZE})
+            data.
         """
         for chunk_df in self._parser.fetch(chunksize):
             self._repository.save(chunk_df)
@@ -55,15 +71,13 @@ class BaseDao(ABC):
         self._repository.delete_all()
 
     # pylint: disable=bad-continuation
-    def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
-    ) -> Generator[DataFrame, None, None]:
+    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
-            query {str} -- Query string. (default: {None} reads entire table)
-            chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
+            query {str} -- Query string.
+            chunksize {int} -- Number of rows of dataframe per chunk
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
@@ -117,6 +131,6 @@ class ClassifierDao(BaseDao):
 
     _parser: ClassifierParser = ClassifierParser()
 
-    def download(self, chunksize=geniepy.CHUNKSIZE):
+    def download(self, chunksize):
         """Classifiers don't need scrapers, so method not implemented."""
         raise NotImplementedError

@@ -2,8 +2,9 @@
 import pytest
 import tests.testdata as td
 from geniepy.datamgmt.repositories import BaseRepository, SqlRepository
-import geniepy.datamgmt.repositories as dr
+from geniepy.datamgmt.tables import CLSFR_PROPTY
 from geniepy.errors import DaoError
+from tests.resources.mock import TEST_CHUNKSIZE
 
 VALID_DF = td.CLSFR_VALID_DF
 INVALID_SCHEMA = td.CLSFR_INVALID_SCHEMA
@@ -12,13 +13,24 @@ INVALID_SCHEMA = td.CLSFR_INVALID_SCHEMA
 class TestSqlClsfrRepository:
     """PyTest repository test class."""
 
-    repo: BaseRepository = SqlRepository(
-        "sqlite://", dr.CLSFR_TABLE_NAME, dr.CLSFR_DAO_TABLE
-    )
+    repo: BaseRepository = SqlRepository("sqlite://", CLSFR_PROPTY)
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""
         assert self.repo is not None
+
+    def test_query_all(self):
+        """Test gen query all str."""
+        expected = "SELECT * FROM classifier;"
+        actual = self.repo.query_all
+        assert actual == expected
+
+    def test_query_pkey(self):
+        """Test gen query all str."""
+        digest = "0x1"
+        expected = "SELECT * FROM classifier WHERE digest='0x1';"
+        actual = self.repo.query_pkey(digest)
+        assert actual == expected
 
     @pytest.mark.parametrize("payload", INVALID_SCHEMA)
     def test_save_invalid_schema(self, payload):
@@ -43,8 +55,8 @@ class TestSqlClsfrRepository:
             pass
         # Attempt to retrieve record
         digest = payload.digest[0]
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
-        generator = self.repo.query(query=query_str)
+        query_str = self.repo.query_pkey(digest)
+        generator = self.repo.query(query_str, TEST_CHUNKSIZE)
         chunk = next(generator)
         assert chunk.equals(payload)
 
@@ -52,8 +64,8 @@ class TestSqlClsfrRepository:
         """Query non-existent record should return empty."""
         # Attempt to retrieve record
         digest = 0
-        query_str = f"SELECT * FROM {self.repo.tablename} WHERE digest='{digest}';"
-        generator = self.repo.query(query=query_str)
+        query_str = self.repo.query_pkey(digest)
+        generator = self.repo.query(query_str, TEST_CHUNKSIZE)
         # Make sure generator doesn't return anything since no matching records
         with pytest.raises(StopIteration):
             next(generator)
@@ -70,7 +82,7 @@ class TestSqlClsfrRepository:
             except DaoError:
                 pass
         # Get all records in database
-        generator = self.repo.query(chunksize=chunksize)
+        generator = self.repo.query(self.repo.query_all, chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.digest.count() == chunksize
@@ -86,12 +98,12 @@ class TestSqlClsfrRepository:
         # Delete all records
         self.repo.delete_all()
         # Make sure no records left
-        generator = self.repo.query()
+        generator = self.repo.query(self.repo.query_all, TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
         # Test saving and reading from table again, make sure still functional
         self.repo.save(VALID_DF[0])
-        generator = self.repo.query()
+        generator = self.repo.query(self.repo.query_all, TEST_CHUNKSIZE)
         # Generator should return value
         next(generator)

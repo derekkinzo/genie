@@ -7,7 +7,6 @@ generate the dataframe usef by the classifiers to calculate a prediction score.
 from typing import Generator
 import pandas as pd
 import geniepy.datamgmt.daos as daos
-from geniepy import CHUNKSIZE
 
 
 class DaoManager:
@@ -41,10 +40,10 @@ class DaoManager:
         self._classifier_dao = classifier_dao
         """The output DAO stores output data after classifiers calc predictions."""
 
-    def download(self):
+    def download(self, chunksize: int):
         """Download (scrapes) data for DAOs and creates internal tables."""
-        self._ctd_dao.download()
-        self._pubmed_dao.download()
+        self._ctd_dao.download(chunksize)
+        self._pubmed_dao.download(chunksize)
 
     def _get_pubmeds_df(self, pmids: str):
         """
@@ -59,19 +58,17 @@ class DaoManager:
         pmids = pmids.split("|")
         pubmed_df = pd.DataFrame()
         for pmid in pmids:
-            pmid_query = (
-                f"SELECT * FROM {self._pubmed_dao.tablename} WHERE pmid='{pmid}';"
-            )
             try:
+                pmid_query = self._pubmed_dao.query_pkey(int(pmid))
                 # Only care about 1 pmid entry (table shouldn't have duplicates)
                 pmid_df = next(self._pubmed_dao.query(pmid_query, 1))
                 pubmed_df = pubmed_df.append(pmid_df, ignore_index=True)
-            except StopIteration:
+            except StopIteration:  # pragma: no cover
                 # TODO log instead of print
                 print(f"PMID: {pmid} not found!")
         return pubmed_df
 
-    def gen_records(self, chunksize=CHUNKSIZE) -> Generator[pd.DataFrame, None, None]:
+    def gen_records(self, chunksize: int) -> Generator[pd.DataFrame, None, None]:
         """
         Generate the dataframe records for classifiers.
 
@@ -97,7 +94,8 @@ class DaoManager:
         """
         # iterate over ctd table
         record_df = pd.DataFrame()
-        for record_df in self._ctd_dao.query(chunksize=chunksize):
+        query_all = self._ctd_dao.query_all
+        for record_df in self._ctd_dao.query(query_all, chunksize):
             record_df["pubmeds"] = record_df.apply(
                 lambda row: self._get_pubmeds_df(row.pmids), axis=1
             )

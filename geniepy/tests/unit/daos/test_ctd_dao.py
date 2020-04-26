@@ -2,17 +2,19 @@
 import pytest
 from geniepy.datamgmt.daos import BaseDao, CtdDao
 from geniepy.errors import SchemaError
-import tests.testdata as td
-from tests.resources.mock import MockCtdScraper
 import geniepy.datamgmt.repositories as dr
+from geniepy.datamgmt.tables import CTD_PROPTY
 from geniepy.errors import DaoError
 from geniepy.datamgmt.parsers import CtdParser
+import tests.testdata as td
+from tests.resources.mock import MockCtdScraper
+from tests.resources.mock import TEST_CHUNKSIZE
 
 
 class TestCtdDao:
     """PyTest data access object test class."""
 
-    test_repo = dr.SqlRepository("sqlite://", dr.CTD_TABLE_NAME, dr.CTD_DAO_TABLE)
+    test_repo = dr.SqlRepository("sqlite://", CTD_PROPTY)
     test_dao: BaseDao = CtdDao(test_repo)
     # Attach mock scraper to parser for testing
     mock_scraper = MockCtdScraper()
@@ -20,8 +22,8 @@ class TestCtdDao:
 
     def read_record(self, digest):
         """Read record(s) from database (tests helper method)."""
-        query_str = f"SELECT * FROM {self.test_dao.tablename} WHERE digest='{digest}';"
-        generator = self.test_dao.query(query=query_str)
+        query_str = self.test_dao.query_pkey(digest)
+        generator = self.test_dao.query(query_str, TEST_CHUNKSIZE)
         return generator
 
     def test_constructor(self):
@@ -38,6 +40,12 @@ class TestCtdDao:
     def test_save_valid_df(self, payload):
         """Test save valid dataframe to dao's repo doesn't raise error."""
         self.test_dao.save(payload)
+
+    def test_tablename(self):
+        """Test tablename property."""
+        expected = "ctd"
+        actual = self.test_dao.tablename
+        assert actual == expected
 
     @pytest.mark.parametrize("payload", td.CTD_VALID_DF)
     def test_query(self, payload):
@@ -75,7 +83,7 @@ class TestCtdDao:
         # Delete all records
         self.test_dao.purge()
         # Make sure no records left
-        generator = self.test_dao.query()
+        generator = self.test_dao.query(self.test_dao.query_all, TEST_CHUNKSIZE)
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -92,7 +100,7 @@ class TestCtdDao:
             except DaoError:
                 pass
         # Get all records in database
-        generator = self.test_dao.query(chunksize=chunksize)
+        generator = self.test_dao.query(self.test_dao.query_all, chunksize)
         # Make sure number generator provides df of chunksize each iteration
         result_df = next(generator)
         assert result_df.digest.count() == chunksize
@@ -107,14 +115,14 @@ class TestCtdDao:
         """
         # Make sure dao's database is empty
         self.test_dao.purge()
-        generator = self.test_dao.query()
+        generator = self.test_dao.query(self.test_dao.query_all, TEST_CHUNKSIZE)
         # Generator should not return anything since database should be empty
         with pytest.raises(StopIteration):
             next(generator)
         # Call download method to update database with data from online sources
         self.test_dao.download(chunksize)
         # Read entire table
-        generator = self.test_dao.query(chunksize=chunksize)
+        generator = self.test_dao.query(self.test_dao.query_all, chunksize)
         # Generator should return values
         result_df = next(generator)
         assert not result_df.empty

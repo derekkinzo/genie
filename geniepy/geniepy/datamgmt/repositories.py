@@ -3,71 +3,38 @@ from typing import Generator
 from abc import ABC, abstractmethod
 import pandas as pd
 from pandas import DataFrame
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, Float, String
 from google.oauth2 import service_account
 import pandas_gbq
-import geniepy
+from sqlalchemy import create_engine, Table
 from geniepy.errors import DaoError
-
-
-CTD_TABLE_NAME = "ctd"
-"""Name of ctd source table."""
-CTD_DAO_TABLE = Table(
-    CTD_TABLE_NAME,
-    MetaData(),
-    # No primary key allows duplicate records
-    Column("digest", String, primary_key=False, nullable=False),
-    Column("genesymbol", String),
-    Column("geneid", Integer, nullable=False),
-    Column("diseasename", String),
-    Column("diseaseid", String, nullable=False),
-    Column("pmids", String, nullable=False),
-)
-"""CTD DAO Repository Schema."""
-
-PUBMED_TABLE_NAME = "pubmed"
-"""Name of pubmed source table."""
-PUBMED_DAO_TABLE = Table(
-    PUBMED_TABLE_NAME,
-    MetaData(),
-    # No primary key allows duplicate records
-    Column("pmid", Integer, primary_key=False, nullable=False),
-    Column("date_completed", String),
-    Column("pub_model", String),
-    Column("title", String),
-    Column("iso_abbreviation", String),
-    Column("article_title", String),
-    Column("abstract", String),
-    Column("authors", String),
-    Column("language", String),
-    Column("chemicals", String),
-    Column("mesh_list", String),
-)
-"""PUBMED DAO Repository Schema."""
-
-
-CLSFR_TABLE_NAME = "classifier"
-"""Name of geniepy classifier output table."""
-CLSFR_DAO_TABLE = Table(
-    CLSFR_TABLE_NAME,
-    MetaData(),
-    # No primary key allows duplicate records
-    Column("digest", String, primary_key=False, nullable=False),
-    Column("pub_score", Float, nullable=False),
-    Column("ct_score", Float, nullable=False),
-)
-"""Classifier Output DAO Repository Schema."""
+from geniepy.datamgmt.tables import RepoProperties
 
 
 class BaseRepository(ABC):
     """Base Abstract Class for Data Access Object Repositories."""
 
-    __slots__ = ["_table", "_tablename"]
+    __slots__ = ["_table", "_tablename", "_pkey"]
 
     @property
-    def tablename(self):
+    def tablename(self) -> str:
         """Return DAO repo's tablename."""
-        return self._tablename  # pylint: disable=E1101
+        # pylint: disable=no-member
+        return self._tablename
+
+    @property
+    def query_all(self) -> str:
+        """Generate query string to query entire table."""
+        return f"SELECT * FROM {self.tablename};"
+
+    def query_pkey(self, val) -> str:
+        """Generate query string to query by primary key."""
+        if isinstance(val, str):
+            # pylint: disable=no-member
+            return f"SELECT * FROM {self.tablename} WHERE {self._pkey}='{val}';"
+        else:
+            # Don't need quotes surrounding val if not a str
+            # pylint: disable=no-member
+            return f"SELECT * FROM {self.tablename} WHERE {self._pkey}={val};"
 
     @abstractmethod
     def save(self, payload: DataFrame):
@@ -87,15 +54,13 @@ class BaseRepository(ABC):
 
     @abstractmethod
     # pylint: disable=bad-continuation
-    def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
-    ) -> Generator[DataFrame, None, None]:
+    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
-            query {str} -- Query string. (default: {None} returns all values)
-            chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
+            query {str} -- Query string
+            chunksize {int} -- Number of rows of dataframe per chunk
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
@@ -107,17 +72,17 @@ class SqlRepository(BaseRepository):
 
     __slots__ = ["_engine"]
 
-    def __init__(self, db_loc: str, tablename: str, table: Table):
+    def __init__(self, db_loc: str, propty: RepoProperties):
         """
         Initialize DAO repository and create table.
 
         Arguments:
             db_loc {str} -- location of underlying database
-            tablename {str} -- the dao table name
-            schema {Table} -- the table schema
+            propty {RepoProperties} -- Repository properties structure
         """
-        self._tablename = tablename
-        self._table = table
+        self._tablename = propty.tablename
+        self._table = propty.table
+        self._pkey = propty.pkey
         # Create sql engine
         self._engine = create_engine(db_loc)
         # Create Table
@@ -150,21 +115,19 @@ class SqlRepository(BaseRepository):
         self._table.create(self._engine)
 
     # pylint: disable=bad-continuation
-    def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
-    ) -> Generator[DataFrame, None, None]:
+    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
-            query {str} -- Query string. (default: {None} returns all values)
-            chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
+            query {str} -- Query string
+            chunksize {int} -- Number of rows of dataframe per chunk
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
         if query is None:
-            return pd.read_sql(self._tablename, con=self._engine, chunksize=chunksize)
+            raise DaoError
         # If query string provided
         generator = pd.read_sql_query(query, self._engine, chunksize=chunksize)
         return generator
@@ -174,6 +137,25 @@ class GbqRepository(BaseRepository):  # pragma: no cover
     """Implementation of Sqlite Data Access Object Repository."""
 
     __slots__ = ["_proj", "_credentials_path"]
+
+    def __init__(
+        self, db_loc: str, propty: RepoProperties, dataset: str, credentials: str
+    ):
+        """
+        Initialize DAO repository and create table.
+
+        Arguments:
+            db_loc {str} -- name of BigQuery project
+            propty {RepoProperties} -- Repository properties structure
+            dataset {str} -- The GBQ dataset the table belongs to
+            credentials_path {str} -- path to gcp credentials json
+        """
+        self._proj = db_loc
+        self._tablename = dataset + "." + propty.tablename
+        self._pkey = propty.pkey
+        self._table = self.get_dict_schema(propty.table)
+        self._credentials_path = credentials
+        self.connect()
 
     def connect(self):
         """Connect to Google BigQuery."""
@@ -194,32 +176,6 @@ class GbqRepository(BaseRepository):  # pragma: no cover
         }
         return [coldict(col) for col in table_schema.get_children()]
 
-    def create_table(self):
-        """Create table in GBQ."""
-        pandas_gbq.to_gbq(
-            pd.DataFrame(),
-            self.tablename,
-            if_exists="replace",
-            table_schema=self._table,
-        )
-
-    def __init__(self, db_loc: str, tablename: str, table: Table, credentials: str):
-        """
-        Initialize DAO repository and create table.
-
-        Arguments:
-            db_loc {str} -- name of BigQuery project
-            tablename {str} -- the dao table name including dataset (i.e. test.table)
-            schema {Table} -- the table schema
-            credentials_path {str} -- path to gcp credentials json
-        """
-        self._proj = db_loc
-        self._tablename = tablename
-        self._table = self.get_dict_schema(table)
-        self._credentials_path = credentials
-        self.connect()
-        self.create_table()
-
     def save(self, payload: DataFrame):
         """
         Save payload to database table.
@@ -239,36 +195,38 @@ class GbqRepository(BaseRepository):  # pragma: no cover
 
     def delete_all(self):
         """Delete all records in repository."""
-        self.create_table()
+        pandas_gbq.to_gbq(
+            pd.DataFrame(),
+            self.tablename,
+            if_exists="replace",
+            table_schema=self._table,
+        )
 
     # pylint: disable=bad-continuation
-    def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
-    ) -> Generator[DataFrame, None, None]:
+    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
-            query {str} -- Query string. (default: {None} returns all values)
-            chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
+            query {str} -- Query string
+            chunksize {int} -- Number of rows of dataframe per chunk
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
+        if query is None:
+            raise DaoError
         try:
-            primary_key = "pmid"
-            if query is None:
-                query = f"SELECT * FROM {self._tablename} WHERE pmid={primary_key};"
             offset = 0
-            # Remove semicolon if exists and add extra params
+            # Remove semicolon if exists in original query to add ordering to query
             query = query.strip(";")
             while True:
-                add_query = f" ORDER BY {primary_key} LIMIT {chunksize} OFFSET {offset}"
+                add_query = f" ORDER BY {self._pkey} LIMIT {chunksize} OFFSET {offset};"
                 gbq_query = query + add_query
-                df = pandas_gbq.read_gbq(gbq_query)
-                if df.empty:
+                response_df = pandas_gbq.read_gbq(gbq_query)
+                if response_df.empty:
                     return
                 offset += chunksize
-                yield df
+                yield response_df
         except Exception as gbq_exp:
             raise DaoError(gbq_exp)
