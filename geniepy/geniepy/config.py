@@ -12,6 +12,8 @@ from geniepy.classmgmt import ClassificationMgr
 
 # TODO remove mock
 import tests.resources.mock as mock
+from tests import get_test_output_path
+import os
 
 
 # TODO Retrieve from config file
@@ -24,17 +26,29 @@ def get_chunksize():
 def get_daomgr() -> DaoManager:
     # TODO Retrieve from config file
     """Configure data mgmt subsystem."""
-    ctd_dao = daos.CtdDao(dr.SqlRepository("sqlite://", CTD_PROPTY))
+    credentials_file = "genie_credentials.json"
+    credentials_path = os.path.join(get_test_output_path(), credentials_file)
+    # Google BigQuery Project Name
+    project_name = "genie-275215"
+    gbq_dataset = "test"
+
+    ctd_dao = daos.CtdDao(
+        dr.GbqRepository(project_name, CTD_PROPTY, gbq_dataset, credentials_path)
+    )
     # pylint: disable=protected-access
     ctd_dao._parser.scraper = mock.MockCtdScraper()
 
     # Create and configure mock pubmed dao
-    pubmed_dao = daos.PubMedDao(dr.SqlRepository("sqlite://", PUBMED_PROPTY))
+    pubmed_dao = daos.PubMedDao(
+        dr.GbqRepository(project_name, PUBMED_PROPTY, gbq_dataset, credentials_path)
+    )
     # pylint: disable=protected-access
     pubmed_dao._parser.scraper = mock.MockPubMedScraper()
 
     # Create and configure mock classifier dao
-    classifier_dao = daos.ClassifierDao(dr.SqlRepository("sqlite://", CLSFR_PROPTY))
+    classifier_dao = daos.ClassifierDao(
+        dr.GbqRepository(project_name, CLSFR_PROPTY, gbq_dataset, credentials_path)
+    )
 
     # Construct mock dao manager for testing
     daomgr = DaoManager(

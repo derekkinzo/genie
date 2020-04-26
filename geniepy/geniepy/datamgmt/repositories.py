@@ -153,7 +153,6 @@ class GbqRepository(BaseRepository):  # pragma: no cover
         self._table = self.get_dict_schema(propty.table)
         self._credentials_path = credentials
         self.connect()
-        self.create_table()
 
     def connect(self):
         """Connect to Google BigQuery."""
@@ -174,15 +173,6 @@ class GbqRepository(BaseRepository):  # pragma: no cover
         }
         return [coldict(col) for col in table_schema.get_children()]
 
-    def create_table(self):
-        """Create table in GBQ."""
-        pandas_gbq.to_gbq(
-            pd.DataFrame(),
-            self.tablename,
-            if_exists="replace",
-            table_schema=self._table,
-        )
-
     def save(self, payload: DataFrame):
         """
         Save payload to database table.
@@ -202,7 +192,12 @@ class GbqRepository(BaseRepository):  # pragma: no cover
 
     def delete_all(self):
         """Delete all records in repository."""
-        self.create_table()
+        pandas_gbq.to_gbq(
+            pd.DataFrame(),
+            self.tablename,
+            if_exists="replace",
+            table_schema=self._table,
+        )
 
     # pylint: disable=bad-continuation
     def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
@@ -223,12 +218,12 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             # Remove semicolon if exists in original query to add ordering to query
             query = query.strip(";")
             while True:
-                add_query = f" ORDER BY {self._pkey} LIMIT {chunksize} OFFSET {offset}"
+                add_query = f" ORDER BY {self._pkey} LIMIT {chunksize} OFFSET {offset};"
                 gbq_query = query + add_query
-                query_df = pandas_gbq.read_gbq(gbq_query)
-                if query_df.empty:
+                response_df = pandas_gbq.read_gbq(gbq_query)
+                if response_df.empty:
                     return
                 offset += chunksize
-                yield query_df
+                yield response_df
         except Exception as gbq_exp:
             raise DaoError(gbq_exp)
