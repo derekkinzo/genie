@@ -18,7 +18,7 @@ class BaseRepository(ABC):
     @property
     def tablename(self) -> str:
         """Return DAO repo's tablename."""
-        # pylint: no-member
+        # pylint: disable=no-member
         return self._tablename
 
     @property
@@ -29,11 +29,11 @@ class BaseRepository(ABC):
     def query_pkey(self, val) -> str:
         """Generate query string to query by primary key."""
         if isinstance(val, str):
-            # pylint: no-member
+            # pylint: disable=no-member
             return f"SELECT * FROM {self.tablename} WHERE {self._pkey}='{val}';"
         else:
             # Don't need quotes surrounding val if not a str
-            # pylint: no-member
+            # pylint: disable=no-member
             return f"SELECT * FROM {self.tablename} WHERE {self._pkey}={val};"
 
     @abstractmethod
