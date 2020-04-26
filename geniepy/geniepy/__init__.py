@@ -25,21 +25,22 @@ __license__ = "MIT"
 
 __all__ = ["runjob"]
 
-DAOMGR: DaoManager = config.get_daomgr()
-CLASSMGR: ClassificationMgr = config.get_classmgr()
-CHUNKSIZE = config.get_chunksize()
-
 
 def run_predictions():
     """Calculate predictions for all records in database."""
-    for records in DAOMGR.gen_records(CHUNKSIZE):
-        predicted_df = CLASSMGR.predict(records)
-        DAOMGR.save_predictions(predicted_df)
+    daomgr: DaoManager = config.get_daomgr()
+    classmgr: ClassificationMgr = config.get_classmgr()
+    chunksize = config.get_classmgr()
+    for records in daomgr.gen_records(chunksize):
+        predicted_df = classmgr.predict(records)
+        daomgr.save_predictions(predicted_df)
 
 
 def run_downloads():
     """Call scrapes to download data and create/append tables."""
-    DAOMGR.download(CHUNKSIZE)
+    daomgr: DaoManager = config.get_daomgr()
+    chunksize = config.get_classmgr()
+    daomgr.download(chunksize)
 
 
 def run_job():
