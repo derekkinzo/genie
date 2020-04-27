@@ -9,10 +9,10 @@ PREDICTION_COL_NAME = "pub_score"
 SAMPLE_RECORD = pd.Series(["g", "e", "e", "k", "s"])
 
 
-class TestPcpClassifier:
+class TestClassifier:
     """Base Classifier pytest class."""
 
-    classifier = clsfr.PcpClassifier()
+    classifier = clsfr.Classifier()
 
     def test_constructor(self):
         """Test classifier object is created."""
@@ -22,7 +22,7 @@ class TestPcpClassifier:
 
     def test_predict_not_trained(self):
         """Brand new classifier is not trained, should return -1."""
-        self.classifier = clsfr.PcpClassifier()
+        self.classifier = clsfr.Classifier()
         assert self.classifier.is_trained is False
         prediction = self.classifier.predict(None)
         assert isinstance(prediction, float)

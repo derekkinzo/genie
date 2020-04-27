@@ -44,27 +44,16 @@ def get_daomgr() -> DaoManager:
     # Google BigQuery Project Name
     projname = configdict["gbq"]["proj"]
     dataset = configdict["gbq"]["dataset"]
-
+    # Construct
     ctd_dao = daos.CtdDao(
         dr.GbqRepository(projname, CTD_PROPTY, dataset, credentials_path)
     )
-    # pylint: disable=protected-access
-    # ctd_dao._parser.scraper = mock.MockCtdScraper()
-
-    # Create and configure mock pubmed dao
     pubmed_dao = daos.PubMedDao(
         dr.GbqRepository(projname, PUBMED_PROPTY, dataset, credentials_path)
     )
-
-    # pylint: disable=protected-access
-    # pubmed_dao._parser.scraper = mock.MockPubMedScraper()
-
-    # Create and configure mock classifier dao
     classifier_dao = daos.ClassifierDao(
         dr.GbqRepository(projname, CLSFR_PROPTY, dataset, credentials_path)
     )
-
-    # Construct mock dao manager for testing
     daomgr = DaoManager(
         ctd_dao=ctd_dao, pubmed_dao=pubmed_dao, classifier_dao=classifier_dao
     )
@@ -74,5 +63,9 @@ def get_daomgr() -> DaoManager:
 def get_classmgr() -> ClassificationMgr:
     """Configure classification mgmt subsystem."""
     # TODO Retrieve from config file
-    return mock.MOCK_CLSFRMGR
+    # PCPCLSFR = PcpClassifier()
+    # CTCLSFR = PcpClassifier()
+    # # pylint: disable=protected-access
+    # CTCLSFR._col_name = "ct_score"
+    # MOCK_CLSFRMGR: ClassificationMgr = ClassificationMgr([PCPCLSFR, CTCLSFR])
     raise NotImplementedError

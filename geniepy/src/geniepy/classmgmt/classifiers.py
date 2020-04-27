@@ -87,7 +87,7 @@ class BaseClassifier(ABC):
     #     return False
 
 
-class PcpClassifier(BaseClassifier):
+class Classifier(BaseClassifier):
     """Implementation of Publication Count Predictive Classifier."""
 
     _col_name: str = "pub_score"
