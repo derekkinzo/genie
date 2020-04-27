@@ -60,7 +60,7 @@ class TestClassMgr:
         assert "digest" in cols
         # Make sure has one prediction column per classifier
         for classifier in MOCK_CLSFRMGR._classifiers:
-            assert classifier.col_name in cols
+            assert classifier.name in cols
         # TODO validate classifier predicted dataframe
 
     def test_predict_invalid_records(self):

@@ -11,8 +11,8 @@ from geniepy.classmgmt.classifiers import Classifier
 TEST_CHUNKSIZE = 5
 """Default chunksize for tests."""
 
-PCPCLSFR = Classifier()
-CTCLSFR = Classifier()
+PCPCLSFR = Classifier("pub_score")
+CTCLSFR = Classifier("ct_score")
 # pylint: disable=protected-access
 CTCLSFR._col_name = "ct_score"
 MOCK_CLSFRMGR: ClassificationMgr = ClassificationMgr([PCPCLSFR, CTCLSFR])

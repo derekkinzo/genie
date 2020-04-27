@@ -25,7 +25,7 @@ def run_predictions():
     """Calculate predictions for all records in database."""
     daomgr: DaoManager = config.get_daomgr()
     classmgr: ClassificationMgr = config.get_classmgr()
-    chunksize = config.get_classmgr()
+    chunksize = config.get_chunksize()
     for records in daomgr.gen_records(chunksize):
         predicted_df = classmgr.predict(records)
         daomgr.save_predictions(predicted_df)

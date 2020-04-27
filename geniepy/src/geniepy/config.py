@@ -12,6 +12,8 @@ import geniepy.datamgmt.repositories as dr
 from geniepy.datamgmt.tables import PUBMED_PROPTY, CTD_PROPTY, CLSFR_PROPTY
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
+from geniepy.classmgmt.classifiers import Classifier
+from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
 from geniepy.errors import ConnectionError
 
 CONFIG_NAME = "config.yaml"
@@ -63,9 +65,7 @@ def get_daomgr() -> DaoManager:
 def get_classmgr() -> ClassificationMgr:
     """Configure classification mgmt subsystem."""
     # TODO Retrieve from config file
-    # PCPCLSFR = PcpClassifier()
-    # CTCLSFR = PcpClassifier()
-    # # pylint: disable=protected-access
-    # CTCLSFR._col_name = "ct_score"
-    # MOCK_CLSFRMGR: ClassificationMgr = ClassificationMgr([PCPCLSFR, CTCLSFR])
-    raise NotImplementedError
+    pub_clsfr = Classifier(PCPCLSFR_NAME)
+    ct_clsfr = Classifier(CTCLSFR_NAME)
+    clsfr_mgr = ClassificationMgr([pub_clsfr, ct_clsfr])
+    return clsfr_mgr
