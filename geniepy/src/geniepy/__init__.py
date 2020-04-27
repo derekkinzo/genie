@@ -4,11 +4,6 @@ import geniepy.config as config
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
 
-
-# import geniepy.config as config
-# from geniepy.datamgmt import DaoManager
-# from geniepy.classmgmt import ClassificationMgr
-
 try:
     # Change here if project is renamed and does not equal the package name
     DIST_NAME = __name__
