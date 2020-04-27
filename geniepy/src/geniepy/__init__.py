@@ -4,11 +4,6 @@ import geniepy.config as config
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
 
-
-# import geniepy.config as config
-# from geniepy.datamgmt import DaoManager
-# from geniepy.classmgmt import ClassificationMgr
-
 try:
     # Change here if project is renamed and does not equal the package name
     DIST_NAME = __name__
@@ -30,7 +25,7 @@ def run_predictions():
     """Calculate predictions for all records in database."""
     daomgr: DaoManager = config.get_daomgr()
     classmgr: ClassificationMgr = config.get_classmgr()
-    chunksize = config.get_classmgr()
+    chunksize = config.get_chunksize()
     for records in daomgr.gen_records(chunksize):
         predicted_df = classmgr.predict(records)
         daomgr.save_predictions(predicted_df)

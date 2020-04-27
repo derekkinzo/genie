@@ -6,7 +6,7 @@ from pandas import DataFrame
 from google.oauth2 import service_account
 import pandas_gbq
 from sqlalchemy import create_engine, Table
-from geniepy.errors import DaoError
+from geniepy.errors import DaoError, ConnectionError
 from geniepy.datamgmt.tables import RepoProperties
 
 
@@ -160,11 +160,14 @@ class GbqRepository(BaseRepository):  # pragma: no cover
 
     def connect(self):
         """Connect to Google BigQuery."""
-        bgq_credentials = service_account.Credentials.from_service_account_file(
-            self._credentials_path,
-        )
-        pandas_gbq.context.credentials = bgq_credentials
-        pandas_gbq.context.project = self._proj
+        try:
+            bgq_credentials = service_account.Credentials.from_service_account_file(
+                self._credentials_path,
+            )
+            pandas_gbq.context.credentials = bgq_credentials
+            pandas_gbq.context.project = self._proj
+        except Exception as exp:
+            raise ConnectionError(exp)
 
     @staticmethod
     def get_dict_schema(table_schema: Table) -> [dict]:

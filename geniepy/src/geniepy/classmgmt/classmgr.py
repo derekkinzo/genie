@@ -45,7 +45,7 @@ class ClassificationMgr:
             prediction_df = pd.DataFrame()
             prediction_df["digest"] = records["digest"]
             for classifier in self._classifiers:
-                prediction_df[classifier.col_name] = records.apply(
+                prediction_df[classifier.name] = records.apply(
                     classifier.predict, axis=1
                 )
             return prediction_df

@@ -12,6 +12,7 @@ from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
 from geniepy.datamgmt.scrapers import BaseScraper, CtdScraper, PubMedScraper
 from geniepy.errors import ParserError
 from geniepy.pubmed import PubMedArticle
+from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
 
 
 class DataType(Enum):
@@ -293,8 +294,8 @@ class ClassifierParser(BaseParser):
     schema: Schema = Schema(
         [
             Column("digest"),
-            Column("pub_score", [IsDtypeValidation(np.float64)]),
-            Column("ct_score", [IsDtypeValidation(np.float64)]),
+            Column(PCPCLSFR_NAME, [IsDtypeValidation(np.float64)]),
+            Column(CTCLSFR_NAME, [IsDtypeValidation(np.float64)]),
         ]
     )
 

@@ -4,25 +4,25 @@ import pandas as pd
 import geniepy.classmgmt.classifiers as clsfr
 from geniepy.errors import ClassifierError
 
-PREDICTION_COL_NAME = "pub_score"
+CLSFR_NAME = "pub_score"
 
 SAMPLE_RECORD = pd.Series(["g", "e", "e", "k", "s"])
 
 
-class TestPcpClassifier:
+class TestClassifier:
     """Base Classifier pytest class."""
 
-    classifier = clsfr.PcpClassifier()
+    classifier = clsfr.Classifier("pub_score")
 
     def test_constructor(self):
         """Test classifier object is created."""
         assert self.classifier is not None
-        assert self.classifier.col_name == PREDICTION_COL_NAME
+        assert self.classifier.name == CLSFR_NAME
         assert self.classifier.is_trained is False
 
     def test_predict_not_trained(self):
         """Brand new classifier is not trained, should return -1."""
-        self.classifier = clsfr.PcpClassifier()
+        self.classifier = clsfr.Classifier(CLSFR_NAME)
         assert self.classifier.is_trained is False
         prediction = self.classifier.predict(None)
         assert isinstance(prediction, float)

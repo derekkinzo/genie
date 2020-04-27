@@ -5,29 +5,34 @@ from geniepy.errors import ClassifierError
 
 ERROR_SCORE = float(-1)
 
+PCPCLSFR_NAME = "pub_score"
+CTCLSFR_NAME = "ct_score"
+
 
 class BaseClassifier(ABC):
     """Base Classifier Abstract Class."""
 
-    _col_name: str
-    """Name of output prediction column."""
+    __slots__ = [
+        "_is_trained",  # True if classifier is trained
+        "_model",  # The classifier model
+        "_name",  # The name of the classifier (used as name of prediction col)
+    ]
 
-    __slots__ = ["_is_trained", "_model"]
-
-    def __init__(self):
+    def __init__(self, name):
         """
         Construct classifier obj.
 
         Arguments:
             name {[type]} -- The classifier's name
         """
+        self._name = name
         self._is_trained = False
         self._model = None
 
     @property
-    def col_name(self):
+    def name(self):
         """Return name prediction column."""
-        return self._col_name
+        return self._name
 
     @property
     def is_trained(self):
@@ -87,11 +92,8 @@ class BaseClassifier(ABC):
     #     return False
 
 
-class PcpClassifier(BaseClassifier):
+class Classifier(BaseClassifier):
     """Implementation of Publication Count Predictive Classifier."""
-
-    _col_name: str = "pub_score"
-    """Name of output prediction column."""
 
     def predict(self, features: pd.Series):
         """
