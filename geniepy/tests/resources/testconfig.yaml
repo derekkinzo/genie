@@ -5,6 +5,6 @@ chunksize: 10
 
 # BigQuery Parameters
 gbq:
-  credentials: "../tests_output/genie_credentials.json"
+  credentials: "invalid_path"
   proj: "genie-275215"
   dataset: "test"

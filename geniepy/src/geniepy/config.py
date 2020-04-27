@@ -4,8 +4,8 @@ GeniePy Configuration Module.
 This module is intended to provide functions that interprets content from the
 package configuration file and generate the corresponding python objects.
 """
-import yaml
 from pathlib import Path
+import yaml
 from geniepy.errors import ConfigError
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
@@ -14,7 +14,6 @@ from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
 from geniepy.classmgmt.classifiers import Classifier
 from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
-from geniepy.errors import ConnectionError
 
 CONFIG_NAME = "config.yaml"
 CONFIG_PATH = Path(__file__).parent.joinpath(CONFIG_NAME).resolve()
