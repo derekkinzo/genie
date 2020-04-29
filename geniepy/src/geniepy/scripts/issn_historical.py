@@ -1,3 +1,8 @@
+"""
+Module to extract ISSN metadata for 
+all available PubMed articles.
+"""
+
 from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime
 import glob

@@ -16,7 +16,6 @@ import json
 import os
 import sys
 import time
-# import xml.etree.ElementTree as ET
 
 # Constants
 _MIN_PUBMED_ID = 1
