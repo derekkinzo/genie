@@ -167,7 +167,7 @@ def main(IDList, MaxWorkers, OutputDir):
     write_output(citation_dict, OutputDir)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # noqa
 
     # command line arguments
     _start_id = 0

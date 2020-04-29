@@ -1,10 +1,9 @@
 """
 This script is deployed as Google Cloud Function.
-It allows to scale-up the citation metadata extraction process.
 
-This script also utilizes multiple PubMed API Keys, 
-to scale-up the number of API calls that can be made
-per second. Plesae make sure the API Keys included are
+It allows to scale-up the citation metadata extraction process.
+This script also utilizes multiple PubMed API Keys, to scale-up the number of API
+calls that can be made per second. Plesae make sure the API Keys included are
 valid before executing this script.
 """
 from datetime import datetime
@@ -15,7 +14,7 @@ import requests
 import xml.etree.ElementTree as ET
 
 # Constants
-API_BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin"
+API_BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin"  # noqa
 API_ID_PARAM = "&id="
 API_KEY_PARAM = "&api_key="
 API_KEY_1 = "70b53d4e84436970587aef3493a723cae708"
@@ -39,9 +38,10 @@ TAG_LINK_SET = "LinkSet"
 TAG_ID = "./IdList/Id"
 TAG_CITATION_ID = "./LinkSetDb/Link/Id"
 
+
 def get_random_api_key():
     # pick a random number between 1 and 5
-    num = randint(1,17)
+    num = randint(1, 17)
 
     # return a randomly selected cloud function
     if num == 1:
@@ -80,7 +80,7 @@ def get_random_api_key():
         return API_KEY_17
 
 
-def parse_citation(url:str):
+def parse_citation(url: str):
 
     _citation_dict = {}
 
@@ -93,29 +93,29 @@ def parse_citation(url:str):
 
     for linkSet in tree.findall(TAG_LINK_SET):
         _pubmed_id = linkSet.find(TAG_ID).text
-        _citation_id_list:str = []
+        _citation_id_list: str = []
         for citationId in linkSet.findall(TAG_CITATION_ID):
             _citation_id_list.append(citationId.text)
-        
+
         if not _citation_id_list or len(_citation_id_list) <= 0:
             _citation_id_list.append("0")
-        
+
         _citation_dict[_pubmed_id] = _citation_id_list
-    
+
     return _citation_dict
 
 
 def get_citation(request):
-    if request.method != 'POST':
+    if request.method != "POST":
         return abort(405)
 
     # get list of PubMed IDs from the request body
     request_json = request.get_json()
-    pubmed_ids = request_json['pubmed_ids']
+    pubmed_ids = request_json["pubmed_ids"]
 
     # split PubMed IDs and construct ID Parameter list
     API_ID_PARAM_LIST = ""
-    for pubmed_id in pubmed_ids.split(','):
+    for pubmed_id in pubmed_ids.split(","):
         API_ID_PARAM_LIST = API_ID_PARAM_LIST + API_ID_PARAM + pubmed_id
 
     # get random API Key
