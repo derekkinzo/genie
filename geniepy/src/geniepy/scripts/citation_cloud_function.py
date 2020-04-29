@@ -6,7 +6,6 @@ This script also utilizes multiple PubMed API Keys, to scale-up the number of AP
 calls that can be made per second. Plesae make sure the API Keys included are
 valid before executing this script.
 """
-from datetime import datetime
 from flask import abort
 import json
 from random import randint
@@ -39,10 +38,9 @@ TAG_ID = "./IdList/Id"
 TAG_CITATION_ID = "./LinkSetDb/Link/Id"
 
 
-def get_random_api_key():
+def get_random_api_key():  # noqa
     # pick a random number between 1 and 5
     num = randint(1, 17)
-
     # return a randomly selected cloud function
     if num == 1:
         return API_KEY_1
@@ -87,7 +85,7 @@ def parse_citation(url: str):
     try:
         req = requests.get(url)
         tree = ET.fromstring(req.text)
-    except:
+    except Exception:
         print(f"Exeception: bad request: {url}")
         return _citation_dict
 
