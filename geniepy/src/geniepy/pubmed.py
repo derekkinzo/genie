@@ -151,8 +151,10 @@ class PubMedArticle:
     @property
     def issn_type(self) -> str:
         """Journal ISSN Type."""
-        issn_type = self._get_xml_element([self.JOURNAL_TAG, "ISSN"], tag_attrib="IssnType")
-        return issn_type        
+        issn_type = self._get_xml_element(
+            [self.JOURNAL_TAG, "ISSN"], tag_attrib="IssnType"
+        )
+        return issn_type
 
     @property
     def to_dict(self):
@@ -239,6 +241,8 @@ class ArticleSetParser:
             "language",
             "chemicals",
             "mesh_list",
+            "issn",
+            "issn_type",
         ]
 
         try:
