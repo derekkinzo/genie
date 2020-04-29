@@ -1,3 +1,12 @@
+"""
+This script is deployed as Google Cloud Function.
+It allows to scale-up the citation metadata extraction process.
+
+This script also utilizes multiple PubMed API Keys, 
+to scale-up the number of API calls that can be made
+per second. Plesae make sure the API Keys included are
+valid before executing this script.
+"""
 from datetime import datetime
 from flask import abort
 import json

@@ -1,3 +1,13 @@
+"""
+Module to extract citation metadata for 
+a given range of PubMed articles.
+
+This script depends upon Google cloud function
+to scale-up the extraction process. Make sure
+the Google cloud functions are deployed and available
+before running this script.
+(See: citation_cloud_function.py)
+"""
 from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime
 from random import randint
@@ -6,21 +16,21 @@ import json
 import os
 import sys
 import time
-import xml.etree.ElementTree as ET
+# import xml.etree.ElementTree as ET
 
 # Constants
 _MIN_PUBMED_ID = 1
-_MAX_PUBMED_ID = 40000000 
+_MAX_PUBMED_ID = 40000000
 _CHUNK_SIZE = 10
 _CSV_SEPRATOR = "|"
 
 
 # Google Cloud Functions - to scale-up data extraction
-CLOUD_FN_1 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_1" 
-CLOUD_FN_2 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_2" 
-CLOUD_FN_3 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_3" 
-CLOUD_FN_4 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_4" 
-CLOUD_FN_5 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_5" 
+CLOUD_FN_1 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_1"
+CLOUD_FN_2 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_2"
+CLOUD_FN_3 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_3"
+CLOUD_FN_4 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_4"
+CLOUD_FN_5 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_5"
 CLOUD_FN_6 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_6"
 CLOUD_FN_7 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_7"
 CLOUD_FN_8 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net/get_citation_8"
@@ -29,15 +39,16 @@ CLOUD_FN_10 = "https://us-central1-csci-e-599-trend-detection.cloudfunctions.net
 
 citation_dict = {}
 
+
 def generate_ID_List(StartID, EndID):
     id_list = list(range(StartID, EndID+1))
-    chucked_id_list = [id_list[i * _CHUNK_SIZE:(i + 1) * _CHUNK_SIZE] for i in range((len(id_list) + _CHUNK_SIZE - 1) // _CHUNK_SIZE )]
+    chucked_id_list = [id_list[i * _CHUNK_SIZE:(i + 1) * _CHUNK_SIZE] for i in range((len(id_list) + _CHUNK_SIZE - 1) // _CHUNK_SIZE)]
     return chucked_id_list
 
 
 def get_random_fn():
     # pick a random number between 1 and 5
-    num = randint(1,10)
+    num = randint(1, 10)
 
     # return a randomly selected cloud function
     if num == 1:
@@ -63,32 +74,32 @@ def get_random_fn():
 
 
 def get_citation(IDList):
-    ids_str = ','.join([str(elem) for elem in IDList]) 
+    ids_str = ','.join([str(elem) for elem in IDList])
     print(f"PID {os.getpid()}: Process Articles: {ids_str}")
 
     # construct api
     api_headers = {'content-type': 'application/json'}
-    api_body = {'pubmed_ids':ids_str}
+    api_body = {'pubmed_ids': ids_str}
 
     # call api - loop untill sucessful
     success = False
     while not success:
         cloud_fn = get_random_fn()
         try:
-            req = requests.post(url=cloud_fn, 
-                                data=json.dumps(api_body), 
-                                headers=api_headers, 
-                                timeout=(2,5))
+            req = requests.post(url=cloud_fn,
+                                data=json.dumps(api_body),
+                                headers=api_headers,
+                                timeout=(2, 5))
             if req.status_code == 200:
                 return req.text
         except:
-            """ if request fails or timeout, wait sometime and try again 
+            """ if request fails or timeout, wait sometime and try again
             with another randomly selected cloud function """
             time.sleep(2)
 
 
 def check_zero_citations(citationList):
-    if not citationList or len(citationList) <=0 or citationList == ["0"]:
+    if not citationList or len(citationList) <= 0 or citationList == ["0"]:
         return True
 
     return False
@@ -101,7 +112,11 @@ def write_output(citation_dict, OutputDir):
         file.write("article_id" + _CSV_SEPRATOR + "cited_count" + _CSV_SEPRATOR + "cited_by_id" + "\n")
         for key in citation_dict:
             if not check_zero_citations(citation_dict[key]):
-                file.write(key + _CSV_SEPRATOR +  str(len(citation_dict[key])) + _CSV_SEPRATOR + ",".join(citation_dict[key]) + "\n")
+                file.write(key + _CSV_SEPRATOR +
+                            str(len(citation_dict[key])) +
+                            _CSV_SEPRATOR +
+                            ",".join(citation_dict[key]) +
+                            "\n")
         print(f"Output: Citation data for {len(citation_dict)} PubMed Articles saved in file: {out_path}")
 
 
