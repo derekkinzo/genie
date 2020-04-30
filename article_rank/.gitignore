@@ -1,0 +1,3 @@
+service-account.json
+*.o
+data/*
