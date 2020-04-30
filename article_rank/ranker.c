@@ -110,7 +110,7 @@ int main(void) {
   segs[0] = 0;
   update(&segs[0]);
 
-  for (int i = 0; i < NUM_CORES; i++) {
+  for (int i = 1; i < NUM_CORES; i++) {
     pthread_cancel(threads[i]);
   }
 
