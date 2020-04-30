@@ -143,6 +143,20 @@ class PubMedArticle:
         return meshes
 
     @property
+    def issn(self) -> str:
+        """Journal ISSN ID."""
+        issn = self._get_xml_element([self.JOURNAL_TAG, "ISSN"])
+        return issn
+
+    @property
+    def issn_type(self) -> str:
+        """Journal ISSN Type."""
+        issn_type = self._get_xml_element(
+            [self.JOURNAL_TAG, "ISSN"], tag_attrib="IssnType"
+        )
+        return issn_type
+
+    @property
     def to_dict(self):
         """Generate article model dictionary."""
         _dict = {}
@@ -157,6 +171,8 @@ class PubMedArticle:
         _dict["language"] = self.language
         _dict["chemicals"] = self.chemicals
         _dict["mesh_list"] = self.mesh_list
+        _dict["issn"] = self.issn
+        _dict["issn_type"] = self.issn_type
         return _dict
 
 
@@ -225,6 +241,8 @@ class ArticleSetParser:
             "language",
             "chemicals",
             "mesh_list",
+            "issn",
+            "issn_type",
         ]
 
         try:
