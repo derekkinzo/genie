@@ -62,7 +62,7 @@ void write_results() {
       long double citation_scores = 0;
       for (int j = 0; j < article.num_citations; j++) {
         int citer = article.citations[j];
-        citation_scores += HYDRATION + DEHYDRATION * ARTICLES[citer].score / ARTICLES[citer].num_citations;
+        citation_scores += HYDRATION + DEHYDRATION * ARTICLES[citer].score / ARTICLES[citer].num_cited;
       }
       fprintf(file, "%Lf\n", citation_scores);
     }
