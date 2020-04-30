@@ -7,14 +7,31 @@
 #include "ranker.h"
 
 int NUM_ARTICLES;
-int MAX_ID;
 Article* ARTICLES;
+
+void update() {
+  for (int i = 0; i < NUM_ARTICLES; i++) {
+    Article* article = &ARTICLES[i];
+    if (article->score) {
+      long double score = 0;
+      for (int j = 0; j < article->num_citations; j++) {
+        Article citer = ARTICLES[article->citations[j]];
+        score += citer.score / citer.num_cited;
+      }
+      article->score = HYDRATION + DEHYDRATION * score;
+    }
+  }
+}
 
 int main(void) {
   FILE* file = fopen("data/links", "r");
-  fread(&MAX_ID, sizeof(int), 1, file);
   fread(&NUM_ARTICLES, sizeof(int), 1, file);
-  ARTICLES = calloc(MAX_ID, sizeof(Article));
+  NUM_ARTICLES += 1;
+  ARTICLES = calloc(NUM_ARTICLES, sizeof(Article));
+
+  int count;
+  fread(&count, sizeof(int), 1, file);
+  printf("Number of articles: %d\n", count);
 
   int cited;
   while (fread(&cited, sizeof(int), 1, file)) {
@@ -29,7 +46,13 @@ int main(void) {
 
     for (int i = 0; i < num_citations; i++) {
       ARTICLES[ARTICLES[cited].citations[i]].score = 1;
+      ARTICLES[ARTICLES[cited].citations[i]].num_cited += 1;
     }
+  }
+
+  for (int i = 0; i < 1000; i++) {
+    update();
+    printf("Iteration: %d\n", i);
   }
 
   assert(feof(file));
