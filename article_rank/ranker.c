@@ -52,21 +52,25 @@ void write_results() {
   qsort(results, NUM_ARTICLES, sizeof(Result), cmp_scores);
 
   FILE* file = fopen("data/rankings", "w");
+
+  long double total_score = 0
   for (int i = 0; i < NUM_ARTICLES; i++) {
     if (results[i].score) {
       int index = results[i].index;
       long double score = results[i].score;
+      total_score += score;
       fprintf(file, "%d,%Lf,", index, score);
       Article article = ARTICLES[index];
       fprintf(file, "%d,", article.num_citations);
-      long double citation_scores = 0;
+      long double citation_scores = HYDRATION;
       for (int j = 0; j < article.num_citations; j++) {
         int citer = article.citations[j];
-        citation_scores += HYDRATION + DEHYDRATION * ARTICLES[citer].score / ARTICLES[citer].num_cited;
+        citation_scores += DEHYDRATION * ARTICLES[citer].score / ARTICLES[citer].num_cited;
       }
       fprintf(file, "%Lf\n", citation_scores);
     }
   }
+  fprintf(file, "total score: %Lf\n", total_score);
   fclose(file);
 }
 
