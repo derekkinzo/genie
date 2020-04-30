@@ -72,6 +72,7 @@ void write_results() {
 
 int main(void) {
   FILE* file = fopen("data/links", "r");
+  assert(file);
   fread(&NUM_ARTICLES, sizeof(int), 1, file);
   NUM_ARTICLES += 1;
   ARTICLES = calloc(NUM_ARTICLES, sizeof(Article));
