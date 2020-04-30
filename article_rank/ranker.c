@@ -4,23 +4,30 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <pthread.h>
 #include "ranker.h"
 
 int NUM_ARTICLES;
 Article* ARTICLES;
 
-void update() {
-  for (int i = 0; i < NUM_ARTICLES; i++) {
-    Article* article = &ARTICLES[i];
-    if (article->score) {
-      long double score = 0;
-      for (int j = 0; j < article->num_citations; j++) {
-        Article citer = ARTICLES[article->citations[j]];
-        score += citer.score / citer.num_cited;
+void* update(void* seg) {
+  int segment = *((int*)seg);
+  for (int n = 0; n < NUM_ITERS; n++) {
+    printf("segment: %d, iteration: %d\n", segment, n);
+
+    for (int i = segment; i < NUM_ARTICLES; i+= NUM_CORES) {
+      Article* article = &ARTICLES[i];
+      if (article->score) {
+        long double score = 0;
+        for (int j = 0; j < article->num_citations; j++) {
+          Article citer = ARTICLES[article->citations[j]];
+          score += citer.score / citer.num_cited;
+        }
+        article->score = HYDRATION + DEHYDRATION * score;
       }
-      article->score = HYDRATION + DEHYDRATION * score;
     }
   }
+  return NULL;
 }
 
 int main(void) {
@@ -31,7 +38,6 @@ int main(void) {
 
   int count;
   fread(&count, sizeof(int), 1, file);
-  printf("Number of articles: %d\n", count);
 
   int cited;
   while (fread(&cited, sizeof(int), 1, file)) {
@@ -50,9 +56,18 @@ int main(void) {
     }
   }
 
-  for (int i = 0; i < 1000; i++) {
-    update();
-    printf("Iteration: %d\n", i);
+  pthread_t threads[NUM_CORES];
+  int segs[NUM_CORES];
+
+  for (int i = 1; i < NUM_CORES; i++) {
+    segs[i] = i;
+    pthread_create(&threads[i], NULL, update, &segs[i]);
+  }
+  segs[0] = 0;
+  update(&segs[0]);
+
+  for (int i = 0; i < NUM_CORES; i++) {
+    pthread_cancel(threads[i]);
   }
 
   assert(feof(file));

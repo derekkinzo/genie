@@ -1,5 +1,5 @@
 CC = gcc -std=c99 -g
-O ?= 0
+O ?= 3
 CFLAGS = -I. -lm
 DEPS = ranker.h
 OBJ = ranker.o
