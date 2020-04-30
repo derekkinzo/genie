@@ -58,11 +58,13 @@ void write_results() {
       long double score = results[i].score;
       fprintf(file, "%d,%Lf,", index, score);
       Article article = ARTICLES[index];
+      fprintf(file, "%d,", article.num_citations);
+      long double citation_scores = 0;
       for (int j = 0; j < article.num_citations; j++) {
         int citer = article.citations[j];
-        fprintf(file, "%d-%Lf ", citer, ARTICLES[citer].score);
+        citation_scores += HYDRATION + DEHYDRATION * ARTICLES[citer].score / ARTICLES[citer].num_citations;
       }
-      fprintf(file, "\n");
+      fprintf(file, "%Lf\n", citation_scores);
     }
   }
   fclose(file);
