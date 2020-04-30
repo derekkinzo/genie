@@ -1,6 +1,6 @@
 CC = gcc -std=c99 -g
 O ?= 3
-CFLAGS = -I. -lm
+CFLAGS = -I. -lm -pthread
 DEPS = ranker.h
 OBJ = ranker.o
 
