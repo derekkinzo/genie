@@ -1,7 +1,7 @@
 GeneSymbol,GeneID,DiseaseName,DiseaseID,DirectEvidence,InferenceChemicalName,InferenceScore,OmimIDs,PubMedIDs
-100174880,"Abnormalities, Drug-Induced",MESH:D000014,,Endocrine Disruptors,5.20,,22659286
+11-BETA-HSD3,100174880,"Abnormalities, Drug-Induced",MESH:D000014,,Endocrine Disruptors,5.20,,22659286
 11-BETA-HSD3,100174880,Anemia,MESH:D000740,,"Water Pollutants, Chemical",4.24,,26546277
-11-BETA-HSD3,100174880,"Anemia, Hemolytic",MESH:D000743,,"Water Pollutants, Chemical",4.53,,22425172
+11-BETA-HSD3,100174880,"Anemia, Hemolytic",MESH:000743,,"Water Pollutants, Chemical",4.53,,22425172
 11-BETA-HSD3,100174880,Asthenozoospermia,MESH:D053627,,"Water Pollutants, Chemical",5.11,,25179371
 11-BETA-HSD3,100174880,Birth Weight,MESH:D001724,,Endocrine Disruptors,5.72,,27152464|29518214
 11-BETA-HSD3,100174880,Breast Neoplasms,MESH:D001943,,Endocrine Disruptors,8.73,,20646273

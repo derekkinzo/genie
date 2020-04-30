@@ -3,7 +3,8 @@
 # pylint: skip-file
 import pandas as pd
 
-PUBMED_INVALID_DAO = [
+
+PUBMED_INVALID_SCHEMA = [
     pd.DataFrame(
         {
             # Missing required column
@@ -257,146 +258,249 @@ PUBMED_VALID_DF = [
 ]
 """Array of valid PubMed dataframes."""
 
-CTD_INVALID_DAO = [
+CTD_INVALID_SCHEMA = [
     pd.DataFrame(
         {
             # Missing Digest required field
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": ["22659286"],
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": [100174880],
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["D000014"],
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
             "OtherField": [22659286],  # Non-existent schema column
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": ["22659286"],
+            "digest": [22659286],
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": [100174880],
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["D000014"],
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
+            "digest": [22659286],
+            "genesymbol": ["11-BETA-HSD3"],
             # Missing required GeneID
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": ["22659286"],
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["D000014"],
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
+            "digest": [22659286],
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": [100174880],
+            "diseasename": ["Abnormalities, Drug-Induced"],
             # Missing required DiseaseID
-            "PubMedIDs": ["22659286"],
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
+            "digest": [22659286],
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": [100174880],
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["D000014"],
             # Missing required PubMed
         }
     ),
 ]
-"""Invalid DAO record."""
+"""Invalid SCHEMA record."""
 
 CTD_INVALID_DF = [
     None,
     pd.DataFrame({"invalid": [1, 2]}),
     pd.DataFrame(
         {
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": ["A100174880"],  # Should be Int
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": ["22659286"],
+            "digest": [22659286],
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": ["A100174880"],  # Should be Int
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["D000014"],
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880.0],  # Should be Int
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": ["22659286"],
+            "digest": [22659286],
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": [100174880.0],  # Should be Int
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["D000014"],
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
-            "Digest": [22659286],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["MESH:D000014"],  # Should not have "MESH:"
-            "PubMedIDs": ["22659286"],
+            "digest": [22659286],
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": [100174880],
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["MESH:D000014"],  # Should not have "MESH:"
+            "pmids": ["22659286"],
         }
     ),
-] + CTD_INVALID_DAO
+] + CTD_INVALID_SCHEMA
 """Array of invalid CTD DataFrames because violate parser rules."""
 
 
 CTD_VALID_DF = [
     pd.DataFrame(
         {
-            "Digest": [
+            "digest": [
                 "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
             ],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [10174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": ["22659286"],
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": [10174880],
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["D000014"],
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
-            "Digest": [
+            "digest": [
                 "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
             ],
-            "GeneSymbol": ["1-SF3"],
-            "GeneID": [1000494280],
-            "DiseaseName": ["Infant Death"],
-            "DiseaseID": ["D0660884"],
-            "PubMedIDs": ["283930756"],  # PubMedId can be int or str
+            "genesymbol": ["1-SF3"],
+            "geneid": [1000494280],
+            "diseasename": ["Infant Death"],
+            "diseaseid": ["D0660884"],
+            "pmids": ["283930756"],
         }
     ),
     pd.DataFrame(
         {
-            "Digest": [
+            "digest": [
                 "e120bfecd61ee146bb3a4c61f8dbb93754b1db25f62aba505872ef5568dd155b"
             ],
-            "GeneSymbol": ["11-BETA-HSD3"],
-            "GeneID": [100174880],
-            "DiseaseName": ["Abnormalities, Drug-Induced"],
-            "DiseaseID": ["D000014"],
-            "PubMedIDs": ["22659286"],  # PubMedId can be int or str
+            "genesymbol": ["11-BETA-HSD3"],
+            "geneid": [100174880],
+            "diseasename": ["Abnormalities, Drug-Induced"],
+            "diseaseid": ["D000014"],
+            "pmids": ["22659286"],
         }
     ),
     pd.DataFrame(
         {
-            "Digest": [
+            "digest": [
                 "f847dcfeaaae8fefa96e1f6e97dd5998ffe07365d1254badae927d1769a2eebc"
             ],
-            "GeneSymbol": ["A1BG3"],
-            "GeneID": [1],
-            "DiseaseName": ["Muscle Weaknessd"],
-            "DiseaseID": ["D0189084"],
-            "PubMedIDs": ["3515563|54800|62135|63766|6511338|7995496"],
+            "genesymbol": ["A1BG3"],
+            "geneid": [1],
+            "diseasename": ["Muscle Weaknessd"],
+            "diseaseid": ["D0189084"],
+            "pmids": ["3515563|54800|62135|63766|6511338|7995496"],
         }
     ),
 ]
 """Array of valid CTD DataFrames."""
+
+CLSFR_VALID_DF = [
+    pd.DataFrame(
+        {
+            "digest": [
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
+            ],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
+        }
+    ),
+]
+"""Array of valid classifier dataframes."""
+
+
+CLSFR_INVALID_DF = [
+    pd.DataFrame(
+        {
+            "digest": [
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
+            ],
+            "pub_score": ["1.2"],  # GeneID should be float
+            "ct_score": [0.7],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
+            ],
+            # Missing pub_score
+            "ct_score": [0.7],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "pub_score": [0.8],
+            "ct_score": ["0.75"],  # Should be float
+        }
+    ),
+]
+"""Array of invalid classifier dataframes."""
+
+
+CLSFR_INVALID_SCHEMA = [
+    pd.DataFrame(
+        {
+            "digest": [
+                "b3834d9281286247e377c5700e9689c3660412df24fa0a4921c6e3c213d616aa"
+            ],
+            # Missing GeneID
+            "ct_score": [0.7],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "pub_score": [0.8],
+            "ct_score": [0.7],
+            "newcol": "newcol",
+        }
+    ),
+    pd.DataFrame(
+        {
+            # missing digest
+            "pub_score": [0.8],
+            "ct_score": [0.7],
+        }
+    ),
+    pd.DataFrame(
+        {
+            "digest": [
+                "e96cc1eb2423dad1fd6f4f341574fbb7fff0479a3339c9e2e4f814f2d970e3f00"
+            ],
+            "pub_score": [0.8],
+            # Missing DiseaseID
+        }
+    ),
+]
+"""Array of valid classifier SCHEMA table schema."""

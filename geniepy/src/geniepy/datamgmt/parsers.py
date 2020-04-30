@@ -9,15 +9,16 @@ import pandas as pd
 from pandas import DataFrame
 from pandas_schema import Column, Schema
 from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
-from geniepy import CHUNKSIZE
 from geniepy.datamgmt.scrapers import BaseScraper, CtdScraper, PubMedScraper
 from geniepy.errors import ParserError
+from geniepy.pubmed import PubMedArticle
+from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
 
 
 class DataType(Enum):
     """Possible parsable datatypes."""
 
-    CSV = auto()
+    CSV_STR = auto()
     XML = auto()
 
 
@@ -58,12 +59,12 @@ class BaseParser(ABC):
             DataFrame -- The parsed dataframe.
         """
 
-    def fetch(self, chunksize: int = CHUNKSIZE) -> Generator[DataFrame, None, None]:
+    def fetch(self, chunksize: int) -> Generator[DataFrame, None, None]:
         """
         Fetch new data, if available from online sources.
 
         Keyword Arguments:
-            chunksize {int} -- the returned generator chunk size (default: {CHUNKSIZE})
+            chunksize {int} -- the returned generator chunk size
 
         Returns:
             Generator[DataFrame, None, None] -- Generator yielding fetched data
@@ -82,18 +83,18 @@ class CtdParser(BaseParser):
     http://ctdbase.org/
     """
 
-    default_type: DataType = DataType.CSV
+    default_type: DataType = DataType.CSV_STR
     scraper: CtdScraper = CtdScraper()
     schema: Schema = Schema(
         [
-            Column("Digest"),
-            Column("GeneSymbol"),
-            Column("GeneID", [IsDtypeValidation(np.int64)]),
-            Column("DiseaseName"),
+            Column("digest"),
+            Column("genesymbol"),
+            Column("geneid", [IsDtypeValidation(np.int64)]),
+            Column("diseasename"),
             Column(
-                "DiseaseID", [MatchesPatternValidation("^D[0-9]+$")]
+                "diseaseid", [MatchesPatternValidation("^D[0-9]+$")]
             ),  # i.e. D000014
-            Column("PubMedIDs"),
+            Column("pmids"),
         ]
     )
 
@@ -108,12 +109,12 @@ class CtdParser(BaseParser):
         Returns:
             str -- the hex string of the computed digest
         """
-        message = str.encode(str(record.GeneID) + record.DiseaseID)
+        message = str.encode(str(record.geneid) + record.diseaseid)
         hexdigest = hashlib.sha256(message).hexdigest()
         return str(hexdigest)
 
     @staticmethod
-    def parse(data, dtype=DataType.CSV) -> DataFrame:
+    def parse(data, dtype=DataType.CSV_STR) -> DataFrame:
         """
         Parse data and convert according to parser schema.
 
@@ -144,8 +145,19 @@ class CtdParser(BaseParser):
             parsed_df["DiseaseID"] = parsed_df.apply(
                 lambda x: x.DiseaseID.replace("MESH:", ""), axis=1
             )
+            # Rename columns based on schema
+            parsed_df.rename(
+                columns={
+                    "GeneSymbol": "genesymbol",
+                    "GeneID": "geneid",
+                    "DiseaseName": "diseasename",
+                    "DiseaseID": "diseaseid",
+                    "PubMedIDs": "pmids",
+                },
+                inplace=True,
+            )
             # Compute and add the digest
-            parsed_df["Digest"] = parsed_df.apply(CtdParser.hash_record, axis=1)
+            parsed_df["digest"] = parsed_df.apply(CtdParser.hash_record, axis=1)
             errors = CtdParser.validate(parsed_df)
             if errors:
                 raise ParserError(errors)
@@ -194,4 +206,110 @@ class PubMedParser(BaseParser):
         Returns:
             DataFrame -- The parsed dataframe.
         """
-        return NotImplementedError
+        # Data passed in should be a list of xml element trees
+        xml_list = data
+
+        # The keys of the dataframe
+        keys = [
+            "pmid",
+            "date_completed",
+            "pub_model",
+            "title",
+            "iso_abbreviation",
+            "article_title",
+            "abstract",
+            "authors",
+            "language",
+            "chemicals",
+            "mesh_list",
+        ]
+
+        # Temp array variables to store from each xml element tree
+        pmid_list = []
+        date_completed_list = []
+        pub_model_list = []
+        title_list = []
+        iso_abbreviation_list = []
+        article_title_list = []
+        abstract_list = []
+        authors_list = []
+        language_list = []
+        chemicals_list = []
+        mesh_list_list = []
+
+        try:
+            # General XML Tags
+            for xml_article in xml_list:
+                article = PubMedArticle(xml_article)
+                pmid_list.append(np.int64(article.pmid))
+                date_completed_list.append(article.date_completed)
+                pub_model_list.append(article.pub_model)
+                title_list.append(article.title)
+                iso_abbreviation_list.append(article.iso_abbreviation)
+                article_title_list.append(article.article_title)
+                abstract_list.append(article.abstract)
+                authors_list.append(str(article.authors).strip("[]"))
+                language_list.append(article.language)
+                chemicals_list.append(str(article.chemicals).strip("[]"))
+                mesh_list_list.append(str(article.mesh_list).strip("[]"))
+
+            # Create the array of arrays of values in dataframe
+            values = [
+                pmid_list,
+                date_completed_list,
+                pub_model_list,
+                title_list,
+                iso_abbreviation_list,
+                article_title_list,
+                abstract_list,
+                authors_list,
+                language_list,
+                chemicals_list,
+                mesh_list_list,
+            ]
+
+            # Zip df keys and values and create dataframe
+            zipped = list(zip(keys, values))
+            parsed_df = pd.DataFrame(dict(zipped))
+
+            errors = PubMedParser.validate(parsed_df)
+            if errors:
+                raise ParserError(errors)  # pragma: no cover - should never reach
+            return parsed_df
+        except Exception as parse_exp:
+            raise ParserError(parse_exp)
+
+
+class ClassifierParser(BaseParser):
+    """
+    Implementation of classifier dao Parser.
+
+    The classifier output tables contain the output data from geniepy after the
+    classifiers have calculated desired predictions.
+    """
+
+    default_type: DataType = None
+    scraper: None
+    """No online sources for classifiers output."""
+    schema: Schema = Schema(
+        [
+            Column("digest"),
+            Column(PCPCLSFR_NAME, [IsDtypeValidation(np.float64)]),
+            Column(CTCLSFR_NAME, [IsDtypeValidation(np.float64)]),
+        ]
+    )
+
+    def fetch(self, chunksize: int) -> Generator[DataFrame, None, None]:
+        """No online sources to fetch from for classifiers outputs."""
+        raise NotImplementedError("Classifier Output Parser has no Scrapers")
+
+    @staticmethod
+    def parse(data, dtype=DataType.CSV_STR) -> DataFrame:
+        """
+        Parser function from base class.
+
+        Raises:
+            NotImplementedError -- Function not implemented since classifiers return
+                dataframes that only need to be validated.
+        """
+        raise NotImplementedError("Classifier Output Parser has no Scrapers")

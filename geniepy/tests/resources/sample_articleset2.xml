@@ -1,0 +1,2878 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2019//EN" "http://dtd.nlm.nih.gov/ncbi/pubmed/out/pubmed_190101.dtd">
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">1</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>16</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>02</Month>
+        <Day>08</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2944</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>13</Volume>
+            <Issue>2</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Jun</Month>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical medicine</Title>
+          <ISOAbbreviation>Biochem Med</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Formate assay in body fluids: application in methanol poisoning.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>117-26</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Makar</LastName>
+            <ForeName>A B</ForeName>
+            <Initials>AB</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>McMartin</LastName>
+            <ForeName>K E</ForeName>
+            <Initials>KE</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Palese</LastName>
+            <ForeName>M</ForeName>
+            <Initials>M</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Tephly</LastName>
+            <ForeName>T R</ForeName>
+            <Initials>TR</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <GrantList CompleteYN="Y">
+          <Grant>
+            <GrantID>MC_UU_12013/5</GrantID>
+            <Agency>MRC</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+        </GrantList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D013487">Research Support, U.S. Gov't, P.H.S.</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>United States</Country>
+        <MedlineTA>Biochem Med</MedlineTA>
+        <NlmUniqueID>0151424</NlmUniqueID>
+        <ISSNLinking>0006-2944</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D005561">Formates</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>142M471B3J</RegistryNumber>
+          <NameOfSubstance UI="D002245">Carbon Dioxide</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 1.2.-</RegistryNumber>
+          <NameOfSubstance UI="D000445">Aldehyde Oxidoreductases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>Y4S76JWI15</RegistryNumber>
+          <NameOfSubstance UI="D000432">Methanol</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000445" MajorTopicYN="N">Aldehyde Oxidoreductases</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D001826" MajorTopicYN="N">Body Fluids</DescriptorName>
+          <QualifierName UI="Q000032" MajorTopicYN="Y">analysis</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002245" MajorTopicYN="N">Carbon Dioxide</DescriptorName>
+          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005561" MajorTopicYN="N">Formates</DescriptorName>
+          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
+          <QualifierName UI="Q000506" MajorTopicYN="Y">poisoning</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000882" MajorTopicYN="N">Haplorhini</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006863" MajorTopicYN="N">Hydrogen-Ion Concentration</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007700" MajorTopicYN="N">Kinetics</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000432" MajorTopicYN="N">Methanol</DescriptorName>
+          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008722" MajorTopicYN="N">Methods</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011549" MajorTopicYN="N">Pseudomonas</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>6</Month>
+          <Day>1</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>6</Month>
+          <Day>1</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>6</Month>
+          <Day>1</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">1</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2944(75)90147-7</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">2</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>10</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>12</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Electronic">1090-2104</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>66</Volume>
+            <Issue>4</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Oct</Month>
+              <Day>27</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical and biophysical research communications</Title>
+          <ISOAbbreviation>Biochem. Biophys. Res. Commun.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Delineation of the intimate details of the backbone conformation of pyridine nucleotide coenzymes in aqueous solution.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1173-9</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Bose</LastName>
+            <ForeName>K S</ForeName>
+            <Initials>KS</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Sarma</LastName>
+            <ForeName>R H</ForeName>
+            <Initials>RH</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D013486">Research Support, U.S. Gov't, Non-P.H.S.</PublicationType>
+          <PublicationType UI="D013487">Research Support, U.S. Gov't, P.H.S.</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>United States</Country>
+        <MedlineTA>Biochem Biophys Res Commun</MedlineTA>
+        <NlmUniqueID>0372516</NlmUniqueID>
+        <ISSNLinking>0006-291X</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0U46U6E8UK</RegistryNumber>
+          <NameOfSubstance UI="D009243">NAD</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>53-59-8</RegistryNumber>
+          <NameOfSubstance UI="D009249">NADP</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <CommentsCorrectionsList>
+        <CommentsCorrections RefType="ErratumIn">
+          <RefSource>Biochem Pharmacol. 1975 Aug 15;24(16):1517-21</RefSource>
+          <PMID Version="1">8</PMID>
+        </CommentsCorrections>
+      </CommentsCorrectionsList>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D005583" MajorTopicYN="N">Fourier Analysis</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009682" MajorTopicYN="N">Magnetic Resonance Spectroscopy</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008958" MajorTopicYN="N">Models, Molecular</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008968" MajorTopicYN="N">Molecular Conformation</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009243" MajorTopicYN="Y">NAD</DescriptorName>
+          <QualifierName UI="Q000031" MajorTopicYN="N">analogs &amp; derivatives</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009249" MajorTopicYN="Y">NADP</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013329" MajorTopicYN="N">Structure-Activity Relationship</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013696" MajorTopicYN="N">Temperature</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">2</ArticleId>
+        <ArticleId IdType="pii">0006-291X(75)90482-9</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-291x(75)90482-9</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">3</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>10</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>12</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-291X</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>66</Volume>
+            <Issue>4</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Oct</Month>
+              <Day>27</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical and biophysical research communications</Title>
+          <ISOAbbreviation>Biochem. Biophys. Res. Commun.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Metal substitutions incarbonic anhydrase: a halide ion probe study.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1281-6</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Smith</LastName>
+            <ForeName>R J</ForeName>
+            <Initials>RJ</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Bryant</LastName>
+            <ForeName>R G</ForeName>
+            <Initials>RG</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D013487">Research Support, U.S. Gov't, P.H.S.</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>United States</Country>
+        <MedlineTA>Biochem Biophys Res Commun</MedlineTA>
+        <NlmUniqueID>0372516</NlmUniqueID>
+        <ISSNLinking>0006-291X</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>00BH33GNGH</RegistryNumber>
+          <NameOfSubstance UI="D002104">Cadmium</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 4.2.1.1</RegistryNumber>
+          <NameOfSubstance UI="D002256">Carbonic Anhydrases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>FXS1BY2PGL</RegistryNumber>
+          <NameOfSubstance UI="D008628">Mercury</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>J41CSQ7QDS</RegistryNumber>
+          <NameOfSubstance UI="D015032">Zinc</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D001665" MajorTopicYN="N">Binding Sites</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002104" MajorTopicYN="Y">Cadmium</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002256" MajorTopicYN="Y">Carbonic Anhydrases</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002417" MajorTopicYN="N">Cattle</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006863" MajorTopicYN="N">Hydrogen-Ion Concentration</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009682" MajorTopicYN="N">Magnetic Resonance Spectroscopy</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008628" MajorTopicYN="Y">Mercury</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011485" MajorTopicYN="N">Protein Binding</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011487" MajorTopicYN="N">Protein Conformation</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D015032" MajorTopicYN="Y">Zinc</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">3</ArticleId>
+        <ArticleId IdType="pii">0006-291X(75)90498-2</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-291x(75)90498-2</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">5</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>10</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>12</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Electronic">1090-2104</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>66</Volume>
+            <Issue>4</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Oct</Month>
+              <Day>27</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical and biophysical research communications</Title>
+          <ISOAbbreviation>Biochem. Biophys. Res. Commun.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Atomic models for the polypeptide backbones of myohemerythrin and hemerythrin.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1349-56</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Hendrickson</LastName>
+            <ForeName>W A</ForeName>
+            <Initials>WA</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Ward</LastName>
+            <ForeName>K B</ForeName>
+            <Initials>KB</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>United States</Country>
+        <MedlineTA>Biochem Biophys Res Commun</MedlineTA>
+        <NlmUniqueID>0372516</NlmUniqueID>
+        <ISSNLinking>0006-291X</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D006422">Hemerythrin</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D008667">Metalloproteins</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D009124">Muscle Proteins</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D003063" MajorTopicYN="N">Cnidaria</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D003201" MajorTopicYN="N">Computers</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006422" MajorTopicYN="Y">Hemerythrin</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008667" MajorTopicYN="Y">Metalloproteins</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008958" MajorTopicYN="N">Models, Molecular</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009124" MajorTopicYN="Y">Muscle Proteins</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011487" MajorTopicYN="N">Protein Conformation</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013045" MajorTopicYN="N">Species Specificity</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">5</ArticleId>
+        <ArticleId IdType="pii">0006-291X(75)90508-2</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-291x(75)90508-2</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">4</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>10</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>12</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Electronic">1090-2104</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>66</Volume>
+            <Issue>4</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Oct</Month>
+              <Day>27</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical and biophysical research communications</Title>
+          <ISOAbbreviation>Biochem. Biophys. Res. Commun.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Effect of chloroquine on cultured fibroblasts: release of lysosomal hydrolases and inhibition of their uptake.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1338-43</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Wiesmann</LastName>
+            <ForeName>U N</ForeName>
+            <Initials>UN</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>DiDonato</LastName>
+            <ForeName>S</ForeName>
+            <Initials>S</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Herschkowitz</LastName>
+            <ForeName>N N</ForeName>
+            <Initials>NN</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <GrantList CompleteYN="Y">
+          <Grant>
+            <GrantID>BB/C008219/1</GrantID>
+            <Agency>Biotechnology and Biological Sciences Research Council</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+          <Grant>
+            <GrantID>G1100377</GrantID>
+            <Agency>Medical Research Council</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+          <Grant>
+            <GrantID>G1100377</GrantID>
+            <Agency>MRC</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+        </GrantList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>United States</Country>
+        <MedlineTA>Biochem Biophys Res Commun</MedlineTA>
+        <NlmUniqueID>0372516</NlmUniqueID>
+        <ISSNLinking>0006-291X</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D003911">Dextrans</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>886U3H6UFF</RegistryNumber>
+          <NameOfSubstance UI="D002738">Chloroquine</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 3.1.6.-</RegistryNumber>
+          <NameOfSubstance UI="D013429">Sulfatases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 3.1.6.8</RegistryNumber>
+          <NameOfSubstance UI="D002553">Cerebroside-Sulfatase</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 3.2.1.31</RegistryNumber>
+          <NameOfSubstance UI="D005966">Glucuronidase</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D001692" MajorTopicYN="N">Biological Transport</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002478" MajorTopicYN="N">Cells, Cultured</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002553" MajorTopicYN="N">Cerebroside-Sulfatase</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002738" MajorTopicYN="N">Chloroquine</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D003911" MajorTopicYN="N">Dextrans</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005347" MajorTopicYN="N">Fibroblasts</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005966" MajorTopicYN="N">Glucuronidase</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007966" MajorTopicYN="N">Leukodystrophy, Metachromatic</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008247" MajorTopicYN="N">Lysosomes</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+          <QualifierName UI="Q000201" MajorTopicYN="Y">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010873" MajorTopicYN="N">Pinocytosis</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D012867" MajorTopicYN="N">Skin</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013429" MajorTopicYN="N">Sulfatases</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">4</ArticleId>
+        <ArticleId IdType="pii">0006-291X(75)90506-9</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-291x(75)90506-9</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">6</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>10</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>12</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-291X</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>66</Volume>
+            <Issue>4</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Oct</Month>
+              <Day>27</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical and biophysical research communications</Title>
+          <ISOAbbreviation>Biochem. Biophys. Res. Commun.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Studies of oxygen binding energy to hemoglobin molecule.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1424-31</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Chow</LastName>
+            <ForeName>Y W</ForeName>
+            <Initials>YW</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Pietranico</LastName>
+            <ForeName>R</ForeName>
+            <Initials>R</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Mukerji</LastName>
+            <ForeName>A</ForeName>
+            <Initials>A</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D013486">Research Support, U.S. Gov't, Non-P.H.S.</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>United States</Country>
+        <MedlineTA>Biochem Biophys Res Commun</MedlineTA>
+        <NlmUniqueID>0372516</NlmUniqueID>
+        <ISSNLinking>0006-291X</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D006454">Hemoglobins</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D008024">Ligands</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D010108">Oxyhemoglobins</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>3G0H8C9362</RegistryNumber>
+          <NameOfSubstance UI="D003035">Cobalt</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>E1UOL152H7</RegistryNumber>
+          <NameOfSubstance UI="D007501">Iron</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>S88TT14065</RegistryNumber>
+          <NameOfSubstance UI="D010100">Oxygen</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D001665" MajorTopicYN="N">Binding Sites</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D003035" MajorTopicYN="N">Cobalt</DescriptorName>
+          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006454" MajorTopicYN="Y">Hemoglobins</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006863" MajorTopicYN="N">Hydrogen-Ion Concentration</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007501" MajorTopicYN="N">Iron</DescriptorName>
+          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008024" MajorTopicYN="N">Ligands</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008433" MajorTopicYN="N">Mathematics</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010100" MajorTopicYN="N">Oxygen</DescriptorName>
+          <QualifierName UI="Q000097" MajorTopicYN="Y">blood</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010108" MajorTopicYN="N">Oxyhemoglobins</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011485" MajorTopicYN="N">Protein Binding</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013057" MajorTopicYN="N">Spectrum Analysis</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>10</Month>
+          <Day>27</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">6</ArticleId>
+        <ArticleId IdType="pii">0006-291X(75)90518-5</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-291x(75)90518-5</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">7</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>26</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Electronic">1873-2968</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>24</Volume>
+            <Issue>16</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Aug</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Maturation of the adrenal medulla--IV. Effects of morphine.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1469-74</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Anderson</LastName>
+            <ForeName>T R</ForeName>
+            <Initials>TR</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Slotkin</LastName>
+            <ForeName>T A</ForeName>
+            <Initials>TA</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <GrantList CompleteYN="Y">
+          <Grant>
+            <GrantID>MC_U147585819</GrantID>
+            <Agency>MRC</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+          <Grant>
+            <GrantID>MC_UU_12011/1</GrantID>
+            <Agency>MRC</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+          <Grant>
+            <GrantID>MC_UP_A620_1014</GrantID>
+            <Agency>MRC</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+        </GrantList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D013486">Research Support, U.S. Gov't, Non-P.H.S.</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D002395">Catecholamines</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>76I7G6D29C</RegistryNumber>
+          <NameOfSubstance UI="D009020">Morphine</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>818U2PZ2EH</RegistryNumber>
+          <NameOfSubstance UI="D008680">Metaraminol</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 1.14.16.2</RegistryNumber>
+          <NameOfSubstance UI="D014446">Tyrosine 3-Monooxygenase</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 1.14.17.1</RegistryNumber>
+          <NameOfSubstance UI="D004299">Dopamine beta-Hydroxylase</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>YKH834O4BH</RegistryNumber>
+          <NameOfSubstance UI="D004837">Epinephrine</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000313" MajorTopicYN="N">Adrenal Medulla</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+          <QualifierName UI="Q000254" MajorTopicYN="Y">growth &amp; development</QualifierName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000375" MajorTopicYN="N">Aging</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000831" MajorTopicYN="N">Animals, Newborn</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D001835" MajorTopicYN="N">Body Weight</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002395" MajorTopicYN="N">Catecholamines</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004299" MajorTopicYN="N">Dopamine beta-Hydroxylase</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004837" MajorTopicYN="N">Epinephrine</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005260" MajorTopicYN="N">Female</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D066298" MajorTopicYN="N">In Vitro Techniques</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008431" MajorTopicYN="N">Maternal-Fetal Exchange</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008680" MajorTopicYN="N">Metaraminol</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009020" MajorTopicYN="N">Morphine</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009021" MajorTopicYN="N">Morphine Dependence</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011247" MajorTopicYN="N">Pregnancy</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051381" MajorTopicYN="N">Rats</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D014446" MajorTopicYN="N">Tyrosine 3-Monooxygenase</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>8</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>8</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>8</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">7</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90020-9</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90020-9</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">8</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>26</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Electronic">1873-2968</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>24</Volume>
+            <Issue>16</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Aug</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Comparison between procaine and isocarboxazid metabolism in vitro by a liver microsomal amidase-esterase.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1517-21</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Moroi</LastName>
+            <ForeName>K</ForeName>
+            <Initials>K</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Sato</LastName>
+            <ForeName>T</ForeName>
+            <Initials>T</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <GrantList CompleteYN="Y">
+          <Grant>
+            <GrantID>SF19107</GrantID>
+            <Agency>Biotechnology and Biological Sciences Research Council</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+        </GrantList>
+        <PublicationTypeList>
+          <PublicationType UI="D003160">Comparative Study</PublicationType>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D016425">Published Erratum</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D008670">Metals</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D010743">Phospholipids</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D011506">Proteins</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>34237V843T</RegistryNumber>
+          <NameOfSubstance UI="D007520">Isocarboxazid</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>4Z8Y51M438</RegistryNumber>
+          <NameOfSubstance UI="D011343">Procaine</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 3.1.-</RegistryNumber>
+          <NameOfSubstance UI="D004950">Esterases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 3.5.-</RegistryNumber>
+          <NameOfSubstance UI="D000581">Amidohydrolases</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <CommentsCorrectionsList>
+        <CommentsCorrections RefType="ErratumFor">
+          <RefSource>Biochem Biophys Res Commun. 1975 Oct 27;66(4):1173-9</RefSource>
+          <PMID Version="1">2</PMID>
+        </CommentsCorrections>
+      </CommentsCorrectionsList>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000581" MajorTopicYN="N">Amidohydrolases</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004950" MajorTopicYN="N">Esterases</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006863" MajorTopicYN="N">Hydrogen-Ion Concentration</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D066298" MajorTopicYN="N">In Vitro Techniques</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007520" MajorTopicYN="N">Isocarboxazid</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007700" MajorTopicYN="N">Kinetics</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008670" MajorTopicYN="N">Metals</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008862" MajorTopicYN="N">Microsomes, Liver</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="Y">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010743" MajorTopicYN="N">Phospholipids</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011343" MajorTopicYN="N">Procaine</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011506" MajorTopicYN="N">Proteins</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051381" MajorTopicYN="N">Rats</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013347" MajorTopicYN="N">Subcellular Fractions</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013696" MajorTopicYN="N">Temperature</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>8</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>8</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>8</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">8</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90029-5</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90029-5</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">9</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2952</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>24</Volume>
+            <Issue>17</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>01</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Radiochemical assay of glutathione S-epoxide transferase and its enhancement by phenobarbital in rat liver in vivo.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1569-72</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Marniemi</LastName>
+            <ForeName>J</ForeName>
+            <Initials>J</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Parkki</LastName>
+            <ForeName>M G</ForeName>
+            <Initials>MG</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D013487">Research Support, U.S. Gov't, P.H.S.</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D002352">Carrier Proteins</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D004852">Epoxy Compounds</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D013343">Styrenes</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>56-49-5</RegistryNumber>
+          <NameOfSubstance UI="D008748">Methylcholanthrene</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 2.5.1.18</RegistryNumber>
+          <NameOfSubstance UI="D005982">Glutathione Transferase</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>GAN16C9B8O</RegistryNumber>
+          <NameOfSubstance UI="D005978">Glutathione</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>YQE403BP4D</RegistryNumber>
+          <NameOfSubstance UI="D010634">Phenobarbital</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002352" MajorTopicYN="N">Carrier Proteins</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004852" MajorTopicYN="N">Epoxy Compounds</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005978" MajorTopicYN="N">Glutathione</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005982" MajorTopicYN="N">Glutathione Transferase</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006863" MajorTopicYN="N">Hydrogen-Ion Concentration</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008099" MajorTopicYN="N">Liver</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="Y">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008748" MajorTopicYN="N">Methylcholanthrene</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010634" MajorTopicYN="N">Phenobarbital</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051381" MajorTopicYN="N">Rats</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013268" MajorTopicYN="N">Stimulation, Chemical</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013343" MajorTopicYN="N">Styrenes</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>1</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>1</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>1</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">9</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90080-5</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90080-5</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">10</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>02</Month>
+        <Day>06</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Electronic">1873-2968</ISSN>
+          <JournalIssue CitedMedium="Internet">
+            <Volume>24</Volume>
+            <Issue>17</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>01</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Digitoxin metabolism by rat liver microsomes.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1639-41</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Schmoldt</LastName>
+            <ForeName>A</ForeName>
+            <Initials>A</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Benthe</LastName>
+            <ForeName>H F</ForeName>
+            <Initials>HF</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Haberland</LastName>
+            <ForeName>G</ForeName>
+            <Initials>G</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <GrantList CompleteYN="Y">
+          <Grant>
+            <GrantID>K01 AG044439</GrantID>
+            <Acronym>AG</Acronym>
+            <Agency>NIA NIH HHS</Agency>
+            <Country>United States</Country>
+          </Grant>
+        </GrantList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>143-62-4</RegistryNumber>
+          <NameOfSubstance UI="D004073">Digitoxigenin</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>53-59-8</RegistryNumber>
+          <NameOfSubstance UI="D009249">NADP</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>E90NZP2L9U</RegistryNumber>
+          <NameOfSubstance UI="D004074">Digitoxin</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002855" MajorTopicYN="N">Chromatography, Thin Layer</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004073" MajorTopicYN="N">Digitoxigenin</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004074" MajorTopicYN="N">Digitoxin</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006900" MajorTopicYN="N">Hydroxylation</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D066298" MajorTopicYN="N">In Vitro Techniques</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008862" MajorTopicYN="N">Microsomes, Liver</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009249" MajorTopicYN="N">NADP</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051381" MajorTopicYN="N">Rats</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013997" MajorTopicYN="N">Time Factors</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>1</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>1</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>1</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">10</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90094-5</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">11</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2952</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>24</Volume>
+            <Issue>18</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Identification of adenylate cyclase-coupled beta-adrenergic receptors with radiolabeled beta-adrenergic antagonists.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1651-8</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Lefkowitz</LastName>
+            <ForeName>R J</ForeName>
+            <Initials>RJ</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+          <PublicationType UI="D013487">Research Support, U.S. Gov't, P.H.S.</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D000319">Adrenergic beta-Antagonists</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D002395">Catecholamines</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D011941">Receptors, Adrenergic</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>10028-17-8</RegistryNumber>
+          <NameOfSubstance UI="D014316">Tritium</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>877K5MQ27W</RegistryNumber>
+          <NameOfSubstance UI="D000526">Alprenolol</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>9Y8NXQ24VQ</RegistryNumber>
+          <NameOfSubstance UI="D011433">Propranolol</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 4.6.1.1</RegistryNumber>
+          <NameOfSubstance UI="D000262">Adenylyl Cyclases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>L628TT009W</RegistryNumber>
+          <NameOfSubstance UI="D007545">Isoproterenol</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000262" MajorTopicYN="N">Adenylyl Cyclases</DescriptorName>
+          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000319" MajorTopicYN="N">Adrenergic beta-Antagonists</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000526" MajorTopicYN="N">Alprenolol</DescriptorName>
+          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D001001" MajorTopicYN="N">Anura</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D001665" MajorTopicYN="N">Binding Sites</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002395" MajorTopicYN="N">Catecholamines</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002417" MajorTopicYN="N">Cattle</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002462" MajorTopicYN="N">Cell Membrane</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004524" MajorTopicYN="N">Eels</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004912" MajorTopicYN="N">Erythrocytes</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006168" MajorTopicYN="N">Guinea Pigs</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D066298" MajorTopicYN="N">In Vitro Techniques</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007545" MajorTopicYN="N">Isoproterenol</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007700" MajorTopicYN="N">Kinetics</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011433" MajorTopicYN="N">Propranolol</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011941" MajorTopicYN="N">Receptors, Adrenergic</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="Y">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013237" MajorTopicYN="N">Stereoisomerism</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D014316" MajorTopicYN="N">Tritium</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">11</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90001-5</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90001-5</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">12</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2952</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>24</Volume>
+            <Issue>18</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>The effect of adrenaline and of alpha- and beta-adrenergic blocking agents on ATP concentration and on incorporation of 32Pi into ATP in rat fat cells.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1659-62</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Stein</LastName>
+            <ForeName>J M</ForeName>
+            <Initials>JM</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <GrantList CompleteYN="Y">
+          <Grant>
+            <GrantID>G1002528</GrantID>
+            <Agency>Medical Research Council</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+        </GrantList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D000317">Adrenergic alpha-Antagonists</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D000319">Adrenergic beta-Antagonists</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D010761">Phosphorus Radioisotopes</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0TTZ664R7Z</RegistryNumber>
+          <NameOfSubstance UI="D010643">Phenoxybenzamine</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>27YLU75U4W</RegistryNumber>
+          <NameOfSubstance UI="D010758">Phosphorus</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>8L70Q75FXE</RegistryNumber>
+          <NameOfSubstance UI="D000255">Adenosine Triphosphate</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>9Y8NXQ24VQ</RegistryNumber>
+          <NameOfSubstance UI="D011433">Propranolol</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 1.13.12.-</RegistryNumber>
+          <NameOfSubstance UI="D008156">Luciferases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 2.7.1.1</RegistryNumber>
+          <NameOfSubstance UI="D006593">Hexokinase</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>YKH834O4BH</RegistryNumber>
+          <NameOfSubstance UI="D004837">Epinephrine</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000255" MajorTopicYN="N">Adenosine Triphosphate</DescriptorName>
+          <QualifierName UI="Q000096" MajorTopicYN="N">biosynthesis</QualifierName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000273" MajorTopicYN="N">Adipose Tissue</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000317" MajorTopicYN="N">Adrenergic alpha-Antagonists</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000319" MajorTopicYN="N">Adrenergic beta-Antagonists</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004837" MajorTopicYN="N">Epinephrine</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006593" MajorTopicYN="N">Hexokinase</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D066298" MajorTopicYN="N">In Vitro Techniques</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008156" MajorTopicYN="N">Luciferases</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010101" MajorTopicYN="N">Oxygen Consumption</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010643" MajorTopicYN="N">Phenoxybenzamine</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010758" MajorTopicYN="N">Phosphorus</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010761" MajorTopicYN="N">Phosphorus Radioisotopes</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011433" MajorTopicYN="N">Propranolol</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051381" MajorTopicYN="N">Rats</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013997" MajorTopicYN="N">Time Factors</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">12</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90002-7</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90002-7</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">13</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2952</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>24</Volume>
+            <Issue>18</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Action of propranolol on mitochondrial functions--effects on energized ion fluxes in the presence of valinomycin.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1701-5</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Järvisalo</LastName>
+            <ForeName>J</ForeName>
+            <Initials>J</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Saris</LastName>
+            <ForeName>N E</ForeName>
+            <Initials>NE</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <GrantList CompleteYN="Y">
+          <Grant>
+            <GrantID>G9901400</GrantID>
+            <Agency>Medical Research Council</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+        </GrantList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>2001-95-8</RegistryNumber>
+          <NameOfSubstance UI="D014634">Valinomycin</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>8L70Q75FXE</RegistryNumber>
+          <NameOfSubstance UI="D000255">Adenosine Triphosphate</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>9Y8NXQ24VQ</RegistryNumber>
+          <NameOfSubstance UI="D011433">Propranolol</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 3.6.1.-</RegistryNumber>
+          <NameOfSubstance UI="D000251">Adenosine Triphosphatases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>RRU6GY95IS</RegistryNumber>
+          <NameOfSubstance UI="D009550">Nigericin</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>RWP5GA015D</RegistryNumber>
+          <NameOfSubstance UI="D011188">Potassium</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000251" MajorTopicYN="N">Adenosine Triphosphatases</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000255" MajorTopicYN="N">Adenosine Triphosphate</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006863" MajorTopicYN="N">Hydrogen-Ion Concentration</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D066298" MajorTopicYN="N">In Vitro Techniques</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008928" MajorTopicYN="N">Mitochondria</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008930" MajorTopicYN="N">Mitochondria, Liver</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008933" MajorTopicYN="N">Mitochondrial Swelling</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009550" MajorTopicYN="N">Nigericin</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010085" MajorTopicYN="N">Oxidative Phosphorylation</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010101" MajorTopicYN="N">Oxygen Consumption</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011188" MajorTopicYN="N">Potassium</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011433" MajorTopicYN="N">Propranolol</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051381" MajorTopicYN="N">Rats</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013997" MajorTopicYN="N">Time Factors</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D014634" MajorTopicYN="N">Valinomycin</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">13</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90009-X</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90009-x</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">14</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2952</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>24</Volume>
+            <Issue>18</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Malathion A and B esterases of mouse liver-I.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1713-7</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Bhagwat</LastName>
+            <ForeName>V M</ForeName>
+            <Initials>VM</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Ramachandran</LastName>
+            <ForeName>B V</ForeName>
+            <Initials>BV</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <GrantList CompleteYN="Y">
+          <Grant>
+            <GrantID>G0100165</GrantID>
+            <Agency>Medical Research Council</Agency>
+            <Country>United Kingdom</Country>
+          </Grant>
+        </GrantList>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D008670">Metals</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D013438">Sulfhydryl Compounds</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 3.1.-</RegistryNumber>
+          <NameOfSubstance UI="D004950">Esterases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>U5N7SU872W</RegistryNumber>
+          <NameOfSubstance UI="D008294">Malathion</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004355" MajorTopicYN="N">Drug Stability</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004950" MajorTopicYN="N">Esterases</DescriptorName>
+          <QualifierName UI="Q000032" MajorTopicYN="Y">analysis</QualifierName>
+          <QualifierName UI="Q000037" MajorTopicYN="N">antagonists &amp; inhibitors</QualifierName>
+          <QualifierName UI="Q000302" MajorTopicYN="N">isolation &amp; purification</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005260" MajorTopicYN="N">Female</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006863" MajorTopicYN="N">Hydrogen-Ion Concentration</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008099" MajorTopicYN="N">Liver</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="Y">enzymology</QualifierName>
+          <QualifierName UI="Q000648" MajorTopicYN="N">ultrastructure</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008294" MajorTopicYN="N">Malathion</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008670" MajorTopicYN="N">Metals</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051379" MajorTopicYN="N">Mice</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D012737" MajorTopicYN="N">Sex Factors</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013438" MajorTopicYN="N">Sulfhydryl Compounds</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">14</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90011-8</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90011-8</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">15</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2952</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>24</Volume>
+            <Issue>18</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Increase in acetyl CoA synthetase activity after phenobarbital treatment.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1725-7</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Akamatsu</LastName>
+            <ForeName>N</ForeName>
+            <Initials>N</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Nakajima</LastName>
+            <ForeName>H</ForeName>
+            <Initials>H</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Ono</LastName>
+            <ForeName>M</ForeName>
+            <Initials>M</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Miura</LastName>
+            <ForeName>Y</ForeName>
+            <Initials>Y</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D011506">Proteins</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>98600C0908</RegistryNumber>
+          <NameOfSubstance UI="D003513">Cycloheximide</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 2.6.1.16</RegistryNumber>
+          <NameOfSubstance UI="D005945">Glutamine-Fructose-6-Phosphate Transaminase (Isomerizing)</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 2.7.-</RegistryNumber>
+          <NameOfSubstance UI="D010770">Phosphotransferases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 3.1.1.6</RegistryNumber>
+          <NameOfSubstance UI="D000115">Acetylesterase</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 6.2.1.-</RegistryNumber>
+          <NameOfSubstance UI="D003066">Coenzyme A Ligases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 6.2.1.1</RegistryNumber>
+          <NameOfSubstance UI="D000106">Acetate-CoA Ligase</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>N08U5BOQ1K</RegistryNumber>
+          <NameOfSubstance UI="D005944">Glucosamine</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>V956696549</RegistryNumber>
+          <NameOfSubstance UI="D000117">Acetylglucosamine</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>YQE403BP4D</RegistryNumber>
+          <NameOfSubstance UI="D010634">Phenobarbital</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000106" MajorTopicYN="N">Acetate-CoA Ligase</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000115" MajorTopicYN="N">Acetylesterase</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000117" MajorTopicYN="N">Acetylglucosamine</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D003066" MajorTopicYN="N">Coenzyme A Ligases</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D003513" MajorTopicYN="N">Cycloheximide</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005944" MajorTopicYN="N">Glucosamine</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D005945" MajorTopicYN="N">Glutamine-Fructose-6-Phosphate Transaminase (Isomerizing)</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008099" MajorTopicYN="N">Liver</DescriptorName>
+          <QualifierName UI="Q000187" MajorTopicYN="N">drug effects</QualifierName>
+          <QualifierName UI="Q000201" MajorTopicYN="Y">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010634" MajorTopicYN="N">Phenobarbital</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D010770" MajorTopicYN="N">Phosphotransferases</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011506" MajorTopicYN="N">Proteins</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051381" MajorTopicYN="N">Rats</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013268" MajorTopicYN="N">Stimulation, Chemical</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">15</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90013-1</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90013-1</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">16</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2952</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>24</Volume>
+            <Issue>18</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Inhibition of aldehyde reductase by acidic metabolites of the biogenic amines.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1731-3</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Turner</LastName>
+            <ForeName>A J</ForeName>
+            <Initials>AJ</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Hick</LastName>
+            <ForeName>P E</ForeName>
+            <Initials>PE</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D001679">Biogenic Amines</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D011743">Pyrimidines</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>53-59-8</RegistryNumber>
+          <NameOfSubstance UI="D009249">NADP</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 1.2.-</RegistryNumber>
+          <NameOfSubstance UI="D000445">Aldehyde Oxidoreductases</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>X77S6GMS36</RegistryNumber>
+          <NameOfSubstance UI="D006719">Homovanillic Acid</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D000445" MajorTopicYN="N">Aldehyde Oxidoreductases</DescriptorName>
+          <QualifierName UI="Q000037" MajorTopicYN="Y">antagonists &amp; inhibitors</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D001679" MajorTopicYN="N">Biogenic Amines</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D001921" MajorTopicYN="N">Brain</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D006719" MajorTopicYN="N">Homovanillic Acid</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D066298" MajorTopicYN="N">In Vitro Techniques</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007700" MajorTopicYN="N">Kinetics</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009249" MajorTopicYN="N">NADP</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011743" MajorTopicYN="N">Pyrimidines</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="N">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D012756" MajorTopicYN="N">Sheep</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">16</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90016-7</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90016-7</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">17</PMID>
+      <DateCompleted>
+        <Year>1976</Year>
+        <Month>01</Month>
+        <Day>23</Day>
+      </DateCompleted>
+      <DateRevised>
+        <Year>2019</Year>
+        <Month>06</Month>
+        <Day>23</Day>
+      </DateRevised>
+      <Article PubModel="Print">
+        <Journal>
+          <ISSN IssnType="Print">0006-2952</ISSN>
+          <JournalIssue CitedMedium="Print">
+            <Volume>24</Volume>
+            <Issue>18</Issue>
+            <PubDate>
+              <Year>1975</Year>
+              <Month>Sep</Month>
+              <Day>15</Day>
+            </PubDate>
+          </JournalIssue>
+          <Title>Biochemical pharmacology</Title>
+          <ISOAbbreviation>Biochem. Pharmacol.</ISOAbbreviation>
+        </Journal>
+        <ArticleTitle>Effects of 5,6-dihydroxytryptamine on tyrosine-hydroxylase activity in central catecholaminergic neurons of the rat.</ArticleTitle>
+        <Pagination>
+          <MedlinePgn>1739-42</MedlinePgn>
+        </Pagination>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Renaud</LastName>
+            <ForeName>B</ForeName>
+            <Initials>B</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Buda</LastName>
+            <ForeName>M</ForeName>
+            <Initials>M</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Lewis</LastName>
+            <ForeName>B D</ForeName>
+            <Initials>BD</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Pujol</LastName>
+            <ForeName>J F</ForeName>
+            <Initials>JF</Initials>
+          </Author>
+        </AuthorList>
+        <Language>eng</Language>
+        <PublicationTypeList>
+          <PublicationType UI="D016428">Journal Article</PublicationType>
+        </PublicationTypeList>
+      </Article>
+      <MedlineJournalInfo>
+        <Country>England</Country>
+        <MedlineTA>Biochem Pharmacol</MedlineTA>
+        <NlmUniqueID>0101032</NlmUniqueID>
+        <ISSNLinking>0006-2952</ISSNLinking>
+      </MedlineJournalInfo>
+      <ChemicalList>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D002395">Catecholamines</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>0</RegistryNumber>
+          <NameOfSubstance UI="D014363">Tryptamines</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>EC 1.14.16.2</RegistryNumber>
+          <NameOfSubstance UI="D014446">Tyrosine 3-Monooxygenase</NameOfSubstance>
+        </Chemical>
+        <Chemical>
+          <RegistryNumber>W2QY253O8S</RegistryNumber>
+          <NameOfSubstance UI="D015115">5,6-Dihydroxytryptamine</NameOfSubstance>
+        </Chemical>
+      </ChemicalList>
+      <CitationSubset>IM</CitationSubset>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D015115" MajorTopicYN="N">5,6-Dihydroxytryptamine</DescriptorName>
+          <QualifierName UI="Q000008" MajorTopicYN="N">administration &amp; dosage</QualifierName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D001921" MajorTopicYN="N">Brain</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002395" MajorTopicYN="N">Catecholamines</DescriptorName>
+          <QualifierName UI="Q000502" MajorTopicYN="Y">physiology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002540" MajorTopicYN="N">Cerebral Cortex</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D002946" MajorTopicYN="N">Cisterna Magna</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D003342" MajorTopicYN="N">Corpus Striatum</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D066298" MajorTopicYN="N">In Vitro Techniques</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D007267" MajorTopicYN="N">Injections</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D008297" MajorTopicYN="N">Male</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D009474" MajorTopicYN="N">Neurons</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="Y">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D051381" MajorTopicYN="N">Rats</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D011919" MajorTopicYN="N">Rats, Inbred Strains</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013268" MajorTopicYN="N">Stimulation, Chemical</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013378" MajorTopicYN="N">Substantia Nigra</DescriptorName>
+          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D013997" MajorTopicYN="N">Time Factors</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D014363" MajorTopicYN="N">Tryptamines</DescriptorName>
+          <QualifierName UI="Q000494" MajorTopicYN="Y">pharmacology</QualifierName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D014446" MajorTopicYN="N">Tyrosine 3-Monooxygenase</DescriptorName>
+          <QualifierName UI="Q000378" MajorTopicYN="Y">metabolism</QualifierName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <History>
+        <PubMedPubDate PubStatus="pubmed">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="medline">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>1</Minute>
+        </PubMedPubDate>
+        <PubMedPubDate PubStatus="entrez">
+          <Year>1975</Year>
+          <Month>9</Month>
+          <Day>15</Day>
+          <Hour>0</Hour>
+          <Minute>0</Minute>
+        </PubMedPubDate>
+      </History>
+      <PublicationStatus>ppublish</PublicationStatus>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">17</ArticleId>
+        <ArticleId IdType="pii">0006-2952(75)90018-0</ArticleId>
+        <ArticleId IdType="doi">10.1016/0006-2952(75)90018-0</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

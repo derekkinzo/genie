@@ -1,17 +1,18 @@
 """Module to test online sources parsers."""
 import pytest
-from geniepy.datamgmt.parsers import BaseParser, PubMedParser
+from geniepy.datamgmt.parsers import BaseParser, ClassifierParser
 import tests.testdata as td
+from tests.resources.mock import TEST_CHUNKSIZE
 
 
-VALID_DF = td.PUBMED_VALID_DF
-INVALID_DF = td.PUBMED_INVALID_DF
+VALID_DF = td.CLSFR_VALID_DF
+INVALID_DF = td.CLSFR_INVALID_DF
 
 
-class TestPubMedParser:
+class TestClassifierParser:
     """Pytest CTD Parser class."""
 
-    parser: BaseParser = PubMedParser()
+    parser: BaseParser = ClassifierParser()
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""
@@ -29,6 +30,12 @@ class TestPubMedParser:
         # Should return empty list
         assert not self.parser.validate(payload)
 
-    # TODO Test Parse Method
+    def test_parse_not_impl(self):
+        """Parse method should not be implemented in classifier parser."""
+        with pytest.raises(NotImplementedError):
+            self.parser.parse(None)
 
-    # TODO Test Fetch Method
+    def test_fetch_not_impl(self):
+        """Fetch method should not be implemented in classifier parser."""
+        with pytest.raises(NotImplementedError):
+            self.parser.fetch(TEST_CHUNKSIZE)

@@ -9,7 +9,7 @@ BUILDDIR      = ../build/sphinx/
 AUTODOCDIR    = api
 AUTODOCBUILD  = sphinx-apidoc
 PROJECT       = geniepy
-MODULEDIR     = ../geniepy
+MODULEDIR     = ../src/geniepy
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $?), 1)

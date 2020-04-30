@@ -1,0 +1,12 @@
+# Default chunksize to be used throughout
+chunksize: 10
+
+# BigQuery Parameters
+gbq:
+  # Create google cloud service account key file:
+  # https://console.cloud.google.com/apis/credentials/serviceaccountkey
+  credentials: "~/.secrets/harvard-599-trendsetters_credentials.json"
+  # GBQ Project Name
+  proj: "harvard-599-trendsetters"
+  # GBQ Project DataSet
+  dataset: "Genie"

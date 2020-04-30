@@ -7,21 +7,52 @@ data. i.e. Pubmed Publications, Clinical Trials, Gene-Disease Relationships.
 from typing import Generator
 from abc import ABC
 from pandas import DataFrame
-import geniepy
 from geniepy.errors import SchemaError
-from geniepy.datamgmt.parsers import BaseParser, CtdParser
+from geniepy.datamgmt.parsers import (
+    BaseParser,
+    CtdParser,
+    PubMedParser,
+    ClassifierParser,
+)
 import geniepy.datamgmt.repositories as dr
 
 
 class BaseDao(ABC):
-    """Data Access Object Abstract Base Class."""
+    """
+    Data Access Object Abstract Base Class.
+
+    Each DAO is composed of one or more repositories and a parser which is used to
+    structure and validate the DAO's data. Consult the parser's schema to check the
+    format of the data stored in the repositories.
+    """
 
     _repository: dr.BaseRepository
     """Database repository used by DAO to store objects."""
     _parser: BaseParser
     """DAO's parser to scraping and validating data."""
 
-    def download(self, chunksize=geniepy.CHUNKSIZE):
+    def __init__(self, repository: dr.BaseRepository):
+        """Initialize DAO state."""
+        self._repository = repository
+
+    @property
+    def query_all(self):
+        """Generate query string to query entire table."""
+        return self._repository.query_all
+
+    def query_pkey(self, val) -> str:
+        """
+        Generate query by primary key string.
+
+        Arguments:
+            val  -- value of primary key
+
+        Returns:
+            str -- The query str
+        """
+        return self._repository.query_pkey(val)
+
+    def download(self, chunksize: int):
         """
         Download new data from online sources if available.
 
@@ -30,7 +61,7 @@ class BaseDao(ABC):
             memory intentive since it could possibly need to download and parse all
             records if the tables are empty. The chunksize allows the caller to limit
             how much memory is processed at a time while downloading and parsing the
-            data. (default: {geniepy.CHUNKSIZE})
+            data.
         """
         for chunk_df in self._parser.fetch(chunksize):
             self._repository.save(chunk_df)
@@ -40,15 +71,13 @@ class BaseDao(ABC):
         self._repository.delete_all()
 
     # pylint: disable=bad-continuation
-    def query(
-        self, query: str = None, chunksize: int = geniepy.CHUNKSIZE
-    ) -> Generator[DataFrame, None, None]:
+    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
-            query {str} -- Query string. (default: {None} reads entire table)
-            chunksize {int} -- Number of rows of dataframe per chunk (default: {10e3})
+            query {str} -- Query string.
+            chunksize {int} -- Number of rows of dataframe per chunk
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
@@ -86,6 +115,22 @@ class CtdDao(BaseDao):
 
     _parser: CtdParser = CtdParser()
 
-    def __init__(self, repository: dr.BaseRepository):
-        """Initialize DAO state."""
-        self._repository = repository
+
+class PubMedDao(BaseDao):
+    """Implementation of CTD Data Access Object."""
+
+    __slots__ = ["_repository"]
+
+    _parser: PubMedParser = PubMedParser()
+
+
+class ClassifierDao(BaseDao):
+    """Implementation of DAO to handle output data used by UI for visualizations."""
+
+    __slots__ = ["_repository"]
+
+    _parser: ClassifierParser = ClassifierParser()
+
+    def download(self, chunksize):
+        """Classifiers don't need scrapers, so method not implemented."""
+        raise NotImplementedError
