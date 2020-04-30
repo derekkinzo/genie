@@ -30,6 +30,44 @@ void* update(void* seg) {
   return NULL;
 }
 
+int cmp_scores(const void* result1, const void* result2) {
+  Result r1 = *((Result*)result1);
+  Result r2 = *((Result*)result2);
+  if (r1.score > r2.score) {
+    return -1;
+  } else if (r2.score > r1.score) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+void write_results() {
+  Result* results = malloc(sizeof(Result) * NUM_ARTICLES);
+  for (int i = 0; i < NUM_ARTICLES; i++) {
+    results[i].index = i;
+    results[i].score = ARTICLES[i].score;
+  }
+
+  qsort(results, NUM_ARTICLES, sizeof(Result), cmp_scores);
+
+  FILE* file = fopen("data/rankings", "w");
+  for (int i = 0; i < NUM_ARTICLES; i++) {
+    if (results[i].score) {
+      int index = results[i].index;
+      long double score = results[i].score;
+      fprintf(file, "%d,%Lf,", index, score);
+      Article article = ARTICLES[index];
+      for (int j = 0; j < article.num_citations; j++) {
+        int citer = article.citations[j];
+        fprintf(file, "%d-%Lf ", citer, ARTICLES[citer].score);
+      }
+      fprintf(file, "\n");
+    }
+  }
+  fclose(file);
+}
+
 int main(void) {
   FILE* file = fopen("data/links", "r");
   fread(&NUM_ARTICLES, sizeof(int), 1, file);
@@ -56,6 +94,9 @@ int main(void) {
     }
   }
 
+  assert(feof(file));
+  fclose (file);
+
   pthread_t threads[NUM_CORES];
   int segs[NUM_CORES];
 
@@ -70,6 +111,5 @@ int main(void) {
     pthread_cancel(threads[i]);
   }
 
-  assert(feof(file));
-  fclose (file);
+  write_results();
 }
