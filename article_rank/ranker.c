@@ -53,7 +53,7 @@ void write_results() {
 
   FILE* file = fopen("data/rankings", "w");
 
-  long double total_score = 0
+  long double total_score = 0;
   for (int i = 0; i < NUM_ARTICLES; i++) {
     if (results[i].score) {
       int index = results[i].index;
