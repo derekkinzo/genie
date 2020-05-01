@@ -108,12 +108,12 @@ class PubMedScraper(BaseScraper):
         ftp_files = []
 
         # connect to FTP and retrieve list of available files
-        ftp = _ftp_connect()
+        ftp = self._ftp_connect()
         ftp.retrlines(f'LIST *{PubMedScraper._PUBMED_FILE_EXT}', ftp_files.append)
 
         # find the new files available
         for _ in ftp_files:
-            if _is_new_file(_.split(' ')[-1]):
+            if self._is_new_file(_.split(' ')[-1]):
                 self.new_files.append(_.split(' ')[-1])
 
         # download new files
@@ -125,7 +125,7 @@ class PubMedScraper(BaseScraper):
                 pass
 
         # close ftp connection
-        _ftp_disconnect(ftp)
+        self._ftp_disconnect(ftp)
 
     def _clean_up(self):
         # update old file names
@@ -146,8 +146,8 @@ class PubMedScraper(BaseScraper):
         Returns:
             Generator -- The generator yielding the data in given chunksizes.
         """
-        _get_old_filenames()
-        _download_new_files()
+        self._get_old_filenames()
+        self._download_new_files()
 
         #uncompress each PubMed file & scrape its contents
         pubmed_articles: [PubMedArticle] = []
@@ -158,7 +158,7 @@ class PubMedScraper(BaseScraper):
                 for article_xml in xml_list:
                     pubmed_articles.append(PubMedArticle(article_xml))
         
-        _clean_up()
+        self._clean_up()
 
         while True:
             articles_chunk = []
