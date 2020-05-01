@@ -133,7 +133,7 @@ class PubMedScraper(BaseScraper):
             f.writelines(map(lambda x:x+'\n', self.new_files))
 
         # remove downloaded files
-        for _ in new_files:
+        for _ in self.new_files:
             os.remove(f"{PubMedScraper._WORKING_DIR}{_}")                                                        
 
     def scrape(self, chunksize: int, **kwargs) -> Generator:
