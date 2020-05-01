@@ -68,29 +68,6 @@ class BaseClassifier(ABC):
             # If load fail
             raise ClassifierError("Unable to load model")
 
-    # @abstractmethod
-    # def store_model(self) -> bool:
-    #     """
-    #     Store classifier model into memory.
-
-    #     Returns:
-    #         bool -- True if model saves successfully, False otherwise.
-    #     """
-    #     return False
-
-    # @abstractmethod
-    # def train(self, features: pd.Series) -> str:
-    #     """
-    #     Train classifier given dataset.
-
-    #     Arguments:
-    #         features {ClassifierAttributes} -- Array of attributes to train classifier
-
-    #     Returns:
-    #         str -- Classifier training results in str, or None if training failed.
-    #     """
-    #     return False
-
 
 class Classifier(BaseClassifier):
     """Implementation of Publication Count Predictive Classifier."""

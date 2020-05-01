@@ -3,6 +3,7 @@ from pkg_resources import get_distribution, DistributionNotFound
 import geniepy.config as config
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
+import geniepy.datamgmt.repositories as dr
 
 try:
     # Change here if project is renamed and does not equal the package name
@@ -23,12 +24,17 @@ __all__ = ["run", "run_predictions", "update_tables"]
 
 def run_predictions():
     """Calculate predictions for all records in database."""
-    daomgr: DaoManager = config.get_daomgr()
-    classmgr: ClassificationMgr = config.get_classmgr()
-    chunksize = config.get_chunksize()
-    for records in daomgr.gen_records(chunksize):
-        predicted_df = classmgr.predict(records)
-        daomgr.save_predictions(predicted_df)
+    features, scores = config.get_repos()
+    classifier = config.get_classifier()
+    query_all = features.query_all
+    for record_df in scoring_repo.query(query_all, config.get_chunksize):
+        predicted_df = classifier.predict(record_df)
+        scores.save(predicted_df)
+
+    # chunksize = config.get_chunksize()
+    # for records in daomgr.gen_records(chunksize):
+    #     predicted_df = classmgr.predict(records)
+    #     daomgr.save_predictions(predicted_df)
 
 
 def update_tables():

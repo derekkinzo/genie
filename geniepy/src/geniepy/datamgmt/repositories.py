@@ -173,6 +173,8 @@ class GbqRepository(BaseRepository):  # pragma: no cover
     def get_dict_schema(table_schema: Table) -> [dict]:
         """Convert Table Schema into GBQ dict expected format."""
         # flake8: noqa
+        if table_schema is None:
+            return
         coldict = lambda col: {
             "name": col.key,
             "type": col.type.__class__.__name__.upper(),
