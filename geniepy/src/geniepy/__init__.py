@@ -1,4 +1,5 @@
 """GeniePy Package entry point."""
+from shutil import copyfile
 from pkg_resources import get_distribution, DistributionNotFound
 import geniepy.config as config
 from geniepy.datamgmt import DaoManager
@@ -21,6 +22,10 @@ __license__ = "MIT"
 
 
 __all__ = ["run", "run_predictions", "update_tables"]
+
+# Check for config.yaml in geniepy dir. Otherwise, create default
+if not config.CONFIG_PATH.exists():
+    copyfile(config.DEFAULT_CONFIG, config.CONFIG_PATH)
 
 
 def run_predictions():

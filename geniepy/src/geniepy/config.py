@@ -22,7 +22,8 @@ from geniepy.classmgmt.classifiers import Classifier
 from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
 
 CONFIG_NAME = "config.yaml"
-CONFIG_PATH = Path(__file__).parent.joinpath(CONFIG_NAME).resolve()
+DEFAULT_CONFIG = Path(__file__).parent.joinpath(CONFIG_NAME).resolve()
+CONFIG_PATH = Path("~/geniepy/config.yaml").expanduser().resolve()
 
 
 def read_yaml() -> dict:

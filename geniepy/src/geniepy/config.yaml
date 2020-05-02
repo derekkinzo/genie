@@ -1,5 +1,5 @@
 # Default chunksize to be used throughout
-chunksize: 25
+chunksize: 100000
 
 # BigQuery Parameters
 gbq:
