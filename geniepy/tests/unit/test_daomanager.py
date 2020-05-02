@@ -67,3 +67,12 @@
 #         clsfr_dao = self.dao_mgr._classifier_dao
 #         saved_df = next(clsfr_dao.query(clsfr_dao.query_all, TEST_CHUNKSIZE))
 #         assert saved_df.equals(predictions_df)
+
+# @pytest.mark.parametrize("chunksize", [*range(1, 10)])
+# def test_get_records_chunksize(self, chunksize):
+#     """Test get records chunksizes."""
+#     self.dao_mgr.download(TEST_CHUNKSIZE)
+#     gen_df = self.dao_mgr.gen_records(chunksize=chunksize)
+#     records = next(gen_df)
+#     # Make sure records contain correct chunk
+#     assert records.shape[0] == chunksize

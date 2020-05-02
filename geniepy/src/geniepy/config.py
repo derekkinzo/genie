@@ -9,14 +9,21 @@ import yaml
 from geniepy.errors import ConfigError
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
-from geniepy.datamgmt.tables import PUBMED_PROPTY, CTD_PROPTY, CLSFR_PROPTY
+from geniepy.datamgmt.tables import (
+    PUBMED_PROPTY,
+    CTD_PROPTY,
+    CLSFR_PROPTY,
+    FEATURES_PROPTY,
+    SCORES_PROPTY,
+)
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
 from geniepy.classmgmt.classifiers import Classifier
 from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
 
 CONFIG_NAME = "config.yaml"
-CONFIG_PATH = Path(__file__).parent.joinpath(CONFIG_NAME).resolve()
+DEFAULT_CONFIG = Path(__file__).parent.joinpath(CONFIG_NAME).resolve()
+CONFIG_PATH = Path("~/geniepy/config.yaml").expanduser().resolve()
 
 
 def read_yaml() -> dict:
@@ -30,6 +37,19 @@ def get_chunksize() -> int:
     configdict = read_yaml()
     # TODO handle value error if chunksize not int?
     return int(configdict["chunksize"])
+
+
+def get_repos():
+    configdict = read_yaml()
+    credentials_file = Path(configdict["gbq"]["credentials"]).expanduser()
+    credentials_path = Path.cwd().joinpath(credentials_file).resolve()
+    projname = configdict["gbq"]["proj"]
+    dataset = configdict["gbq"]["dataset"]
+    features_repo = dr.GbqRepository(
+        projname, FEATURES_PROPTY, "scoring", credentials_path
+    )
+    scores_repo = dr.GbqRepository(projname, SCORES_PROPTY, dataset, credentials_path)
+    return features_repo, scores_repo
 
 
 def get_daomgr() -> DaoManager:
@@ -70,3 +90,9 @@ def get_classmgr() -> ClassificationMgr:
     ct_clsfr = Classifier(CTCLSFR_NAME)
     clsfr_mgr = ClassificationMgr([pub_clsfr, ct_clsfr])
     return clsfr_mgr
+
+
+def get_classifier():
+    ct_clsfr = Classifier(CTCLSFR_NAME)
+    ct_clsfr.load()
+    return ct_clsfr

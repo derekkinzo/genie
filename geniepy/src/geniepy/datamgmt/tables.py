@@ -69,3 +69,24 @@ CLSFR_DAO_TABLE = Table(
 CLSFR_PROPTY = RepoProperties(
     tablename=CLSFR_TABLE_NAME, pkey=CLSFR_PKEY, table=CLSFR_DAO_TABLE
 )
+
+
+FEATURES_PKEY = "gene_id"
+"""Features table primary key."""
+FEATURES_TABLE_NAME = "scoring_data"
+"""Features table name."""
+FEATURES_DAO_TABLE = None
+"""Features Output DAO Repository Schema."""
+FEATURES_PROPTY = RepoProperties(
+    tablename=FEATURES_TABLE_NAME, pkey=FEATURES_PKEY, table=FEATURES_DAO_TABLE
+)
+
+SCORES_PKEY = "gene_id"
+"""Scoring table primary key."""
+SCORES_TABLE_NAME = "scores"
+"""Scoring table name."""
+SCORES_DAO_TABLE = None
+"""Scoring Output DAO Repository Schema."""
+SCORES_PROPTY = RepoProperties(
+    tablename=SCORES_TABLE_NAME, pkey=SCORES_PKEY, table=SCORES_DAO_TABLE
+)

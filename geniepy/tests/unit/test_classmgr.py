@@ -67,3 +67,8 @@
 #         """Test attempting to predict with invalid records."""
 #         with pytest.raises(ClassifierError):
 #             MOCK_CLSFRMGR.predict(None)
+
+# def test_predict_invalid_records(self):
+#     """Test attempting to predict with invalid records."""
+#     with pytest.raises(ClassifierError):
+#         MOCK_CLSFRMGR.predict(None)

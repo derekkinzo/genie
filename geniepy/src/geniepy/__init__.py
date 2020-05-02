@@ -1,8 +1,11 @@
 """GeniePy Package entry point."""
+from shutil import copyfile
 from pkg_resources import get_distribution, DistributionNotFound
 import geniepy.config as config
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
+import geniepy.datamgmt.repositories as dr
+from time import time
 
 try:
     # Change here if project is renamed and does not equal the package name
@@ -20,15 +23,28 @@ __license__ = "MIT"
 
 __all__ = ["run", "run_predictions", "update_tables"]
 
+# Check for config.yaml in geniepy dir. Otherwise, create default
+if not config.CONFIG_PATH.exists():
+    CONFIG_DIR = config.CONFIG_PATH.parent
+    if not CONFIG_DIR.exists():
+        CONFIG_DIR.mkdir()
+    copyfile(config.DEFAULT_CONFIG, config.CONFIG_PATH)
+
 
 def run_predictions():
     """Calculate predictions for all records in database."""
-    daomgr: DaoManager = config.get_daomgr()
-    classmgr: ClassificationMgr = config.get_classmgr()
-    chunksize = config.get_chunksize()
-    for records in daomgr.gen_records(chunksize):
-        predicted_df = classmgr.predict(records)
-        daomgr.save_predictions(predicted_df)
+    features, scores = config.get_repos()
+    classifier = config.get_classifier()
+    query_all = features.query_all
+    # Capture initial time and start iterating over relationships
+    start_time = time()
+    for record_df in features.query(query_all, config.get_chunksize()):
+        predicted_df = classifier.predict(record_df)
+        scores.save(predicted_df)
+        elapsed_time = round(time() - start_time)
+        num_records = predicted_df.shape[0]
+        print(f"Processed {num_records} in {elapsed_time}s")
+        start_time = time()
 
 
 def update_tables():
