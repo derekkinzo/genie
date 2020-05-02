@@ -90,3 +90,13 @@ SCORES_DAO_TABLE = None
 SCORES_PROPTY = RepoProperties(
     tablename=SCORES_TABLE_NAME, pkey=SCORES_PKEY, table=SCORES_DAO_TABLE
 )
+
+PUBTATOR_GENE_PKEY = "GeneID"
+"""Table primary key."""
+PUBTATOR_GENE_TABLE_NAME = "gene2pubtator"
+"""Table name."""
+PUBTATOR_GENE_DAO_TABLE = None
+"""Output DAO Repository Schema."""
+PUBTATOR_GENE_PROPTY = RepoProperties(
+    tablename=PUBTATOR_GENE_TABLE_NAME, pkey=SCORES_PKEY, table=SCORES_DAO_TABLE
+)

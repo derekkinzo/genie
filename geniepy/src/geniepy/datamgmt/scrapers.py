@@ -59,7 +59,7 @@ class PubtatorGeneScraper(BaseScraper):
 
         ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/gene2pubtatorcentral.gz
         """
-
+        self.download()
         header_names = ["PMID", "Type", "GeneID", "Mentions", "Resource"]
         csv_gen = pd.read_csv(
             self.PUBTATOR_CSV_NAME,

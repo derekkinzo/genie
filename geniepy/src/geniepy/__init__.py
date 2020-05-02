@@ -50,7 +50,7 @@ def run_predictions():
 def update_tables():
     """Call scrapes to download data and create/append tables."""
     daomgr: DaoManager = config.get_daomgr()
-    chunksize = config.get_classmgr()
+    chunksize = config.get_chunksize()
     daomgr.download(chunksize)
 
 

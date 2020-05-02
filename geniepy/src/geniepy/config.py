@@ -15,6 +15,7 @@ from geniepy.datamgmt.tables import (
     CLSFR_PROPTY,
     FEATURES_PROPTY,
     SCORES_PROPTY,
+    PUBTATOR_GENE_PROPTY,
 )
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
@@ -67,7 +68,7 @@ def get_daomgr() -> DaoManager:
     dataset = configdict["gbq"]["dataset"]
     # Construct
     pubtator_gene_dao = daos.PubtatorGeneDao(
-        dr.GbqRepository(projname, CTD_PROPTY, dataset, credentials_path)
+        dr.GbqRepository(projname, PUBTATOR_GENE_PROPTY, dataset, credentials_path)
     )
     pubmed_dao = daos.PubMedDao(
         dr.GbqRepository(projname, PUBMED_PROPTY, dataset, credentials_path)
