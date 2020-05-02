@@ -1,7 +1,10 @@
 """Implementation of predictive classifiers."""
 from abc import ABC, abstractmethod
 import pandas as pd
+from google_drive_downloader import GoogleDriveDownloader as gdd
+from joblib import load
 from geniepy.errors import ClassifierError
+from datetime import datetime
 
 ERROR_SCORE = float(-1)
 
@@ -40,7 +43,7 @@ class BaseClassifier(ABC):
         return self._is_trained
 
     @abstractmethod
-    def predict(self, features: pd.Series) -> float:
+    def predict(self, features: pd.DataFrame) -> float:
         """
         Calculate publication count label.
 
@@ -48,23 +51,29 @@ class BaseClassifier(ABC):
         internally, so execution isn't halted due to exceptions.
 
         Arguments:
-            features {pd.Series} -- Pandas series necessary prediction data
+            features {pd.DataFrame} -- Pandas series necessary prediction data
 
         Returns:
             float -- the classifier prediction
         """
 
-    def load(self, model):
+    def load(self):
         """
         Load classifier model.
 
         Raises:
             ClassifierError -- If model doesn't load successfully
         """
-        if model is not None:
-            self._model = model
+        # Download model from google drive
+        try:
+            gdd.download_file_from_google_drive(
+                file_id="1ADgASNfM1cmhr9r1-ozuEp_e7y2kCq4R",
+                dest_path="~/geniepy/gene_disease_gbc.joblib",
+                unzip=True,
+            )
+            self._model = load("~/geniepy/gene_disease_gbc.joblib")
             self._is_trained = True
-        else:
+        except Exception:
             # If load fail
             raise ClassifierError("Unable to load model")
 
@@ -72,7 +81,7 @@ class BaseClassifier(ABC):
 class Classifier(BaseClassifier):
     """Implementation of Publication Count Predictive Classifier."""
 
-    def predict(self, features: pd.Series):
+    def predict(self, features: pd.DataFrame):
         """
         Calculate publication count label.
 
@@ -80,7 +89,7 @@ class Classifier(BaseClassifier):
         internally, so execution isn't halted due to exceptions.
 
         Arguments:
-            features {pd.Series} -- Pandas series necessary prediction data
+            features {pd.DataFrame} -- Pandas series necessary prediction data
 
         Returns:
             float -- the classifier prediction
@@ -89,5 +98,31 @@ class Classifier(BaseClassifier):
             # TODO log event "Received None features to predict"
             # TODO log event "Untrained classifier can't calculate predictions"
             return ERROR_SCORE
-        # TODO add call to sklearn model to predict
-        return float(1)
+        # Only keep expected columns
+        features.dropna(inplace=True)
+        scores_df = pd.DataFrame(features["gene_disease_relationship"])
+        filtered_features = features[
+            [
+                "num_publications",
+                "citations_cum_sum",
+                "authors_cum_sum",
+                "chemicals_cum_sum",
+                "cum_sum_journals",
+                "num_languages",
+                "sjr",
+                "h_index",
+                "us_published",
+                "us_uk_published",
+            ]
+        ]
+        # Predictions and probabilities
+        predictions = self._model.predict(filtered_features)
+        probs = self._model.predict_proba(filtered_features)
+        prob_1 = [item[0] for item in probs]  # Get positiive probs only
+        # Todays date
+        date = datetime.today().strftime("%Y-%m-%d")
+        # Add new fields into original df
+        scores_df["classifier_prediction"] = predictions
+        scores_df["classifier_prob"] = prob_1
+        scores_df["scoring_date"] = date
+        return scores_df

@@ -4,6 +4,7 @@ import geniepy.config as config
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
 import geniepy.datamgmt.repositories as dr
+from time import time
 
 try:
     # Change here if project is renamed and does not equal the package name
@@ -27,14 +28,15 @@ def run_predictions():
     features, scores = config.get_repos()
     classifier = config.get_classifier()
     query_all = features.query_all
-    for record_df in scoring_repo.query(query_all, config.get_chunksize):
+    # Capture initial time and start iterating over relationships
+    start_time = time()
+    for record_df in features.query(query_all, config.get_chunksize()):
         predicted_df = classifier.predict(record_df)
         scores.save(predicted_df)
-
-    # chunksize = config.get_chunksize()
-    # for records in daomgr.gen_records(chunksize):
-    #     predicted_df = classmgr.predict(records)
-    #     daomgr.save_predictions(predicted_df)
+        elapsed_time = round(time() - start_time)
+        num_records = predicted_df.shape[0]
+        print(f"Processed {num_records} in {elapsed_time}s")
+        start_time = time()
 
 
 def update_tables():
