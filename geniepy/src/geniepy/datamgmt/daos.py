@@ -13,6 +13,7 @@ from geniepy.datamgmt.parsers import (
     CtdParser,
     PubMedParser,
     ClassifierParser,
+    PubtatorGeneParser,
 )
 import geniepy.datamgmt.repositories as dr
 
@@ -134,3 +135,11 @@ class ClassifierDao(BaseDao):
     def download(self, chunksize):
         """Classifiers don't need scrapers, so method not implemented."""
         raise NotImplementedError
+
+
+class PubtatorGeneDao(BaseDao):
+    """Data Access Object for Pubtator PMID/GeneID records."""
+
+    __slots__ = ["_repository"]
+
+    _parser: PubtatorGeneParser = PubtatorGeneParser()

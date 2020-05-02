@@ -9,7 +9,12 @@ import pandas as pd
 from pandas import DataFrame
 from pandas_schema import Column, Schema
 from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
-from geniepy.datamgmt.scrapers import BaseScraper, CtdScraper, PubMedScraper
+from geniepy.datamgmt.scrapers import (
+    BaseScraper,
+    CtdScraper,
+    PubMedScraper,
+    PubtatorGeneScraper,
+)
 from geniepy.errors import ParserError
 from geniepy.pubmed import PubMedArticle
 from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
@@ -18,8 +23,9 @@ from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
 class DataType(Enum):
     """Possible parsable datatypes."""
 
-    CSV_STR = auto()
-    XML = auto()
+    CSV_STR = auto()  # csv string
+    XML = auto()  # xml element tree
+    DF = auto()  # pandas dataframe
 
 
 class BaseParser(ABC):
@@ -164,6 +170,37 @@ class CtdParser(BaseParser):
             return parsed_df
         except Exception as parse_exp:
             raise ParserError(parse_exp)
+
+
+class PubtatorGeneParser(BaseParser):
+    """Implementation of Pubtator Gene Parser."""
+
+    default_type: DataType = DataType.DF
+    scraper: PubtatorGeneScraper = PubtatorGeneScraper()
+
+    @staticmethod
+    def parse(data, dtype=DataType.DF) -> DataFrame:
+        """
+        Parse data and convert according to parser schema.
+
+        Arguments:
+            data {Implementation dependent} -- Data to be parsed
+
+        Keyword Arguments:
+            dtype {DataType} -- Type of data to be parsed (default: {DataType.CSV})
+
+        Returns:
+            DataFrame -- The parsed dataframe.
+
+        Raises:
+            ParserError -- If unable to parse data
+        """
+        try:
+            parsed_df = data[["PMID", "GeneID"]]
+
+            return parsed_df
+        except:
+            return None
 
 
 class PubMedParser(BaseParser):

@@ -23,18 +23,18 @@ class DaoManager:
     the classifiers.
     """
 
-    __slots__ = ["_ctd_dao", "_pubmed_dao", "_classifier_dao"]
+    __slots__ = ["_pubtator_gene_dao", "_pubmed_dao", "_classifier_dao"]
 
     # pylint: disable=bad-continuation
     def __init__(
         self,
-        ctd_dao: daos.CtdDao,
+        pubtator_gene_dao: daos.PubtatorGeneParser,
         pubmed_dao: daos.PubMedDao,
         classifier_dao: daos.ClassifierDao,
     ):
         """Initializa DAO mgr with corresponding DAO children."""
-        self._ctd_dao = ctd_dao
-        """The CTD DAO handles data from CTD databases."""
+        self._pubtator_gene_dao = pubtator_gene_dao
+        """The Putator Gene DAO handles data from Pubtator Gene databases."""
         self._pubmed_dao = pubmed_dao
         """The PubMed DAO handles data from PubMed databases."""
         self._classifier_dao = classifier_dao
@@ -42,7 +42,7 @@ class DaoManager:
 
     def download(self, chunksize: int):
         """Download (scrapes) data for DAOs and creates internal tables."""
-        self._ctd_dao.download(chunksize)
+        self._pubtator_gene_dao.download(chunksize)
         self._pubmed_dao.download(chunksize)
 
     def _get_pubmeds_df(self, pmids: str):
@@ -94,8 +94,8 @@ class DaoManager:
         """
         # iterate over ctd table
         record_df = pd.DataFrame()
-        query_all = self._ctd_dao.query_all
-        for record_df in self._ctd_dao.query(query_all, chunksize):
+        query_all = self._pubtator_gene_dao.query_all
+        for record_df in self._pubtator_gene_dao.query(query_all, chunksize):
             record_df["pubmeds"] = record_df.apply(
                 lambda row: self._get_pubmeds_df(row.pmids), axis=1
             )

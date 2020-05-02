@@ -46,7 +46,7 @@ def get_daomgr() -> DaoManager:
     projname = configdict["gbq"]["proj"]
     dataset = configdict["gbq"]["dataset"]
     # Construct
-    ctd_dao = daos.CtdDao(
+    pubtator_gene_dao = daos.PubtatorGeneDao(
         dr.GbqRepository(projname, CTD_PROPTY, dataset, credentials_path)
     )
     pubmed_dao = daos.PubMedDao(
@@ -56,7 +56,9 @@ def get_daomgr() -> DaoManager:
         dr.GbqRepository(projname, CLSFR_PROPTY, dataset, credentials_path)
     )
     daomgr = DaoManager(
-        ctd_dao=ctd_dao, pubmed_dao=pubmed_dao, classifier_dao=classifier_dao
+        pubtator_gene_dao=pubtator_gene_dao,
+        pubmed_dao=pubmed_dao,
+        classifier_dao=classifier_dao,
     )
     return daomgr
 

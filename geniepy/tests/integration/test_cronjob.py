@@ -4,6 +4,12 @@ import geniepy
 
 
 @pytest.mark.slow_integration_test
+def test_update_tables():
+    """Test calculating predictions."""
+    geniepy.update_tables()
+
+
+@pytest.mark.slow_integration_test
 def test_run_predictions():
     """Test calculating predictions."""
     geniepy.run_predictions()

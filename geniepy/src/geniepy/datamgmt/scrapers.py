@@ -47,10 +47,11 @@ class PubtatorGeneScraper(BaseScraper):
 
     def download(self):
         """Download records from online sources."""
-        wget.download(self.FTP_URL, str(self.PUBTATOR_GZIP_NAME))
-        with gzip.open(self.PUBTATOR_GZIP_NAME, "rb") as f_in:
-            with open(self.PUBTATOR_CSV_NAME, "wb") as f_out:
-                shutil.copyfileobj(f_in, f_out)
+        if not self.PUBTATOR_GZIP_NAME.exists():
+            wget.download(self.FTP_URL, str(self.PUBTATOR_GZIP_NAME))
+            with gzip.open(self.PUBTATOR_GZIP_NAME, "rb") as f_in:
+                with open(self.PUBTATOR_CSV_NAME, "wb") as f_out:
+                    shutil.copyfileobj(f_in, f_out)
 
     def scrape(self, chunksize: int, **kwargs) -> Generator:
         """
@@ -59,7 +60,7 @@ class PubtatorGeneScraper(BaseScraper):
         ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/gene2pubtatorcentral.gz
         """
 
-        header_names = ["PMID", "Type", "Concept ID", "Mentions", "Resource"]
+        header_names = ["PMID", "Type", "GeneID", "Mentions", "Resource"]
         csv_gen = pd.read_csv(
             self.PUBTATOR_CSV_NAME,
             chunksize=chunksize,
