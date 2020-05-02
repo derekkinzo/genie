@@ -55,15 +55,3 @@ class TestDaoManager:
         records = next(gen_df)
         # Make sure records contain correct chunk
         assert records.shape[0] == chunksize
-
-    def test_save_predictions(self):
-        """Test writing predictions to output tables."""
-        self.dao_mgr.download(TEST_CHUNKSIZE)
-        gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
-        records = next(gen_df)
-        predictions_df = mock.MOCK_CLSFRMGR.predict(records)
-        self.dao_mgr.save_predictions(predictions_df)
-        # Read data back from output tables to make sure records were saved
-        clsfr_dao = self.dao_mgr._classifier_dao
-        saved_df = next(clsfr_dao.query(clsfr_dao.query_all, TEST_CHUNKSIZE))
-        assert saved_df.equals(predictions_df)

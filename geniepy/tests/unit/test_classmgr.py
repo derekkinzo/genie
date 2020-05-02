@@ -36,33 +36,6 @@ class TestClassMgr:
         """Test obj construction."""
         assert MOCK_CLSFRMGR is not None
 
-    def test_predict_records(self):
-        """
-        Test prediction of records.
-
-        Records are fed into the classifier to be predicted and classification manager
-        returns a dataframe containing the corresponding predictions.
-        """
-        # Generate records to be fed into classifiers
-        self.dao_mgr.download(TEST_CHUNKSIZE)
-        gen_df = self.dao_mgr.gen_records(TEST_CHUNKSIZE)
-        raw_df = next(gen_df)
-        predicted_df = MOCK_CLSFRMGR.predict(raw_df)
-        # Make sure predicted all rows
-        expected_rows = raw_df.shape[0]
-        actual_rows = predicted_df.shape[0]
-        assert actual_rows == expected_rows
-        # Make sure predicted df is valid (should return no errors)
-        assert not ClassifierParser.validate(predicted_df)
-        # Make sure one prediction per classifier
-        cols = predicted_df.columns
-        # Make sure has a digest column
-        assert "digest" in cols
-        # Make sure has one prediction column per classifier
-        for classifier in MOCK_CLSFRMGR._classifiers:
-            assert classifier.name in cols
-        # TODO validate classifier predicted dataframe
-
     def test_predict_invalid_records(self):
         """Test attempting to predict with invalid records."""
         with pytest.raises(ClassifierError):

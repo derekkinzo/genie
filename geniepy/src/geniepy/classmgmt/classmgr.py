@@ -31,7 +31,7 @@ class ClassificationMgr:
         # TODO Train or restore classifiers.
         for classifier in self._classifiers:
             # TODO Replace to load correct model
-            classifier.load(True)
+            classifier.load()
 
     def predict(self, records: pd.DataFrame):
         """

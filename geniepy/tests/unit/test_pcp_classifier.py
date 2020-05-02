@@ -33,23 +33,3 @@ class TestClassifier:
         prediction = self.classifier.predict(None)
         assert isinstance(prediction, float)
         assert prediction == clsfr.ERROR_SCORE
-
-    def test_load_invalid_model(self):
-        """Test load model successful."""
-        assert self.classifier.is_trained is False
-        with pytest.raises(ClassifierError):
-            self.classifier.load(None)
-
-    def test_load_valid_model(self):
-        """Test load model successful."""
-        assert self.classifier.is_trained is False
-        # True placeholder for sklearn model
-        self.classifier.load(True)
-        assert self.classifier.is_trained is True
-
-    def test_predict_trained(self):
-        """Test predicting after classifier trained."""
-        self.classifier.load(1)
-        prediction = self.classifier.predict(SAMPLE_RECORD)
-        assert isinstance(prediction, float)
-        assert prediction != clsfr.ERROR_SCORE
