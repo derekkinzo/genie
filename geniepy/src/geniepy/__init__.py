@@ -25,6 +25,9 @@ __all__ = ["run", "run_predictions", "update_tables"]
 
 # Check for config.yaml in geniepy dir. Otherwise, create default
 if not config.CONFIG_PATH.exists():
+    CONFIG_DIR = config.CONFIG_PATH.parent
+    if not CONFIG_DIR.exists():
+        CONFIG_DIR.mkdir()
     copyfile(config.DEFAULT_CONFIG, config.CONFIG_PATH)
 
 
