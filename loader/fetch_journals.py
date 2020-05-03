@@ -16,7 +16,7 @@ with connection:
 
         for row in results:
             count += 1
-            if count % 100000 == 0:
+            if count % 5000 == 0:
                 print(count)
                 connection.commit()
             cur.execute("INSERT INTO journals VALUES (%s, %s, %s);", (row[0], row[1], row[2]))
