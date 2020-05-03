@@ -14,15 +14,9 @@ config.CONFIG_PATH = TEST_CONFIG_PATH
 
 def test_chunksize():
     """Test retrieving chunksize."""
-    expected = 10
+    expected = 100000
     actual = config.get_chunksize()
     assert actual == expected
-
-
-def test_get_dao_mgr_invalid_path():
-    """Test get valid daomgr raises config error without valid path."""
-    with pytest.raises(ConfigError):
-        config.get_daomgr()
 
 
 def test_get_clsfr():

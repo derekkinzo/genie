@@ -1,4 +1,5 @@
 """Integration tests of Pubtator - Gene data."""
+import pytest
 from pathlib import Path
 from typing import Generator
 from geniepy.datamgmt.scrapers import PubtatorGeneScraper
@@ -10,6 +11,7 @@ FTP_URL_SAMPLE = (
 )
 
 
+@pytest.mark.slow_integration_test
 def test_download():
     """Test downloding data."""
     pbs = PubtatorGeneScraper()
@@ -19,6 +21,7 @@ def test_download():
     assert Path.exists(pbs.PUBTATOR_GZIP_NAME)
 
 
+@pytest.mark.slow_integration_test
 def test_cleanup():
     """Test deleting generated files."""
     pbs = PubtatorGeneScraper()
@@ -28,6 +31,7 @@ def test_cleanup():
     assert not Path.exists(pbs.PUBTATOR_CSV_NAME)
 
 
+@pytest.mark.slow_integration_test
 def test_scrape():
     """Test scraping data from pubtator-gene."""
     pbs = PubtatorGeneScraper()

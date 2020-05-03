@@ -66,6 +66,7 @@ class BaseDao(ABC):
             how much memory is processed at a time while downloading and parsing the
             data.
         """
+        print(f"Starting download for {self._repository.tablename} ...")
         for chunk_df in self._parser.fetch(chunksize):
             self._repository.save(chunk_df)
 
