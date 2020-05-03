@@ -14,6 +14,7 @@ from geniepy.datamgmt.parsers import (
     PubMedParser,
     ClassifierParser,
     PubtatorGeneParser,
+    PubtatorDiseaseParser,
 )
 import geniepy.datamgmt.repositories as dr
 
@@ -143,3 +144,11 @@ class PubtatorGeneDao(BaseDao):
     __slots__ = ["_repository"]
 
     _parser: PubtatorGeneParser = PubtatorGeneParser()
+
+
+class PubtatorDiseaseDao(BaseDao):
+    """Data Access Object for Pubtator PMID/DiseaseID records."""
+
+    __slots__ = ["_repository"]
+
+    _parser: PubtatorDiseaseParser = PubtatorDiseaseParser()

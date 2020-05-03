@@ -39,42 +39,72 @@ class PubtatorGeneScraper(BaseScraper):
 
     TMP_DIR = Path.cwd().joinpath("tmp")
     FTP_URL = "ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/gene2pubtatorcentral.gz"  # noqa
-    PUBTATOR_GZIP_NAME = TMP_DIR.joinpath("pubtator-gene.gzip").resolve()
-    PUBTATOR_CSV_NAME = TMP_DIR.joinpath("pubtator-gene.csv").resolve()
+    GZIP_NAME = "pubtator-gene.gzip"
+    CSV_NAME = "pubtator-gene.csv"
+    HEADER_NAMES = ["PMID", "Type", "GeneID", "Mentions", "Resource"]
 
     def __init__(self):
         self.TMP_DIR.mkdir(parents=True, exist_ok=True)
 
+    @property
+    def pubtator_gzip(self):
+        """Path to pubtator gzip downloaded file."""
+        pubtator_gzip = self.TMP_DIR.joinpath(self.GZIP_NAME).resolve()
+        return pubtator_gzip
+
+    @property
+    def pubtator_csv(self):
+        """Path to pubtator csv downloaded file."""
+        pubtator_csv = self.TMP_DIR.joinpath(self.CSV_NAME).resolve()
+        return pubtator_csv
+
     def download(self):
         """Download records from online sources."""
-        if not self.PUBTATOR_GZIP_NAME.exists():
-            wget.download(self.FTP_URL, str(self.PUBTATOR_GZIP_NAME))
-            with gzip.open(self.PUBTATOR_GZIP_NAME, "rb") as f_in:
-                with open(self.PUBTATOR_CSV_NAME, "wb") as f_out:
+        if not self.pubtator_gzip.exists():
+            wget.download(self.FTP_URL, str(self.pubtator_gzip))
+        if not self.pubtator_csv.exists():
+            with gzip.open(self.pubtator_gzip, "rb") as f_in:
+                with open(self.pubtator_csv, "wb") as f_out:
                     shutil.copyfileobj(f_in, f_out)
 
     def scrape(self, chunksize: int, **kwargs) -> Generator:
         """
         Download pmid/geneid data from pubtator.
 
-        ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/gene2pubtatorcentral.gz
+        ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/disease2pubtatorcentral.gz
         """
         self.download()
-        header_names = ["PMID", "Type", "GeneID", "Mentions", "Resource"]
         csv_gen = pd.read_csv(
-            self.PUBTATOR_CSV_NAME,
+            self.pubtator_csv,
             chunksize=chunksize,
             delimiter="\t",
-            names=header_names,
+            names=self.HEADER_NAMES,
         )
         return csv_gen
 
     def clean_up(self):
         """Delete all temp files."""
-        if os.path.exists(self.PUBTATOR_GZIP_NAME):
-            os.remove(self.PUBTATOR_GZIP_NAME)
-        if os.path.exists(self.PUBTATOR_CSV_NAME):
-            os.remove(self.PUBTATOR_CSV_NAME)
+        if os.path.exists(self.pubtator_gzip):
+            os.remove(self.pubtator_gzip)
+        if os.path.exists(self.pubtator_csv):
+            os.remove(self.pubtator_csv)
+
+
+class PubtatorDiseaseScraper(PubtatorGeneScraper):
+    """Scrape PMID/DiseaseID from pubtator."""
+
+    FTP_URL = "ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/disease2pubtatorcentral.gz"  # noqa
+    GZIP_NAME = "pubtator-disease.gzip"
+    CSV_NAME = "pubtator-disease.csv"
+    HEADER_NAMES = ["PMID", "Type", "DiseaseID", "Mentions", "Resource"]
+
+    def download(self):
+        """Download records from online sources."""
+        if not self.pubtator_gzip.exists():
+            wget.download(self.FTP_URL, str(self.pubtator_gzip))
+            with gzip.open(self.pubtator_gzip, "rb") as f_in:
+                with open(self.pubtator_csv, "wb") as f_out:
+                    shutil.copyfileobj(f_in, f_out)
 
 
 class CtdScraper(BaseScraper):

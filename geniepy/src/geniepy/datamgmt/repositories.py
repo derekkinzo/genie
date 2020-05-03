@@ -2,6 +2,7 @@
 from typing import Generator
 from abc import ABC, abstractmethod
 import pandas as pd
+from datetime import datetime
 from pandas import DataFrame
 from google.oauth2 import service_account
 import pandas_gbq
@@ -193,6 +194,10 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             DaoError: if cannot save payload to db
         """
         try:
+            # Always append date column
+            # Todays date
+            date = datetime.today().strftime("%Y-%m-%d")
+            payload["scoring_date"] = date
             pandas_gbq.to_gbq(
                 payload, self._tablename, if_exists="append", table_schema=self._table,
             )

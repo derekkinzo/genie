@@ -98,5 +98,19 @@ PUBTATOR_GENE_TABLE_NAME = "gene2pubtator"
 PUBTATOR_GENE_DAO_TABLE = None
 """Output DAO Repository Schema."""
 PUBTATOR_GENE_PROPTY = RepoProperties(
-    tablename=PUBTATOR_GENE_TABLE_NAME, pkey=SCORES_PKEY, table=SCORES_DAO_TABLE
+    tablename=PUBTATOR_GENE_TABLE_NAME,
+    pkey=PUBTATOR_GENE_PKEY,
+    table=PUBTATOR_GENE_DAO_TABLE,
+)
+
+PUBTATOR_DISEASE_PKEY = "DiseaseID"
+"""Table primary key."""
+PUBTATOR_DISEASE_TABLE_NAME = "disease2pubtator"
+"""Table name."""
+PUBTATOR_DISEASE_DAO_TABLE = None
+"""Output DAO Repository Schema."""
+PUBTATOR_DISEASE_PROPTY = RepoProperties(
+    tablename=PUBTATOR_DISEASE_TABLE_NAME,
+    pkey=PUBTATOR_DISEASE_PKEY,
+    table=PUBTATOR_DISEASE_DAO_TABLE,
 )

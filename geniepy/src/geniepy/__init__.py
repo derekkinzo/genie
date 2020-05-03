@@ -47,6 +47,18 @@ def run_predictions():
         start_time = time()
 
 
+def update_disease2pubtator():
+    """Update pubtator pmid/disease table."""
+    disease2pubtator_dao = config.get_dao("disease2pubtator")
+    disease2pubtator_dao.download(config.get_chunksize())
+
+
+def update_sjr():
+    """Update sjr table."""
+    sjr_dao = config.get_dao("sjr")
+    sjr_dao.download()
+
+
 def update_tables():
     """Call scrapes to download data and create/append tables."""
     daomgr: DaoManager = config.get_daomgr()

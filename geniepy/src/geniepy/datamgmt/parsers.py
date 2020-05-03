@@ -9,12 +9,7 @@ import pandas as pd
 from pandas import DataFrame
 from pandas_schema import Column, Schema
 from pandas_schema.validation import IsDtypeValidation, MatchesPatternValidation
-from geniepy.datamgmt.scrapers import (
-    BaseScraper,
-    CtdScraper,
-    PubMedScraper,
-    PubtatorGeneScraper,
-)
+import geniepy.datamgmt.scrapers as gs
 from geniepy.errors import ParserError
 from geniepy.pubmed import PubMedArticle
 from geniepy.classmgmt.classifiers import PCPCLSFR_NAME, CTCLSFR_NAME
@@ -31,7 +26,7 @@ class DataType(Enum):
 class BaseParser(ABC):
     """Abstract base parser class."""
 
-    scraper: BaseScraper
+    scraper: gs.BaseScraper
     schema: Schema
     default_type: DataType = None
 
@@ -90,7 +85,7 @@ class CtdParser(BaseParser):
     """
 
     default_type: DataType = DataType.CSV_STR
-    scraper: CtdScraper = CtdScraper()
+    scraper: gs.CtdScraper = gs.CtdScraper()
     schema: Schema = Schema(
         [
             Column("digest"),
@@ -172,32 +167,33 @@ class CtdParser(BaseParser):
             raise ParserError(parse_exp)
 
 
+class PubtatorDiseaseParser(BaseParser):
+    """Implementation of Pubtator Disease Parser."""
+
+    default_type: DataType = DataType.DF
+    scraper: gs.PubtatorDiseaseScraper = gs.PubtatorDiseaseScraper()
+
+    @staticmethod
+    def parse(data, dtype=DataType.DF) -> DataFrame:
+        """Parse data and convert according to parser schema."""
+        try:
+            parsed_df = data[["PMID", "DiseaseID"]]
+            return parsed_df
+        except:
+            return None
+
+
 class PubtatorGeneParser(BaseParser):
     """Implementation of Pubtator Gene Parser."""
 
     default_type: DataType = DataType.DF
-    scraper: PubtatorGeneScraper = PubtatorGeneScraper()
+    scraper: gs.PubtatorGeneScraper = gs.PubtatorGeneScraper()
 
     @staticmethod
     def parse(data, dtype=DataType.DF) -> DataFrame:
-        """
-        Parse data and convert according to parser schema.
-
-        Arguments:
-            data {Implementation dependent} -- Data to be parsed
-
-        Keyword Arguments:
-            dtype {DataType} -- Type of data to be parsed (default: {DataType.CSV})
-
-        Returns:
-            DataFrame -- The parsed dataframe.
-
-        Raises:
-            ParserError -- If unable to parse data
-        """
+        """Parse data and convert according to parser schema."""
         try:
             parsed_df = data[["PMID", "GeneID"]]
-
             return parsed_df
         except:
             return None
@@ -212,7 +208,7 @@ class PubMedParser(BaseParser):
     """
 
     default_type: DataType = DataType.XML
-    scraper: PubMedScraper()
+    scraper: gs.PubMedScraper()
     schema: Schema = Schema(
         [
             Column("pmid", [IsDtypeValidation(np.int64)]),

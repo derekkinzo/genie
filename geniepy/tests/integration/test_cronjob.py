@@ -4,8 +4,20 @@ import geniepy
 
 
 @pytest.mark.slow_integration_test
+def test_update_sjr():
+    """Update dao table."""
+    geniepy.update_sjr()
+
+
+@pytest.mark.slow_integration_test
+def test_update_disease2pubtator():
+    """Update dao table."""
+    geniepy.update_disease2pubtator()
+
+
+@pytest.mark.slow_integration_test
 def test_update_tables():
-    """Test calculating predictions."""
+    """Update all tables."""
     geniepy.update_tables()
 
 

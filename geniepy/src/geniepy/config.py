@@ -9,14 +9,7 @@ import yaml
 from geniepy.errors import ConfigError
 import geniepy.datamgmt.daos as daos
 import geniepy.datamgmt.repositories as dr
-from geniepy.datamgmt.tables import (
-    PUBMED_PROPTY,
-    CTD_PROPTY,
-    CLSFR_PROPTY,
-    FEATURES_PROPTY,
-    SCORES_PROPTY,
-    PUBTATOR_GENE_PROPTY,
-)
+import geniepy.datamgmt.tables as gt
 from geniepy.datamgmt import DaoManager
 from geniepy.classmgmt import ClassificationMgr
 from geniepy.classmgmt.classifiers import Classifier
@@ -33,11 +26,27 @@ def read_yaml() -> dict:
         return yaml.load(config_file, Loader=yaml.FullLoader)
 
 
+CONFIGDICT = read_yaml()
+PROJNAME = CONFIGDICT["gbq"]["proj"]
+DATASET = CONFIGDICT["gbq"]["dataset"]
+
+
 def get_chunksize() -> int:
     """Retrieve standard genie generators chunk size."""
     configdict = read_yaml()
     # TODO handle value error if chunksize not int?
     return int(configdict["chunksize"])
+
+
+def get_credentials() -> str:
+    """Get credentials file path from config."""
+    credentials_file = Path(CONFIGDICT["gbq"]["credentials"]).expanduser()
+    credentials_path = Path.cwd().joinpath(credentials_file).resolve()
+    if not credentials_path.exists():
+        # TODO log error properly
+        print(f"Invalid configuration file: {credentials_path}")
+        raise ConfigError("Credentials path not found")
+    return credentials_path
 
 
 def get_repos():
@@ -47,40 +56,33 @@ def get_repos():
     projname = configdict["gbq"]["proj"]
     dataset = configdict["gbq"]["dataset"]
     features_repo = dr.GbqRepository(
-        projname, FEATURES_PROPTY, "scoring", credentials_path
+        projname, gt.FEATURES_PROPTY, "scoring", credentials_path
     )
-    scores_repo = dr.GbqRepository(projname, SCORES_PROPTY, dataset, credentials_path)
+    scores_repo = dr.GbqRepository(
+        projname, gt.SCORES_PROPTY, dataset, credentials_path
+    )
     return features_repo, scores_repo
+
+
+def get_dao(daoname: str):
+    dao_dict = {
+        "disease2pubtator": (daos.PubtatorDiseaseDao, gt.PUBTATOR_DISEASE_PROPTY,),
+        "gene2pubtator": (daos.PubtatorGeneDao, gt.PUBTATOR_GENE_PROPTY),
+        "pubmed": (daos.PubMedDao, gt.PUBMED_PROPTY),
+    }
+    DAO_CLS = dao_dict[daoname][0]
+    TABLE_PROPTY = dao_dict[daoname][1]
+    credentials = get_credentials()
+    dao = DAO_CLS(dr.GbqRepository(PROJNAME, TABLE_PROPTY, DATASET, credentials))
+    return dao
 
 
 def get_daomgr() -> DaoManager:
     """Configure data mgmt subsystem."""
-    # TODO Retrieve from config file
-    configdict = read_yaml()
-    credentials_file = Path(configdict["gbq"]["credentials"]).expanduser()
-    credentials_path = Path.cwd().joinpath(credentials_file).resolve()
-    if not credentials_path.exists():
-        # TODO log error properly
-        print(f"Invalid configuration file: {credentials_path}")
-        raise ConfigError("Credentials path not found")
-    # Google BigQuery Project Name
-    projname = configdict["gbq"]["proj"]
-    dataset = configdict["gbq"]["dataset"]
-    # Construct
-    pubtator_gene_dao = daos.PubtatorGeneDao(
-        dr.GbqRepository(projname, PUBTATOR_GENE_PROPTY, dataset, credentials_path)
-    )
-    pubmed_dao = daos.PubMedDao(
-        dr.GbqRepository(projname, PUBMED_PROPTY, dataset, credentials_path)
-    )
-    classifier_dao = daos.ClassifierDao(
-        dr.GbqRepository(projname, CLSFR_PROPTY, dataset, credentials_path)
-    )
-    daomgr = DaoManager(
-        pubtator_gene_dao=pubtator_gene_dao,
-        pubmed_dao=pubmed_dao,
-        classifier_dao=classifier_dao,
-    )
+    pubtator_disease_dao = get_dao("disease2pubtator")
+    pubtator_gene_dao = get_dao("gene2pubtator")
+    pubmed_dao = get_dao("pubmed")
+    daomgr = DaoManager(pubtator_disease_dao, pubtator_gene_dao, pubmed_dao)
     return daomgr
 
 
