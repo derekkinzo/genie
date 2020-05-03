@@ -119,10 +119,7 @@ class Classifier(BaseClassifier):
         predictions = self._model.predict(filtered_features)
         probs = self._model.predict_proba(filtered_features)
         prob_1 = [item[0] for item in probs]  # Get positiive probs only
-        # Todays date
-        date = datetime.today().strftime("%Y-%m-%d")
         # Add new fields into original df
         scores_df["classifier_prediction"] = predictions
         scores_df["classifier_prob"] = prob_1
-        scores_df["scoring_date"] = date
         return scores_df
