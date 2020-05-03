@@ -7,6 +7,7 @@ generate the dataframe usef by the classifiers to calculate a prediction score.
 from typing import Generator
 import pandas as pd
 import geniepy.datamgmt.daos as daos
+from multiprocessing import Process
 
 
 class DaoManager:
@@ -46,10 +47,19 @@ class DaoManager:
 
     def download(self, chunksize: int):
         """Download (scrapes) data for DAOs and creates internal tables."""
-        self._sjr_dao.download(chunksize)
-        self._pubtator_disease_dao.download(chunksize)
-        self._pubtator_gene_dao.download(chunksize)
-        self._pubmed_dao.download(chunksize)
+        # Fire off scrapers async
+        psjr = Process(target=self._sjr_dao.download, args=(chunksize,))
+        ppubtatordisease = Process(
+            target=self._pubtator_disease_dao.download, args=(chunksize,)
+        )
+        ppubtatorgene = Process(
+            target=self._pubtator_gene_dao.download, args=(chunksize,)
+        )
+        ppubmed = Process(target=self._pubmed_dao.download, args=(chunksize,))
+        psjr.start()
+        ppubtatordisease.start()
+        ppubtatorgene.start()
+        # ppubmed.start()
 
     def _get_pubmeds_df(self, pmids: str):
         """

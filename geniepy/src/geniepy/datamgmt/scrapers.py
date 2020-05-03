@@ -62,7 +62,6 @@ class PubtatorGeneScraper(BaseScraper):
         """Download records from online sources."""
         if not self.gzip_path.exists():
             wget.download(self.FTP_URL, str(self.gzip_path))
-        if not self.csv_path.exists():
             with gzip.open(self.gzip_path, "rb") as f_in:
                 with open(self.csv_path, "wb") as f_out:
                     shutil.copyfileobj(f_in, f_out)
