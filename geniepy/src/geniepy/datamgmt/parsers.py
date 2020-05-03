@@ -199,6 +199,23 @@ class PubtatorGeneParser(BaseParser):
             return None
 
 
+class SjrParser(BaseParser):
+    """Implementation of Scientific Journal Ratings Parser."""
+
+    default_type: DataType = DataType.DF
+    scraper: gs.SjrScraper = gs.SjrScraper()
+
+    @staticmethod
+    def parse(data, dtype=DataType.DF) -> DataFrame:
+        """Parse data and convert according to parser schema."""
+        try:
+            parsed_df = data[["Title", "SJR", "H index"]]
+            parsed_df.rename(columns={"H index": "h_index"}, inplace=True)
+            return parsed_df
+        except:
+            return None
+
+
 class PubMedParser(BaseParser):
     """
     Implementation of PubMed Articles Parser.

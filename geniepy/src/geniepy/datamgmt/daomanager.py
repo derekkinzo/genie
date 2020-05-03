@@ -24,6 +24,7 @@ class DaoManager:
     """
 
     __slots__ = [
+        "_sjr_dao",
         "_pubtator_disease_dao",
         "_pubtator_gene_dao",
         "_pubmed_dao",
@@ -32,17 +33,20 @@ class DaoManager:
     # pylint: disable=bad-continuation
     def __init__(
         self,
+        sjr_dao: daos.SjrDao,
         pubtator_disease_dao: daos.PubtatorDiseaseParser,
         pubtator_gene_dao: daos.PubtatorGeneParser,
         pubmed_dao: daos.PubMedDao,
     ):
         """Initializa DAO mgr with corresponding DAO children."""
+        self._sjr_dao = sjr_dao
         self._pubtator_disease_dao = pubtator_disease_dao
         self._pubtator_gene_dao = pubtator_gene_dao
         self._pubmed_dao = pubmed_dao
 
     def download(self, chunksize: int):
         """Download (scrapes) data for DAOs and creates internal tables."""
+        self._sjr_dao.download(chunksize)
         self._pubtator_disease_dao.download(chunksize)
         self._pubtator_gene_dao.download(chunksize)
         self._pubmed_dao.download(chunksize)

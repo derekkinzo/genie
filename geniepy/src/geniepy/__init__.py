@@ -56,7 +56,7 @@ def update_disease2pubtator():
 def update_sjr():
     """Update sjr table."""
     sjr_dao = config.get_dao("sjr")
-    sjr_dao.download()
+    sjr_dao.download(config.get_chunksize())
 
 
 def update_tables():

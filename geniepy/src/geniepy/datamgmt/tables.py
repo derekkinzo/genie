@@ -114,3 +114,13 @@ PUBTATOR_DISEASE_PROPTY = RepoProperties(
     pkey=PUBTATOR_DISEASE_PKEY,
     table=PUBTATOR_DISEASE_DAO_TABLE,
 )
+
+SJR_PKEY = "Rank"
+"""Table primary key."""
+SJR_TABLE_NAME = "sjr"
+"""Table name."""
+SJR_DAO_TABLE = None
+"""Output DAO Repository Schema."""
+SJR_PROPTY = RepoProperties(
+    tablename=SJR_TABLE_NAME, pkey=SJR_PKEY, table=SJR_DAO_TABLE,
+)

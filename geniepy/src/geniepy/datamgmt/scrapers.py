@@ -47,24 +47,24 @@ class PubtatorGeneScraper(BaseScraper):
         self.TMP_DIR.mkdir(parents=True, exist_ok=True)
 
     @property
-    def pubtator_gzip(self):
+    def gzip_path(self):
         """Path to pubtator gzip downloaded file."""
-        pubtator_gzip = self.TMP_DIR.joinpath(self.GZIP_NAME).resolve()
-        return pubtator_gzip
+        gzip_path = self.TMP_DIR.joinpath(self.GZIP_NAME).resolve()
+        return gzip_path
 
     @property
-    def pubtator_csv(self):
+    def csv_path(self):
         """Path to pubtator csv downloaded file."""
-        pubtator_csv = self.TMP_DIR.joinpath(self.CSV_NAME).resolve()
-        return pubtator_csv
+        csv_path = self.TMP_DIR.joinpath(self.CSV_NAME).resolve()
+        return csv_path
 
     def download(self):
         """Download records from online sources."""
-        if not self.pubtator_gzip.exists():
-            wget.download(self.FTP_URL, str(self.pubtator_gzip))
-        if not self.pubtator_csv.exists():
-            with gzip.open(self.pubtator_gzip, "rb") as f_in:
-                with open(self.pubtator_csv, "wb") as f_out:
+        if not self.gzip_path.exists():
+            wget.download(self.FTP_URL, str(self.gzip_path))
+        if not self.csv_path.exists():
+            with gzip.open(self.gzip_path, "rb") as f_in:
+                with open(self.csv_path, "wb") as f_out:
                     shutil.copyfileobj(f_in, f_out)
 
     def scrape(self, chunksize: int, **kwargs) -> Generator:
@@ -75,19 +75,16 @@ class PubtatorGeneScraper(BaseScraper):
         """
         self.download()
         csv_gen = pd.read_csv(
-            self.pubtator_csv,
-            chunksize=chunksize,
-            delimiter="\t",
-            names=self.HEADER_NAMES,
+            self.csv_path, chunksize=chunksize, delimiter="\t", names=self.HEADER_NAMES,
         )
         return csv_gen
 
     def clean_up(self):
         """Delete all temp files."""
-        if os.path.exists(self.pubtator_gzip):
-            os.remove(self.pubtator_gzip)
-        if os.path.exists(self.pubtator_csv):
-            os.remove(self.pubtator_csv)
+        if os.path.exists(self.gzip_path):
+            os.remove(self.gzip_path)
+        if os.path.exists(self.csv_path):
+            os.remove(self.csv_path)
 
 
 class PubtatorDiseaseScraper(PubtatorGeneScraper):
@@ -98,13 +95,38 @@ class PubtatorDiseaseScraper(PubtatorGeneScraper):
     CSV_NAME = "pubtator-disease.csv"
     HEADER_NAMES = ["PMID", "Type", "DiseaseID", "Mentions", "Resource"]
 
+
+class SjrScraper(BaseScraper):
+    """Scrape Scientific Journal Ratings records."""
+
+    TMP_DIR = Path.cwd().joinpath("tmp")
+    FTP_URL = "https://www.scimagojr.com/journalrank.php?out=xls"  # noqa
+    CSV_NAME = "sjr.csv"
+
+    def __init__(self):
+        self.TMP_DIR.mkdir(parents=True, exist_ok=True)
+
+    @property
+    def csv_path(self):
+        """Path to pubtator csv downloaded file."""
+        csv_path = self.TMP_DIR.joinpath(self.CSV_NAME).resolve()
+        return csv_path
+
     def download(self):
         """Download records from online sources."""
-        if not self.pubtator_gzip.exists():
-            wget.download(self.FTP_URL, str(self.pubtator_gzip))
-            with gzip.open(self.pubtator_gzip, "rb") as f_in:
-                with open(self.pubtator_csv, "wb") as f_out:
-                    shutil.copyfileobj(f_in, f_out)
+        if not self.csv_path.exists():
+            wget.download(self.FTP_URL, str(self.csv_path))
+
+    def scrape(self, chunksize: int, **kwargs) -> Generator:
+        """Download sjr data."""
+        self.download()
+        csv_gen = pd.read_csv(self.csv_path, chunksize=chunksize, delimiter=";")
+        return csv_gen
+
+    def clean_up(self):
+        """Delete all temp files."""
+        if os.path.exists(self.csv_path):
+            os.remove(self.csv_path)
 
 
 class CtdScraper(BaseScraper):

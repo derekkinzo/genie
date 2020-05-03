@@ -29,13 +29,12 @@ def read_yaml() -> dict:
 CONFIGDICT = read_yaml()
 PROJNAME = CONFIGDICT["gbq"]["proj"]
 DATASET = CONFIGDICT["gbq"]["dataset"]
+CHUNKSIZE = int(CONFIGDICT["chunksize"])
 
 
 def get_chunksize() -> int:
     """Retrieve standard genie generators chunk size."""
-    configdict = read_yaml()
-    # TODO handle value error if chunksize not int?
-    return int(configdict["chunksize"])
+    return CHUNKSIZE
 
 
 def get_credentials() -> str:
@@ -68,6 +67,7 @@ def get_dao(daoname: str):
     dao_dict = {
         "disease2pubtator": (daos.PubtatorDiseaseDao, gt.PUBTATOR_DISEASE_PROPTY,),
         "gene2pubtator": (daos.PubtatorGeneDao, gt.PUBTATOR_GENE_PROPTY),
+        "sjr": (daos.SjrDao, gt.SJR_PROPTY),
         "pubmed": (daos.PubMedDao, gt.PUBMED_PROPTY),
     }
     DAO_CLS = dao_dict[daoname][0]
@@ -79,10 +79,11 @@ def get_dao(daoname: str):
 
 def get_daomgr() -> DaoManager:
     """Configure data mgmt subsystem."""
+    sjr_dao = get_dao("sjr")
     pubtator_disease_dao = get_dao("disease2pubtator")
     pubtator_gene_dao = get_dao("gene2pubtator")
     pubmed_dao = get_dao("pubmed")
-    daomgr = DaoManager(pubtator_disease_dao, pubtator_gene_dao, pubmed_dao)
+    daomgr = DaoManager(sjr_dao, pubtator_disease_dao, pubtator_gene_dao, pubmed_dao)
     return daomgr
 
 
