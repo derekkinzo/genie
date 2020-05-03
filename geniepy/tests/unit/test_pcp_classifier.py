@@ -1,8 +1,6 @@
 """Test base classifier class."""
-import pytest
 import pandas as pd
 import geniepy.classmgmt.classifiers as clsfr
-from geniepy.errors import ClassifierError
 
 CLSFR_NAME = "pub_score"
 

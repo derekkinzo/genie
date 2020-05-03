@@ -4,7 +4,6 @@ import pandas as pd
 from google_drive_downloader import GoogleDriveDownloader as gdd
 from joblib import load as jload
 from geniepy.errors import ClassifierError
-from datetime import datetime
 
 ERROR_SCORE = float(-1)
 
