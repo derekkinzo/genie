@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 from google_drive_downloader import GoogleDriveDownloader as gdd
-from joblib import load
+from joblib import load as jload
 from geniepy.errors import ClassifierError
 from datetime import datetime
 
@@ -71,7 +71,7 @@ class BaseClassifier(ABC):
                 dest_path="~/geniepy/gene_disease_gbc.joblib",
                 unzip=True,
             )
-            self._model = load("~/geniepy/gene_disease_gbc.joblib")
+            self._model = jload("~/geniepy/gene_disease_gbc.joblib")
             self._is_trained = True
         except Exception:
             # If load fail

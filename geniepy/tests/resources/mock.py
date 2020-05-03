@@ -12,8 +12,22 @@ from geniepy.classmgmt.classifiers import Classifier
 TEST_CHUNKSIZE = 5
 """Default chunksize for tests."""
 
-PCPCLSFR = Classifier("pub_score")
-CTCLSFR = Classifier("ct_score")
+
+class MockClassifier(Classifier):
+    """Mock classifier for tests."""
+
+    def load(self):
+        """
+        Load classifier model.
+        Raises:
+            ClassifierError -- If model doesn't load successfully
+        """
+        self._model = True
+        self._is_trained = True
+
+
+PCPCLSFR = MockClassifier("pub_score")
+CTCLSFR = MockClassifier("ct_score")
 # pylint: disable=protected-access
 CTCLSFR._col_name = "ct_score"
 MOCK_CLSFRMGR: ClassificationMgr = ClassificationMgr([PCPCLSFR, CTCLSFR])

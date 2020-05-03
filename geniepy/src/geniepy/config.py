@@ -26,20 +26,28 @@ def read_yaml() -> dict:
         return yaml.load(config_file, Loader=yaml.FullLoader)
 
 
-CONFIGDICT = read_yaml()
-PROJNAME = CONFIGDICT["gbq"]["proj"]
-DATASET = CONFIGDICT["gbq"]["dataset"]
-CHUNKSIZE = int(CONFIGDICT["chunksize"])
+def get_projname():
+    """Retrieve gbq project name from config file."""
+    configdict = read_yaml()
+    return configdict["gbq"]["proj"]
+
+
+def get_dataset():
+    """Retrive gbq dataset from config file."""
+    configdict = read_yaml()
+    return configdict["gbq"]["dataset"]
 
 
 def get_chunksize() -> int:
     """Retrieve standard genie generators chunk size."""
-    return CHUNKSIZE
+    configdict = read_yaml()
+    return configdict["chunksize"]
 
 
 def get_credentials() -> str:
     """Get credentials file path from config."""
-    credentials_file = Path(CONFIGDICT["gbq"]["credentials"]).expanduser()
+    configdict = read_yaml()
+    credentials_file = Path(configdict["gbq"]["credentials"]).expanduser()
     credentials_path = Path.cwd().joinpath(credentials_file).resolve()
     if not credentials_path.exists():
         # TODO log error properly
@@ -49,17 +57,13 @@ def get_credentials() -> str:
 
 
 def get_repos():
-    configdict = read_yaml()
-    credentials_file = Path(configdict["gbq"]["credentials"]).expanduser()
-    credentials_path = Path.cwd().joinpath(credentials_file).resolve()
-    projname = configdict["gbq"]["proj"]
-    dataset = configdict["gbq"]["dataset"]
+    credentials = get_credentials()
+    projname = get_projname()
+    dataset = get_dataset()
     features_repo = dr.GbqRepository(
-        projname, gt.FEATURES_PROPTY, "scoring", credentials_path
+        projname, gt.FEATURES_PROPTY, "scoring", credentials
     )
-    scores_repo = dr.GbqRepository(
-        projname, gt.SCORES_PROPTY, dataset, credentials_path
-    )
+    scores_repo = dr.GbqRepository(projname, gt.SCORES_PROPTY, dataset, credentials)
     return features_repo, scores_repo
 
 
@@ -73,7 +77,9 @@ def get_dao(daoname: str):
     DAO_CLS = dao_dict[daoname][0]
     TABLE_PROPTY = dao_dict[daoname][1]
     credentials = get_credentials()
-    dao = DAO_CLS(dr.GbqRepository(PROJNAME, TABLE_PROPTY, DATASET, credentials))
+    projname = get_projname()
+    dataset = get_dataset()
+    dao = DAO_CLS(dr.GbqRepository(projname, TABLE_PROPTY, dataset, credentials))
     return dao
 
 

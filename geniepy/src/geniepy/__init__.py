@@ -3,8 +3,6 @@ from shutil import copyfile
 from pkg_resources import get_distribution, DistributionNotFound
 import geniepy.config as config
 from geniepy.datamgmt import DaoManager
-from geniepy.classmgmt import ClassificationMgr
-import geniepy.datamgmt.repositories as dr
 from time import time
 
 try:
