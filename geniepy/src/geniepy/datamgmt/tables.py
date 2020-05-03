@@ -69,3 +69,58 @@ CLSFR_DAO_TABLE = Table(
 CLSFR_PROPTY = RepoProperties(
     tablename=CLSFR_TABLE_NAME, pkey=CLSFR_PKEY, table=CLSFR_DAO_TABLE
 )
+
+
+FEATURES_PKEY = "gene_id"
+"""Features table primary key."""
+FEATURES_TABLE_NAME = "scoring_data"
+"""Features table name."""
+FEATURES_DAO_TABLE = None
+"""Features Output DAO Repository Schema."""
+FEATURES_PROPTY = RepoProperties(
+    tablename=FEATURES_TABLE_NAME, pkey=FEATURES_PKEY, table=FEATURES_DAO_TABLE
+)
+
+SCORES_PKEY = "gene_id"
+"""Scoring table primary key."""
+SCORES_TABLE_NAME = "scores"
+"""Scoring table name."""
+SCORES_DAO_TABLE = None
+"""Scoring Output DAO Repository Schema."""
+SCORES_PROPTY = RepoProperties(
+    tablename=SCORES_TABLE_NAME, pkey=SCORES_PKEY, table=SCORES_DAO_TABLE
+)
+
+PUBTATOR_GENE_PKEY = "GeneID"
+"""Table primary key."""
+PUBTATOR_GENE_TABLE_NAME = "gene2pubtator"
+"""Table name."""
+PUBTATOR_GENE_DAO_TABLE = None
+"""Output DAO Repository Schema."""
+PUBTATOR_GENE_PROPTY = RepoProperties(
+    tablename=PUBTATOR_GENE_TABLE_NAME,
+    pkey=PUBTATOR_GENE_PKEY,
+    table=PUBTATOR_GENE_DAO_TABLE,
+)
+
+PUBTATOR_DISEASE_PKEY = "DiseaseID"
+"""Table primary key."""
+PUBTATOR_DISEASE_TABLE_NAME = "disease2pubtator"
+"""Table name."""
+PUBTATOR_DISEASE_DAO_TABLE = None
+"""Output DAO Repository Schema."""
+PUBTATOR_DISEASE_PROPTY = RepoProperties(
+    tablename=PUBTATOR_DISEASE_TABLE_NAME,
+    pkey=PUBTATOR_DISEASE_PKEY,
+    table=PUBTATOR_DISEASE_DAO_TABLE,
+)
+
+SJR_PKEY = "Rank"
+"""Table primary key."""
+SJR_TABLE_NAME = "sjr"
+"""Table name."""
+SJR_DAO_TABLE = None
+"""Output DAO Repository Schema."""
+SJR_PROPTY = RepoProperties(
+    tablename=SJR_TABLE_NAME, pkey=SJR_PKEY, table=SJR_DAO_TABLE,
+)

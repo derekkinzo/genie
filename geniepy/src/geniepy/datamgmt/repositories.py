@@ -2,6 +2,7 @@
 from typing import Generator
 from abc import ABC, abstractmethod
 import pandas as pd
+from datetime import datetime
 from pandas import DataFrame
 from google.oauth2 import service_account
 import pandas_gbq
@@ -173,6 +174,8 @@ class GbqRepository(BaseRepository):  # pragma: no cover
     def get_dict_schema(table_schema: Table) -> [dict]:
         """Convert Table Schema into GBQ dict expected format."""
         # flake8: noqa
+        if table_schema is None:
+            return
         coldict = lambda col: {
             "name": col.key,
             "type": col.type.__class__.__name__.upper(),
@@ -191,6 +194,10 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             DaoError: if cannot save payload to db
         """
         try:
+            # Always append date column
+            # Todays date
+            date = datetime.today().strftime("%Y-%m-%d")
+            payload["date"] = date
             pandas_gbq.to_gbq(
                 payload, self._tablename, if_exists="append", table_schema=self._table,
             )

@@ -13,6 +13,9 @@ from geniepy.datamgmt.parsers import (
     CtdParser,
     PubMedParser,
     ClassifierParser,
+    PubtatorGeneParser,
+    PubtatorDiseaseParser,
+    SjrParser,
 )
 import geniepy.datamgmt.repositories as dr
 
@@ -63,6 +66,7 @@ class BaseDao(ABC):
             how much memory is processed at a time while downloading and parsing the
             data.
         """
+        print(f"Starting download for {self._repository.tablename} ...")
         for chunk_df in self._parser.fetch(chunksize):
             self._repository.save(chunk_df)
 
@@ -134,3 +138,27 @@ class ClassifierDao(BaseDao):
     def download(self, chunksize):
         """Classifiers don't need scrapers, so method not implemented."""
         raise NotImplementedError
+
+
+class PubtatorGeneDao(BaseDao):
+    """Data Access Object for Pubtator PMID/GeneID records."""
+
+    __slots__ = ["_repository"]
+
+    _parser: PubtatorGeneParser = PubtatorGeneParser()
+
+
+class PubtatorDiseaseDao(BaseDao):
+    """Data Access Object for Pubtator PMID/DiseaseID records."""
+
+    __slots__ = ["_repository"]
+
+    _parser: PubtatorDiseaseParser = PubtatorDiseaseParser()
+
+
+class SjrDao(BaseDao):
+    """Data Access Object for Pubtator PMID/DiseaseID records."""
+
+    __slots__ = ["_repository"]
+
+    _parser: SjrParser = SjrParser()

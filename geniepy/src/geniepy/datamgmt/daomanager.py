@@ -7,6 +7,7 @@ generate the dataframe usef by the classifiers to calculate a prediction score.
 from typing import Generator
 import pandas as pd
 import geniepy.datamgmt.daos as daos
+from multiprocessing import Process
 
 
 class DaoManager:
@@ -23,27 +24,42 @@ class DaoManager:
     the classifiers.
     """
 
-    __slots__ = ["_ctd_dao", "_pubmed_dao", "_classifier_dao"]
+    __slots__ = [
+        "_sjr_dao",
+        "_pubtator_disease_dao",
+        "_pubtator_gene_dao",
+        "_pubmed_dao",
+    ]
 
     # pylint: disable=bad-continuation
     def __init__(
         self,
-        ctd_dao: daos.CtdDao,
+        sjr_dao: daos.SjrDao,
+        pubtator_disease_dao: daos.PubtatorDiseaseParser,
+        pubtator_gene_dao: daos.PubtatorGeneParser,
         pubmed_dao: daos.PubMedDao,
-        classifier_dao: daos.ClassifierDao,
     ):
         """Initializa DAO mgr with corresponding DAO children."""
-        self._ctd_dao = ctd_dao
-        """The CTD DAO handles data from CTD databases."""
+        self._sjr_dao = sjr_dao
+        self._pubtator_disease_dao = pubtator_disease_dao
+        self._pubtator_gene_dao = pubtator_gene_dao
         self._pubmed_dao = pubmed_dao
-        """The PubMed DAO handles data from PubMed databases."""
-        self._classifier_dao = classifier_dao
-        """The output DAO stores output data after classifiers calc predictions."""
 
     def download(self, chunksize: int):
         """Download (scrapes) data for DAOs and creates internal tables."""
-        self._ctd_dao.download(chunksize)
-        self._pubmed_dao.download(chunksize)
+        # Fire off scrapers async
+        psjr = Process(target=self._sjr_dao.download, args=(chunksize,))
+        ppubtatordisease = Process(
+            target=self._pubtator_disease_dao.download, args=(chunksize,)
+        )
+        ppubtatorgene = Process(
+            target=self._pubtator_gene_dao.download, args=(chunksize,)
+        )
+        ppubmed = Process(target=self._pubmed_dao.download, args=(chunksize,))
+        psjr.start()
+        ppubtatordisease.start()
+        ppubtatorgene.start()
+        # ppubmed.start()
 
     def _get_pubmeds_df(self, pmids: str):
         """
@@ -94,8 +110,8 @@ class DaoManager:
         """
         # iterate over ctd table
         record_df = pd.DataFrame()
-        query_all = self._ctd_dao.query_all
-        for record_df in self._ctd_dao.query(query_all, chunksize):
+        query_all = self._pubtator_gene_dao.query_all
+        for record_df in self._pubtator_gene_dao.query(query_all, chunksize):
             record_df["pubmeds"] = record_df.apply(
                 lambda row: self._get_pubmeds_df(row.pmids), axis=1
             )
@@ -108,4 +124,4 @@ class DaoManager:
         Arguments:
             records {DataFrame} -- [description]
         """
-        self._classifier_dao.save(predictions)
+        # self._classifier_dao.save(predictions)
