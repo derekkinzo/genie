@@ -12,13 +12,13 @@ import requests
 from os import path
 from bs4 import BeautifulSoup
 import os
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getcwd() + "/service-account.json"
-from google.cloud import bigquery
+
+from journals import journals
 
 # os.environ["FLASK_ENV"] = "development"
 
-client = bigquery.Client()
 app = Flask("genie")
+app.register_blueprint(journals)
 
 @app.route("/index")
 def index():
@@ -72,7 +72,6 @@ def list():
 
     return render_template("list.html", data = results, columns = columns)
 
-@app.route('/js/list.js')
 def listjs():
     return send_from_directory("js", "list.js")
 
