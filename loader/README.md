@@ -1,0 +1,1 @@
+psql < journals.sql
