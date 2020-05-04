@@ -3,6 +3,7 @@ from flask import render_template
 from flask import jsonify
 from flask import Blueprint
 import pdb
+import math
 from connection import connection
 journals = Blueprint("journals", __name__)
 orders = [None, "ASC", "DESC"]
@@ -17,6 +18,8 @@ def view():
 def index():
     search = request.args.get("search")
     order = "id, year"
+    page = int(request.args.get("page"))
+
     if request.args.get("sortcol"):
         order = f"{cols[int(request.args.get('sortcol'))]} {orders[int(request.args.get('sortstate'))]}, " + order
 
@@ -27,11 +30,19 @@ def index():
                 FROM journals
                 WHERE id LIKE %(search)s
                 ORDER BY {}
-                LIMIT 100
-                OFFSET 0;
-            """.format(order), {"search": f"%{search}%"})
+                LIMIT {}
+                OFFSET {};
+            """.format(order, 50, page * 50), {"search": f"%{search}%"})
             journals = cur.fetchall()
+
+            cur.execute("""
+                SELECT count(1)
+                FROM journals
+                WHERE id LIKE %(search)s;
+            """, {"search": f"%{search}%"})
+            count = cur.fetchone()[0]
+
             results = []
             for journal in journals:
                 results.append(journal)
-            return jsonify(results)
+            return jsonify({"items": results, "total_pages": math.ceil(count / 50)})

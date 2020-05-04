@@ -7,7 +7,13 @@ journals.fetch = () => {
     params.sortstate = $(sort).attr("state")
   }
 
+  params.page = journals.getPage()
+
   $.get("/journals", params, (data) => {
     journals.update(data)
   })
+}
+
+journals.getPage = () => {
+  return parseInt($("#current-page").attr("page"))
 }

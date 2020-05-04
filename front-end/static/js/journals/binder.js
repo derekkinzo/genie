@@ -1,4 +1,5 @@
 $("#search").keyup((event) => {
+  journals.updatePage(0)
   journals.fetch()
 })
 
@@ -7,6 +8,22 @@ $(".fa-sort").click((event) => {
   $(".fa-sort").attr("state", 0)
   $(event.target).attr("state", state)
   journals.fetch()
+})
+
+$(".fa-step-forward").click((event) => {
+  if (!$(event.target).hasClass("disabled")) {
+    let newPage = journals.getPage() + 1
+    journals.updatePage(newPage)
+    journals.fetch()
+  }
+})
+
+$(".fa-step-backward").click((event) => {
+  if (!$(event.target).hasClass("disabled")) {
+    let newPage = journals.getPage() - 1
+    journals.updatePage(newPage)
+    journals.fetch()
+  }
 })
 
 journals.fetch()
