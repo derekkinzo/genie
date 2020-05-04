@@ -2,6 +2,14 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <style>
+  .fa-sort[state="1"] {
+    color: black;
+  }
+
+  .fa-sort[state="2"] {
+    color: black;
+  }
+
   #table tbody {
     height: 90%;
     overflow: auto;
@@ -111,7 +119,9 @@
           {%for i in range(columns | length)%}
             <th>
               {{columns[i]}}
-              <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
+              {% if i > 0 %}
+                <i class="fa fa-fw fa-sort" state=0 col={{i}} style="cursor:pointer"></i>
+              {% endif %}
             </th>
           {%endfor%}
         </tr>
