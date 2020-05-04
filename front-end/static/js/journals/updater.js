@@ -15,6 +15,7 @@ journals.update = (data) => {
     }
     tbody.append(tr)
   }
+  $($(tbody).find("tr")[0]).trigger("click")
 
   $("#total-pages").text(data.total_pages)
   $(".fa-step-backward").removeClass("disabled")
