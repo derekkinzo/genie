@@ -17,6 +17,8 @@ def view():
 @journals.route("/journals")
 def index():
     search = request.args.get("search")
+    if search:
+        search = "WHERE id LIKE %(search)s"
     order = "id, year"
     page = int(request.args.get("page"))
 
@@ -28,18 +30,18 @@ def index():
             cur.execute("""
                 SELECT id, year, count
                 FROM journals
-                WHERE id LIKE %(search)s
+                {}
                 ORDER BY {}
                 LIMIT {}
                 OFFSET {};
-            """.format(order, 50, page * 50), {"search": "%{}%".format(search)})
+            """.format(search, order, 50, page * 50), {"search": "%{}%".format(search)})
             journals = cur.fetchall()
 
             cur.execute("""
                 SELECT count(1)
                 FROM journals
-                WHERE id LIKE %(search)s;
-            """, {"search": "%{}%".format(search)})
+                {};
+            """.format(search), {"search": "%{}%".format(search)})
             count = cur.fetchone()[0]
 
             results = []
