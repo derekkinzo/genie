@@ -1,12 +1,19 @@
 # Default chunksize to be used throughout
 chunksize: 100000
 
+# Google Drive File ID for classifier model
+model: "1ADgASNfM1cmhr9r1-ozuEp_e7y2kCq4R"
+
 # BigQuery Parameters
 gbq:
   # Create google cloud service account key file:
   # https://console.cloud.google.com/apis/credentials/serviceaccountkey
-  credentials: "~/geniepy/harvard-599-trendsetters-credentials.json"
+  credentials: "~/.geniepy.d/harvard-599-trendsetters-credentials.json"
   # GBQ Project Name
   proj: "harvard-599-trendsetters"
   # GBQ Project DataSet
-  dataset: "Genie"
+  dataset:
+    # Dataset containing master tables
+    master: "Genie"
+    # Dataset containing classifier scoring data
+    scoring: "scoring"

@@ -4,6 +4,16 @@
 class GeniePyError(Exception):
     """General GeniePy error, all other geniepy errors inherits from GeniePyError."""
 
+    def __init__(self, msg=""):
+        """Add message geniepy exceptions."""
+        self._msg = msg
+        super().__init__()
+
+    @property
+    def message(self):
+        """Return exception message."""
+        return self._msg
+
 
 class SchemaError(GeniePyError):
     """Invalid database schema."""

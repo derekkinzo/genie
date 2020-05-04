@@ -177,7 +177,7 @@ class PubtatorDiseaseParser(BaseParser):
     def parse(data, dtype=DataType.DF) -> DataFrame:
         """Parse data and convert according to parser schema."""
         try:
-            parsed_df = data[["PMID", "DiseaseID"]]
+            parsed_df = data[["PMID", "DiseaseID"]].copy()
             return parsed_df
         except:
             return None
@@ -193,7 +193,7 @@ class PubtatorGeneParser(BaseParser):
     def parse(data, dtype=DataType.DF) -> DataFrame:
         """Parse data and convert according to parser schema."""
         try:
-            parsed_df = data[["PMID", "GeneID"]]
+            parsed_df = data[["PMID", "GeneID"]].copy()
             return parsed_df
         except:
             return None
@@ -209,7 +209,7 @@ class SjrParser(BaseParser):
     def parse(data, dtype=DataType.DF) -> DataFrame:
         """Parse data and convert according to parser schema."""
         try:
-            parsed_df = data[["Title", "SJR", "H index"]]
+            parsed_df = data[["Title", "SJR", "H index"]].copy()
             parsed_df.rename(columns={"H index": "h_index"}, inplace=True)
             return parsed_df
         except:

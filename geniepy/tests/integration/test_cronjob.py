@@ -23,6 +23,6 @@ class TestCronJob:
         """Test calculating predictions."""
         geniepy.run_predictions()
 
-    def test_run_job(self):
+    def test_run(self):
         """Test end-to-end run cron job function."""
-        geniepy.run_job()
+        geniepy.run()

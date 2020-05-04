@@ -7,7 +7,7 @@ TEST_CONFIG_NAME = "testconfig.yaml"
 TEST_CONFIG_PATH = Path(get_resources_path()).resolve().joinpath(TEST_CONFIG_NAME)
 
 # Override default config path for tests
-config.CONFIG_PATH = TEST_CONFIG_PATH
+config.CONFIG_FILE = TEST_CONFIG_PATH
 
 
 def test_chunksize():
