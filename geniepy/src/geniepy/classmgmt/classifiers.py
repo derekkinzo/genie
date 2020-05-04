@@ -4,6 +4,7 @@ import pandas as pd
 from google_drive_downloader import GoogleDriveDownloader as gdd
 from joblib import load as jload
 from geniepy.errors import ClassifierError
+import geniepy.config as gc
 
 ERROR_SCORE = float(-1)
 
@@ -64,14 +65,16 @@ class BaseClassifier(ABC):
             ClassifierError -- If model doesn't load successfully
         """
         # Download model from google drive
+        model_path = gc.TMP_DIR.joinpath("gene_disease_gbc.joblib")
         try:
             gdd.download_file_from_google_drive(
                 file_id="1ADgASNfM1cmhr9r1-ozuEp_e7y2kCq4R",
-                dest_path="~/geniepy/gene_disease_gbc.joblib",
+                dest_path=model_path,
                 unzip=True,
             )
-            self._model = jload("~/geniepy/gene_disease_gbc.joblib")
+            self._model = jload(model_path)
             self._is_trained = True
+            model_path.unlink()
         except Exception:
             # If load fail
             raise ClassifierError("Unable to load model")
