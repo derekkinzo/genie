@@ -32,7 +32,7 @@ def index():
                 ORDER BY {}
                 LIMIT {}
                 OFFSET {};
-            """.format(order, 50, page * 50), {"search": f"%{search}%"})
+            """.format(order, 50, page * 50), {"search": "%{}%".format(search)})
             journals = cur.fetchall()
 
             cur.execute("""
