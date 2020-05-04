@@ -1,5 +1,4 @@
-journals.updater = {}
-journals.updater.updater = (data) => {
+journals.update = (data) => {
   let table = $("#table")
   let tbody = table.find("tbody")
   tbody.empty()
@@ -16,5 +15,3 @@ journals.updater.updater = (data) => {
     tbody.append(tr)
   }
 }
-
-data = journals.fetcher.fetch(journals.updater.updater)

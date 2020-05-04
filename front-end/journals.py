@@ -13,15 +13,18 @@ def view():
 
 @journals.route("/journals")
 def index():
+    search = request.args.get("search")
+
     with connection as conn:
         with conn.cursor() as cur:
             cur.execute("""
                 SELECT id, year, count
                 FROM journals
+                WHERE id LIKE %(search)s
                 ORDER BY id, year DESC
                 LIMIT 100
                 OFFSET 0;
-            """)
+            """, {"search": f"%{search}%"})
             journals = cur.fetchall()
             results = []
             for journal in journals:

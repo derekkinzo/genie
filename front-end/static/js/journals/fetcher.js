@@ -1,6 +1,7 @@
-journals.fetcher = {}
-journals.fetcher.fetch = (updater) => {
-  $.get("/journals", (data) => {
-    updater(data)
+journals.fetch = () => {
+  let search = $("#search").val()
+
+  $.get("/journals", {search: search}, (data) => {
+    journals.update(data)
   })
 }
