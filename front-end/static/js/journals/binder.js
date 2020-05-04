@@ -1,7 +1,7 @@
-$("#search").keyup((event) => {
+$("#search").keyup($.debounce(500, (event) => {
   journals.updatePage(0)
   journals.fetch()
-})
+}))
 
 $(".fa-sort").click((event) => {
   let state = (parseInt($(event.target).attr("state")) + 1) % 3

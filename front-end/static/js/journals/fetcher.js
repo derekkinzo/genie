@@ -1,4 +1,4 @@
-journals.fetch = $.debounce(500, () => {
+journals.fetch = () => {
   let params = {search: $("#search").val()}
 
   let sort = $(".fa-sort[state=1]")[0] || $(".fa-sort[state=2]")[0]
@@ -12,7 +12,7 @@ journals.fetch = $.debounce(500, () => {
   $.get("/journals", params, (data) => {
     journals.update(data)
   })
-})
+}
 
 journals.getPage = () => {
   return parseInt($("#current-page").attr("page"))
