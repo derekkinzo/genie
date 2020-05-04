@@ -6,6 +6,7 @@ journals.update = (data) => {
   for (let i = 0; i < data.items.length; i++) {
     let tr = $("<tr>")
     let row = data.items[i]
+    tr.attr("id", row[0])
     for (let j = 0; j < row.length; j++) {
       let td = $("<td>")
       let div = $("<div>" + row[j] + "</div>")

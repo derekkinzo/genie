@@ -14,6 +14,12 @@ journals.fetch = () => {
   })
 }
 
+journals.show = (id) => {
+  $.get("/journals/" + id, (data) => {
+    journals.plot(data)
+  })
+}
+
 journals.getPage = () => {
   return parseInt($("#current-page").attr("page"))
 }

@@ -26,4 +26,7 @@ $(".fa-step-backward").click((event) => {
   }
 })
 
+$("#table tbody").on("click", "tr", (event) => {
+  journals.show(event.currentTarget.id)
+})
 journals.fetch()

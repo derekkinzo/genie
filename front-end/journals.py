@@ -49,3 +49,20 @@ def index():
             for journal in journals:
                 results.append(journal)
             return jsonify({"items": results, "total_pages": math.ceil(count / 50)})
+
+@journals.route("/journals/<path:id>")
+def show(id):
+    with connection as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT year, count
+                FROM journals
+                WHERE id = %s;
+            """, (id, ))
+            journals = cur.fetchall()
+            x = []
+            y = []
+            for journal in journals:
+                x.append(journal[0])
+                y.append(journal[1])
+            return jsonify({"x": x, "y": y})
