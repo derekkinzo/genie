@@ -66,11 +66,10 @@ class BaseClassifier(ABC):
         """
         # Download model from google drive
         model_path = gc.TMP_DIR.joinpath("gene_disease_gbc.joblib")
+        model_id = gc.get_model()
         try:
             gdd.download_file_from_google_drive(
-                file_id="1ADgASNfM1cmhr9r1-ozuEp_e7y2kCq4R",
-                dest_path=model_path,
-                unzip=True,
+                file_id=model_id, dest_path=model_path, unzip=True,
             )
             self._model = jload(model_path)
             self._is_trained = True

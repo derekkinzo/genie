@@ -33,12 +33,11 @@ def create_repos():
     try:
         credentials = config.get_credentials()
         projname = config.get_projname()
+        dataset = config.get_dataset("scoring")
         features_repo = dr.GbqRepository(
-            projname, gt.FEATURES_PROPTY, "scoring", credentials
+            projname, gt.FEATURES_PROPTY, dataset, credentials
         )
-        scores_repo = dr.GbqRepository(
-            projname, gt.SCORES_PROPTY, "scoring", credentials
-        )
+        scores_repo = dr.GbqRepository(projname, gt.SCORES_PROPTY, dataset, credentials)
         return features_repo, scores_repo
     except ConfigError as exp:
         print(exp.message)
@@ -57,7 +56,7 @@ def create_dao(daoname: str):
     TABLE_PROPTY = dao_dict[daoname][1]
     credentials = config.get_credentials()
     projname = config.get_projname()
-    dataset = config.get_dataset()
+    dataset = config.get_dataset("master")
     dao = DAO_CLS(dr.GbqRepository(projname, TABLE_PROPTY, dataset, credentials))
     return dao
 

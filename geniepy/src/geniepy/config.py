@@ -34,16 +34,22 @@ def read_yaml() -> dict:
         return yaml.load(config_file, Loader=yaml.FullLoader)
 
 
+def get_model() -> str:
+    """Return the model file_id."""
+    configdict = read_yaml()
+    return configdict["model"]
+
+
 def get_projname() -> str:
     """Retrieve gbq project name from config file."""
     configdict = read_yaml()
     return configdict["gbq"]["proj"]
 
 
-def get_dataset() -> str:
-    """Retrive gbq dataset from config file."""
+def get_dataset(dsname: str) -> str:
+    """Retrive gbq dataset from config file. 'master' or 'scoring'."""
     configdict = read_yaml()
-    return configdict["gbq"]["dataset"]
+    return configdict["gbq"]["dataset"][dsname]
 
 
 def get_chunksize() -> int:
