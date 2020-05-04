@@ -197,7 +197,7 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             # Always append date column
             # Todays date
             date = datetime.today().strftime("%Y-%m-%d")
-            payload["date"] = date
+            payload.insert(0, "date", date)
             pandas_gbq.to_gbq(
                 payload, self._tablename, if_exists="append", table_schema=self._table,
             )
