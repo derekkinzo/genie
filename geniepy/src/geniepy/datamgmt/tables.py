@@ -45,6 +45,8 @@ PUBMED_DAO_TABLE = Table(
     Column("language", String),
     Column("chemicals", String),
     Column("mesh_list", String),
+    Column("issn", String),
+    Column("issn_type", String),
 )
 """PUBMED DAO Repository Schema."""
 PUBMED_PROPTY = RepoProperties(

@@ -239,6 +239,8 @@ class PubMedParser(BaseParser):
             Column("language"),
             Column("chemicals"),
             Column("mesh_list"),
+            Column("issn"),
+            Column("issn_type"),            
         ]
     )
 
@@ -272,6 +274,8 @@ class PubMedParser(BaseParser):
             "language",
             "chemicals",
             "mesh_list",
+            "issn",
+            "issn_type",
         ]
 
         # Temp array variables to store from each xml element tree
@@ -286,6 +290,8 @@ class PubMedParser(BaseParser):
         language_list = []
         chemicals_list = []
         mesh_list_list = []
+        issn = []
+        issn_type = []
 
         try:
             # General XML Tags
@@ -302,6 +308,8 @@ class PubMedParser(BaseParser):
                 language_list.append(article.language)
                 chemicals_list.append(str(article.chemicals).strip("[]"))
                 mesh_list_list.append(str(article.mesh_list).strip("[]"))
+                issn.append(str(article.issn).strip("[]"))
+                issn_type.append(str(article.issn_type).strip("[]"))
 
             # Create the array of arrays of values in dataframe
             values = [
@@ -316,6 +324,8 @@ class PubMedParser(BaseParser):
                 language_list,
                 chemicals_list,
                 mesh_list_list,
+                issn,
+                issn_type
             ]
 
             # Zip df keys and values and create dataframe

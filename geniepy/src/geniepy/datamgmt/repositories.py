@@ -86,8 +86,12 @@ class SqlRepository(BaseRepository):
         self._pkey = propty.pkey
         # Create sql engine
         self._engine = create_engine(db_loc)
-        # Create Table
-        self._table.create(self._engine)
+        # Create sql engine
+        self._engine = create_engine(db_loc)
+        try:
+            self._engine.connect()
+        except Exception:
+            self._table.create(self._engine)
 
     def save(self, payload: DataFrame):
         """

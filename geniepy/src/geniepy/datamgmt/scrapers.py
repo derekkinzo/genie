@@ -7,6 +7,9 @@ import gzip
 import shutil
 import os
 import pandas as pd
+from ftplib import FTP
+import xml.etree.ElementTree as ET
+from geniepy.pubmed import PubMedArticle
 
 
 class BaseScraper(ABC):
@@ -97,36 +100,36 @@ class PubtatorDiseaseScraper(PubtatorGeneScraper):
 
 class SjrScraper(BaseScraper):
     """Scrape Scientific Journal Ratings records."""
-
+    
     TMP_DIR = Path.cwd().joinpath("tmp")
     FTP_URL = "https://www.scimagojr.com/journalrank.php?out=xls"  # noqa
     CSV_NAME = "sjr.csv"
-
+    
     def __init__(self):
         self.TMP_DIR.mkdir(parents=True, exist_ok=True)
-
+        
     @property
     def csv_path(self):
         """Path to pubtator csv downloaded file."""
         csv_path = self.TMP_DIR.joinpath(self.CSV_NAME).resolve()
         return csv_path
-
+        
     def download(self):
         """Download records from online sources."""
         if not self.csv_path.exists():
             wget.download(self.FTP_URL, str(self.csv_path))
-
+            
     def scrape(self, chunksize: int, **kwargs) -> Generator:
         """Download sjr data."""
         self.download()
         csv_gen = pd.read_csv(self.csv_path, chunksize=chunksize, delimiter=";")
         return csv_gen
-
+        
     def clean_up(self):
         """Delete all temp files."""
         if os.path.exists(self.csv_path):
             os.remove(self.csv_path)
-
+            
 
 class CtdScraper(BaseScraper):
     """
@@ -146,7 +149,6 @@ class CtdScraper(BaseScraper):
             Generator -- The generator yielding the data in given chunksizes.
         """
         raise NotImplementedError
-
 
 class PubMedScraper(BaseScraper):
     """
@@ -241,6 +243,7 @@ class PubMedScraper(BaseScraper):
         Returns:
             Generator -- The generator yielding the data in given chunksizes.
         """
+
         self._get_old_filenames()
         self._download_new_files()
 
@@ -252,20 +255,17 @@ class PubMedScraper(BaseScraper):
                 xml_list = xml_root.findall("PubmedArticle")
                 for article_xml in xml_list:
                     pubmed_articles.append(PubMedArticle(article_xml))
+
+            # yield articles to generator
+            while True:
+                articles_chunk = []
+                for _ in range(chunksize):
+                    if len(pubmed_articles) > 0:
+                        articles_chunk.append(pubmed_articles.pop())
+                if len(articles_chunk) <= 0:
+                    break
+
+                yield articles_chunk
         
         self._clean_up()
-
-        while True:
-            articles_chunk = []
-            for _ in range(chunksize):
-                # Append articles to create chunk sized array
-                if len(xml_list) > 0:
-                    articles_chunk.append(xml_list.pop())
-            # If no more articles return
-            if not articles_chunk:
-                return
-            # If still articles, yield to generator
-            yield articles_chunk
-
         # raise NotImplementedError
-        

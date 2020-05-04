@@ -59,7 +59,7 @@ class DaoManager:
         psjr.start()
         ppubtatordisease.start()
         ppubtatorgene.start()
-        # ppubmed.start()
+        ppubmed.start()
 
     def _get_pubmeds_df(self, pmids: str):
         """
