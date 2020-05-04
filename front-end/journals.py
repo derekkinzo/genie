@@ -26,7 +26,7 @@ def index():
     with connection as conn:
         with conn.cursor() as cur:
             cur.execute("""
-                SELECT id, year, count
+                SELECT id, year, count, count(*) OVER() AS total
                 FROM journals
                 WHERE id LIKE %(search)s
                 ORDER BY {}
@@ -35,14 +35,11 @@ def index():
             """.format(order, 50, page * 50), {"search": "%{}%".format(search)})
             journals = cur.fetchall()
 
-            cur.execute("""
-                SELECT count(1)
-                FROM journals
-                WHERE id LIKE %(search)s;
-            """, {"search": "%{}%".format(search)})
-            count = cur.fetchone()[0]
-
+            count = 0
+            if journals:
+                count = journals[0][-1]
             results = []
+
             for journal in journals:
-                results.append(journal)
+                results.append(journal[:-1])
             return jsonify({"items": results, "total_pages": math.ceil(count / 50)})
