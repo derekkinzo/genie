@@ -21,7 +21,7 @@ def index():
     page = int(request.args.get("page"))
 
     if request.args.get("sortcol"):
-        order = f"{cols[int(request.args.get('sortcol'))]} {orders[int(request.args.get('sortstate'))]}, " + order
+        order = "{} {}, ".format(cols[int(request.args.get('sortcol'))], orders[int(request.args.get('sortstate'))]) + order
 
     with connection as conn:
         with conn.cursor() as cur:
