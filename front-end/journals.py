@@ -39,7 +39,7 @@ def index():
                 SELECT count(1)
                 FROM journals
                 WHERE id LIKE %(search)s;
-            """, {"search": f"%{search}%"})
+            """, {"search": "%{}%".format(search)})
             count = cur.fetchone()[0]
 
             results = []
