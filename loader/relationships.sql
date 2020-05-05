@@ -3,7 +3,7 @@ CREATE DATABASE genie;
 \c genie;
 CREATE EXTENSION pg_trgm;
 
-DROP TABLE relationships;
+-- DROP TABLE relationships;
 
 CREATE TABLE relationships(
   id character varying PRIMARY KEY,
