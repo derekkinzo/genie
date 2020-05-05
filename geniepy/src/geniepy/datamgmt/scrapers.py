@@ -164,24 +164,26 @@ class CitationScraper(BaseScraper):
     API_BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&linkname=pubmed_pubmed_citedin"  # noqa
     API_ID_PARAM = "&id="
     API_KEY_PARAM = "&api_key="
-    API_KEYS = ["70b53d4e84436970587aef3493a723cae708",
-                "9ab4b04dcabcab740d1a297e6f3f54aa1e09",
-                "39458b83e654b32523475ee6b828b6c22c08",
-                "cf95d471b41c4ea9e6b89d41de269705eb08",
-                "94c3049a7b3dffca2d22ce11b51a3ea5da09",
-                "3fb37654e8f711f8751d9e3c21fc46257108",
-                "91315e4e69c1b5e2676371490cfc715caa08",
-                "b1ee76fae01c312e4bf2fd3e8b1bcf978a09",
-                "25b74bb456d7e6fc756c86c7aebb1b525009",
-                "7a7e4492084dd09cef758ee65a7909704b08",
-                "4d32405f13fed69766ad639d89c5c5288608",
-                "18c8d26e60b5cd012e2ba9618c88dd12cb09",
-                "667ca5b1b72b7697ed43c26727329282bb08",
-                "5cdea4b682e2fc93c56c2b1e5e9da93f4709",
-                "108b2e1a81369991da6c737545097c581a08",
-                "f10805158a7609bb115cb074b05e5923a407",
-                "00d74dd1cb732cd7fc29f54168fe7055c809"]
-    TAG_CITATION_ID = "./LinkSet/LinkSetDb/Link/Id"                   
+    API_KEYS = [
+        "70b53d4e84436970587aef3493a723cae708",
+        "9ab4b04dcabcab740d1a297e6f3f54aa1e09",
+        "39458b83e654b32523475ee6b828b6c22c08",
+        "cf95d471b41c4ea9e6b89d41de269705eb08",
+        "94c3049a7b3dffca2d22ce11b51a3ea5da09",
+        "3fb37654e8f711f8751d9e3c21fc46257108",
+        "91315e4e69c1b5e2676371490cfc715caa08",
+        "b1ee76fae01c312e4bf2fd3e8b1bcf978a09",
+        "25b74bb456d7e6fc756c86c7aebb1b525009",
+        "7a7e4492084dd09cef758ee65a7909704b08",
+        "4d32405f13fed69766ad639d89c5c5288608",
+        "18c8d26e60b5cd012e2ba9618c88dd12cb09",
+        "667ca5b1b72b7697ed43c26727329282bb08",
+        "5cdea4b682e2fc93c56c2b1e5e9da93f4709",
+        "108b2e1a81369991da6c737545097c581a08",
+        "f10805158a7609bb115cb074b05e5923a407",
+        "00d74dd1cb732cd7fc29f54168fe7055c809",
+    ]
+    TAG_CITATION_ID = "./LinkSet/LinkSetDb/Link/Id"
 
     def scrape(self, chunksize: int, **kwargs) -> Generator:
         """
@@ -199,28 +201,36 @@ class CitationScraper(BaseScraper):
 
         start_id: int = 1
         end_id: int = 100
-        
+
         # check chunksize argument has valid value
-        if chunksize < chunksize_min or chunksize > chunksize_max:
-            raise ValueError(f"Parameter chunksize value should be between {str(chunksize_min)} and {str(chunksize_max)}")
-        
+        if chunksize < chunksize_min:
+            raise ValueError(
+                f"Parameter chunksize value should be between {str(chunksize_min)} and {str(chunksize_max)}"
+            )
+
         # check start_id argument has valid value
-        if 'start_id' in kwargs:
+        if "start_id" in kwargs:
             try:
-                start_id = int(kwargs.get('start_id'))
-            except ValueError as e:
-                raise ValueError("Parameter start_id should be a valid numeric value greater than 0.")
+                start_id = int(kwargs.get("start_id"))
+            except ValueError:
+                raise ValueError(
+                    "Parameter start_id should be a valid numeric value greater than 0."
+                )
 
         # check end_id argument has valid value
-        if 'end_id' in kwargs:
+        if "end_id" in kwargs:
             try:
-               end_id = int(kwargs.get('end_id'))
-            except ValueError as e:
-                raise ValueError("Parameter end_id should be a valid numeric value greater than 0.")
+                end_id = int(kwargs.get("end_id"))
+            except ValueError:
+                raise ValueError(
+                    "Parameter end_id should be a valid numeric value greater than 0."
+                )
 
         # check range between start_id and end_id is valid
         if start_id >= end_id:
-            raise ValueError("Parameter end_id value should be greater than start_id value.")
+            raise ValueError(
+                "Parameter end_id value should be greater than start_id value."
+            )
 
         # scrape and yield Citation data
         chunk = []
@@ -231,7 +241,7 @@ class CitationScraper(BaseScraper):
 
             chunk.append(self.get_citations(_))
         return
-    
+
     def get_citations(self, pmid: int) -> []:
         # fire API request
         requestUrl = self.requestUrl(pmid)
@@ -242,25 +252,27 @@ class CitationScraper(BaseScraper):
             # ignore error
             pass
 
-        #scrape citation data from API response
+        # scrape citation data from API response
         citation_tree = tree.findall(self.TAG_CITATION_ID)
         if citation_tree and len(citation_tree) > 0:
             citations = []
             for _ in citation_tree:
                 citations.append(_.text)
-            return([pmid, len(citation_tree), ",".join(citations)])        
+            return [pmid, len(citation_tree), ",".join(citations)]
 
-        return([pmid, 0, ""])
+        return [pmid, 0, ""]
 
     def requestUrl(self, pmid: int) -> str:
-        return (self.API_BASE_URL + 
-                self.API_KEY_PARAM + 
-                self.randomKey() + 
-                self.API_ID_PARAM + 
-                str(pmid))
+        return (
+            self.API_BASE_URL
+            + self.API_KEY_PARAM
+            + self.randomKey()
+            + self.API_ID_PARAM
+            + str(pmid)
+        )
 
     def randomKey(self) -> str:
-        return self.API_KEYS[randint(0, len(self.API_KEYS)-1)]
+        return self.API_KEYS[randint(0, len(self.API_KEYS) - 1)]
 
 
 class PubMedScraper(BaseScraper):

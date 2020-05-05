@@ -51,13 +51,14 @@ def create_dao(daoname: str):
         "gene2pubtator": (daos.PubtatorGeneDao, gt.PUBTATOR_GENE_PROPTY),
         "sjr": (daos.SjrDao, gt.SJR_PROPTY),
         "pubmed": (daos.PubMedDao, gt.PUBMED_PROPTY),
+        "citations": (daos.CitationDao, gt.CITATION_PROPTY),
     }
-    DAO_CLS = dao_dict[daoname][0]
+    DaoClass = dao_dict[daoname][0]
     TABLE_PROPTY = dao_dict[daoname][1]
     credentials = config.get_credentials()
     projname = config.get_projname()
     dataset = config.get_dataset("master")
-    dao = DAO_CLS(dr.GbqRepository(projname, TABLE_PROPTY, dataset, credentials))
+    dao = DaoClass(dr.GbqRepository(projname, TABLE_PROPTY, dataset, credentials))
     return dao
 
 
@@ -67,7 +68,15 @@ def create_daomgr() -> DaoManager:
     pubtator_disease_dao = create_dao("disease2pubtator")
     pubtator_gene_dao = create_dao("gene2pubtator")
     pubmed_dao = create_dao("pubmed")
-    daomgr = DaoManager(sjr_dao, pubtator_disease_dao, pubtator_gene_dao, pubmed_dao)
+    citations_dao = create_dao("citations")
+
+    daomgr = DaoManager(
+        sjr_dao=sjr_dao,
+        pubtator_disease_dao=pubtator_disease_dao,
+        pubtator_gene_dao=pubtator_gene_dao,
+        citation_dao=citations_dao,
+        pubmed_dao=pubmed_dao,
+    )
     return daomgr
 
 
