@@ -215,6 +215,30 @@ class SjrParser(BaseParser):
         except:
             return None
 
+            
+class CitationParser(BaseParser):
+    """Implementation of Scientific Journal Ratings Parser."""
+
+    default_type: DataType = DataType.DF
+    scraper: gs.CitationScraper = gs.CitationScraper()
+    schema: Schema = Schema(
+        [
+            Column("pmid", [IsDtypeValidation(np.int64)]),
+            Column("citation_count", [IsDtypeValidation(np.int64)]),
+            Column("citation_pmid"),
+        ]
+    )    
+
+    @staticmethod
+    def parse(data, dtype=DataType.DF) -> DataFrame:
+        """Parse data and convert according to parser schema."""
+        try:
+            parsed_df = DataFrame(data)
+            parsed_df.columns = ["pmid", "citation_count", "citation_pmid"]
+            return parsed_df
+        except:
+            return None
+
 
 class PubMedParser(BaseParser):
     """
@@ -225,7 +249,7 @@ class PubMedParser(BaseParser):
     """
 
     default_type: DataType = DataType.XML
-    scraper: gs.PubMedScraper()
+    scraper: gs.PubMedScraper = gs.PubMedScraper()
     schema: Schema = Schema(
         [
             Column("pmid", [IsDtypeValidation(np.int64)]),

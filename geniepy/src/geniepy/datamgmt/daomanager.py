@@ -28,6 +28,7 @@ class DaoManager:
         "_sjr_dao",
         "_pubtator_disease_dao",
         "_pubtator_gene_dao",
+        "_citation_dao",
         "_pubmed_dao",
     ]
 
@@ -37,12 +38,14 @@ class DaoManager:
         sjr_dao: daos.SjrDao,
         pubtator_disease_dao: daos.PubtatorDiseaseParser,
         pubtator_gene_dao: daos.PubtatorGeneParser,
+        citation_dao: daos.CitationDao,
         pubmed_dao: daos.PubMedDao,
     ):
         """Initializa DAO mgr with corresponding DAO children."""
         self._sjr_dao = sjr_dao
         self._pubtator_disease_dao = pubtator_disease_dao
         self._pubtator_gene_dao = pubtator_gene_dao
+        self._citation_dao = citation_dao
         self._pubmed_dao = pubmed_dao
 
     def download(self, chunksize: int):
@@ -56,9 +59,11 @@ class DaoManager:
             target=self._pubtator_gene_dao.download, args=(chunksize,)
         )
         ppubmed = Process(target=self._pubmed_dao.download, args=(chunksize,))
+        pcitation = Process(target=self._citation_dao.download, args=(chunksize,))
         psjr.start()
         ppubtatordisease.start()
         ppubtatorgene.start()
+        # pcitation.start()
         # ppubmed.start()
 
     def _get_pubmeds_df(self, pmids: str):

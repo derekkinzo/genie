@@ -11,6 +11,7 @@ from geniepy.errors import SchemaError
 from geniepy.datamgmt.parsers import (
     BaseParser,
     CtdParser,
+    CitationParser,
     PubMedParser,
     ClassifierParser,
     PubtatorGeneParser,
@@ -118,6 +119,14 @@ class CtdDao(BaseDao):
     __slots__ = ["_repository"]
 
     _parser: CtdParser = CtdParser()
+
+
+class CitationDao(BaseDao):
+    """Implementation of Citation Data Access Object."""
+
+    __slots__ = ["_repository"]
+
+    _parser: CitationParser = CitationParser()
 
 
 class PubMedDao(BaseDao):

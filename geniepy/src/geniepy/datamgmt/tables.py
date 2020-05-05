@@ -26,6 +26,24 @@ CTD_PROPTY = RepoProperties(
 )
 
 
+CITATION_PKEY = "pmid"
+"""CITATION table primary key."""
+CITATION_TABLE_NAME = "pubmed_citation"
+"""Name of CITATION source table."""
+CITATION_DAO_TABLE = Table(
+    CITATION_TABLE_NAME,
+    MetaData(),
+    # No primary key allows duplicate records
+    Column("pmid", Integer, primary_key=False, nullable=False),
+    Column("citation_count", Integer, nullable=False),
+    Column("citation_pmid", String),
+)
+"""CITATION DAO Repository Schema."""
+CITATION_PROPTY = RepoProperties(
+    tablename=CITATION_TABLE_NAME, pkey=CITATION_PKEY, table=CITATION_DAO_TABLE
+)
+
+
 PUBMED_TABLE_NAME = "pubmed"
 """PUBMED table primary key."""
 PUBMED_PKEY = "pmid"
