@@ -199,15 +199,15 @@ class CitationScraper(BaseScraper):
 
         start_id: int = 1
         end_id: int = 100
-
+        
         # check chunksize argument has valid value
         if chunksize < chunksize_min or chunksize > chunksize_max:
-            raise ValueError(f"Parameter chunksize value should be between {chunksize_min} and {chunksize_max}")
+            raise ValueError(f"Parameter chunksize value should be between {str(chunksize_min)} and {str(chunksize_max)}")
         
         # check start_id argument has valid value
         if 'start_id' in kwargs:
             try:
-               start_id = int(kwargs.get('start_id'))
+                start_id = int(kwargs.get('start_id'))
             except ValueError as e:
                 raise ValueError("Parameter start_id should be a valid numeric value greater than 0.")
 
@@ -224,12 +224,12 @@ class CitationScraper(BaseScraper):
 
         # scrape and yield Citation data
         chunk = []
-        for id in range(start_id, end_id + 1):
-            if chunk and len(chunk) == chunksize:
+        for _ in range(start_id, end_id + 1):
+            if chunk and len(chunk) >= chunksize:
                 yield chunk
                 chunk = []
-            
-            chunk.append(self.get_citations(id))
+
+            chunk.append(self.get_citations(_))
         return
     
     def get_citations(self, pmid: int) -> []:
