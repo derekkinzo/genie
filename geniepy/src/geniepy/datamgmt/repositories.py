@@ -232,7 +232,7 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             # Remove semicolon if exists in original query to add ordering to query
             query = query.strip(";")
             while True:
-                add_query = f" ORDER BY {self._pkey} LIMIT {chunksize} OFFSET {offset};"
+                add_query = f" WHERE {self._pkey} BETWEEN {offset} AND {offset + chunksize};"  # noqa
                 gbq_query = query + add_query
                 response_df = pandas_gbq.read_gbq(gbq_query)
                 if response_df.empty:

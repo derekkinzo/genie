@@ -71,9 +71,9 @@ CLSFR_PROPTY = RepoProperties(
 )
 
 
-FEATURES_PKEY = "gene_id"
+FEATURES_PKEY = "random_num"
 """Features table primary key."""
-FEATURES_TABLE_NAME = "scoring_data"
+FEATURES_TABLE_NAME = "scoring_features"
 """Features table name."""
 FEATURES_DAO_TABLE = None
 """Features Output DAO Repository Schema."""
