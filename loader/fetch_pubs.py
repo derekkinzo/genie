@@ -5,7 +5,7 @@ from connection import connection
 from bigquery import client
 
 results = client.query("""
-    SELECT * FROM `harvard-599-trendsetters.aact.publications_cumulative_sum` LIMIT 1000
+    SELECT * FROM `harvard-599-trendsetters.aact.publications_cumulative_sum`
 """)
 
 with connection:
