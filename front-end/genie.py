@@ -6,6 +6,8 @@ import pdb
 import math
 import numpy as np
 from connection import connection
+from os import path
+import csv
 
 genie = Blueprint("genie", __name__)
 orders = [None, "DESC", "ASC"]
@@ -76,3 +78,23 @@ def show(id):
             cur.execute("SELECT year, pmid_cum_sum, citations_cum_sum FROM disease_pubs WHERE id = %s;", (relationship[1], ))
             disease_data = np.array(cur.fetchall()).T
             return jsonify({"gene_data": gene_data.tolist(), "disease_data": disease_data.tolist(), "gene_name": relationship[2], "disease_name": relationship[3]})
+
+@genie.route("/search")
+def search():
+    q = request.args.get("q")
+    results = []
+    if path.exists("search_results/" + q):
+        with open("search_results/" + q, "r") as results_file:
+            reader = csv.reader(results_file)
+            for row in reader:
+                results.append(row)
+    else:
+        response = requests.get("https://www.googleapis.com/customsearch/v1?key=" + os.getenv("GOOGLE_API") + "&cx=004315576993373726096:gkqhc3opbnm&q=" + q)
+        data = response.json()
+        for item in data["items"]:
+            results.append([item["title"], item["link"]])
+        with open("search_results/" + q, "w") as results_file:
+            writer = csv.writer(results_file)
+            for result in results:
+                writer.writerow(result)
+    return jsonify(results)
