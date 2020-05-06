@@ -1,32 +1,32 @@
-$("#search").keyup($.debounce(500, (event) => {
-  journals.updatePage(0)
-  journals.fetch()
+$("#search").keyup($.debounce(250, (event) => {
+  genie.updatePage(0)
+  genie.fetch()
 }))
 
 $(".fa-sort").click((event) => {
   let state = (parseInt($(event.target).attr("state")) + 1) % 3
   $(".fa-sort").attr("state", 0)
   $(event.target).attr("state", state)
-  journals.fetch()
+  genie.fetch()
 })
 
 $(".fa-step-forward").click((event) => {
   if (!$(event.target).hasClass("disabled")) {
-    let newPage = journals.getPage() + 1
-    journals.updatePage(newPage)
-    journals.fetch()
+    let newPage = genie.getPage() + 1
+    genie.updatePage(newPage)
+    genie.fetch()
   }
 })
 
 $(".fa-step-backward").click((event) => {
   if (!$(event.target).hasClass("disabled")) {
-    let newPage = journals.getPage() - 1
-    journals.updatePage(newPage)
-    journals.fetch()
+    let newPage = genie.getPage() - 1
+    genie.updatePage(newPage)
+    genie.fetch()
   }
 })
 
 $("#table tbody").on("click", "tr", (event) => {
-  journals.show(event.currentTarget.id)
+  genie.show(event.currentTarget.id)
 })
-journals.fetch()
+genie.fetch()

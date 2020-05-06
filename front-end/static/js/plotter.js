@@ -1,4 +1,4 @@
-journals.plot = (data, id) => {
+genie.plot = (data, id) => {
   $("#table tbody tr").removeClass("selected")
   $("#table tbody #" + id).addClass("selected")
 

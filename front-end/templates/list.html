@@ -109,10 +109,12 @@
       <thead style="background-color:#545b62;color:white;height:40px;">
         <tr>
           {%for i in range(columns | length)%}
-            <th>
-              {{columns[i]}}
-              <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
-            </th>
+            {% if i > 0 %}
+              <th>
+                {{columns[i]}}
+                <i class="fa fa-fw fa-sort" state=0 style="cursor:pointer"></i>
+              </th>
+            {%endif%}
           {%endfor%}
         </tr>
       </thead>

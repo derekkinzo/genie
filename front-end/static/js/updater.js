@@ -1,4 +1,4 @@
-journals.update = (data) => {
+genie.update = (data) => {
   let table = $("#table")
   let tbody = table.find("tbody")
   tbody.empty()
@@ -19,14 +19,14 @@ journals.update = (data) => {
 
   $("#total-pages").text(data.total_pages)
   $(".fa-step-backward").removeClass("disabled")
-  if (journals.getPage() - 1 < 0)
+  if (genie.getPage() - 1 < 0)
     $(".fa-step-backward").addClass("disabled")
   $(".fa-step-forward").removeClass("disabled")
-  if (journals.getPage() + 1 >= data.total_pages)
+  if (genie.getPage() + 1 >= data.total_pages)
     $(".fa-step-forward").addClass("disabled")
 }
 
-journals.updatePage = (page) => {
+genie.updatePage = (page) => {
   $("#current-page").attr("page", page)
   $("#current-page").text(page + 1)
 }
