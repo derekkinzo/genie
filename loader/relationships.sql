@@ -9,7 +9,7 @@ CREATE TABLE relationships(
   id character varying PRIMARY KEY,
   p2_prob smallint NOT NULL,
   mesh_id character varying NOT NULL,
-  gene_id integer NOT NULL,
+  gene_id character varying NOT NULL,
   disease_name character varying NOT NULL,
   gene_name character varying NOT NULL,
   change_recent boolean NOT NULL,
@@ -22,6 +22,7 @@ CREATE TABLE relationships(
 CREATE INDEX index_relationships_on_id ON relationships USING GIN(id gin_trgm_ops);
 CREATE INDEX index_relationships_on_p2_prob ON relationships USING btree (p2_prob);
 CREATE INDEX index_relationships_on_mesh_id ON relationships USING GIN(mesh_id gin_trgm_ops);
+CREATE INDEX index_relationships_on_gene_id ON relationships USING GIN(gene_id gin_trgm_ops);
 CREATE INDEX index_relationships_on_disease_name ON relationships USING GIN(disease_name gin_trgm_ops);
 CREATE INDEX index_relationships_on_gene_name ON relationships USING GIN(gene_name gin_trgm_ops);
 CREATE INDEX index_relationships_on_change_recent ON relationships USING btree (change_recent);

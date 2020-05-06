@@ -17,7 +17,7 @@ genie.update = (data) => {
   }
   $($(tbody).find("tr")[0]).trigger("click")
 
-  $("#total-pages").text(data.total_pages)
+  genie.updateTotalPages(data.total_pages)
   $(".fa-step-backward").removeClass("disabled")
   if (genie.getPage() - 1 < 0)
     $(".fa-step-backward").addClass("disabled")
@@ -29,4 +29,8 @@ genie.update = (data) => {
 genie.updatePage = (page) => {
   $("#current-page").attr("page", page)
   $("#current-page").text(page + 1)
+}
+
+genie.updateTotalPages = (total) => {
+  $("#total-pages").text(total)
 }

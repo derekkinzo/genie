@@ -26,6 +26,6 @@ with connection:
             elif row[6] == "Y":
                 change_recent = True
             cur.execute(
-                "INSERT INTO relationships VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",
-                (row[0], row[1][:-1], row[2], row[3], row[4], row[5], change_recent, row[7] and row[7][:-1] or 0, row[8] and row[8][:-1] or 0, row[9], row[10] or 0)
+                "INSERT INTO relationships VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT (id) DO NOTHING;",
+                (row[0], row[1][:-1], row[2], row[3], row[4] or "", row[5] or "", change_recent, row[7] and row[7][:-1] or 0, row[8] and row[8][:-1] or 0, row[9], row[10] or 0)
             )
