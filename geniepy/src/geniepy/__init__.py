@@ -1,4 +1,9 @@
 """GeniePy Package entry point."""
+import os
+import sys
+import warnings
+from concurrent.futures import ProcessPoolExecutor
+from itertools import repeat
 from pkg_resources import get_distribution, DistributionNotFound
 from time import time
 import geniepy.config as config
@@ -87,32 +92,47 @@ def create_classifier():
     return ct_clsfr
 
 
+def process_records(offset, chunksize, daomgr: DaoManager, classifier: Classifier):
+    """Download predict and save records."""
+    try:
+        pid = os.getpid()
+        print(f"Process: {pid} - Downloading {chunksize} features")
+        features_df = daomgr.get_features(offset, chunksize)
+        if not features_df.empty:
+            print(f"Process: {pid} - Calculating {chunksize} predictions")
+            predicted_df = classifier.predict(features_df)
+            print(f"Process: {pid} - Saving {chunksize} predictions")
+            daomgr.save_predictions(predicted_df)
+        return True
+    except Exception as exp:  # noqa
+        sys.stderr.write(
+            f"Unable to process records: {offset} to  {offset + chunksize}"
+        )
+        sys.stderr.write(str(exp))
+
+
 def run_predictions():
     """Calculate predictions for all records in database."""
-    features, scores = create_repos()
+    warnings.filterwarnings("ignore")
+    daomgr: DaoManager = create_daomgr()
     classifier = create_classifier()
-    query_all = features.query_all
-    # Capture initial time and start iterating over relationships
+    chunksize = config.get_chunksize()
     start_time = time()
-    for record_df in features.query(query_all, config.get_chunksize()):
-        predicted_df = classifier.predict(record_df)
-        scores.save(predicted_df)
-        elapsed_time = round(time() - start_time)
-        num_records = predicted_df.shape[0]
-        print(f"Processed {num_records} in {elapsed_time}s")
-        start_time = time()
-
-
-def update_disease2pubtator():
-    """Update pubtator pmid/disease table."""
-    disease2pubtator_dao = create_dao("disease2pubtator")
-    disease2pubtator_dao.download(config.get_chunksize())
-
-
-def update_sjr():
-    """Update sjr table."""
-    sjr_dao = create_dao("sjr")
-    sjr_dao.download(config.get_chunksize())
+    max_val = daomgr.get_max_feature(chunksize)
+    offsets = range(0, max_val, chunksize)
+    max_workers = config.get_max_workers()
+    outputs = list()
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        for out in executor.map(
+            process_records,
+            offsets,
+            repeat(chunksize),
+            repeat(daomgr),
+            repeat(classifier),
+        ):
+            outputs.append(out)
+    elapsed_time = round(time() - start_time)
+    print(f"Elapsed time: {elapsed_time}s")
 
 
 def update_tables():

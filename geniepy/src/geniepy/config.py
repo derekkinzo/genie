@@ -58,6 +58,12 @@ def get_chunksize() -> int:
     return configdict["chunksize"]
 
 
+def get_max_workers() -> int:
+    """Retrieve standard genie generators maximum parallel processes."""
+    configdict = read_yaml()
+    return configdict["max_workers"]
+
+
 def get_credentials() -> str:
     """Get credentials file path from config."""
     configdict = read_yaml()

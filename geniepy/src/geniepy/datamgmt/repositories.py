@@ -25,17 +25,17 @@ class BaseRepository(ABC):
     @property
     def query_all(self) -> str:
         """Generate query string to query entire table."""
-        return f"SELECT * FROM {self.tablename};"
+        return f"SELECT * FROM {self.tablename}"
 
     def query_pkey(self, val) -> str:
         """Generate query string to query by primary key."""
         if isinstance(val, str):
             # pylint: disable=no-member
-            return f"SELECT * FROM {self.tablename} WHERE {self._pkey}='{val}';"
+            return f"SELECT * FROM {self.tablename} WHERE {self._pkey}='{val}'"
         else:
             # Don't need quotes surrounding val if not a str
             # pylint: disable=no-member
-            return f"SELECT * FROM {self.tablename} WHERE {self._pkey}={val};"
+            return f"SELECT * FROM {self.tablename} WHERE {self._pkey}={val}"
 
     @abstractmethod
     def save(self, payload: DataFrame):
@@ -55,16 +55,21 @@ class BaseRepository(ABC):
 
     @abstractmethod
     # pylint: disable=bad-continuation
-    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
+    def query(
+        self, query: str, chunksize: int, exact=False
+    ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
             query {str} -- Query string
             chunksize {int} -- Number of rows of dataframe per chunk
+            exact {bool} -- If exact is false, query function manages chunks
+                and returns generator. Otherwise, the direct query is returned.
 
         Returns:
-            Generator[DataFrame] -- Generator to iterate over DataFrame results.
+            Generator[DataFrame] -- Generator to iterate over DataFrame results,
+                or DataFrame if exact param is True
         """
 
 
@@ -116,15 +121,19 @@ class SqlRepository(BaseRepository):
         self._table.create(self._engine)
 
     # pylint: disable=bad-continuation
-    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
+    def query(
+        self, query: str, chunksize: int, exact=False
+    ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
             query {str} -- Query string
             chunksize {int} -- Number of rows of dataframe per chunk
+            exact {bool} -- If exact is false, query function manages chunks
+                and returns generator. Otherwise, the direct query is returned.
 
-        Returns:
+        Returny:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
         """
         if query is None:
@@ -214,13 +223,16 @@ class GbqRepository(BaseRepository):  # pragma: no cover
         )
 
     # pylint: disable=bad-continuation
-    def query(self, query: str, chunksize: int) -> Generator[DataFrame, None, None]:
+    def query(
+        self, query: str, chunksize: int, exact=False
+    ) -> Generator[DataFrame, None, None]:
         """
         Query DAO repo and returns a generator of DataFrames with query results.
 
         Keyword Arguments:
             query {str} -- Query string
             chunksize {int} -- Number of rows of dataframe per chunk
+            exact {bool} -- If false, query orders results and returns chunks
 
         Returns:
             Generator[DataFrame] -- Generator to iterate over DataFrame results.
@@ -228,16 +240,22 @@ class GbqRepository(BaseRepository):  # pragma: no cover
         if query is None:
             raise DaoError
         try:
-            offset = 0
-            # Remove semicolon if exists in original query to add ordering to query
-            query = query.strip(";")
-            while True:
-                add_query = f" ORDER BY {self._pkey} LIMIT {chunksize} OFFSET {offset};"
-                gbq_query = query + add_query
-                response_df = pandas_gbq.read_gbq(gbq_query)
-                if response_df.empty:
-                    return
-                offset += chunksize
+            if exact:
+                response_df = pandas_gbq.read_gbq(query)
                 yield response_df
+            if not exact:
+                offset = 0
+                # Remove semicolon if exists in original query to add ordering to query
+                query = query.strip(";")
+                while True:
+                    add_query = (
+                        f" ORDER BY {self._pkey} LIMIT {chunksize} OFFSET {offset};"
+                    )
+                    gbq_query = query + add_query
+                    response_df = pandas_gbq.read_gbq(gbq_query)
+                    if response_df.empty:
+                        return
+                    offset += chunksize
+                    yield response_df
         except Exception as gbq_exp:
             raise DaoError(gbq_exp)
