@@ -21,14 +21,14 @@ class TestSqlPubMedRepository:
 
     def test_query_all(self):
         """Test gen query all str."""
-        expected = "SELECT * FROM pubmed;"
+        expected = "SELECT * FROM pubmed"
         actual = self.repo.query_all
         assert actual == expected
 
     def test_query_pkey(self):
         """Test gen query all str."""
         pmid = 1
-        expected = "SELECT * FROM pubmed WHERE pmid=1;"
+        expected = "SELECT * FROM pubmed WHERE pmid=1"
         actual = self.repo.query_pkey(pmid)
         assert actual == expected
 

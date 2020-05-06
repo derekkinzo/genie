@@ -21,14 +21,14 @@ class TestSqlClsfrRepository:
 
     def test_query_all(self):
         """Test gen query all str."""
-        expected = "SELECT * FROM classifier;"
+        expected = "SELECT * FROM classifier"
         actual = self.repo.query_all
         assert actual == expected
 
     def test_query_pkey(self):
         """Test gen query all str."""
         digest = "0x1"
-        expected = "SELECT * FROM classifier WHERE digest='0x1';"
+        expected = "SELECT * FROM classifier WHERE digest='0x1'"
         actual = self.repo.query_pkey(digest)
         assert actual == expected
 
