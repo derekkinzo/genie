@@ -1,4 +1,8 @@
 """GeniePy Package entry point."""
+import warnings
+from concurrent.futures import ProcessPoolExecutor
+from itertools import repeat
+from tqdm import tqdm
 from pkg_resources import get_distribution, DistributionNotFound
 from time import time
 import geniepy.config as config
@@ -87,32 +91,43 @@ def create_classifier():
     return ct_clsfr
 
 
-def run_predictions():
-    """Calculate predictions for all records in database."""
-    features, scores = create_repos()
-    classifier = create_classifier()
-    query_all = features.query_all
-    # Capture initial time and start iterating over relationships
-    start_time = time()
-    for record_df in features.query(query_all, config.get_chunksize()):
+features, scores = create_repos()
+classifier = create_classifier()
+
+
+def process_records(offset, chunksize):
+    gen_query = (
+        lambda offset: features.query_all
+        + f" WHERE random_num BETWEEN {offset} AND {offset + chunksize};"
+    )
+    query_str = gen_query(offset)
+    print(query_str)
+    record_df = next(features.query(query_str, chunksize, exact=True))
+    if not record_df.empty():
         predicted_df = classifier.predict(record_df)
         scores.save(predicted_df)
-        elapsed_time = round(time() - start_time)
-        num_records = predicted_df.shape[0]
-        print(f"Processed {num_records} in {elapsed_time}s")
-        start_time = time()
 
 
-def update_disease2pubtator():
-    """Update pubtator pmid/disease table."""
-    disease2pubtator_dao = create_dao("disease2pubtator")
-    disease2pubtator_dao.download(config.get_chunksize())
+def get_max_record(chunksize):
+    count_query = features.query_all.replace("*", "MAX(random_num)")
+    max_df = next(features.query(count_query, 1, exact=True))
+    # Make sure go past max to include all numbers in range
+    return int(max_df.iloc[0][0]) + chunksize
 
 
-def update_sjr():
-    """Update sjr table."""
-    sjr_dao = create_dao("sjr")
-    sjr_dao.download(config.get_chunksize())
+def run_predictions():
+    """Calculate predictions for all records in database."""
+    warnings.filterwarnings("ignore")
+    # Capture initial time and start iterating over relationships
+    chunksize = config.get_chunksize()
+    start_time = time()
+    max_val = get_max_record(chunksize)
+    offsets = range(0, max_val, chunksize)
+    max_workers = config.get_max_workers()
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        executor.map(process_records, offsets, repeat(chunksize))
+    elapsed_time = round(time() - start_time)
+    print(f"Elapsed time: {elapsed_time}s")
 
 
 def update_tables():

@@ -1,6 +1,9 @@
 # Default chunksize to be used throughout
 chunksize: 100000
 
+# Maximum number of parallel processes allowed
+max_workers: = 4
+
 # Google Drive File ID for classifier model
 model: "1ADgASNfM1cmhr9r1-ozuEp_e7y2kCq4R"
 
