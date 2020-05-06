@@ -1,8 +1,8 @@
 """GeniePy Package entry point."""
+import os
 import warnings
 from concurrent.futures import ProcessPoolExecutor
 from itertools import repeat
-from tqdm import tqdm
 from pkg_resources import get_distribution, DistributionNotFound
 from time import time
 import geniepy.config as config
@@ -91,41 +91,36 @@ def create_classifier():
     return ct_clsfr
 
 
-features, scores = create_repos()
-classifier = create_classifier()
-
-
-def process_records(offset, chunksize):
-    gen_query = (
-        lambda offset: features.query_all
-        + f" WHERE random_num BETWEEN {offset} AND {offset + chunksize};"
-    )
-    query_str = gen_query(offset)
-    print(query_str)
-    record_df = next(features.query(query_str, chunksize, exact=True))
-    if not record_df.empty():
-        predicted_df = classifier.predict(record_df)
-        scores.save(predicted_df)
-
-
-def get_max_record(chunksize):
-    count_query = features.query_all.replace("*", "MAX(random_num)")
-    max_df = next(features.query(count_query, 1, exact=True))
-    # Make sure go past max to include all numbers in range
-    return int(max_df.iloc[0][0]) + chunksize
+def process_records(offset, chunksize, daomgr: DaoManager, classifier: Classifier):
+    """Function to download, predict and save records."""
+    pid = os.getpid()
+    print(f"Process: {pid} - Downloading {chunksize} features")
+    features_df = daomgr.get_features(offset, chunksize)
+    if not features_df.empty:
+        print(f"Process: {pid} - Calculating {chunksize} predictions")
+        predicted_df = classifier.predict(features_df)
+        print(f"Process: {pid} - Saving {chunksize} predictions")
+        daomgr.save_predictions(predicted_df)
 
 
 def run_predictions():
     """Calculate predictions for all records in database."""
     warnings.filterwarnings("ignore")
-    # Capture initial time and start iterating over relationships
+    daomgr: DaoManager = create_daomgr()
+    classifier = create_classifier()
     chunksize = config.get_chunksize()
     start_time = time()
-    max_val = get_max_record(chunksize)
+    max_val = daomgr.get_max_feature(chunksize)
     offsets = range(0, max_val, chunksize)
     max_workers = config.get_max_workers()
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
-        executor.map(process_records, offsets, repeat(chunksize))
+        executor.map(
+            process_records,
+            offsets,
+            repeat(chunksize),
+            repeat(daomgr),
+            repeat(classifier),
+        )
     elapsed_time = round(time() - start_time)
     print(f"Elapsed time: {elapsed_time}s")
 

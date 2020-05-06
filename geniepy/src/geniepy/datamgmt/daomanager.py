@@ -8,6 +8,9 @@ from typing import Generator
 import pandas as pd
 import geniepy.datamgmt.daos as daos
 from multiprocessing import Process
+import geniepy.config as config
+import geniepy.datamgmt.tables as gt
+import geniepy.datamgmt.repositories as dr
 
 
 class DaoManager:
@@ -29,7 +32,20 @@ class DaoManager:
         "_pubtator_disease_dao",
         "_pubtator_gene_dao",
         "_pubmed_dao",
+        "_features",
+        "_scores",
     ]
+
+    def create_repos(self):
+        """Configure and create scoring repositories."""
+        credentials = config.get_credentials()
+        projname = config.get_projname()
+        dataset = config.get_dataset("scoring")
+        features_repo = dr.GbqRepository(
+            projname, gt.FEATURES_PROPTY, dataset, credentials
+        )
+        scores_repo = dr.GbqRepository(projname, gt.SCORES_PROPTY, dataset, credentials)
+        return features_repo, scores_repo
 
     # pylint: disable=bad-continuation
     def __init__(
@@ -44,6 +60,7 @@ class DaoManager:
         self._pubtator_disease_dao = pubtator_disease_dao
         self._pubtator_gene_dao = pubtator_gene_dao
         self._pubmed_dao = pubmed_dao
+        self._features, self._scores = self.create_repos()
 
     def download(self, chunksize: int):
         """Download (scrapes) data for DAOs and creates internal tables."""
@@ -84,38 +101,36 @@ class DaoManager:
                 print(f"PMID: {pmid} not found!")
         return pubmed_df
 
-    def gen_records(self, chunksize: int) -> Generator[pd.DataFrame, None, None]:
+    def get_max_feature(self, chunksize):
+        """Retrieve the max addressable record in features table."""
+        count_query = self._features.query_all.replace("*", "MAX(random_num)")
+        max_df = next(self._features.query(count_query, 1, exact=True))
+        # Make sure go past max to include all numbers in range
+        return int(max_df.iloc[0][0]) + chunksize
+
+    def get_features(self, offset: int, chunksize: int) -> pd.DataFrame:
         """
         Generate the dataframe records for classifiers.
 
         This function should be called after the DAO tables have been created through
         the download function.
 
-        Returns:
-            Generator[pd.DataFrame, None, None] -- Generator of dataframes used by
-                classifiers according to the geniepy dataframe schema.
-            None -- If DAOs have not downloaded data from online sources and generated
-                    internal tables.
+        Arguments:
+            offset {int} -- The offset of records to be fetched
+            chunksize {int} -- The number of records to be returned
 
-        Record Schema:
-            {
-                digest: String,
-                genesymbol: String,
-                geneid: Integer,
-                diseasename: String,
-                diseaseid: String,
-                pmids: String,
-                pubmeds: DataFrame(PubMedParser)
-            }
+
+        Returns:
+            A dataframe containing records from features table
         """
-        # iterate over ctd table
-        record_df = pd.DataFrame()
-        query_all = self._pubtator_gene_dao.query_all
-        for record_df in self._pubtator_gene_dao.query(query_all, chunksize):
-            record_df["pubmeds"] = record_df.apply(
-                lambda row: self._get_pubmeds_df(row.pmids), axis=1
-            )
-            yield record_df
+        gen_query = (
+            lambda offset: self._features.query_all
+            + f" WHERE random_num BETWEEN {offset} AND {offset + chunksize};"
+        )
+        query_str = gen_query(offset)
+        print(query_str)
+        record_df = next(self._features.query(query_str, chunksize, exact=True))
+        return record_df
 
     def save_predictions(self, predictions: pd.DataFrame):
         """
@@ -124,4 +139,4 @@ class DaoManager:
         Arguments:
             records {DataFrame} -- [description]
         """
-        # self._classifier_dao.save(predictions)
+        self._scores.save(predictions)

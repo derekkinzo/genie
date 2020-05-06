@@ -81,7 +81,7 @@ FEATURES_PROPTY = RepoProperties(
     tablename=FEATURES_TABLE_NAME, pkey=FEATURES_PKEY, table=FEATURES_DAO_TABLE
 )
 
-SCORES_PKEY = "gene_id"
+SCORES_PKEY = "classifier_prob"
 """Scoring table primary key."""
 SCORES_TABLE_NAME = "scores"
 """Scoring table name."""
