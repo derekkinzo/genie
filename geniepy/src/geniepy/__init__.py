@@ -1,5 +1,6 @@
 """GeniePy Package entry point."""
 import os
+import sys
 import warnings
 from concurrent.futures import ProcessPoolExecutor
 from itertools import repeat
@@ -92,15 +93,22 @@ def create_classifier():
 
 
 def process_records(offset, chunksize, daomgr: DaoManager, classifier: Classifier):
-    """Function to download, predict and save records."""
-    pid = os.getpid()
-    print(f"Process: {pid} - Downloading {chunksize} features")
-    features_df = daomgr.get_features(offset, chunksize)
-    if not features_df.empty:
-        print(f"Process: {pid} - Calculating {chunksize} predictions")
-        predicted_df = classifier.predict(features_df)
-        print(f"Process: {pid} - Saving {chunksize} predictions")
-        daomgr.save_predictions(predicted_df)
+    """Download predict and save records."""
+    try:
+        pid = os.getpid()
+        print(f"Process: {pid} - Downloading {chunksize} features")
+        features_df = daomgr.get_features(offset, chunksize)
+        if not features_df.empty:
+            print(f"Process: {pid} - Calculating {chunksize} predictions")
+            predicted_df = classifier.predict(features_df)
+            print(f"Process: {pid} - Saving {chunksize} predictions")
+            daomgr.save_predictions(predicted_df)
+        return True
+    except Exception as exp:  # noqa
+        sys.stderr.write(
+            f"Unable to process records: {offset} to  {offset + chunksize}"
+        )
+        sys.stderr.write(str(exp))
 
 
 def run_predictions():
@@ -113,14 +121,16 @@ def run_predictions():
     max_val = daomgr.get_max_feature(chunksize)
     offsets = range(0, max_val, chunksize)
     max_workers = config.get_max_workers()
+    outputs = list()
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
-        executor.map(
+        for out in executor.map(
             process_records,
             offsets,
             repeat(chunksize),
             repeat(daomgr),
             repeat(classifier),
-        )
+        ):
+            outputs.append(out)
     elapsed_time = round(time() - start_time)
     print(f"Elapsed time: {elapsed_time}s")
 
