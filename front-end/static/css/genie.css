@@ -1,0 +1,152 @@
+.fa-sort[state="1"] {
+  color: black;
+}
+
+.fa-sort[state="2"] {
+  color: black;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#loading-indicator {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loading-indicator div {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+#table tbody {
+  height: 80%;
+  overflow: auto;
+  display: block;
+}
+
+#table th {
+  vertical-align: middle;
+}
+
+#table th, #table td {
+  padding: 5px;
+}
+
+#table thead, #table tfoot {
+    width: 100%;
+    table-layout: fixed;
+    display: table;
+    background-color:#545b62;
+    color:white;
+}
+
+#table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#table tbody tr:hover {
+  cursor: pointer;
+  background: rgba(0,123,255,.25);
+}
+
+#table tbody tr.selected {
+  background: #ebebeb;
+}
+
+#table td > div {
+  overflow: auto;
+}
+
+#table {
+  margin-bottom: 0;
+}
+
+#search {
+  cursor: text;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 8px;
+  font-family: monospace;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 80px;
+  background: crimson;
+  transition: all 1s;
+  z-index: 4;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
+}
+
+#search::placeholder {
+  color: white;
+  font-size: 20px;
+}
+
+#search:focus {
+  outline: none;
+}
+
+#table td, #table th {
+  border-style: none;
+}
+
+#statistics > * {
+  margin-right: 20px;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+#vs * {
+  color: white;
+}
+
+.tab-select:hover {
+  background-color: grey;
+}
+
+.tab-select {
+  cursor: pointer;
+}
+
+.tab-select.selected {
+  background-color: grey;
+}
+
+.fa-step-forward.disabled, .fa-step-backward.disabled {
+  color: grey;
+}
+
+.fa-step-forward:not(.disabled), .fa-step-backward:not(.disabled) {
+  cursor: pointer;
+}
+
+.article-link {
+  margin-bottom: 10px;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}

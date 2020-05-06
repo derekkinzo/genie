@@ -1,149 +1,11 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-<style>
-  .fa-sort[state="1"] {
-    color: black;
-  }
-
-  .fa-sort[state="2"] {
-    color: black;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  #loading-indicator {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #loading-indicator div {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-  }
-
-  #table tbody {
-    height: 80%;
-    overflow: auto;
-    display: block;
-  }
-
-  #table th {
-    vertical-align: middle;
-  }
-
-  #table thead, #table tfoot {
-      width: 100%;
-      table-layout: fixed;
-      display: table;
-      background-color:#545b62;
-      color:white;
-  }
-
-  #table tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
-
-  #table tbody tr:hover {
-    cursor: pointer;
-    background: rgba(0,123,255,.25);
-  }
-
-  #table tbody tr.selected {
-    background: #ebebeb;
-  }
-
-  #table td > div {
-    overflow: auto;
-  }
-
-  #table {
-    margin-bottom: 0;
-  }
-
-  #search {
-    cursor: text;
-    padding: 10px;
-    font-size: 20px;
-    border-radius: 8px;
-    font-family: monospace;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 80px;
-    background: crimson;
-    transition: all 1s;
-    z-index: 4;
-    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
-  }
-
-  #search::placeholder {
-    color: white;
-    font-size: 20px;
-  }
-
-  #search:focus {
-    outline: none;
-  }
-
-  #table td, #table th {
-    border-style: none;
-  }
-
-  #statistics > * {
-    margin-right: 20px;
-  }
-
-  ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-  }
-
-  #vs * {
-    color: white;
-  }
-
-  #articles1 > *, #articles2 > * {
-    margin-bottom: 10px;
-  }
-
-  .fa-step-forward.disabled, .fa-step-backward.disabled {
-    color: grey;
-  }
-
-  .fa-step-forward:not(.disabled), .fa-step-backward:not(.disabled) {
-    cursor: pointer;
-  }
-
-  body {
-    width: 100vw;
-    height: 100vh;
-  }
-</style>
+<link rel="stylesheet" href="/static/css/genie.css">
 
 <div id="loading-indicator" style="display:none"><div></div></div>
 
-<div style="display:flex;width:100%;height:100%">
-  <div style="width:75%;height:100%;background-color:#6c757d">
+<div style="display:flex;width:100%;height:60%">
+  <div style="width:65%;height:100%;background-color:#6c757d">
     <div style="width:100%;height:15%;display:flex;background-color:#666666">
       <img height="100%" src="/static/logo.png" />
       <div style="width:100%;height:100%;display:flex;justify-content:flex-end">
@@ -152,8 +14,8 @@
         </div>
       </div>
     </div>
-    <table id="table" class="table" style="width:100%;height:85%;background-color:#6c757d;">
-      <thead style="height:10%;">
+    <table id="table" class="table" style="width:100%;height:85%;background-color:#6c757d;font-size:2vh">
+      <thead style="height:20%;">
         <tr>
           {%for i in range(column_names | length)%}
             <th>
@@ -165,7 +27,7 @@
           {%endfor%}
         </tr>
       </thead>
-      <tbody style="height:80%"></tbody>
+      <tbody style="height:70%"></tbody>
       <tfoot style="height:10%">
         <tr>
           <th style="text-align:left"><i class="fa fa-fw fa-step-backward disabled"></i></th>
@@ -175,7 +37,7 @@
       </tfoot>
     </table>
   </div>
-  <div style="width:25%;height:100%">
+  <div style="width:35%;height:100%">
     <div style="width:100%;height:15%;justify-content:space-between;display:flex;align-items:center;background-color:#666666;padding:10px 20px;color:white;">
       <div id="statistics" style="padding-left:20px;display:flex;font-size:2.5vh">
         <div>Breakout Coefficient <span class="badge badge-info">9001</span></div>
@@ -187,13 +49,52 @@
     <div id="scatter" style="width:100%;height:85%"></div>
   </div>
 </div>
+<div id="vs" style="display:flex;width:100%;height:40%;background-color:#222222">
+  <div style="width:50%;height:100%;border-right:2px solid grey">
+    <div style="display:flex;justify-content:center;align-items:center;width:100%;height:10%"><h5 style="margin:0"><span style="text-transform:uppercase" id="gene-name"></span> Gene Details<h5></div>
+    <div style="display:flex;width:100%;height:90%">
+      <div style="width:50%;height:100%">
+        <div id="gene-plot-select" style="width:100%;height:10%;display:flex;padding:0 10px;justify-content:space-between">
+          <div id="gene-plot-select-1" class="tab-select">Plot Publications</div>
+          <div id="gene-plot-select-2" class="tab-select">Plot Citations</div>
+        </div>
+        <div id="gene-plot" style="width:100%;height:90%"></div>
+      </div>
+      <div style="width:50%;height:100%">
+        <div style="width:100%;height:10%;display:flex;justify-content:center">Related Articles</div>
+        <div style="padding:10px;width:100%;height:90%">
+          <div id="gene-articles" style="overflow:scroll;height:90%;width:100%;overflow:auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:50%;height:100%;border-right:2px solid grey">
+    <div style="display:flex;justify-content:center;align-items:center;width:100%;height:10%"><h5 style="margin:0"><span style="text-transform:uppercase" id="disease-name"></span> Disease Details<h5></div>
+    <div style="display:flex;width:100%;height:90%">
+      <div style="width:50%;height:100%">
+        <div id="disease-plot-select" style="width:100%;height:10%;display:flex;padding:0 10px;justify-content:space-between">
+          <div id="disease-plot-select-1" class="tab-select">Plot Publications</div>
+          <div id="disease-plot-select-2" class="tab-select">Plot Citations</div>
+        </div>
+        <div id="disease-plot" style="width:100%;height:90%"></div>
+      </div>
+      <div style="width:50%;height:100%">
+        <div style="width:100%;height:10%;display:flex;justify-content:center">Related Articles</div>
+        <div style="padding:10px;width:100%;height:90%">
+          <div id="disease-articles" style="overflow:scroll;height:90%;width:100%;overflow:auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/throttle-debounce.min.js"></script>
 <script type="text/javascript">genie = {}</script>
 <script type="text/javascript" src="/static/js/plotter.js"></script>
-<script type="text/javascript" src="/static/js/initializer.js"></script>
 <script type="text/javascript" src="/static/js/fetcher.js"></script>
 <script type="text/javascript" src="/static/js/updater.js"></script>
+<script type="text/javascript" src="/static/js/selector.js"></script>
 <script type="text/javascript" src="/static/js/binder.js"></script>

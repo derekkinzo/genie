@@ -1,4 +1,5 @@
 genie.fetch = () => {
+  $('#loading-indicator').show()
   let params = {search: $("#search").val()}
 
   let sort = $(".fa-sort[state=1]")[0] || $(".fa-sort[state=2]")[0]
@@ -11,12 +12,13 @@ genie.fetch = () => {
 
   $.get("/relationships", params, (data) => {
     genie.update(data)
+    $('#loading-indicator').hide()
   })
 }
 
 genie.show = (id) => {
   $.get("/relationships/" + id, (data) => {
-    genie.plot(data)
+    genie.select(data)
   })
 }
 

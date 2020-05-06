@@ -28,6 +28,45 @@ $(".fa-step-backward").click((event) => {
 })
 
 $("#table tbody").on("click", "tr", (event) => {
+  $("#table tbody tr").removeClass("selected")
+  $(event.currentTarget).addClass("selected")
   genie.show(event.currentTarget.id)
 })
+
+for (let i = 1; i <= 2; i++) {
+  $("#gene-plot-select-" + i).click(() => {
+    $("#gene-plot-select *").removeClass("selected")
+    $("#gene-plot-select-" + i).addClass("selected")
+
+    let layout = {
+      plot_bgcolor: "#222222",
+      paper_bgcolor:"#222222",
+      font: {color: 'white'},
+      hoverinfo: false,
+      margin: {l: 40, r: 40, b: 40, t: 40, pad: 0}
+    }
+
+    let trace = [{type: "scatter", mode: "lines", x: genie.relationship.gene_data[0], y: genie.relationship.gene_data[i]}]
+    Plotly.newPlot("gene-plot", trace, layout, {displayModeBar: false})
+  })
+}
+
+for (let i = 1; i <= 2; i++) {
+  $("#disease-plot-select-" + i).click(() => {
+    $("#disease-plot-select *").removeClass("selected")
+    $("#disease-plot-select-" + i).addClass("selected")
+
+    let layout = {
+      plot_bgcolor: "#222222",
+      paper_bgcolor:"#222222",
+      font: {color: 'white'},
+      hoverinfo: false,
+      margin: {l: 40, r: 40, b: 40, t: 40, pad: 0}
+    }
+
+    let trace = [{type: "scatter", mode: "lines", x: genie.relationship.disease_data[0], y: genie.relationship.disease_data[i]}]
+    Plotly.newPlot("disease-plot", trace, layout, {displayModeBar: false})
+  })
+}
+
 genie.fetch()

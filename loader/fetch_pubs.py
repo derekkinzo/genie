@@ -8,7 +8,7 @@ with connection:
     with connection.cursor() as cur:
         for type in ["gene", "disease"]:
             results = client.query("""
-                SELECT * FROM `harvard-599-trendsetters.aact.cumulative_{}_publications` LIMIT 1000
+                SELECT * FROM `harvard-599-trendsetters.aact.cumulative_{}_publications`
             """.format(type))
 
             cur.execute("DELETE FROM {}_pubs;".format(type))

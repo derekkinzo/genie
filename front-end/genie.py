@@ -4,11 +4,13 @@ from flask import jsonify
 from flask import Blueprint
 import pdb
 import math
+import numpy as np
 from connection import connection
+
 genie = Blueprint("genie", __name__)
 orders = [None, "DESC", "ASC"]
 num_columns = 10
-column_names = ["Id", "P2 Probability", "Mesh Id", "Disease", "Gene", "Change Recent", "Probability Change", "Previous Probability", "Publications", "Citations"]
+column_names = ["Id", "P2 Prob", "Mesh Id", "Disease", "Gene", "Change Recent", "Probability Change", "Previous Probability", "Publications", "Citations"]
 assert(len(column_names) == num_columns)
 columns = ["id", "p2_prob", "mesh_id", "disease_name", "gene_name", "change_recent", "recent_prob_change", "previous_prob", "num_pubs", "num_citations"]
 assert(len(columns) == num_columns)
@@ -31,7 +33,7 @@ def index():
                 where_sql += "{} ILIKE %(query)s OR ".format(columns[i])
         where_sql = where_sql[:-3]
 
-    order = "id"
+    order = "p2_prob DESC, id"
     page = int(request.args.get("page"))
 
     if request.args.get("sortcolumn"):
@@ -60,20 +62,17 @@ def index():
             for relationship in relationships:
                 results.append(relationship)
             return jsonify({"items": results, "total_pages": math.ceil(count / 50)})
-#
-# @journals.route("/journals/<path:id>")
-# def show(id):
-#     with connection as conn:
-#         with conn.cursor() as cur:
-#             cur.execute("""
-#                 SELECT year, count
-#                 FROM journals
-#                 WHERE id = %s;
-#             """, (id, ))
-#             journals = cur.fetchall()
-#             x = []
-#             y = []
-#             for journal in journals:
-#                 x.append(journal[0])
-#                 y.append(journal[1])
-#             return jsonify({"x": x, "y": y})
+
+@genie.route("/relationships/<path:id>")
+def show(id):
+    with connection as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT gene_id, mesh_id, gene_name, disease_name FROM relationships WHERE id = %s;", (id, ))
+            relationship = cur.fetchone()
+
+            cur.execute("SELECT year, pmid_cum_sum, citations_cum_sum FROM gene_pubs WHERE id = %s;", (relationship[0], ))
+            gene_data = np.array(cur.fetchall()).T
+
+            cur.execute("SELECT year, pmid_cum_sum, citations_cum_sum FROM disease_pubs WHERE id = %s;", (relationship[1], ))
+            disease_data = np.array(cur.fetchall()).T
+            return jsonify({"gene_data": gene_data.tolist(), "disease_data": disease_data.tolist(), "gene_name": relationship[2], "disease_name": relationship[3]})
