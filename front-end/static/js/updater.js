@@ -7,7 +7,7 @@ genie.update = (data) => {
     let tr = $("<tr>")
     let row = data.items[i]
     tr.attr("id", row[0])
-    for (let j = 0; j < row.length; j++) {
+    for (let j = 1; j < row.length; j++) {
       let td = $("<td>")
       let div = $("<div>" + row[j] + "</div>")
       td.append(div)

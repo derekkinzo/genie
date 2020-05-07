@@ -106,13 +106,13 @@ def show(id):
             journals_data = np.array(cur.fetchall()).T.reshape(2, -1).tolist()
 
 
-            stats = {
-                "Total Publications": (pubs_data[0], pubs_data[1], "Cumulative Count"),
-                "Total Citations": (pubs_data[0], pubs_data[2], "Cumulative Count"),
-                "Total Journal": (journals_data[0], journals_data[1], "Cumulative Count"),
-                "SJR": (sjr_data[0], sjr_data[2], "Average"),
-                "HIndex": (sjr_data[0], sjr_data[1], "Average")
-            }
+            stats = [
+                ("Total Publications", pubs_data[0], pubs_data[1], "Cumulative Count"),
+                ("Total Citations", pubs_data[0], pubs_data[2], "Cumulative Count"),
+                ("Total Journal", journals_data[0], journals_data[1], "Cumulative Count"),
+                ("SJR", sjr_data[0], sjr_data[2], "Average"),
+                ("h index", sjr_data[0], sjr_data[1], "Average")
+            ]
 
             return jsonify({"gene_data": gene_data.tolist(), "disease_data": disease_data.tolist(), "gene_name": relationship[2], "disease_name": relationship[3], "stats": stats})
 

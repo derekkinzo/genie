@@ -82,22 +82,22 @@ for (let i = 1; i <= 2; i++) {
 $("#stats").on("click", ".tab-select", (event) => {
   $("#stats .tab-select").removeClass("selected")
   $(event.target).addClass("selected")
-  let type = $(event.target).text()
+  let index = parseInt($(event.target).attr("index"))
 
   let layout = {
     plot_bgcolor: "#222222",
     paper_bgcolor:"#222222",
     font: {color: 'white'},
-    title: {text: type},
+    title: {text: genie.relationship.stats[index][0]},
     xaxis: {
       title: {text: 'Year'}
     },
     yaxis: {
-      title: {text: genie.relationship.stats[type][2]}
+      title: {text: genie.relationship.stats[index][3]}
     }
   }
 
-  let trace = [{type: "scatter", mode: "lines", x: genie.relationship.stats[type][0], y: genie.relationship.stats[type][1]}]
+  let trace = [{type: "scatter", mode: "lines", x: genie.relationship.stats[index][1], y: genie.relationship.stats[index][2]}]
   Plotly.newPlot("stats-plot", trace, layout, {displayModeBar: false})
 })
 

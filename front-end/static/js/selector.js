@@ -22,9 +22,10 @@ genie.select = (data) => {
 
   $("#stats").empty()
 
-  for (const title in data.stats) {
-    let select = $("<div>" + title + "</div>")
+  for (let i = 0; i < data.stats.length; i++) {
+    let select = $("<div>" + data.stats[i][0] + "</div>")
     select.addClass("tab-select")
+    $(select).attr("index", i)
     $("#stats").append(select)
   }
 
