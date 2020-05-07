@@ -1,5 +1,5 @@
 #define HYDRATION 1
-#define DEHYDRATION 0.5
+#define DEHYDRATION 0.9
 #define NUM_CORES 16
 #define NUM_ITERS 20
 
