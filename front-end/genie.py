@@ -53,13 +53,20 @@ def index():
                 OFFSET {};
             """.format(", ".join(columns), where_sql, order, 50, page * 50), {"query": "%{}%".format(request.args.get("search"))})
             relationships = cur.fetchall()
+            results = []
+            for relationship in relationships:
+                row = list(relationship)
+                row[1] = str(row[1]) + "%"
+                row[6] = str(row[6]) + "%"
+                row[7] = str(row[7]) + "%"
+                results.append(row)
 
             if request.args.get("format") == "csv":
                 file_data = io.StringIO()
                 writer = csv.writer(file_data)
                 writer.writerow(column_names)
-                for relationship in relationships:
-                    writer.writerow(relationship)
+                for row in results:
+                    writer.writerow(row)
                 response = make_response(file_data.getvalue())
                 response.headers["Content-Disposition"] = "attachment; filename=data.csv"
                 response.headers["Content-type"] = "text/csv"
@@ -72,9 +79,6 @@ def index():
             """.format(where_sql), {"query": "%{}%".format(request.args.get("search"))})
             count = cur.fetchone()[0]
 
-            results = []
-            for relationship in relationships:
-                results.append(relationship)
             return jsonify({"items": results, "total_pages": math.ceil(count / 50)})
 
 @genie.route("/relationships/<path:id>")
