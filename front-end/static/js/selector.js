@@ -27,9 +27,11 @@ genie.updateLinks = ($el, data) => {
     let lidiv = $("<li>")
     lidiv.addClass("article-link")
 
-    let atag = $("<a>" + data[i][0] + ", page rank: " + data[i][3] + ", citations: " + data[i][2] + "</a>")
+    let atag = $("<a>" + data[i][0] +  "</a>")
     atag.attr("target", "_blank")
     atag.attr("href", data[i][1])
+    let p = $("<p>" + "page rank: " + data[i][3] + ", citations: " + data[i][2] + "</p>")
+    atag.append(p)
     lidiv.append(atag)
     $el.append(lidiv)
   }
