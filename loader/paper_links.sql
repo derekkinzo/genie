@@ -9,7 +9,7 @@ CREATE TABLE paper_links(
   id character varying PRIMARY KEY,
   mesh_id character varying NOT NULL,
   gene_id character varying NOT NULL,
-  pmid integer NOT NULL,
+  pmid character varying NOT NULL,
   year smallint NOT NULL,
   citations integer NOT NULL,
   link character varying NOT NULL

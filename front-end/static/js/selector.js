@@ -6,19 +6,8 @@ genie.select = (data) => {
   $("#gene-name").text(data.gene_name)
   $("#disease-name").text(data.disease_name)
 
-  $.get({
-    url: "/search?q=" + data.gene_name,
-    success: (data) => {
-      genie.updateLinks($("#gene-articles"), data)
-    }
-  })
-
-  $.get({
-    url: "/search?q=" + data.disease_name,
-    success: (data) => {
-      genie.updateLinks($("#disease-articles"), data)
-    }
-  })
+  genie.updateLinks($("#gene-articles"), data.gene_links)
+  genie.updateLinks($("#disease-articles"), data.disease_links)
 
   $("#stats").empty()
 
@@ -38,7 +27,7 @@ genie.updateLinks = ($el, data) => {
     let lidiv = $("<li>")
     lidiv.addClass("article-link")
 
-    let atag = $("<a>" + data[i][0] + "</a>")
+    let atag = $("<a>" + data[i][0] + ", page rank: " + data[i][3] + ", citations: " + data[i][2] + "</a>")
     atag.attr("target", "_blank")
     atag.attr("href", data[i][1])
     lidiv.append(atag)

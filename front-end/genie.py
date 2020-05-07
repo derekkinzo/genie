@@ -79,6 +79,12 @@ def index():
                 FROM relationships
                 {};
             """.format(where_sql), {"query": "%{}%".format(request.args.get("search"))})
+
+            cur.execute("""
+                SELECT count(1)
+                FROM relationships
+                {};
+            """.format(where_sql), {"query": "%{}%".format(request.args.get("search"))})
             count = cur.fetchone()[0]
 
             return jsonify({"items": results, "total_pages": math.ceil(count / 50)})
@@ -105,6 +111,26 @@ def show(id):
             cur.execute("SELECT year, journal_sum FROM journal_sums WHERE id = %s ORDER BY year;", (id, ))
             journals_data = np.array(cur.fetchall()).T.reshape(2, -1).tolist()
 
+            cur.execute("""
+                SELECT paper_links.pmid, paper_links.link, paper_links.citations, pubmed_ranks.pubmed_rank
+                FROM paper_links LEFT OUTER JOIN pubmed_ranks
+                ON paper_links.pmid = pubmed_ranks.id
+                WHERE gene_id = %s
+                ORDER BY pubmed_ranks.pubmed_rank DESC
+                LIMIT 20;
+            """, (relationship[0], ))
+            gene_links = [[row[0], row[1], row[2], str(row[3])] for row in cur.fetchall()]
+
+
+            cur.execute("""
+                SELECT paper_links.pmid, paper_links.link, paper_links.citations, pubmed_ranks.pubmed_rank
+                FROM paper_links LEFT OUTER JOIN pubmed_ranks
+                ON paper_links.pmid = pubmed_ranks.id
+                WHERE mesh_id = %s
+                ORDER BY pubmed_ranks.pubmed_rank DESC
+                LIMIT 20;
+            """, (relationship[1], ))
+            disease_links = [[row[0], row[1], row[2], str(row[3])] for row in cur.fetchall()]
 
             stats = [
                 ("Total Publications", pubs_data[0], pubs_data[1], "Cumulative Count"),
@@ -114,7 +140,7 @@ def show(id):
                 ("h index", sjr_data[0], sjr_data[1], "Average")
             ]
 
-            return jsonify({"gene_data": gene_data.tolist(), "disease_data": disease_data.tolist(), "gene_name": relationship[2], "disease_name": relationship[3], "stats": stats})
+            return jsonify({"gene_data": gene_data.tolist(), "disease_data": disease_data.tolist(), "gene_name": relationship[2], "disease_name": relationship[3], "stats": stats, "gene_links": gene_links, "disease_links": disease_links})
 
 
 @genie.route("/search")
