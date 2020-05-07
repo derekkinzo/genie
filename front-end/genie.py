@@ -15,13 +15,13 @@ import os
 genie = Blueprint("genie", __name__)
 orders = [None, "DESC", "ASC"]
 num_columns = 10
-column_names = ["Id", "P2 Prob", "Mesh Id", "Disease", "Gene", "Change Recent", "Probability Change", "Previous Probability", "Publications", "Citations"]
+column_names = ["Id", "Mesh Id", "Disease", "Gene", "P2 Prob", "Change Recent", "Probability Change", "Previous Probability", "Publications", "Citations"]
 assert(len(column_names) == num_columns)
 columns = ["id", "p2_prob", "mesh_id", "disease_name", "gene_name", "change_recent", "recent_prob_change", "previous_prob", "num_pubs", "num_citations"]
 assert(len(columns) == num_columns)
-sorts = [False, True, False, False, False, True, True, True, True, True]
+sorts = [False, False, False, False, True, True, True, True, True, True]
 assert(len(sorts) == num_columns)
-searches = [True, False, True, True, True, False, False, False, False, False]
+searches = [True, True, True, True, False, False, False, False, False, False]
 assert(len(searches) == num_columns)
 
 @genie.route("/")
