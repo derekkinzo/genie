@@ -1,7 +1,7 @@
-#define HYDRATION 0.15
-#define DEHYDRATION 0.85
+#define HYDRATION 1
+#define DEHYDRATION 0.5
 #define NUM_CORES 16
-#define NUM_ITERS 10
+#define NUM_ITERS 20
 
 typedef struct Article {
   long double score;
