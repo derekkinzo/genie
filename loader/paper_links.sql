@@ -12,8 +12,8 @@ CREATE TABLE paper_links(
   pmid character varying NOT NULL,
   year smallint NOT NULL,
   citations integer NOT NULL,
-  link character varying NOT NULL,
-  title character varying NOT NULL
+  title character varying NOT NULL,
+  link character varying NOT NULL
 );
 
 CREATE INDEX index_paper_links_on_mesh_id ON paper_links USING btree (mesh_id);
