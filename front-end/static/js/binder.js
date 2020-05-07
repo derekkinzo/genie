@@ -60,13 +60,28 @@ for (let i = 1; i <= 2; i++) {
       plot_bgcolor: "#222222",
       paper_bgcolor:"#222222",
       font: {color: 'white'},
-      hoverinfo: false,
-      margin: {l: 40, r: 40, b: 40, t: 40, pad: 0}
+      margin: {l: 40, r: 40, b: 40, t: 20, pad: 0}
     }
 
     let trace = [{type: "scatter", mode: "lines", x: genie.relationship.disease_data[0], y: genie.relationship.disease_data[i]}]
     Plotly.newPlot("disease-plot", trace, layout, {displayModeBar: false})
   })
 }
+
+$("#stats").on("click", ".stat-select", (event) => {
+  $("#stats .stat-select").removeClass("selected")
+  $(event.target).addClass("selected")
+  let type = $(event.target).text()
+
+  let layout = {
+    plot_bgcolor: "#222222",
+    paper_bgcolor:"#222222",
+    font: {color: 'white'},
+    margin: {l: 40, r: 40, b: 40, t: 20, pad: 0}
+  }
+
+  let trace = [{type: "scatter", mode: "lines", x: genie.relationship.stats[type][0], y: genie.relationship.stats[type][1]}]
+  Plotly.newPlot("stats-plot", trace, layout, {displayModeBar: false})
+})
 
 genie.fetch()

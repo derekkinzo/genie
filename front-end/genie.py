@@ -77,7 +77,26 @@ def show(id):
 
             cur.execute("SELECT year, pmid_cum_sum, citations_cum_sum FROM disease_pubs WHERE id = %s;", (relationship[1], ))
             disease_data = np.array(cur.fetchall()).T
-            return jsonify({"gene_data": gene_data.tolist(), "disease_data": disease_data.tolist(), "gene_name": relationship[2], "disease_name": relationship[3]})
+
+            cur.execute("SELECT year, hindex, sjr FROM sjr_stats WHERE id = %s ORDER BY year;", (id, ))
+            sjr_data = np.array(cur.fetchall()).T.tolist()
+
+            cur.execute("SELECT year, pmid_sum, citations_sum FROM pub_sums WHERE id = %s ORDER BY year;;", (id, ))
+            pubs_data = np.array(cur.fetchall()).T.tolist()
+
+            cur.execute("SELECT year, journal_sum FROM journal_sums WHERE id = %s ORDER BY year;", (id, ))
+            journals_data = np.array(cur.fetchall()).T.tolist()
+
+            stats = {
+                "HIndex": (sjr_data[0], sjr_data[1]),
+                "SJR": (sjr_data[0], sjr_data[2]),
+                "Total Publications": (pubs_data[0], pubs_data[1]),
+                "Total Citations": (pubs_data[0], pubs_data[2]),
+                "Total Journal": (journals_data[0], journals_data[1])
+            }
+
+            return jsonify({"gene_data": gene_data.tolist(), "disease_data": disease_data.tolist(), "gene_name": relationship[2], "disease_name": relationship[3], "stats": stats})
+
 
 @genie.route("/search")
 def search():

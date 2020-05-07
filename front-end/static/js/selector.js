@@ -19,6 +19,16 @@ genie.select = (data) => {
       genie.updateLinks($("#disease-articles"), data)
     }
   })
+
+  $("#stats").empty()
+
+  for (const title in data.stats) {
+    let select = $("<div>" + title + "</div>")
+    select.addClass("stat-select")
+    $("#stats").append(select)
+  }
+
+  $("#stats").find(".stat-select").first().trigger("click")
 }
 
 genie.updateLinks = ($el, data) => {

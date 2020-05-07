@@ -122,6 +122,14 @@
   color: white;
 }
 
+.stat-select {
+  cursor: pointer;
+}
+
+.stat-select:hover, .stat-select.selected {
+  background-color: #999999;
+}
+
 .tab-select:hover {
   background-color: grey;
 }
