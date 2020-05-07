@@ -84,4 +84,8 @@ $("#stats").on("click", ".stat-select", (event) => {
   Plotly.newPlot("stats-plot", trace, layout, {displayModeBar: false})
 })
 
+$("#export").click((event) => {
+  genie.fetch("csv")
+})
+
 genie.fetch()

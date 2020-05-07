@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request, make_response
 from flask import render_template
 from flask import jsonify
 from flask import Blueprint
@@ -8,6 +8,7 @@ import numpy as np
 from connection import connection
 from os import path
 import csv
+import io
 
 genie = Blueprint("genie", __name__)
 orders = [None, "DESC", "ASC"]
@@ -52,6 +53,17 @@ def index():
                 OFFSET {};
             """.format(", ".join(columns), where_sql, order, 50, page * 50), {"query": "%{}%".format(request.args.get("search"))})
             relationships = cur.fetchall()
+
+            if request.args.get("format") == "csv":
+                file_data = io.StringIO()
+                writer = csv.writer(file_data)
+                writer.writerow(column_names)
+                for relationship in relationships:
+                    writer.writerow(relationship)
+                response = make_response(file_data.getvalue())
+                response.headers["Content-Disposition"] = "attachment; filename=data.csv"
+                response.headers["Content-type"] = "text/csv"
+                return response
 
             cur.execute("""
                 SELECT count(1)

@@ -24,6 +24,9 @@ genie.update = (data) => {
   $(".fa-step-forward").removeClass("disabled")
   if (genie.getPage() + 1 >= data.total_pages)
     $(".fa-step-forward").addClass("disabled")
+
+  let a = document.getElementById("export")
+  a.getElementsByTagName("span")[0].innerText = data.items.length
 }
 
 genie.updatePage = (page) => {

@@ -1,5 +1,4 @@
-genie.fetch = () => {
-  $('#loading-indicator').show()
+genie.fetch = (format) => {
   let params = {search: $("#search").val()}
 
   let sort = $(".fa-sort[state=1]")[0] || $(".fa-sort[state=2]")[0]
@@ -10,10 +9,16 @@ genie.fetch = () => {
 
   params.page = genie.getPage()
 
-  $.get("/relationships", params, (data) => {
-    genie.update(data)
-    $('#loading-indicator').hide()
-  })
+  if (format == "csv") {
+    params.format = format
+    window.location = "/relationships?" + jQuery.param(params)
+  } else {
+    $('#loading-indicator').show()
+    $.get("/relationships", params, (data) => {
+      genie.update(data)
+      $('#loading-indicator').hide()
+    })
+  }
 }
 
 genie.show = (id) => {
