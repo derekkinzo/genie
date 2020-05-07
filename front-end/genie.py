@@ -58,7 +58,7 @@ def index():
             results = []
             for relationship in relationships:
                 row = list(relationship)
-                row[1] = str(row[1]) + "%"
+                row[5] = str(row[5]) + "%"
                 row[6] = str(row[6]) + "%"
                 row[7] = str(row[7]) + "%"
                 results.append(row)
