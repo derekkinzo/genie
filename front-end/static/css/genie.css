@@ -122,20 +122,18 @@
   color: white;
 }
 
-.stat-select {
-  cursor: pointer;
-}
-
-.stat-select:hover, .stat-select.selected {
-  background-color: #999999;
-}
-
 .tab-select:hover {
   background-color: grey;
 }
 
 .tab-select {
+  padding: 5px;
+  border-radius: 5px;
+  /* margin-right: 5px; */
   cursor: pointer;
+  line-height: 100%;
+  border: 1px solid grey;
+  vertical-align: middle;
 }
 
 .tab-select.selected {
@@ -157,4 +155,5 @@
 body {
   width: 100vw;
   height: 100vh;
+  font-size:2vh;
 }

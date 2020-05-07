@@ -24,23 +24,23 @@ genie.select = (data) => {
 
   for (const title in data.stats) {
     let select = $("<div>" + title + "</div>")
-    select.addClass("stat-select")
+    select.addClass("tab-select")
     $("#stats").append(select)
   }
 
-  $("#stats").find(".stat-select").first().trigger("click")
+  $("#stats").find(".tab-select").first().trigger("click")
 }
 
 genie.updateLinks = ($el, data) => {
   $el.empty()
   for (let i = 0; i < data.length; i++) {
-    let adiv = $("<div>")
-    adiv.addClass("article-link")
+    let lidiv = $("<li>")
+    lidiv.addClass("article-link")
 
     let atag = $("<a>" + data[i][0] + "</a>")
     atag.attr("target", "_blank")
     atag.attr("href", data[i][1])
-    adiv.append(atag)
-    $el.append(adiv)
+    lidiv.append(atag)
+    $el.append(lidiv)
   }
 }

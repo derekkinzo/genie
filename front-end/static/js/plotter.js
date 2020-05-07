@@ -10,7 +10,12 @@ genie.plot = (data, id) => {
     },
     xaxis: {
       title: {
-        text: 'Year'
+        text: 'Year',
+        font: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
       }
     },
   }

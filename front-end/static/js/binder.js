@@ -42,8 +42,13 @@ for (let i = 1; i <= 2; i++) {
       plot_bgcolor: "#222222",
       paper_bgcolor:"#222222",
       font: {color: 'white'},
-      hoverinfo: false,
-      margin: {l: 40, r: 40, b: 40, t: 40, pad: 0}
+      margin: {t: 25, pad: 0},
+      xaxis: {
+        title: {text: 'Year'}
+      },
+      yaxis: {
+        title: {text: "Cumulative Count"}
+      }
     }
 
     let trace = [{type: "scatter", mode: "lines", x: genie.relationship.gene_data[0], y: genie.relationship.gene_data[i]}]
@@ -60,7 +65,13 @@ for (let i = 1; i <= 2; i++) {
       plot_bgcolor: "#222222",
       paper_bgcolor:"#222222",
       font: {color: 'white'},
-      margin: {l: 40, r: 40, b: 40, t: 20, pad: 0}
+      margin: {t: 25, pad: 0},
+      xaxis: {
+        title: {text: 'Year'}
+      },
+      yaxis: {
+        title: {text: "Cumulative Count"}
+      }
     }
 
     let trace = [{type: "scatter", mode: "lines", x: genie.relationship.disease_data[0], y: genie.relationship.disease_data[i]}]
@@ -68,8 +79,8 @@ for (let i = 1; i <= 2; i++) {
   })
 }
 
-$("#stats").on("click", ".stat-select", (event) => {
-  $("#stats .stat-select").removeClass("selected")
+$("#stats").on("click", ".tab-select", (event) => {
+  $("#stats .tab-select").removeClass("selected")
   $(event.target).addClass("selected")
   let type = $(event.target).text()
 
@@ -77,7 +88,13 @@ $("#stats").on("click", ".stat-select", (event) => {
     plot_bgcolor: "#222222",
     paper_bgcolor:"#222222",
     font: {color: 'white'},
-    margin: {l: 40, r: 40, b: 40, t: 20, pad: 0}
+    title: {text: type},
+    xaxis: {
+      title: {text: 'Year'}
+    },
+    yaxis: {
+      title: {text: genie.relationship.stats[type][2]}
+    }
   }
 
   let trace = [{type: "scatter", mode: "lines", x: genie.relationship.stats[type][0], y: genie.relationship.stats[type][1]}]

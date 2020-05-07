@@ -9,6 +9,8 @@ from connection import connection
 from os import path
 import csv
 import io
+import requests
+import os
 
 genie = Blueprint("genie", __name__)
 orders = [None, "DESC", "ASC"]
@@ -89,26 +91,27 @@ def show(id):
             relationship = cur.fetchone()
 
             cur.execute("SELECT year, pmid_cum_sum, citations_cum_sum FROM gene_pubs WHERE id = %s;", (relationship[0], ))
-            gene_data = np.array(cur.fetchall()).T
+            gene_data = np.array(cur.fetchall()).T.reshape(3, -1)
 
             cur.execute("SELECT year, pmid_cum_sum, citations_cum_sum FROM disease_pubs WHERE id = %s;", (relationship[1], ))
-            disease_data = np.array(cur.fetchall()).T
+            disease_data = np.array(cur.fetchall()).T.reshape(3, -1)
 
             cur.execute("SELECT year, hindex, sjr FROM sjr_stats WHERE id = %s ORDER BY year;", (id, ))
-            sjr_data = np.array(cur.fetchall()).T.tolist()
+            sjr_data = np.array(cur.fetchall()).T.reshape(3, -1).tolist()
 
             cur.execute("SELECT year, pmid_sum, citations_sum FROM pub_sums WHERE id = %s ORDER BY year;;", (id, ))
-            pubs_data = np.array(cur.fetchall()).T.tolist()
+            pubs_data = np.array(cur.fetchall()).T.reshape(3, -1).tolist()
 
             cur.execute("SELECT year, journal_sum FROM journal_sums WHERE id = %s ORDER BY year;", (id, ))
-            journals_data = np.array(cur.fetchall()).T.tolist()
+            journals_data = np.array(cur.fetchall()).T.reshape(2, -1).tolist()
+
 
             stats = {
-                "HIndex": (sjr_data[0], sjr_data[1]),
-                "SJR": (sjr_data[0], sjr_data[2]),
-                "Total Publications": (pubs_data[0], pubs_data[1]),
-                "Total Citations": (pubs_data[0], pubs_data[2]),
-                "Total Journal": (journals_data[0], journals_data[1])
+                "HIndex": (sjr_data[0], sjr_data[1], "Average"),
+                "SJR": (sjr_data[0], sjr_data[2], "Average"),
+                "Total Publications": (pubs_data[0], pubs_data[1], "Cumulative Count"),
+                "Total Citations": (pubs_data[0], pubs_data[2], "Cumulative Count"),
+                "Total Journal": (journals_data[0], journals_data[1], "Cumulative Count")
             }
 
             return jsonify({"gene_data": gene_data.tolist(), "disease_data": disease_data.tolist(), "gene_name": relationship[2], "disease_name": relationship[3], "stats": stats})
@@ -117,19 +120,23 @@ def show(id):
 @genie.route("/search")
 def search():
     q = request.args.get("q")
-    results = []
-    if path.exists("search_results/" + q):
-        with open("search_results/" + q, "r") as results_file:
-            reader = csv.reader(results_file)
-            for row in reader:
-                results.append(row)
-    else:
+
+    if not path.exists("search_results/" + q):
+        results = []
         response = requests.get("https://www.googleapis.com/customsearch/v1?key=" + os.getenv("GOOGLE_API") + "&cx=004315576993373726096:gkqhc3opbnm&q=" + q)
         data = response.json()
         for item in data["items"]:
-            results.append([item["title"], item["link"]])
+            title = "".join(item["title"].split(" - ")[1:])
+            results.append([title, item["link"]])
         with open("search_results/" + q, "w") as results_file:
             writer = csv.writer(results_file)
             for result in results:
                 writer.writerow(result)
+
+    results = []
+    with open("search_results/" + q, "r") as results_file:
+        reader = csv.reader(results_file)
+        for row in reader:
+            results.append(row)
+
     return jsonify(results)
