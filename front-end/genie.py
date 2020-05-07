@@ -119,7 +119,7 @@ def show(id):
                 ORDER BY pubmed_ranks.pubmed_rank DESC
                 LIMIT 20;
             """, (relationship[0], ))
-            gene_links = [[row[0], row[1], row[2], str(row[3])] for row in cur.fetchall()]
+            gene_links = [[row[0] or "N/A", row[1], row[2], str(row[3])] for row in cur.fetchall()]
 
 
             cur.execute("""
@@ -130,7 +130,7 @@ def show(id):
                 ORDER BY pubmed_ranks.pubmed_rank DESC
                 LIMIT 20;
             """, (relationship[1], ))
-            disease_links = [[row[0], row[1], row[2], str(row[3])] for row in cur.fetchall()]
+            disease_links = [[row[0] or "N/A", row[1], row[2], str(row[3])] for row in cur.fetchall()]
 
             stats = [
                 ("Total Publications", pubs_data[0], pubs_data[1], "Cumulative Count"),
