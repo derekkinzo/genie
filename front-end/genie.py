@@ -112,7 +112,7 @@ def show(id):
             journals_data = np.array(cur.fetchall()).T.reshape(2, -1).tolist()
 
             cur.execute("""
-                SELECT paper_links.pmid, paper_links.link, paper_links.citations, pubmed_ranks.pubmed_rank
+                SELECT paper_links.title, paper_links.link, paper_links.citations, pubmed_ranks.pubmed_rank
                 FROM paper_links LEFT OUTER JOIN pubmed_ranks
                 ON paper_links.pmid = pubmed_ranks.id
                 WHERE gene_id = %s
@@ -123,7 +123,7 @@ def show(id):
 
 
             cur.execute("""
-                SELECT paper_links.pmid, paper_links.link, paper_links.citations, pubmed_ranks.pubmed_rank
+                SELECT paper_links.title, paper_links.link, paper_links.citations, pubmed_ranks.pubmed_rank
                 FROM paper_links LEFT OUTER JOIN pubmed_ranks
                 ON paper_links.pmid = pubmed_ranks.id
                 WHERE mesh_id = %s
