@@ -117,7 +117,7 @@ def show(id):
                 ON paper_links.pmid = pubmed_ranks.id
                 WHERE gene_id = %s
                 ORDER BY pubmed_ranks.pubmed_rank DESC
-                LIMIT 20;
+                LIMIT 50;
             """, (relationship[0], ))
             gene_links = [[row[0], row[1], row[2], str(row[3])] for row in cur.fetchall()]
 
@@ -128,7 +128,7 @@ def show(id):
                 ON paper_links.pmid = pubmed_ranks.id
                 WHERE mesh_id = %s
                 ORDER BY pubmed_ranks.pubmed_rank DESC
-                LIMIT 20;
+                LIMIT 50;
             """, (relationship[1], ))
             disease_links = [[row[0], row[1], row[2], str(row[3])] for row in cur.fetchall()]
 
