@@ -6,7 +6,7 @@ import random
 import requests
 from os import path
 import os
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getcwd() + "/service-account.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.dirname(os.getcwd()) + "/service-account.json"
 from google.cloud import bigquery
 client = bigquery.Client()
 
@@ -22,6 +22,6 @@ with open("data/citations.csv", "w") as file:
         for i in row[1].split(","):
             data.append(int(i))
         count += 1
-        if count % 1000 == 0:
+        if count % 10000 == 0:
             print(count)
         writer.writerow(data)
