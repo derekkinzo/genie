@@ -1,9 +1,10 @@
 """Module to test online sources parsers."""
 import pytest
+from geniepy.datamgmt.scrapers import PubMedScraper
 from geniepy.datamgmt.parsers import BaseParser, PubMedParser
 from geniepy.errors import ParserError
 import tests.testdata as td
-from tests.resources.mock import MockPubMedScraper
+
 
 
 VALID_DF = td.PUBMED_VALID_DF
@@ -11,11 +12,11 @@ INVALID_DF = td.PUBMED_INVALID_DF
 
 
 class TestPubMedParser:
-    """Pytest CTD Parser class."""
+    """Pytest PubMed Parser class."""
 
     parser: BaseParser = PubMedParser()
-    mock_scraper = MockPubMedScraper()
-    parser.scraper = mock_scraper
+    scraper: PubMedScraper = PubMedScraper()
+    parser.scraper = scraper
 
     def test_constructor(self):
         """Ensure scraper obj constructed successfully."""
@@ -33,15 +34,10 @@ class TestPubMedParser:
         # Should return empty list
         assert not self.parser.validate(payload)
 
-    def test_parse_valid(self):
+    @pytest.mark.parametrize('chunksize', [1, 100])
+    def test_parse_valid(self, chunksize):
         """Test parsing valid recrods."""
-        chunksize = 3
         scrape_gen = self.parser.scraper.scrape(chunksize=chunksize)
         xml_articles = next(scrape_gen)
         parsed_df = self.parser.parse(xml_articles)
         assert parsed_df.shape[0] == chunksize
-
-    def test_parse_invalid_file(self):
-        """Attempt to parse invalid data."""
-        with pytest.raises(ParserError):
-            self.parser.parse("invalid xml")

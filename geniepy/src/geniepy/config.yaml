@@ -20,3 +20,10 @@ gbq:
     master: "Genie"
     # Dataset containing classifier scoring data
     scoring: "scoring"
+
+# PubMed FTP URLs
+pubmed_ftp_server: "ftp.ncbi.nlm.nih.gov"
+pubmed_baseline_dir: "/pubmed/baseline/"
+pubmed_update_dir: "/pubmed/updatefiles/"
+pubmed_data_file: "~/.geniepy.d/pubmed.dat"
+pubmed_download_dir: "~/.geniepy.d/pubmed"

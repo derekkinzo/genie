@@ -225,7 +225,7 @@ class PubMedParser(BaseParser):
     """
 
     default_type: DataType = DataType.XML
-    scraper: gs.PubMedScraper()
+    scraper: gs.PubMedScraper = gs.PubMedScraper()
     schema: Schema = Schema(
         [
             Column("pmid", [IsDtypeValidation(np.int64)]),
@@ -239,6 +239,10 @@ class PubMedParser(BaseParser):
             Column("language"),
             Column("chemicals"),
             Column("mesh_list"),
+            Column("issn"),
+            Column("issn_type"),
+            Column("citation_count"),
+            Column("citation_pmid"),            
         ]
     )
 
@@ -257,7 +261,8 @@ class PubMedParser(BaseParser):
             DataFrame -- The parsed dataframe.
         """
         # Data passed in should be a list of xml element trees
-        xml_list = data
+        # xml_list = data
+        articles = data
 
         # The keys of the dataframe
         keys = [
@@ -272,6 +277,10 @@ class PubMedParser(BaseParser):
             "language",
             "chemicals",
             "mesh_list",
+            "issn",
+            "issn_type",
+            "citation_count",
+            "citation_pmid",
         ]
 
         # Temp array variables to store from each xml element tree
@@ -286,11 +295,16 @@ class PubMedParser(BaseParser):
         language_list = []
         chemicals_list = []
         mesh_list_list = []
+        issn_list = []
+        issn_type_list = []
+        citation_count_list = []
+        citation_pmid_list = []
 
         try:
             # General XML Tags
-            for xml_article in xml_list:
-                article = PubMedArticle(xml_article)
+            # for xml_article in xml_list:
+            for article in articles:
+                # article = PubMedArticle(xml_article)
                 pmid_list.append(np.int64(article.pmid))
                 date_completed_list.append(article.date_completed)
                 pub_model_list.append(article.pub_model)
@@ -302,6 +316,10 @@ class PubMedParser(BaseParser):
                 language_list.append(article.language)
                 chemicals_list.append(str(article.chemicals).strip("[]"))
                 mesh_list_list.append(str(article.mesh_list).strip("[]"))
+                issn_list.append(str(article.issn).strip("[]"))
+                issn_type_list.append(str(article.issn_type).strip("[]"))
+                citation_count_list.append(str(article.citationCount).strip("[]"))
+                citation_pmid_list.append(str(article.citationPmid).strip("[]"))
 
             # Create the array of arrays of values in dataframe
             values = [
@@ -316,6 +334,10 @@ class PubMedParser(BaseParser):
                 language_list,
                 chemicals_list,
                 mesh_list_list,
+                issn_list,
+                issn_type_list,
+                citation_count_list,
+                citation_pmid_list,
             ]
 
             # Zip df keys and values and create dataframe
