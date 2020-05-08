@@ -61,6 +61,8 @@ def index():
                 row[4] = str(row[4]) + "%"
                 row[6] = str(row[6]) + "%"
                 row[7] = str(row[7]) + "%"
+                row[8] = "{:,}".format(row[8])
+                row[9] = "{:,}".format(row[9])
                 results.append(row)
 
             if request.args.get("format") == "csv":
