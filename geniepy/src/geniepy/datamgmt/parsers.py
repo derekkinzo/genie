@@ -60,7 +60,7 @@ class BaseParser(ABC):
             DataFrame -- The parsed dataframe.
         """
 
-    def fetch(self, chunksize: int) -> Generator[DataFrame, None, None]:
+    def fetch(self, chunksize: int, **kwargs) -> Generator[DataFrame, None, None]:
         """
         Fetch new data, if available from online sources.
 
@@ -70,7 +70,15 @@ class BaseParser(ABC):
         Returns:
             Generator[DataFrame, None, None] -- Generator yielding fetched data
         """
-        raw_gen = self.scraper.scrape(chunksize)
+        raw_gen = self.scraper.scrape(chunksize, **kwargs)
+
+        # for testing purposes only - returns single yield
+        if "test" in kwargs and kwargs.get("test") == True:
+            parsed_df = self.parse(next(raw_gen), self.default_type)
+            yield parsed_df
+            return
+
+        # for production purposes - iterate through yields
         for data_chunk in raw_gen:
             parsed_df = self.parse(data_chunk, self.default_type)
             yield parsed_df

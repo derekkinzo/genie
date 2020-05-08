@@ -96,7 +96,7 @@ class TestPubMedDao:
         result_df = next(generator)
         assert result_df.pmid.count() == chunksize
 
-    @pytest.mark.parametrize("chunksize", [1])
+    @pytest.mark.parametrize("chunksize", [1, 100])
     def test_download(self, chunksize):
         """
         Test download method for historical data.
@@ -111,7 +111,7 @@ class TestPubMedDao:
         with pytest.raises(StopIteration):
             next(generator)
         # Call download method to update database with data from online sources
-        self.test_dao.download(chunksize)
+        self.test_dao.download(chunksize, test=True)
         # Read entire table
         generator = self.test_dao.query(self.test_dao.query_all, chunksize)
         # Generator should return values

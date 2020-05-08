@@ -34,7 +34,7 @@ class TestPubMedParser:
         # Should return empty list
         assert not self.parser.validate(payload)
 
-    @pytest.mark.parametrize('chunksize', [1, 100])
+    @pytest.mark.parametrize('chunksize', [1, 10, 100])
     def test_parse_valid(self, chunksize):
         """Test parsing valid recrods."""
         scrape_gen = self.parser.scraper.scrape(chunksize=chunksize)

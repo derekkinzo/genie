@@ -257,47 +257,63 @@ class PubMedScraper(BaseScraper):
         # determine new files to parse
         # in BASELINE_SCRAPE_MODE parse all files
         pubmed_new_files = []
+        parsed_files = []
         if BASELINE_SCRAPE_MODE:
             pubmed_new_files = pubmed_files
         else:
             pubmed_new_files = list(set(pubmed_files) - set(pubmed_history))
         
-        for pubmed_file in pubmed_new_files:
-            # download pubmed data file
-            retries = 0
-            while retries <= PubMedScraper.DEFAULT_DOWNLOAD_RETRIES:
-                if self._ftp_download(pubmed_ftp, pubmed_file):
-                    break
-                retries += 1
-
-            # scrape downloaded PubMed data file
-            articles = self._pubmedScrape(pubmed_file)
-                
-            # yield articles to generator
-            while True:
-                articles_chunk = []
-                for _ in range(chunksize):
-                    if len(articles) > 0:
-                        article = articles.pop()
-                        # scrape citation metadata
-                        citations = self._citationScrape(article.pmid)
-                        article.set_citationCount(citations[1])
-                        article.set_citationPmid(citations[2])
-                        articles_chunk.append(article)
-                    else:
+        # main scraping block
+        try:
+            for pubmed_file in pubmed_new_files:
+                # download pubmed data file
+                retries = 0
+                while retries <= PubMedScraper.DEFAULT_DOWNLOAD_RETRIES:
+                    if self._ftp_download(pubmed_ftp, pubmed_file):
                         break
-                if len(articles_chunk) <= 0:
-                    break
+                    retries += 1
+
+                # scrape downloaded PubMed data file
+                articles = self._pubmedScrape(pubmed_file)
                     
-                yield articles_chunk
+                # yield articles to generator
+                while True:
+                    articles_chunk = []
+                    for _ in range(chunksize):
+                        if len(articles) > 0:
+                            article = articles.pop()
+                            # scrape citation metadata
+                            citations = self._citationScrape(article.pmid)
+                            article.set_citationCount(citations[1])
+                            article.set_citationPmid(citations[2])
+                            articles_chunk.append(article)
+                        else:
+                            break
+                    if len(articles_chunk) <= 0:
+                        break
+                        
+                    yield articles_chunk
 
+                # update list of parsed files
+                parsed_files.append(pubmed_file)
 
-        # close ftp connection
-        self._ftp_disconnect(pubmed_ftp)
+        except GeneratorExit:
+            # ignore error.
+            pass
 
-        # if baseline dataset was scraped; reset scrape history
-        if BASELINE_SCRAPE_MODE:
-            self._clear_history()
+        finally:
+            # close ftp connection
+            self._ftp_disconnect(pubmed_ftp)
+
+            # clean up downloaded files
+            self._clean_up()
+
+            # update history
+            self._update_history(parsed_files)
+
+            # if baseline dataset was scraped; reset scrape history
+            if BASELINE_SCRAPE_MODE:
+                self._clear_history()
                 
         return
         
@@ -356,6 +372,15 @@ class PubMedScraper(BaseScraper):
         except Exception as e:
             return []
 
+    def _update_history(self, file_list: []):
+        """Read and create list of PubMed filenames 
+        which are already scraped"""
+        try:
+            with open(self._get_history_filepath(), "a+") as f:
+                f.writelines(map(lambda x:x+'\n', file_list))
+        except Exception as e:
+            return
+
     def _clear_history(self):
         """Clear scrape history"""
         history_file = self._get_history_filepath()
@@ -366,7 +391,8 @@ class PubMedScraper(BaseScraper):
     def _get_history_filepath(self)-> str:
         """Get PubMed data file path from Config"""
         try:
-            return config.get_pubmed_data_file()
+            history_file_path = os.path.expanduser(config.get_pubmed_data_file())
+            return history_file_path
         except Exception as e:
             return PubMedScraper.DEFAULT_PUBMED_BASELINE_DIR
 
@@ -412,6 +438,15 @@ class PubMedScraper(BaseScraper):
             return [pmid, len(citation_tree), ",".join(citations)]
 
         return null_citation
+
+    def _clean_up(self):
+        """Delete all downloaded pubmed files"""
+        clean_up_path = os.path.expanduser(self._get_download_dir())
+        try:
+            shutil.rmtree(clean_up_path)
+            return
+        except OSError as e:
+            return        
 
     @classmethod
     def _citationApiUrl(cls, pmid: int) -> str:
