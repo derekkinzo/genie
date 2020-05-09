@@ -15,6 +15,10 @@ class TestCronJob:
         """Update dao table."""
         geniepy.update_disease2pubtator()
 
+    def test_create_tables(self):
+        """Update all tables."""
+        geniepy.create_tables()
+
     def test_update_tables(self):
         """Update all tables."""
         geniepy.update_tables()

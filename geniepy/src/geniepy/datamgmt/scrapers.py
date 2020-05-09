@@ -67,6 +67,7 @@ class PubtatorGeneScraper(BaseScraper):
 
     def download(self):
         """Download records from online sources."""
+        print(f"Downloading Pubtator Genes/Disease relationships...")
         if not self.gzip_path.exists():
             wget.download(self.FTP_URL, str(self.gzip_path))
             with gzip.open(self.gzip_path, "rb") as f_in:
@@ -79,11 +80,16 @@ class PubtatorGeneScraper(BaseScraper):
 
         ftp://ftp.ncbi.nlm.nih.gov/pub/lu/PubTatorCentral/disease2pubtatorcentral.gz
         """
-        self.download()
-        csv_gen = pd.read_csv(
-            self.csv_path, chunksize=chunksize, delimiter="\t", names=self.HEADER_NAMES,
-        )
-        return csv_gen
+        if kwargs.get("baseline") is True:
+            self.download()
+            csv_gen = pd.read_csv(
+                self.csv_path,
+                chunksize=chunksize,
+                delimiter="\t",
+                names=self.HEADER_NAMES,
+            )
+            return csv_gen
+        return ()
 
     def clean_up(self):
         """Delete all temp files."""
@@ -120,14 +126,18 @@ class SjrScraper(BaseScraper):
 
     def download(self):
         """Download records from online sources."""
+        print(f"Downloading sjr records...")
         if not self.csv_path.exists():
             wget.download(self.FTP_URL, str(self.csv_path))
 
     def scrape(self, chunksize: int, **kwargs) -> Generator:
         """Download sjr data."""
-        self.download()
-        csv_gen = pd.read_csv(self.csv_path, chunksize=chunksize, delimiter=";")
-        return csv_gen
+        if kwargs.get("baseline") is True:
+            # Only download if baseline is true
+            self.download()
+            csv_gen = pd.read_csv(self.csv_path, chunksize=chunksize, delimiter=";")
+            return csv_gen
+        return ()
 
     def clean_up(self):
         """Delete all temp files."""
@@ -213,7 +223,7 @@ class PubMedScraper(BaseScraper):
         Returns:
             Generator -- The generator yielding the data in given chunksizes.
         """
-
+        print("Starting pubmed scraper")
         # set default chunksize
         if chunksize <= 0:
             chunksize = PubMedScraper.DEFAULT_CHUNKSIZE
@@ -226,6 +236,7 @@ class PubMedScraper(BaseScraper):
             try:
                 if kwargs.get("baseline") == True:
                     BASELINE_SCRAPE_MODE = True
+                    print("Scraping Pubmed Baseline")
             except Exception as e:
                 BASELINE_SCRAPE_MODE = PubMedScraper.DEFAULT_PUBMED_BASELINE_SCRAPE_MODE
 

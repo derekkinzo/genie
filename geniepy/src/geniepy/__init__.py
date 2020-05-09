@@ -135,6 +135,13 @@ def run_predictions():
     print(f"Elapsed time: {elapsed_time}s")
 
 
+def create_tables():
+    """Call scrapers to create all tables."""
+    daomgr: DaoManager = create_daomgr()
+    chunksize = config.get_chunksize()
+    daomgr.download(chunksize, baseline=True)
+
+
 def update_tables():
     """Call scrapes to download data and create/append tables."""
     daomgr: DaoManager = create_daomgr()

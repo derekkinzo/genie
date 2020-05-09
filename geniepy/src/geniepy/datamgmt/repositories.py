@@ -211,6 +211,7 @@ class GbqRepository(BaseRepository):  # pragma: no cover
                 payload, self._tablename, if_exists="append", table_schema=self._table,
             )
         except Exception as sql_exp:
+            print(f"Exception in {self.tablename}")
             raise DaoError(sql_exp)
 
     def delete_all(self):

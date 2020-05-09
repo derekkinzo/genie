@@ -99,7 +99,14 @@ PUBTATOR_GENE_PKEY = "GeneID"
 """Table primary key."""
 PUBTATOR_GENE_TABLE_NAME = "gene2pubtator"
 """Table name."""
-PUBTATOR_GENE_DAO_TABLE = None
+PUBTATOR_GENE_DAO_TABLE = Table(
+    PUBTATOR_GENE_TABLE_NAME,
+    MetaData(),
+    # No primary key allows duplicate records
+    Column("date", String, primary_key=False, nullable=False),
+    Column("PMID", String),
+    Column("GeneID", String),
+)
 """Output DAO Repository Schema."""
 PUBTATOR_GENE_PROPTY = RepoProperties(
     tablename=PUBTATOR_GENE_TABLE_NAME,
@@ -111,7 +118,14 @@ PUBTATOR_DISEASE_PKEY = "DiseaseID"
 """Table primary key."""
 PUBTATOR_DISEASE_TABLE_NAME = "disease2pubtator"
 """Table name."""
-PUBTATOR_DISEASE_DAO_TABLE = None
+PUBTATOR_DISEASE_DAO_TABLE = Table(
+    PUBTATOR_DISEASE_TABLE_NAME,
+    MetaData(),
+    # No primary key allows duplicate records
+    Column("date", String, primary_key=False, nullable=False),
+    Column("PMID", String),
+    Column("DiseaseID", String),
+)
 """Output DAO Repository Schema."""
 PUBTATOR_DISEASE_PROPTY = RepoProperties(
     tablename=PUBTATOR_DISEASE_TABLE_NAME,
@@ -123,7 +137,17 @@ SJR_PKEY = "Rank"
 """Table primary key."""
 SJR_TABLE_NAME = "sjr"
 """Table name."""
-SJR_DAO_TABLE = None
+SJR_DAO_TABLE = Table(
+    SJR_TABLE_NAME,
+    MetaData(),
+    # No primary key allows duplicate records
+    Column("date", String, primary_key=False, nullable=False),
+    Column("Title", String),
+    Column("SJR", String),
+    Column("h_index", Integer),
+)
+
+
 """Output DAO Repository Schema."""
 SJR_PROPTY = RepoProperties(
     tablename=SJR_TABLE_NAME, pkey=SJR_PKEY, table=SJR_DAO_TABLE,
