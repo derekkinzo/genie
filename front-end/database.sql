@@ -1,7 +1,4 @@
-CREATE DATABASE genie;
-
 \c genie;
-CREATE EXTENSION pg_trgm;
 
 -- DROP TABLE paper_links;
 
