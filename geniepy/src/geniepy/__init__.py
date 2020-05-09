@@ -68,12 +68,17 @@ def create_dao(daoname: str):
 
 def create_daomgr() -> DaoManager:
     """Configure data mgmt subsystem."""
-    sjr_dao = create_dao("sjr")
-    pubtator_disease_dao = create_dao("disease2pubtator")
-    pubtator_gene_dao = create_dao("gene2pubtator")
-    pubmed_dao = create_dao("pubmed")
-    daomgr = DaoManager(sjr_dao, pubtator_disease_dao, pubtator_gene_dao, pubmed_dao)
-    return daomgr
+    try:
+        sjr_dao = create_dao("sjr")
+        pubtator_disease_dao = create_dao("disease2pubtator")
+        pubtator_gene_dao = create_dao("gene2pubtator")
+        pubmed_dao = create_dao("pubmed")
+        daomgr = DaoManager(
+            sjr_dao, pubtator_disease_dao, pubtator_gene_dao, pubmed_dao
+        )
+        return daomgr
+    except Exception:
+        print("Unable to configure Dao Manager")
 
 
 def create_classmgr() -> ClassificationMgr:
@@ -150,10 +155,10 @@ def update_tables():
 
 
 def sample_run():
+    """Run through entire cycle of creating tables and predictions with sample data."""  # noqa
     daomgr: DaoManager = create_daomgr()
     chunksize = config.get_chunksize()
-    daomgr.download(chunksize, is_sample=True)
-    # TODO add scoring
+    daomgr.download(chunksize, is_sample=True, baseline=True)
 
 
 def run():

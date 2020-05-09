@@ -17,7 +17,7 @@ gbq:
   # GBQ Project DataSet
   dataset:
     # Dataset containing master tables
-    master: "Genie"
+    master: "master"
     # Dataset containing classifier scoring data
     scoring: "scoring"
 
