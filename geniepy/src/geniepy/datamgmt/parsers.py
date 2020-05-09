@@ -73,7 +73,7 @@ class BaseParser(ABC):
         raw_gen = self.scraper.scrape(chunksize, **kwargs)
 
         # for testing purposes only - returns single yield
-        if "test" in kwargs and kwargs.get("test") == True:
+        if "is_sample" in kwargs and kwargs.get("is_sample") == True:
             parsed_df = self.parse(next(raw_gen), self.default_type)
             yield parsed_df
             return
@@ -250,7 +250,7 @@ class PubMedParser(BaseParser):
             Column("issn"),
             Column("issn_type"),
             Column("citation_count"),
-            Column("citation_pmid"),            
+            Column("citation_pmid"),
         ]
     )
 

@@ -23,6 +23,10 @@ class TestCronJob:
         """Test calculating predictions."""
         geniepy.run_predictions()
 
+    def test_sample(self):
+        """Update all tables."""
+        geniepy.sample_run()
+
     def test_run(self):
         """Test end-to-end run cron job function."""
         geniepy.run()

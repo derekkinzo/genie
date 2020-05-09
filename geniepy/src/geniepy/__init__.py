@@ -142,6 +142,13 @@ def update_tables():
     daomgr.download(chunksize)
 
 
+def sample_run():
+    daomgr: DaoManager = create_daomgr()
+    chunksize = config.get_chunksize()
+    daomgr.download(chunksize, is_sample=True)
+    # TODO add scoring
+
+
 def run():
     """Cron-job function to scrape sources for updated data and update predictions."""
     print("Running...")
