@@ -15,6 +15,7 @@ from random import randint
 from pathlib import Path
 from geniepy.pubmed import PubMedArticle
 
+
 class BaseScraper(ABC):
     """Scraper Abstract Base Class."""
 
@@ -162,6 +163,7 @@ class PubMedScraper(BaseScraper):
     https://www.nlm.nih.gov/bsd/licensee/elements_descriptions.html
 
     """
+
     # Constants for PubMed scraping
     DEFAULT_CHUNKSIZE: int = 1000
     DEFAULT_PUBMED_BASELINE_SCRAPE_MODE: bool = False
@@ -199,7 +201,7 @@ class PubMedScraper(BaseScraper):
         "f10805158a7609bb115cb074b05e5923a407",
         "00d74dd1cb732cd7fc29f54168fe7055c809",
     ]
-    TAG_CITATION_ID = "./LinkSet/LinkSetDb/Link/Id"    
+    TAG_CITATION_ID = "./LinkSet/LinkSetDb/Link/Id"
 
     def scrape(self, chunksize: int, **kwargs) -> Generator:
         """
@@ -226,7 +228,7 @@ class PubMedScraper(BaseScraper):
                     BASELINE_SCRAPE_MODE = True
             except Exception as e:
                 BASELINE_SCRAPE_MODE = PubMedScraper.DEFAULT_PUBMED_BASELINE_SCRAPE_MODE
-        
+
         # set PubMed FTP server
         FTP_SERVER: str = ""
         try:
@@ -251,9 +253,9 @@ class PubMedScraper(BaseScraper):
 
         # connect to pubmed ftp and retrieve list of ftp files
         pubmed_ftp = self._ftp_connect(FTP_SERVER, FTP_DIR)
-        pubmed_files = self._ftp_file_list(pubmed_ftp)  #list of files from ftp
-        pubmed_history = self._read_history()   # list of historically scraped files
-        
+        pubmed_files = self._ftp_file_list(pubmed_ftp)  # list of files from ftp
+        pubmed_history = self._read_history()  # list of historically scraped files
+
         # determine new files to parse
         # in BASELINE_SCRAPE_MODE parse all files
         pubmed_new_files = []
@@ -262,7 +264,7 @@ class PubMedScraper(BaseScraper):
             pubmed_new_files = pubmed_files
         else:
             pubmed_new_files = list(set(pubmed_files) - set(pubmed_history))
-        
+
         # main scraping block
         try:
             for pubmed_file in pubmed_new_files:
@@ -275,7 +277,7 @@ class PubMedScraper(BaseScraper):
 
                 # scrape downloaded PubMed data file
                 articles = self._pubmedScrape(pubmed_file)
-                    
+
                 # yield articles to generator
                 while True:
                     articles_chunk = []
@@ -291,7 +293,7 @@ class PubMedScraper(BaseScraper):
                             break
                     if len(articles_chunk) <= 0:
                         break
-                        
+
                     yield articles_chunk
 
                 # update list of parsed files
@@ -314,9 +316,9 @@ class PubMedScraper(BaseScraper):
             # if baseline dataset was scraped; reset scrape history
             if BASELINE_SCRAPE_MODE:
                 self._clear_history()
-                
+
         return
-        
+
     def _ftp_connect(self, ftp_server, ftp_dir) -> FTP:
         """Opens FTP connection and returns the FTP handle"""
         try:
@@ -335,49 +337,54 @@ class PubMedScraper(BaseScraper):
         except Exception as e:
             return
 
-    def _ftp_file_list(self, ftp: FTP)-> []:
+    def _ftp_file_list(self, ftp: FTP) -> []:
         """Read list of files in FTP directory"""
         ftp_files = []
         try:
-            ftp.retrlines(f'LIST *{PubMedScraper.DEFAULT_PUBMED_DATAFILE_EXTN}', ftp_files.append)
-            ftp_files = [file.split(' ')[-1].lower() for file in ftp_files] #transform filenames
+            ftp.retrlines(
+                f"LIST *{PubMedScraper.DEFAULT_PUBMED_DATAFILE_EXTN}", ftp_files.append
+            )
+            ftp_files = [
+                file.split(" ")[-1].lower() for file in ftp_files
+            ]  # transform filenames
             return ftp_files
         except Exception as e:
             return ftp_files
 
-    def _ftp_download(self, ftp: FTP, ftp_file: str)-> bool:
+    def _ftp_download(self, ftp: FTP, ftp_file: str) -> bool:
         """Downloads given file from the FTP server"""
         try:
             # check if the download path exists.
             # if not, create the path
+            print(f"Downloading pubmed article: {ftp_file}")
             download_path = os.path.expanduser(self._get_download_dir())
             Path(download_path).mkdir(parents=True, exist_ok=True)
 
             # downlad file
             download_filepath = os.path.join(download_path, ftp_file)
-            ftp.retrbinary("RETR " + ftp_file, open(download_filepath, 'wb').write)
+            ftp.retrbinary("RETR " + ftp_file, open(download_filepath, "wb").write)
             return True
         except Exception as e:
             return False
 
-    def _read_history(self)-> []:
-        """Read and create list of PubMed filenames 
+    def _read_history(self) -> []:
+        """Read and create list of PubMed filenames
         which are already scraped"""
         history = []
         try:
             with open(self._get_history_filepath(), "r") as f:
                 for line in f.readlines():
-                    history.append(line.replace('\n','').lower())
+                    history.append(line.replace("\n", "").lower())
             return history
         except Exception as e:
             return []
 
     def _update_history(self, file_list: []):
-        """Read and create list of PubMed filenames 
+        """Read and create list of PubMed filenames
         which are already scraped"""
         try:
             with open(self._get_history_filepath(), "a+") as f:
-                f.writelines(map(lambda x:x+'\n', file_list))
+                f.writelines(map(lambda x: x + "\n", file_list))
         except Exception as e:
             return
 
@@ -385,10 +392,10 @@ class PubMedScraper(BaseScraper):
         """Clear scrape history"""
         history_file = self._get_history_filepath()
         if os.path.exists(history_file):
-            os.remove(history_file)   
+            os.remove(history_file)
         pass
 
-    def _get_history_filepath(self)-> str:
+    def _get_history_filepath(self) -> str:
         """Get PubMed data file path from Config"""
         try:
             history_file_path = os.path.expanduser(config.get_pubmed_data_file())
@@ -396,32 +403,34 @@ class PubMedScraper(BaseScraper):
         except Exception as e:
             return PubMedScraper.DEFAULT_PUBMED_BASELINE_DIR
 
-    def _get_download_dir(self)-> str:
+    def _get_download_dir(self) -> str:
         """Get path where to download PubMed data files"""
         try:
             return config.get_pubmed_download_dir()
         except Exception as e:
             return PubMedScraper.DEFAULT_DOWNLOAD_DIR
 
-    def _pubmedScrape(self, pubmed_file)-> []:
+    def _pubmedScrape(self, pubmed_file) -> []:
         """Scrape all pubmed articles from pubmed data file"""
         pubmed_articles = []
         try:
             file_path = os.path.expanduser(self._get_download_dir())
             file = os.path.join(file_path, pubmed_file)
-            with gzip.open(file, 'rb') as f:
+            with gzip.open(file, "rb") as f:
                 xml_root = ET.fromstring(f.read())
                 xml_list = xml_root.findall(PubMedScraper.TAG_ARTICLE)
                 for article_xml in xml_list:
                     pubmed_articles.append(PubMedArticle(article_xml))
+            print(f"Scraped {len(pubmed_articles)} articles")
             return pubmed_articles
         except Exception as e:
+            print(e)
             return []
 
-    def _citationScrape(self, pmid: int)-> []:
+    def _citationScrape(self, pmid: int) -> []:
         """Scrape citation metadata from PubMed API"""
         null_citation = [pmid, 0, ""]
-        
+
         # fire PubMed API request
         try:
             req = requests.get(PubMedScraper._citationApiUrl(pmid))
@@ -446,7 +455,7 @@ class PubMedScraper(BaseScraper):
             shutil.rmtree(clean_up_path)
             return
         except OSError as e:
-            return        
+            return
 
     @classmethod
     def _citationApiUrl(cls, pmid: int) -> str:
@@ -457,13 +466,9 @@ class PubMedScraper(BaseScraper):
             + PubMedScraper._randomApiKey()
             + PubMedScraper.API_ID_PARAM
             + str(pmid)
-        )            
+        )
 
     @classmethod
     def _randomApiKey(cls) -> str:
         """Returns a random PubMed API key from a list of static API keys"""
         return PubMedScraper.API_KEYS[randint(0, len(PubMedScraper.API_KEYS) - 1)]
-
-
-
-

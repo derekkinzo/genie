@@ -4,6 +4,7 @@ from geniepy.datamgmt.scrapers import PubMedScraper
 from geniepy.datamgmt.daos import BaseDao, PubMedDao
 from geniepy.errors import SchemaError
 import tests.testdata as td
+
 # from tests.resources.mock import MockPubMedScraper
 # from tests.resources.mock import TEST_CHUNKSIZE
 import geniepy.datamgmt.repositories as dr
@@ -74,7 +75,9 @@ class TestPubMedDao:
         # Delete all records
         self.test_dao.purge()
         # Make sure no records left
-        generator = self.test_dao.query(self.test_dao.query_all, TestPubMedDao.TEST_CHUNKSIZE)
+        generator = self.test_dao.query(
+            self.test_dao.query_all, TestPubMedDao.TEST_CHUNKSIZE
+        )
         # generator shouldn't return anything since no records in database
         with pytest.raises(StopIteration):
             next(generator)
@@ -96,6 +99,7 @@ class TestPubMedDao:
         result_df = next(generator)
         assert result_df.pmid.count() == chunksize
 
+    @pytest.mark.slow_integration_test
     @pytest.mark.parametrize("chunksize", [1, 100])
     def test_download(self, chunksize):
         """
@@ -106,7 +110,9 @@ class TestPubMedDao:
         """
         # Make sure dao's database is empty
         self.test_dao.purge()
-        generator = self.test_dao.query(self.test_dao.query_all, TestPubMedDao.TEST_CHUNKSIZE)
+        generator = self.test_dao.query(
+            self.test_dao.query_all, TestPubMedDao.TEST_CHUNKSIZE
+        )
         # Generator should not return anything since database should be empty
         with pytest.raises(StopIteration):
             next(generator)

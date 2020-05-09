@@ -172,7 +172,7 @@ class PubMedArticle:
 
     def set_citationPmid(self, citation_pmid: str):
         """Update property: citation_pmid"""
-        self.citationPmid = citation_pmid        
+        self.citationPmid = citation_pmid
 
     @property
     def to_dict(self):
@@ -263,6 +263,8 @@ class ArticleSetParser:
             "mesh_list",
             "issn",
             "issn_type",
+            "citation_count",
+            "citation_pmid",
         ]
 
         try:

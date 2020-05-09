@@ -6,7 +6,6 @@ from geniepy.errors import ParserError
 import tests.testdata as td
 
 
-
 VALID_DF = td.PUBMED_VALID_DF
 INVALID_DF = td.PUBMED_INVALID_DF
 
@@ -34,7 +33,8 @@ class TestPubMedParser:
         # Should return empty list
         assert not self.parser.validate(payload)
 
-    @pytest.mark.parametrize('chunksize', [1, 10, 100])
+    @pytest.mark.slow_integration_test
+    @pytest.mark.parametrize("chunksize", [1, 10, 100])
     def test_parse_valid(self, chunksize):
         """Test parsing valid recrods."""
         scrape_gen = self.parser.scraper.scrape(chunksize=chunksize)
