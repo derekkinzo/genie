@@ -10,7 +10,6 @@ import csv
 import random
 import requests
 from os import path
-from bs4 import BeautifulSoup
 import os
 
 from genie import genie
