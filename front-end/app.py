@@ -19,4 +19,4 @@ from genie import genie
 app = Flask("genie")
 app.register_blueprint(genie)
 
-app.run(host = "0.0.0.0", port = os.environ["PORT"] or 5000)
+app.run(host = "0.0.0.0", port = "PORT" in os.environ and os.environ["PORT"] or 5000)
