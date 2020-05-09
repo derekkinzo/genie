@@ -1,3 +1,6 @@
+// stores the articles in the array with its score and citations. It runs the page rank algorithm for NUM_ITERS iterations and writes the results in result_rankings.
+// This program performs about 5 iterations of page rank per second on 32 million articles with 16 cores.
+
 #define _DEFAULT_SOURCE
 
 #include <math.h>

@@ -44,19 +44,44 @@ for article in articles:
 	article.score = score
 ```
 
-Process Overview
+Overview
 ----------------
+This program requires a database of articles ids as well as the citation article ids for each article. An example row looks like this:
+1234567, 23456, 5678, 982384
 
-fetch.py fetches articles from out big query database.
-write_binary.py converts articles ids to integers and saves it in data/links
-ranker.c stores the articles in the array with its score and citations. It runs the page rank algorithm for NUM_ITERS iterations and writes the results in result_rankings.
-This program performs about 5 iterations of page rank per second on 32 million articles with 16 cores.
+Where the first column is the id of the pubmed article being cited. The following columns are ids of articles that cite article 1234567. We gathered pubmed citation information as a separate task and stored them in a bigquery table called harvard-599-trendsetters.pubmed.pubmed_citation (please see fetch.py).
 
-pip3 install google-cloud-bigquery
+Therefore, the input of this program are tables likes this:
+1234567, 23456, 5678, 982384
+23456, 23124, 92383, 2324, 2314124, 1232
+
+Whereas the output of the program looks like the following:
+18156677,1512.463756,27466
+14907713,568.630309,52368
+5432063,433.904656,53474
+942051,291.640087,42760
+19171970,255.677059,7377
+271968,227.256398,22352
+2231712,199.411086,24459
+
+Where the first column is the article id. The second column is the page rank of that article. The third column is the number of articles. The rows are sorted by page rank descending. Notice that the highest ranked article does not have the highest number of citations. This is due to the fact each citation is weighted differently and having more citations does not mean higher importance of the citations.
+
+Procedure
+---------
+Here are the steps for completing this task. Please use python3 to run the python files and pip3 to install any required dependencies.
+
+0. Obtain a google service account key in order to fetch data from our bigquery table. First, go to https://cloud.google.com/bigquery/docs/quickstarts/quickstart-client-libraries#client-libraries-install-python and follow the "Before You Begin" section to obtain a json file with your google cloud service account credentials. Next place the json file in the same folder as this README file and name the file service-account.json. Next obtain permission to pull data from our big query table with your service-account.json file. Finally, run `pip3 install google-cloud-bigquery` to install bigquery on python3.
+0. fetch citation data from from google bigquery and write them to a csv file. Run `python3 fetch.py.`
+0. convert article ids to integers and save them in binary file `links` where different rows are separated by the \n character and different columns are separated by \0 character. Run `python3 write_binary.py`. This will produce a file named `links` that contains the citations in binary format.
+0. load the data from `links` and perform page rank. Store the results in `rankings` in descending order by page rank. To do this, run make in the current directory to compile the c program that accomplishes this task. Call ./ranker to run the complied program. The final results will be stored in `rankings`.
+0. If you want to store the results in postgresql instead, run pubmed_ranks.sql in your local postgresql database to setup a table to store results. Refer to https://www.postgresql.org/ or the internet to setup postgresql on your machine. Run `python3 load_pubmed_ranks.py` to load results from `rankings` to a local psql table named `pubmed_ranks`
+
+<!-- Dev commands
 scp -i ~/.ssh/google_compute_engine geraldding@35.221.27.216:/home/geraldding/genie/article_rank/data/citations.csv data/
-ssh -i ~/.ssh/google_compute_engine geraldding@35.221.27.216
+ssh -i ~/.ssh/google_compute_engine geraldding@35.221.27.216 -->
 
+<!-- Debugging commands for ranker.code
 lldb ranker
 breakpoint set --name main
 breakpoint set -f ranker.c -l 16
-r
+r -->
