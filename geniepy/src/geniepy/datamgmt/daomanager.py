@@ -62,21 +62,23 @@ class DaoManager:
         self._pubmed_dao = pubmed_dao
         self._features, self._scores = self.create_repos()
 
-    def download(self, chunksize: int):
+    def download(self, chunksize: int, **kwargs):
         """Download (scrapes) data for DAOs and creates internal tables."""
         # Fire off scrapers async
-        psjr = Process(target=self._sjr_dao.download, args=(chunksize,))
+        psjr = Process(target=self._sjr_dao.download, args=(chunksize,), kwargs=kwargs)
         ppubtatordisease = Process(
-            target=self._pubtator_disease_dao.download, args=(chunksize,)
+            target=self._pubtator_disease_dao.download, args=(chunksize,), kwargs=kwargs
         )
         ppubtatorgene = Process(
-            target=self._pubtator_gene_dao.download, args=(chunksize,)
+            target=self._pubtator_gene_dao.download, args=(chunksize,), kwargs=kwargs
         )
-        ppubmed = Process(target=self._pubmed_dao.download, args=(chunksize,))
+        ppubmed = Process(
+            target=self._pubmed_dao.download, args=(chunksize,), kwargs=kwargs
+        )
         psjr.start()
         ppubtatordisease.start()
         ppubtatorgene.start()
-        # ppubmed.start()
+        ppubmed.start()
 
     def _get_pubmeds_df(self, pmids: str):
         """

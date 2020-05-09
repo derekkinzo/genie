@@ -55,7 +55,7 @@ class BaseDao(ABC):
         """
         return self._repository.query_pkey(val)
 
-    def download(self, chunksize: int):
+    def download(self, chunksize: int, **kwargs):
         """
         Download new data from online sources if available.
 
@@ -66,8 +66,7 @@ class BaseDao(ABC):
             how much memory is processed at a time while downloading and parsing the
             data.
         """
-        print(f"Starting download for {self._repository.tablename} ...")
-        for chunk_df in self._parser.fetch(chunksize):
+        for chunk_df in self._parser.fetch(chunksize, **kwargs):
             self._repository.save(chunk_df)
 
     def purge(self):

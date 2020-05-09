@@ -171,6 +171,10 @@ PUBMED_VALID_DF = [
             "language": ["eng"],
             "chemicals": [""],
             "mesh_list": [""],
+            "issn": ["1234-5678"],
+            "issn_type": ["Print"], 
+            "citation_count": 0,
+            "citation_pmid": [""],
         }
     ),
     pd.DataFrame(
@@ -192,6 +196,10 @@ PUBMED_VALID_DF = [
             "language": ["eng"],
             "chemicals": [""],
             "mesh_list": [""],
+            "issn": ["1234-5678"],
+            "issn_type": ["Print"], 
+            "citation_count": 0,
+            "citation_pmid": [""],            
         }
     ),
     pd.DataFrame(
@@ -211,6 +219,10 @@ PUBMED_VALID_DF = [
             "language": ["eng"],
             "chemicals": [""],
             "mesh_list": [""],
+            "issn": ["1234-5678"],
+            "issn_type": ["Print"], 
+            "citation_count": 0,
+            "citation_pmid": [""],            
         }
     ),
     pd.DataFrame(
@@ -232,6 +244,10 @@ PUBMED_VALID_DF = [
             "language": ["eng"],
             "chemicals": [""],
             "mesh_list": [""],
+            "issn": ["1234-5678"],
+            "issn_type": ["Print"], 
+            "citation_count": 0,
+            "citation_pmid": [""],            
         }
     ),
     pd.DataFrame(
@@ -253,6 +269,10 @@ PUBMED_VALID_DF = [
             "language": ["eng"],
             "chemicals": [""],
             "mesh_list": [""],
+            "issn": ["1234-5678"],
+            "issn_type": ["Print"], 
+            "citation_count": 0,
+            "citation_pmid": [""],            
         }
     ),
 ]
