@@ -32,14 +32,14 @@ And that’s it! If we run the above code a few times it will converge!
 Pseudocode Analogy
 ------------------
 ```python
-// first we calculate how much water is flowing into each article
+# first we calculate how much water is flowing into each article
 for article in articles:
-	// score is how much water it is getting from rain
+	# score is how much water it is getting from rain
 	score = 0.15
 	for citation in article.citations:
-		// flow from citation is how much lake citation is flowing into the lake article. citation.score is the volume of water in lake citation. We divide by citation.cited_articles because citation’s water is flowing into citation.cited_article lakes equally. We multiply by 0.85 because 15% of water is evaporated into rain.
+		# flow from citation is how much lake citation is flowing into the lake article. citation.score is the volume of water in lake citation. We divide by citation.cited_articles because citation’s water is flowing into citation.cited_article lakes equally. We multiply by 0.85 because 15% of water is evaporated into rain.
 		flow_from_citation = 0.85 * citation.score / citation.cited_articles
-		//next we just sum up all the water flowing into lake article from other lakes
+		# next we just sum up all the water flowing into lake article from other lakes
 		score += flow_from_citation
 	article.score = score
 ```
