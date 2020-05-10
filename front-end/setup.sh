@@ -4,6 +4,9 @@ if [ "$(uname)" == "Darwin" ]; then
   echo "Creating postgresql user genie with password genie123 on MAC"
   psql -U postgres < create_user.sql;
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  echo "checking updates"
+  sudo apt update
+  sudo apt install python3-pip
   echo "Creating postgresql user genie with password genie123 on Linux"
   sudo su postgres < create_user_linux.sh
 else
