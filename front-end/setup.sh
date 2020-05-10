@@ -7,6 +7,9 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   echo "checking updates"
   sudo apt update
   sudo apt install python3-pip
+  sudo apt-get install postgresql
+  sudo apt-get install python-psycopg2
+  sudo apt-get install libpq-dev
   echo "Creating postgresql user genie with password genie123 on Linux"
   sudo su postgres < create_user_linux.sh
 else
