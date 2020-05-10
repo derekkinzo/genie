@@ -2,7 +2,7 @@
 echo "$(uname)"
 if [ "$(uname)" == "Darwin" ]; then
   echo "Creating postgresql user genie with password genie123 on MAC"
-  psql -U postgres < create_user.sql;
+  psql postgres < create_user.sql;
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   echo "checking updates"
   sudo apt update
