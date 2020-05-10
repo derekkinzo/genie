@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class DiseaseNotFoundException extends RuntimeException {
+public class PatentException extends RuntimeException {
 
-  public DiseaseNotFoundException(final String message) {
+  public PatentException(final String message) {
 
     super(message);
   }

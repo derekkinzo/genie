@@ -6,6 +6,7 @@ import com.trends.db.service.ClinicalTrialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -35,20 +36,29 @@ public class ClinicalTrialServiceImpl implements ClinicalTrialService {
   }
 
   @Override
-  public void saveClinicalTrials(final Set<ClinicalTrial> clinicalTrials) {
-
-    dao.insert(clinicalTrials);
-  }
-
-  @Override
   public void saveClinicalTrial(final ClinicalTrial clinicalTrial) {
 
     dao.insert(clinicalTrial);
   }
 
   @Override
-  public void updateClinicalTrial(final ClinicalTrial clinicalTrial) {
+  public ClinicalTrial updateClinicalTrial(ClinicalTrial clinicalTrial, final ClinicalTrial payload) {
 
-    dao.insert(clinicalTrial);
+    clinicalTrial.setCitations(payload.getCitations());
+    clinicalTrial.setCollaborators(payload.getCollaborators());
+    clinicalTrial.setKeywords(payload.getKeywords());
+    clinicalTrial.setFdaRegulated(payload.isFdaRegulated());
+    clinicalTrial.setCreatedOn(payload.getCreatedOn());
+    clinicalTrial.setLeadSponsors(payload.getLeadSponsors());
+    clinicalTrial.setOutcome(payload.getOutcome());
+    clinicalTrial.setPubMedId(payload.getPubMedId());
+    clinicalTrial.setStatus(payload.getStatus());
+    clinicalTrial.setStopped(payload.isStopped());
+    clinicalTrial.setTrialStartedOn(payload.getTrialStartedOn());
+    clinicalTrial.setTrialType(payload.getTrialType());
+    clinicalTrial.setWhyStopped(payload.getWhyStopped());
+    clinicalTrial.setUpdatedOn(new Date());
+
+    return dao.insert(clinicalTrial);
   }
 }

@@ -14,9 +14,7 @@ public interface GeneService {
 
   List<Gene> findAllGenes();
 
-  void saveGenes(final Set<Gene> genes);
-
   void saveGene(final Gene gene);
 
-  void updateGene(final Gene gene);
+  Gene updateGene(Gene gene, final Gene payload);
 }

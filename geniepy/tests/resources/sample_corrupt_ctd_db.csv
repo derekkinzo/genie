@@ -1,0 +1,22 @@
+GeneSymbol,GeneID,DiseaseName,DiseaseID,DirectEvidence,InferenceChemicalName,InferenceScore,OmimIDs,PubMedIDs
+11-BETA-HSD3,100174880,"Abnormalities, Drug-Induced",MESH:D000014,,Endocrine Disruptors,5.20,,22659286
+11-BETA-HSD3,100174880,Anemia,MESH:D000740,,"Water Pollutants, Chemical",4.24,,26546277
+11-BETA-HSD3,100174880,"Anemia, Hemolytic",MESH:000743,,"Water Pollutants, Chemical",4.53,,22425172
+11-BETA-HSD3,100174880,Asthenozoospermia,MESH:D053627,,"Water Pollutants, Chemical",5.11,,25179371
+11-BETA-HSD3,100174880,Birth Weight,MESH:D001724,,Endocrine Disruptors,5.72,,27152464|29518214
+11-BETA-HSD3,100174880,Breast Neoplasms,MESH:D001943,,Endocrine Disruptors,8.73,,20646273
+11-BETA-HSD3,100174880,Breast Neoplasms,MESH:D001943,,"Water Pollutants, Chemical",8.73,,20164002
+11-BETA-HSD3,100174880,"Cell Transformation, Neoplastic",MESH:D002471,,"Water Pollutants, Chemical",4.23,,26210350
+11-BETA-HSD3,100174880,Chromosome Aberrations,MESH:D002869,,"Water Pollutants, Chemical",4.70,,20732340
+11-BETA-HSD3,100174880,Death,MESH:D003643,,"Water Pollutants, Chemical",4.86,,22471926|24552493
+11-BETA-HSD3,100174880,"Dermatitis, Irritant",MESH:D017453,,"Water Pollutants, Chemical",5.20,,26546277
+11-BETA-HSD3,100174880,Disorders of Sex Development,MESH:D012734,,Endocrine Disruptors,14.27,,25198161
+11-BETA-HSD3,100174880,Disorders of Sex Development,MESH:D012734,,"Water Pollutants, Chemical",14.27,,25198161
+11-BETA-HSD3,100174880,Dizziness,MESH:D004244,,"Water Pollutants, Chemical",4.30,,26546277
+11-BETA-HSD3,100174880,Esophageal Neoplasms,MESH:D004938,,"Water Pollutants, Chemical",4.65,,24552493
+11-BETA-HSD3,100174880,Eye Pain,MESH:D058447,,"Water Pollutants, Chemical",6.00,,26546277
+11-BETA-HSD3,100174880,Fatty Liver,MESH:D005234,,"Water Pollutants, Chemical",4.13,,26580918
+11-BETA-HSD3,100174880,Fetal Death,MESH:D005313,,Endocrine Disruptors,5.78,,20487043
+11-BETA-HSD3,100174880,Headache,MESH:D006261,,"Water Pollutants, Chemical",4.09,,26546277
+11-BETA-HSD3,100174880,Hodgkin Disease,MESH:D006689,,"Water Pollutants, Chemical",4.92,,24552493
+11-BETA-HSD3,100174880,Hypokinesia,MESH:D018476,,"Water Pollutants, Chemical",4.62,,24394944

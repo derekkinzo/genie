@@ -3,13 +3,15 @@ GeniePy
 =======
 
 
-Gene-Disease relationship trend detection application
+Gene-Disease relationship trend detection application.
 
 
-Description
-===========
+.. note::
 
-A longer description of your project goes here...
+    Python package available on PyPi_
+
+    Project documentation here_
+
 
 
 Installation
@@ -17,40 +19,59 @@ Installation
 
 **Install with pip**
 
+Install from PyPi_ with pip
+
+
 ::
 
     pip install geniepy
 
 
-
 **Install from source code**
+
+Install using setuptools locally
 
 ::
 
     git clone https://github.com/derekkinzo/genie.git
-
     cd genie/geniepy
-
     python setup.py install
 
-**Generate Python Package**
+
+**Run Source Code**
+
+Create virtual environment, and run code
 
 ::
 
-    git tag -a {version} 
+    python3 -m venv .venv
+    source .venv/bin/activate (for windows: source .venv/scripts/activate)
+    pip install -r requirements.txt
 
-    python setup.py sdist bdist_wheel
-
-    twine upload --repository testpypi dist/{package name}
-
-    twine upload dist/{package name}
 
 **Python Package Development**
 
+Setuptools commands to test, generate docs, and install for development (creates symlink)
+
 ::
 
+    python setup.py test
+    python setup.py docs
     python setup.py develop
 
-    python setup.py test
 
-    python setup.py docs
+**Generate Python Package**
+
+Commands to generate python package and upload it to PyPi (setup PyPi account and .profile first)
+
+::
+
+    git tag -a {version}
+    python setup.py sdist bdist_wheel
+    twine upload --repository testpypi dist/{package name}
+    twine upload dist/{package name}
+
+
+
+.. _PyPi: https://pypi.org/project/geniepy/
+.. _here: https://geniepy.readthedocs.io/en/latest/

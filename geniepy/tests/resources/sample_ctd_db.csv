@@ -1,0 +1,22 @@
+GeneSymbol,GeneID,DiseaseName,DiseaseID,DirectEvidence,InferenceChemicalName,InferenceScore,OmimIDs,PubMedIDs
+11-BETA-HSD3,100174880,"Abnormalities, Drug-Induced",MESH:D000014,,Endocrine Disruptors,5.20,,1|2
+11-BETA-HSD3,100174880,Anemia,MESH:D000740,,"Water Pollutants, Chemical",4.24,,2
+11-BETA-HSD3,100174880,"Anemia, Hemolytic",MESH:D000743,,"Water Pollutants, Chemical",4.53,,3
+11-BETA-HSD3,100174880,Asthenozoospermia,MESH:D053627,,"Water Pollutants, Chemical",5.11,,4
+11-BETA-HSD3,100174880,Birth Weight,MESH:D001724,,Endocrine Disruptors,5.72,,5|6
+11-BETA-HSD3,100174880,Breast Neoplasms,MESH:D001943,,Endocrine Disruptors,8.73,,7
+11-BETA-HSD3,100174880,Breast Neoplasms,MESH:D001943,,"Water Pollutants, Chemical",8.73,,8
+11-BETA-HSD3,100174880,"Cell Transformation, Neoplastic",MESH:D002471,,"Water Pollutants, Chemical",4.23,,9
+11-BETA-HSD3,100174880,Chromosome Aberrations,MESH:D002869,,"Water Pollutants, Chemical",4.70,,10
+11-BETA-HSD3,100174880,Death,MESH:D003643,,"Water Pollutants, Chemical",4.86,,11|12|13
+11-BETA-HSD3,100174880,"Dermatitis, Irritant",MESH:D017453,,"Water Pollutants, Chemical",5.20,,14
+11-BETA-HSD3,100174880,Disorders of Sex Development,MESH:D012734,,Endocrine Disruptors,14.27,,15
+11-BETA-HSD3,100174880,Disorders of Sex Development,MESH:D012734,,"Water Pollutants, Chemical",14.27,,16
+11-BETA-HSD3,100174880,Dizziness,MESH:D004244,,"Water Pollutants, Chemical",4.30,,17
+11-BETA-HSD3,100174880,Esophageal Neoplasms,MESH:D004938,,"Water Pollutants, Chemical",4.65,,13|2|9
+11-BETA-HSD3,100174880,Eye Pain,MESH:D058447,,"Water Pollutants, Chemical",6.00,,1|13|16
+11-BETA-HSD3,100174880,Fatty Liver,MESH:D005234,,"Water Pollutants, Chemical",4.13,,4|5|2
+11-BETA-HSD3,100174880,Fetal Death,MESH:D005313,,Endocrine Disruptors,5.78,,4|4|9
+11-BETA-HSD3,100174880,Headache,MESH:D006261,,"Water Pollutants, Chemical",4.09,,0|2|27
+11-BETA-HSD3,100174880,Hodgkin Disease,MESH:D006689,,"Water Pollutants, Chemical",4.92,,24552493
+11-BETA-HSD3,100174880,Hypokinesia,MESH:D018476,,"Water Pollutants, Chemical",4.62,,-1

@@ -14,10 +14,8 @@ public interface ClinicalTrialService {
 
   List<ClinicalTrial> findAllClinicalTrials();
 
-  void saveClinicalTrials(final Set<ClinicalTrial> clinicalTrials);
-
   void saveClinicalTrial(final ClinicalTrial clinicalTrial);
 
-  void updateClinicalTrial(final ClinicalTrial clinicalTrial);
+  ClinicalTrial updateClinicalTrial(ClinicalTrial clinicalTrial, final ClinicalTrial payload);
 
 }

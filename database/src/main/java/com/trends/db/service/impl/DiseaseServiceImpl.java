@@ -17,7 +17,7 @@ public class DiseaseServiceImpl implements DiseaseService {
   private DiseaseRepo dao;
 
   @Override
-  public Optional<Disease> findDiseasesById(final String id) {
+  public Optional<Disease> findDiseaseById(final String id) {
 
     return dao.findById(id);
   }
@@ -35,20 +35,15 @@ public class DiseaseServiceImpl implements DiseaseService {
   }
 
   @Override
-  public void saveDiseases(final Set<Disease> diseases) {
-
-    dao.insert(diseases);
-  }
-
-  @Override
   public void saveDisease(final Disease disease) {
 
     dao.insert(disease);
   }
 
   @Override
-  public void updateDisease(final Disease disease) {
+  public Disease updateDisease(final Disease disease, final Disease payload) {
 
-    dao.insert(disease);
+     return dao.insert(disease);
   }
+
 }
