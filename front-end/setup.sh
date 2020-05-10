@@ -5,7 +5,7 @@ if [ "$(uname)" == "Darwin" ]; then
   psql -U postgres < create_user.sql;
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   echo "Creating postgresql user genie with password genie123 on Linux"
-  sudo su - postgres < create_user_linux.sh
+  sudo su postgres < create_user_linux.sh
 else
   echo "Operating system not supported"
   exit
