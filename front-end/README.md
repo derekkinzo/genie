@@ -31,7 +31,7 @@ This application runs on postgresql and python flask.
 2. go to http://0.0.0.0:5000/
 
 To start the server after initial setup:
-`python3 app.py`
+`bash app.sh`
 
 Getting Data
 ------------

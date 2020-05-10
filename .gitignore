@@ -1,5 +1,6 @@
 service-account.json
 __pycache__
 .env
-bin/*
-lib/*
+front-end/bin
+front-end/lib
+pyvenv.cfg
