@@ -1,5 +1,6 @@
 Prerequisites
 =============
+Supports MacOS and linux
 Hosting this application requires python3, pip3 and postgresql
 
 If you don't have postgresql on MAC run
@@ -13,7 +14,7 @@ psql postgres
 Setup and start server
 -----
 This application runs on postgresql and python flask.
-1. Run `sh setup.sh` to setup postgresql and flask dependencies. This will install postgresql on linux.
+1. Run `bash setup.sh` to setup postgresql and flask dependencies. This will install postgresql on linux.
 2. go to http://0.0.0.0:5000/
 
 To start the server after initial setup:
