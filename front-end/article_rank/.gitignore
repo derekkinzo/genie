@@ -1,0 +1,5 @@
+service-account.json
+*.o
+data/*
+!data/.keep
+ranker
