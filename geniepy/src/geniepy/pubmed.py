@@ -17,11 +17,13 @@ class PubMedArticle:
     ARTICLE_TAG = MEDLINE_TAG + "/Article"
     JOURNAL_TAG = ARTICLE_TAG + "/Journal"
 
-    __slots__ = ["_pubmed_article"]
+    __slots__ = ["_pubmed_article", "citationCount", "citationPmid"]
 
     def __init__(self, article_tree: ET.Element):
         """Construct object from corresponding article element tree."""
         self._pubmed_article: ET.Element = article_tree
+        self.citationCount: int = 0
+        self.citationPmid: str = ""
 
     def _get_xml_element(self, tags: [str], tag_attrib=None) -> str:
         """
@@ -143,6 +145,36 @@ class PubMedArticle:
         return meshes
 
     @property
+    def issn(self) -> str:
+        """Journal ISSN ID."""
+        issn = self._get_xml_element([self.JOURNAL_TAG, "ISSN"])
+        return issn
+
+    @property
+    def issn_type(self) -> str:
+        """Journal ISSN Type."""
+        issn_type = self._get_xml_element(
+            [self.JOURNAL_TAG, "ISSN"], tag_attrib="IssnType"
+        )
+        return issn_type
+
+    @property
+    def citation_count(self) -> str:
+        """Journal ISSN Type."""
+        issn_type = self._get_xml_element(
+            [self.JOURNAL_TAG, "ISSN"], tag_attrib="IssnType"
+        )
+        return issn_type
+
+    def set_citationCount(self, citation_count: int):
+        """Update property: citation_count"""
+        self.citationCount = citation_count
+
+    def set_citationPmid(self, citation_pmid: str):
+        """Update property: citation_pmid"""
+        self.citationPmid = citation_pmid
+
+    @property
     def to_dict(self):
         """Generate article model dictionary."""
         _dict = {}
@@ -157,6 +189,10 @@ class PubMedArticle:
         _dict["language"] = self.language
         _dict["chemicals"] = self.chemicals
         _dict["mesh_list"] = self.mesh_list
+        _dict["issn"] = self.issn
+        _dict["issn_type"] = self.issn_type
+        _dict["citation_count"] = self.citationCount
+        _dict["citation_pmid"] = self.citationPmid
         return _dict
 
 
@@ -225,6 +261,10 @@ class ArticleSetParser:
             "language",
             "chemicals",
             "mesh_list",
+            "issn",
+            "issn_type",
+            "citation_count",
+            "citation_pmid",
         ]
 
         try:
@@ -233,5 +273,5 @@ class ArticleSetParser:
                 writer.writeheader()
                 for article in dict_list:
                     writer.writerow(article)
-        except IOError:
+        except IOError:  # pragma: no cover
             print("Unable to write csv file")

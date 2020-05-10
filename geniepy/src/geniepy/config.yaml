@@ -1,0 +1,29 @@
+# Default chunksize to be used throughout
+chunksize: 100000
+
+# Maximum number of parallel processes allowed
+max_workers: 4
+
+# Google Drive File ID for classifier model
+model: "1ADgASNfM1cmhr9r1-ozuEp_e7y2kCq4R"
+
+# BigQuery Parameters
+gbq:
+  # Create google cloud service account key file:
+  # https://console.cloud.google.com/apis/credentials/serviceaccountkey
+  credentials: "~/.geniepy.d/harvard-599-trendsetters-credentials.json"
+  # GBQ Project Name
+  proj: "harvard-599-trendsetters"
+  # GBQ Project DataSet
+  dataset:
+    # Dataset containing master tables
+    master: "master"
+    # Dataset containing classifier scoring data
+    scoring: "scoring"
+
+# PubMed FTP URLs
+pubmed_ftp_server: "ftp.ncbi.nlm.nih.gov"
+pubmed_baseline_dir: "/pubmed/baseline/"
+pubmed_update_dir: "/pubmed/updatefiles/"
+pubmed_data_file: "~/.geniepy.d/pubmed.dat"
+pubmed_download_dir: "~/.geniepy.d/pubmed"

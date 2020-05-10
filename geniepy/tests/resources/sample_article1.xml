@@ -92,47 +92,6 @@
       <CitationSubset>IM</CitationSubset>
       <MeshHeadingList>
         <MeshHeading>
-          <DescriptorName UI="D000445" MajorTopicYN="N">Aldehyde Oxidoreductases</DescriptorName>
-          <QualifierName UI="Q000378" MajorTopicYN="N">metabolism</QualifierName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D000818" MajorTopicYN="N">Animals</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D001826" MajorTopicYN="N">Body Fluids</DescriptorName>
-          <QualifierName UI="Q000032" MajorTopicYN="Y">analysis</QualifierName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D002245" MajorTopicYN="N">Carbon Dioxide</DescriptorName>
-          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D005561" MajorTopicYN="N">Formates</DescriptorName>
-          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
-          <QualifierName UI="Q000506" MajorTopicYN="Y">poisoning</QualifierName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D000882" MajorTopicYN="N">Haplorhini</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D006801" MajorTopicYN="N">Humans</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D006863" MajorTopicYN="N">Hydrogen-Ion Concentration</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D007700" MajorTopicYN="N">Kinetics</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D000432" MajorTopicYN="N">Methanol</DescriptorName>
-          <QualifierName UI="Q000097" MajorTopicYN="N">blood</QualifierName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D008722" MajorTopicYN="N">Methods</DescriptorName>
-        </MeshHeading>
-        <MeshHeading>
-          <DescriptorName UI="D011549" MajorTopicYN="N">Pseudomonas</DescriptorName>
-          <QualifierName UI="Q000201" MajorTopicYN="N">enzymology</QualifierName>
         </MeshHeading>
       </MeshHeadingList>
     </MedlineCitation>

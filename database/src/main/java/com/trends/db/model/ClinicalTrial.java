@@ -2,8 +2,7 @@ package com.trends.db.model;
 
 import com.trends.db.model.enums.TrialOutcome;
 import com.trends.db.model.enums.TrialStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -21,8 +20,7 @@ import java.util.Set;
  * The type Clinical trial.
  */
 @Document(collection = "trial")
-@Getter
-@Setter
+@Data
 @ToString(exclude = { "id" })
 public class ClinicalTrial implements Serializable {
 
@@ -54,4 +52,30 @@ public class ClinicalTrial implements Serializable {
 
   @Version
   private Integer version;
+
+  public ClinicalTrial(@NotBlank final String pubMedId, final String trialType, final TrialStatus status,
+                       final Set<String> keywords, final Set<String> leadSponsors, final Set<String> citations,
+                       final Set<String> collaborators, final boolean isStopped, final String whyStopped,
+                       final boolean isFdaRegulated,
+                       final Date trialStartedOn, final TrialOutcome outcome, final Date createdOn, final Date updatedOn,
+                       final Integer version) {
+
+    this.pubMedId = pubMedId;
+    this.trialType = trialType;
+    this.status = status;
+    this.keywords = keywords;
+    this.leadSponsors = leadSponsors;
+    this.citations = citations;
+    this.collaborators = collaborators;
+    this.isStopped = isStopped;
+    this.whyStopped = whyStopped;
+    this.isFdaRegulated = isFdaRegulated;
+    this.trialStartedOn = trialStartedOn;
+    this.outcome = outcome;
+    this.createdOn = createdOn;
+    this.updatedOn = updatedOn;
+    this.version = version;
+  }
 }
+
+

@@ -1,10 +1,12 @@
 package com.trends.db.controller;
 
 import com.trends.db.model.Disease;
+import com.trends.db.model.exception.DiseaseException;
 import com.trends.db.service.DiseaseService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +28,7 @@ import java.util.Set;
 @RequestMapping("/v1/api")
 public class DiseaseController {
 
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+  private static final Logger _logger = LoggerFactory.getLogger(DiseaseController.class);
 
   private final DiseaseService diseaseService;
 
@@ -36,10 +38,25 @@ public class DiseaseController {
   }
 
   @ApiOperation(value = "Get Diseases by Keyword", nickname = "Get Diseases by keyword", response = Disease.class)
-  @GetMapping(path = "/diseases")
-  public List<Disease> getAllDiseases() {
+  @GetMapping(path = "/diseases", produces = "application/json")
+  public ResponseEntity<List<Disease>> getAllDiseases() {
 
-    return diseaseService.findAllDiseases();
+    _logger.info("Getting all disease...");
+
+    final List<Disease> diseases;
+
+    try {
+      diseases = diseaseService.findAllDiseases();
+    } catch (DiseaseException e) {
+      _logger.error("Disease fetch failed");
+      return ResponseEntity.notFound().build();
+    }
+
+    if (!diseases.isEmpty()) {
+      return ResponseEntity.ok().body(diseases);
+
+    }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 
   /**
@@ -49,10 +66,24 @@ public class DiseaseController {
    * @return the diseases
    */
   @ApiOperation(value = "Get Diseases by Keyword", nickname = "Get Diseases by keyword", response = Disease.class)
-  @GetMapping(path = "/diseases/keyword/{keyword}")
-  public Set<Disease> getDiseases(@PathVariable final String keyword) {
+  @GetMapping(path = "/diseases/keyword/{keyword}", produces = "application/json")
+  public ResponseEntity<Set<Disease>> getDiseases(@PathVariable final String keyword) {
 
-    return diseaseService.findDiseasesByKeyword(keyword);
+    _logger.info("Getting diseases for keyword: {}", keyword);
+    final Set<Disease> diseases;
+
+    try {
+      diseases = diseaseService.findDiseasesByKeyword(keyword);
+    } catch (DiseaseException e) {
+      _logger.error("Disease fetch failed");
+      return ResponseEntity.notFound().build();
+    }
+
+    if (!diseases.isEmpty()) {
+      return ResponseEntity.ok().body(diseases);
+
+    }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 
   /**
@@ -62,27 +93,23 @@ public class DiseaseController {
    * @return the diseases
    */
   @ApiOperation(value = "Get Disease by Id", nickname = "Get Diseases by id", response = Disease.class)
-  @GetMapping(path = "/diseases/id/{id}")
-  public ResponseEntity getDiseaseById(@PathVariable final String id) {
+  @GetMapping(path = "/diseases/id/{id}", produces = "application/json")
+  public ResponseEntity<Disease> getDiseaseById(@PathVariable final String id) {
 
-    Optional<Disease> disease = diseaseService.findDiseasesById(id);
-    if (disease.isPresent()) {
-      return ResponseEntity.ok().body(disease.get());
-    }
-    else {
+    _logger.info("Getting disease by id: {}", id);
+
+    final Optional<Disease> disease;
+
+    try {
+      disease = diseaseService.findDiseaseById(id);
+    } catch (DiseaseException e) {
+      _logger.error("Disease fetch failed");
       return ResponseEntity.notFound().build();
     }
-  }
 
-  /**
-   * Add diseases set.
-   *
-   * @param diseases the diseases
-   */
-  @PostMapping(path = "/diseases")
-  public void addDiseases(@RequestBody final Set<Disease> diseases) {
+    return disease.map(value -> ResponseEntity.ok().body(value))
+                  .orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
 
-    diseaseService.saveDiseases(diseases);
   }
 
   /**
@@ -90,6 +117,7 @@ public class DiseaseController {
    *
    * @param disease the disease
    */
+  @ApiOperation(value = "Add Disease", nickname = "Add a disease", response = Disease.class)
   @PostMapping(path = "/disease/add", consumes = "application/json")
   public void addDisease(@RequestBody @Valid final Disease disease) {
 
@@ -97,14 +125,20 @@ public class DiseaseController {
   }
 
   /**
-   * Update disease set.
+   * Update disease
    *
    * @param disease the disease to be updated
    */
-  @PutMapping(path = "/diseases/update/{id}")
-  public void updateDisease(@PathVariable final Integer id, @RequestBody final Disease disease) {
+  @ApiOperation(value = "Update a disease", nickname = "Update a disease by id", response = Disease.class)
+  @PutMapping(path = "/diseases/update/{id}", consumes = "application/json")
+  public ResponseEntity<Disease> updateDisease(@PathVariable final String id, @RequestBody final Disease disease) {
 
-    diseaseService.updateDisease(disease);
+    Optional<Disease> foundDisease =
+        Optional.ofNullable(diseaseService.findDiseaseById(id)
+                                          .orElseThrow(
+                                              () -> new DiseaseException(String.format("Disease id %s not found", id))));
+    final Disease updateDisease = diseaseService.updateDisease(foundDisease.get(), disease);
+    return ResponseEntity.ok(updateDisease);
   }
 
 }

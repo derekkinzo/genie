@@ -1,33 +1,51 @@
 =======
-GeniePy
+GeniePy_
 =======
 
-This is the documentation of **GeniePy**.
+GeniePy_ is a python package designed to predict gene/disease relationship trends. The application leverages machine learning to build two predictive classifiers:
 
-.. note::
+**Publication Count Predictive Classifier**
+    The Publication Count Predictive Classifier attempts to predict the order of magnitude of publications a given gene/disesase relationship will reach for a given time lag.
 
-    This is the main page of your project's `Sphinx`_ documentation.
-    It is formatted in `reStructuredText`_. Add additional pages
-    by creating rst-files in ``docs`` and adding them to the `toctree`_ below.
-    Use then `references`_ in order to link them from this page, e.g.
-    :ref:`authors` and :ref:`changes`.
+**Clinical Trials Predictive Classifier**
+    The Clinical Trials Predictive Classifier attempts to predict whether or not a given gene/disease relationship will reach phase 2 clinical trial.
 
-    It is also possible to refer to the documentation of other Python packages
-    with the `Python domain syntax`_. By default you can reference the
-    documentation of `Sphinx`_, `Python`_, `NumPy`_, `SciPy`_, `matplotlib`_,
-    `Pandas`_, `Scikit-Learn`_. You can add more by extending the
-    ``intersphinx_mapping`` in your Sphinx's ``conf.py``.
 
-    The pretty useful extension `autodoc`_ is activated by default and lets
-    you include documentation from docstrings. Docstrings can be written in
-    `Google style`_ (recommended!), `NumPy style`_ and `classical style`_.
+Application Architecture
+------------------------
+    The diagram below provides a high-level description of how the application is
+    architected.
 
+    The application is sub-divided into two main subpackages: Data and Classificaiton Management.
+
+    - The data management subpackage is responsible for gathering and composing the data available online, create local databases, and serve this data as a pandas dataframe back to the main function.
+
+    - The classification subpackage handles the classifiers and interacts with the main application by receiving a dataframe with classifier features and return a dataframe containing the corresponding predictions.
+
+    The entry-point of the application starts by generating by scraping online sources and creating the necessary tables. The main application can then request the gathered data from the data management subpackage and feeds it into the classification manager to calculate the predictions. Once the predictions have been calculated, the resulting dataframes are handed back to the data management to store the predictions into the classification tables which are then queried by the user interface to display the results.
+
+.. image:: ./_static/GeniePyArchitectureDiagram.png
+
+
+
+Data Management subpackage Class Diagram
+----------------------------------------
+    The diagram below depicts the class diagram for the Data Management subpackage.
+
+.. image:: ./_static/GeniePyDataMgmtClassDiagram.png
+
+
+Performance Optimization Using Cloud Functions
+----------------------------------------------
+    TODO: Describe use of cloud functions applied to increase performance and allow continuous querying to generate databases.
+
+.. image:: ./_static/CloudFunctionsDiagram.png
 
 Contents
 ========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    License <license>
    Authors <authors>
@@ -42,18 +60,4 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-.. _toctree: http://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html
-.. _reStructuredText: http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
-.. _references: http://www.sphinx-doc.org/en/stable/markup/inline.html
-.. _Python domain syntax: http://sphinx-doc.org/domains.html#the-python-domain
-.. _Sphinx: http://www.sphinx-doc.org/
-.. _Python: http://docs.python.org/
-.. _Numpy: http://docs.scipy.org/doc/numpy
-.. _SciPy: http://docs.scipy.org/doc/scipy/reference/
-.. _matplotlib: https://matplotlib.org/contents.html#
-.. _Pandas: http://pandas.pydata.org/pandas-docs/stable
-.. _Scikit-Learn: http://scikit-learn.org/stable
-.. _autodoc: http://www.sphinx-doc.org/en/stable/ext/autodoc.html
-.. _Google style: https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings
-.. _NumPy style: https://numpydoc.readthedocs.io/en/latest/format.html
-.. _classical style: http://www.sphinx-doc.org/en/stable/domains.html#info-field-lists
+.. _GeniePy: https://pypi.org/project/geniepy/

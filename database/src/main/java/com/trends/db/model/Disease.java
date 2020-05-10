@@ -1,5 +1,6 @@
 package com.trends.db.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,8 +20,7 @@ import java.util.Set;
  * The type Disease.
  */
 @Document(collection = "disease")
-@Getter
-@Setter
+@Data
 @ToString(exclude = { "id" })
 public class Disease implements Serializable {
 

@@ -1,0 +1,10 @@
+# Test configuration yaml file
+
+# Default chunksize to be used throughout
+chunksize: 10
+
+# BigQuery Parameters
+gbq:
+  credentials: "invalid_path"
+  proj: "genie-275215"
+  dataset: "test"

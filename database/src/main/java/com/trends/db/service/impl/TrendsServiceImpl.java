@@ -35,20 +35,15 @@ public class TrendsServiceImpl implements TrendsService {
   }
 
   @Override
-  public void saveTrends(final Set<Trend> trends) {
-
-    dao.insert(trends);
-  }
-
-  @Override
   public void saveTrend(final Trend trend) {
 
     dao.insert(trend);
   }
 
   @Override
-  public void updateTrend(final Trend trend) {
+  public Trend updateTrend(final Trend trend, final Trend payload) {
 
-    dao.insert(trend);
+    return dao.insert(trend);
   }
+
 }

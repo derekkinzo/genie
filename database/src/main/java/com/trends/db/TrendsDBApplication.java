@@ -35,7 +35,7 @@ import java.util.Collections;
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 @Slf4j
 @EnableMongoAuditing
-public class TrendsDBApplication implements CommandLineRunner {
+public class TrendsDBApplication {
 
   private static final Integer version = 1;
 
@@ -78,34 +78,5 @@ public class TrendsDBApplication implements CommandLineRunner {
         .apis(RequestHandlerSelectors.any())
         .paths(PathSelectors.any())
         .build();
-  }
-
-  @Override
-  public void run(final String... args) throws Exception {
-
-//    // Empty the schema
-//    trendRepo.deleteAll();
-//    clinicalTrialRepo.deleteAll();
-    publicationRepo.deleteAll();
-//    patentRepo.deleteAll();
-//    geneRepo.deleteAll();
-//    diseaseRepo.deleteAll();
-//
-//    // Create Schema
-//    diseaseRepo.insert(new Disease("Covid-19",
-//        Collections.singleton("CoronaVirus"),
-//        Collections.singleton("Some Alias"),
-//        Collections.singleton("Some Drug"),
-//        true,
-//        Calendar.getInstance().getTime(),
-//        Calendar.getInstance().getTime(),
-//        version));
-//
-//    geneRepo.save(new Gene());
-//    patentRepo.save(new Patent());
-//    publicationRepo.save(new Publication());
-//    clinicalTrialRepo.save(new ClinicalTrial());
-//    trendRepo.save(new Trend());
-//
   }
 }

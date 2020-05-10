@@ -1,11 +1,15 @@
 package com.trends.db.controller;
 
 import com.trends.db.model.Gene;
+import com.trends.db.model.exception.DiseaseException;
+import com.trends.db.model.exception.GeneException;
+import com.trends.db.model.exception.TrialException;
 import com.trends.db.service.GeneService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +30,8 @@ import java.util.Set;
 @RequestMapping("/v1/api")
 public class GeneController {
 
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+  private static final Logger _logger = LoggerFactory.getLogger(GeneController.class);
 
-  @Autowired
   private final GeneService geneService;
 
   public GeneController(final GeneService geneService) {
@@ -37,10 +40,25 @@ public class GeneController {
   }
 
   @ApiOperation(value = "Get All Genes", nickname = "Get All Genes", response = Gene.class)
-  @GetMapping(path = "/genes")
-  public List<Gene> getAllGenes() {
+  @GetMapping(path = "/genes", produces = "application/json")
+  public ResponseEntity<List<Gene>> getAllGenes() {
 
-    return geneService.findAllGenes();
+    _logger.info("Getting all genes...");
+
+    final List<Gene> genes;
+
+    try {
+      genes = geneService.findAllGenes();
+    } catch (GeneException e) {
+      _logger.error("Gene fetch failed");
+      return ResponseEntity.notFound().build();
+    }
+
+    if (!genes.isEmpty()) {
+      return ResponseEntity.ok().body(genes);
+
+    }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 
   /**
@@ -50,10 +68,24 @@ public class GeneController {
    * @return the genes
    */
   @ApiOperation(value = "Get Genes by keyword", nickname = "Get Genes by keyword", response = Gene.class)
-  @GetMapping(path = "/genes/keyword/{keyword}")
-  public Set<Gene> getGenes(@PathVariable final String keyword) {
+  @GetMapping(path = "/genes/keyword/{keyword}", produces = "application/json")
+  public ResponseEntity<Set<Gene>> getGenesByKeyword(@PathVariable final String keyword) {
 
-    return geneService.findGenesByKeyword(keyword);
+    _logger.info("Getting genes for keyword: {}", keyword);
+    final Set<Gene> genes;
+
+    try {
+      genes = geneService.findGenesByKeyword(keyword);
+    } catch (DiseaseException e) {
+      _logger.error("Gene fetch failed");
+      return ResponseEntity.notFound().build();
+    }
+
+    if (!genes.isEmpty()) {
+      return ResponseEntity.ok().body(genes);
+
+    }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 
   /**
@@ -63,22 +95,21 @@ public class GeneController {
    * @return the gene
    */
   @ApiOperation(value = "Get Genes by Id", nickname = "Get Genes by id", response = Gene.class)
-  @GetMapping(path = "/genes/id/{id}")
-  public Optional<Gene> getGene(@PathVariable final String id) {
+  @GetMapping(path = "/genes/id/{id}", produces = "application/json")
+  public ResponseEntity<Gene> getGeneById(@PathVariable final String id) {
 
-    return geneService.findGenesById(id);
-  }
+    _logger.info("Getting gene for id: {}", id);
+    final Optional<Gene> gene;
 
-  /**
-   * Add genes set.
-   *
-   * @param genes the genes
-   * @return the set
-   */
-  @PostMapping(path = "/genes")
-  public void addGenes(@RequestBody @Valid final Set<Gene> genes) {
+    try {
+      gene = geneService.findGenesById(id);
+    } catch (DiseaseException e) {
+      _logger.error("Gene fetch failed");
+      return ResponseEntity.notFound().build();
+    }
 
-    geneService.saveGenes(genes);
+    return gene.map(value -> ResponseEntity.ok().body(value))
+               .orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
   }
 
   /**
@@ -87,7 +118,7 @@ public class GeneController {
    * @param gene the gene
    * @return the set
    */
-  @PostMapping(path = "/gene/add")
+  @PostMapping(path = "/gene/add", consumes = "application/json")
   public void addGene(@RequestBody @Valid final Gene gene) {
 
     geneService.saveGene(gene);
@@ -99,9 +130,14 @@ public class GeneController {
    * @param gene the gene
    * @return the set
    */
-  @PutMapping(path = "/genes/update/{id}")
-  public void updateGenes(@PathVariable final Integer id, @RequestBody @Valid final Gene gene) {
+  @PutMapping(path = "/gene/update/{id}", consumes = "application/json")
+  public ResponseEntity<Gene> updateGene(@PathVariable final String id, @RequestBody @Valid final Gene gene) {
 
-    geneService.updateGene(gene);
+    Optional<Gene> foundGene =
+        Optional.ofNullable(geneService.findGenesById(id)
+                                       .orElseThrow(
+                                           () -> new TrialException(String.format("Gene id %s not found", id))));
+    final Gene updatedGene = geneService.updateGene(foundGene.get(), gene);
+    return ResponseEntity.ok(updatedGene);
   }
 }

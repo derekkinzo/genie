@@ -31,13 +31,7 @@ public class PublicationServiceImpl implements PublicationService {
   @Override
   public List<Publication> findAllPublications() {
 
-    return findAllPublications();
-  }
-
-  @Override
-  public void savePublications(final Set<Publication> publications) {
-
-    dao.insert(publications);
+    return dao.findAll();
   }
 
   @Override
@@ -47,8 +41,9 @@ public class PublicationServiceImpl implements PublicationService {
   }
 
   @Override
-  public void updatePublication(final Publication publication) {
+  public Publication updatePublication(final Publication publication, final Publication payload) {
 
-    dao.insert(publication);
+    return dao.insert(publication);
   }
+
 }
