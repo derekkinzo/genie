@@ -5,3 +5,4 @@ python3 write_binary.py
 make
 ./ranker
 python3 load_pubmed_ranks.py
+cd ..

@@ -53,4 +53,4 @@ python3 loader/fetch_sjr.py
 
 Genie Page Rank
 ---------------
-Finally, you can upgrade from citation ranking to page ranking pubmed articles by running `bash article_rank/setup.sh`
+Finally, you can upgrade from citation ranking to page ranking pubmed articles by running `bash article_rank/setup.sh`. Keep in mind this can take up to 30 minutes since there are 30 million records.
