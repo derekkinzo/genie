@@ -20,8 +20,15 @@ fi
 echo "creating database tables"
 psql postgresql://genie:genie123@localhost:5432 < database.sql
 
+echo "installing virtural env"
+pip3 install virtualenv
+
+echo "setup virtual env"
+virtualenv .
+source bin/activate
+
 echo "installing python3 dependencies"
 pip3 install -r requirements.txt
 
 echo "starting server"
-python3 app.py
+bash app.sh
