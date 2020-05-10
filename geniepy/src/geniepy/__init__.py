@@ -164,3 +164,4 @@ def sample_run():
 def init():
     """Create configuration file if doesn't exist."""
     assert config.CONFIG_FILE.exists()
+    print("GeniePy is ready")
