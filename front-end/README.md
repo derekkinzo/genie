@@ -50,3 +50,7 @@ python3 loader/fetch_paper_links.py
 python3 loader/pubs.py
 python3 loader/fetch_sjr.py
 ```
+
+Genie Page Rank
+---------------
+Finally, you can upgrade from citation ranking to page ranking pubmed articles by running `bash article_rank/setup.sh`
