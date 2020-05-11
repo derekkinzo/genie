@@ -10,7 +10,6 @@ from pathlib import Path
 from geniepy.errors import ConfigError
 import logging
 import sys
-import os
 from logging.handlers import TimedRotatingFileHandler
 
 CONFIG_DIR = Path("~/.geniepy.d/").expanduser().resolve()
@@ -22,8 +21,12 @@ CONFIG_NAME = "config.yaml"
 CONFIG_FILE = CONFIG_DIR.joinpath(CONFIG_NAME).resolve()
 DEFAULT_CONFIG = Path(__file__).parent.joinpath(CONFIG_NAME).resolve()
 
-LOG_FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
-LOG_FILE = os.path.join(CONFIG_DIR, "geniepy.log")
+LOG_FORMATTER = logging.Formatter(
+    "%(asctime)s — %(name)s — %(levelname)s — %(message)s"
+)
+LOG_NAME = "geniepy.log"
+LOG_FILE = CONFIG_DIR.joinpath(LOG_NAME)
+LOG_FILE.touch()
 
 # Check for config.yaml in geniepy dir. Otherwise, create default
 if not CONFIG_FILE.exists():
@@ -110,14 +113,15 @@ def get_pubmed_download_dir() -> str:
     """Retrieve path where to download PubMed data files."""
     configdict = read_yaml()
     return configdict["pubmed_download_dir"]
-  
+
 
 def get_logger(logger_name: str):
-    file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
+    """Retrieve geniepy logger."""
+    file_handler = TimedRotatingFileHandler(LOG_FILE, when="midnight")
     file_handler.setFormatter(LOG_FORMATTER)
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.DEBUG)
     logger.addHandler(file_handler)
+    logger.addHandler(logging.StreamHandler(sys.stdout))
     logger.propagate = False
     return logger
-
