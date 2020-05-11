@@ -161,7 +161,7 @@ def sample_run():
     daomgr.download(chunksize, is_sample=True, baseline=True)
 
 
-def run():
-    """Cron-job function to scrape sources for updated data and update predictions."""
-    print("Running...")
-    print("Done")
+def init():
+    """Create configuration file if doesn't exist."""
+    assert config.CONFIG_FILE.exists()
+    print(f"GeniePy version {__version__} is ready")

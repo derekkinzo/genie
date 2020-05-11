@@ -81,30 +81,36 @@ def get_credentials() -> str:
         raise ConfigError("Credentials path not found")
     return credentials_path
 
+
 def get_pubmed_ftp_server() -> str:
     """Retrieve PubMed FTP Server."""
     configdict = read_yaml()
     return configdict["pubmed_ftp_server"]
+
 
 def get_pubmed_baseline_dir() -> str:
     """Retrieve PubMed FTP Directory for Baseline Dataset."""
     configdict = read_yaml()
     return configdict["pubmed_baseline_dir"]
 
+
 def get_pubmed_update_dir() -> str:
     """Retrieve PubMed FTP Directory for Update Dataset."""
     configdict = read_yaml()
     return configdict["pubmed_update_dir"]
+
 
 def get_pubmed_data_file() -> str:
     """Retrieve path for PubMed data file."""
     configdict = read_yaml()
     return configdict["pubmed_data_file"]
 
+
 def get_pubmed_download_dir() -> str:
     """Retrieve path where to download PubMed data files."""
     configdict = read_yaml()
     return configdict["pubmed_download_dir"]
+  
 
 def get_logger(logger_name: str):
     file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
@@ -114,3 +120,4 @@ def get_logger(logger_name: str):
     logger.addHandler(file_handler)
     logger.propagate = False
     return logger
+
