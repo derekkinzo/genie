@@ -228,14 +228,18 @@ class PubMedScraper(BaseScraper):
         """
         PubMedScraper.LOGGER.info("Starting PubMed Scraper")
 
-        # TODO: remove is_sample impl
-        # is_sample = kwargs.get("is_sample")
-
-
         # set default chunksize
         if chunksize <= 0:
             chunksize = PubMedScraper.DEFAULT_CHUNKSIZE
             PubMedScraper.LOGGER.info(f"chunksize set to default: {chunksize}")
+
+        # set IS_SAMPLE flag
+        IS_SAMPLE = False
+        if "is_sample" in kwargs:
+            try:
+                IS_SAMPLE = kwargs.get("is_sample")
+            except:
+                IS_SAMPLE = False
 
         # set BASELINE_SCRAPE_MODE flag
         # BASELINE_SCRAPE_MODE = True (enables the baseline scraping mode)
@@ -316,28 +320,36 @@ class PubMedScraper(BaseScraper):
                 articles = self._pubmedScrape(pubmed_file)
                 PubMedScraper.LOGGER.info(f"{len(articles)} articles found in {pubmed_file}")
 
+                # optimize chunksize based on number of 
+                # available PubMed articles
+                chunk_size: int = 0
+                if chunksize > len(articles):
+                    chunk_size = len(articles)
+                else:
+                    chunk_size = chunksize
+                PubMedScraper.LOGGER.info(f"Chunksize is set to: {chunk_size}")
+
                 # yield articles to generator
                 while True:
                     articles_chunk = []
-                    for i in range(chunksize):
+                    for i in range(chunk_size):
                         if len(articles) > 0:
                             article = articles.pop()
-                            # scrape citation metadata
-                            # citations = self._citationScrape(article.pmid)
-                            # article.set_citationCount(citations[1])
-                            # article.set_citationPmid(citations[2])
+                            if not IS_SAMPLE or (IS_SAMPLE and i <= 1000):
+                                # scrape citation metadata
+                                # in is_sample mode only scrape first 1000 citations
+                                citations = self._citationScrape(article.pmid)
+                                article.set_citationCount(citations[1])
+                                article.set_citationPmid(citations[2])
+                                PubMedScraper.LOGGER.info(f"Get citations for PMID: {article.pmid} [{i} of {chunk_size}]")
                             articles_chunk.append(article)
                         else:
                             break
 
-                        # TODO: remove is_sample impl
-                        # if i > 10 and is_sample:
-                            # yield articles_chunk
-                            # return
                     if len(articles_chunk) <= 0:
                         break
 
-                    PubMedScraper.LOGGER.info(f"Yielding {len(articles_chunk)} articles")
+                    PubMedScraper.LOGGER.info(f"Yielded {len(articles_chunk)} articles")
                     yield articles_chunk
 
                 # update list of parsed files
@@ -375,6 +387,7 @@ class PubMedScraper(BaseScraper):
             ftp.cwd(ftp_dir)
             return ftp
         except Exception as e:
+            PubMedScraper.LOGGER.exception(e.msg())
             return None
 
     def _ftp_disconnect(self, ftp: FTP):
@@ -383,6 +396,7 @@ class PubMedScraper(BaseScraper):
             ftp.close()
             return
         except Exception as e:
+            PubMedScraper.LOGGER.exception(e.msg())
             return
 
     def _ftp_file_list(self, ftp: FTP) -> []:
@@ -397,6 +411,7 @@ class PubMedScraper(BaseScraper):
             ]  # transform filenames
             return ftp_files
         except Exception as e:
+            PubMedScraper.LOGGER.exception(e.msg())
             return ftp_files
 
     def _ftp_download(self, ftp: FTP, ftp_file: str) -> bool:
@@ -425,6 +440,7 @@ class PubMedScraper(BaseScraper):
                     history.append(line.replace("\n", "").lower())
             return history
         except Exception as e:
+            PubMedScraper.LOGGER.info("History file not found. New History file will be created.")
             return []
 
     def _update_history(self, file_list: []):
@@ -434,6 +450,7 @@ class PubMedScraper(BaseScraper):
             with open(self._get_history_filepath(), "a+") as f:
                 f.writelines(map(lambda x: x + "\n", file_list))
         except Exception as e:
+            PubMedScraper.LOGGER.exception(e.msg())
             return
 
     def _clear_history(self):
@@ -449,6 +466,7 @@ class PubMedScraper(BaseScraper):
             history_file_path = os.path.expanduser(config.get_pubmed_data_file())
             return history_file_path
         except Exception as e:
+            PubMedScraper.LOGGER.exception(e.msg())
             return PubMedScraper.DEFAULT_PUBMED_BASELINE_DIR
 
     def _get_download_dir(self) -> str:
@@ -456,6 +474,7 @@ class PubMedScraper(BaseScraper):
         try:
             return config.get_pubmed_download_dir()
         except Exception as e:
+            PubMedScraper.LOGGER.exception(e.msg())
             return PubMedScraper.DEFAULT_DOWNLOAD_DIR
 
     def _pubmedScrape(self, pubmed_file) -> []:
@@ -469,10 +488,9 @@ class PubMedScraper(BaseScraper):
                 xml_list = xml_root.findall(PubMedScraper.TAG_ARTICLE)
                 for article_xml in xml_list:
                     pubmed_articles.append(PubMedArticle(article_xml))
-            print(f"Scraped {len(pubmed_articles)} articles")
             return pubmed_articles
         except Exception as e:
-            print(e)
+            PubMedScraper.LOGGER.exception(e.msg())
             return []
 
     def _citationScrape(self, pmid: int) -> []:
@@ -484,6 +502,7 @@ class PubMedScraper(BaseScraper):
             req = requests.get(PubMedScraper._citationApiUrl(pmid))
             tree = ET.fromstring(req.text)
         except Exception as e:
+            PubMedScraper.LOGGER.exception(e.msg())
             return null_citation
 
         # scrape citation data from API response
@@ -503,6 +522,7 @@ class PubMedScraper(BaseScraper):
             shutil.rmtree(clean_up_path)
             return
         except OSError as e:
+            PubMedScraper.LOGGER.exception(e.msg())
             return
 
     @classmethod
