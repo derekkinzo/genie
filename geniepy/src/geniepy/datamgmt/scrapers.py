@@ -15,6 +15,11 @@ import xml.etree.ElementTree as ET
 from random import randint
 from pathlib import Path
 from geniepy.pubmed import PubMedArticle
+from joblib import Memory
+
+
+# Initialize memoization
+memory = Memory(str(config.TMP_DIR), verbose=0)
 
 
 class BaseScraper(ABC):
@@ -174,7 +179,7 @@ class PubMedScraper(BaseScraper):
 
     """
 
-    #Logger
+    # Logger
     LOGGER = config.get_logger("PubMedScraper")
 
     # Constants for PubMed scraping
@@ -216,6 +221,10 @@ class PubMedScraper(BaseScraper):
     ]
     TAG_CITATION_ID = "./LinkSet/LinkSetDb/Link/Id"
 
+    def __init__(self):
+        """Initialize memoization for citation scraping."""
+        self._citationScrape = memory.cache(self._citationScrape)
+
     def scrape(self, chunksize: int, **kwargs) -> Generator:
         """
         Implement base scrape method to download records from PubMed database.
@@ -253,7 +262,7 @@ class PubMedScraper(BaseScraper):
             except Exception as e:
                 BASELINE_SCRAPE_MODE = PubMedScraper.DEFAULT_PUBMED_BASELINE_SCRAPE_MODE
                 PubMedScraper.LOGGER.exception(e.msg())
-                PubMedScraper.LOGGER.info("Scrape mode: Daily Update")                
+                PubMedScraper.LOGGER.info("Scrape mode: Daily Update")
         else:
             PubMedScraper.LOGGER.info("Scrape mode: Daily Update")
 
@@ -303,7 +312,9 @@ class PubMedScraper(BaseScraper):
         else:
             pubmed_new_files = list(set(pubmed_files) - set(pubmed_history))
 
-        PubMedScraper.LOGGER.info(f"Number of new files to be parsed: {len(pubmed_new_files)}")
+        PubMedScraper.LOGGER.info(
+            f"Number of new files to be parsed: {len(pubmed_new_files)}"
+        )
 
         # main scraping block
         try:
@@ -312,15 +323,19 @@ class PubMedScraper(BaseScraper):
                 retries = 0
                 while retries <= PubMedScraper.DEFAULT_DOWNLOAD_RETRIES:
                     if self._ftp_download(pubmed_ftp, pubmed_file):
-                        PubMedScraper.LOGGER.info(f"Downloaded PubMed file: {pubmed_file}")
+                        PubMedScraper.LOGGER.info(
+                            f"Downloaded PubMed file: {pubmed_file}"
+                        )
                         break
                     retries += 1
 
                 # scrape downloaded PubMed data file
                 articles = self._pubmedScrape(pubmed_file)
-                PubMedScraper.LOGGER.info(f"{len(articles)} articles found in {pubmed_file}")
+                PubMedScraper.LOGGER.info(
+                    f"{len(articles)} articles found in {pubmed_file}"
+                )
 
-                # optimize chunksize based on number of 
+                # optimize chunksize based on number of
                 # available PubMed articles
                 chunk_size: int = 0
                 if chunksize > len(articles):
@@ -341,7 +356,9 @@ class PubMedScraper(BaseScraper):
                                 citations = self._citationScrape(article.pmid)
                                 article.set_citationCount(citations[1])
                                 article.set_citationPmid(citations[2])
-                                PubMedScraper.LOGGER.info(f"Get citations for PMID: {article.pmid} [{i} of {chunk_size}]")
+                                PubMedScraper.LOGGER.info(
+                                    f"Get citations for PMID: {article.pmid} [{i} of {chunk_size}]"
+                                )
                             articles_chunk.append(article)
                         else:
                             break
@@ -375,7 +392,9 @@ class PubMedScraper(BaseScraper):
             # if baseline dataset was scraped; reset scrape history
             if BASELINE_SCRAPE_MODE:
                 self._clear_history()
-                PubMedScraper.LOGGER.info("PubMed Scraper: Cleared History (after BASELINE)")
+                PubMedScraper.LOGGER.info(
+                    "PubMed Scraper: Cleared History (after BASELINE)"
+                )
 
         return
 
@@ -440,7 +459,9 @@ class PubMedScraper(BaseScraper):
                     history.append(line.replace("\n", "").lower())
             return history
         except Exception as e:
-            PubMedScraper.LOGGER.info("History file not found. New History file will be created.")
+            PubMedScraper.LOGGER.info(
+                "History file not found. New History file will be created."
+            )
             return []
 
     def _update_history(self, file_list: []):

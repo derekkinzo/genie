@@ -167,11 +167,11 @@ class PubMedArticle:
         return issn_type
 
     def set_citationCount(self, citation_count: int):
-        """Update property: citation_count"""
+        """Update property: citation_count."""
         self.citationCount = citation_count
 
     def set_citationPmid(self, citation_pmid: str):
-        """Update property: citation_pmid"""
+        """Update property: citation_pmid."""
         self.citationPmid = citation_pmid
 
     @property
