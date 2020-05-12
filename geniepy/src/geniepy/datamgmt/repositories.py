@@ -9,6 +9,7 @@ import pandas_gbq
 from sqlalchemy import create_engine, Table
 from geniepy.errors import DaoError, ConnectionError
 from geniepy.datamgmt.tables import RepoProperties
+import geniepy.config as config
 
 
 class BaseRepository(ABC):
@@ -148,6 +149,8 @@ class GbqRepository(BaseRepository):  # pragma: no cover
 
     __slots__ = ["_proj", "_credentials_path"]
 
+    LOGGER = config.get_logger("GbqRepository")
+
     # pylint: disable=bad-continuation
     def __init__(
         self, db_loc: str, propty: RepoProperties, dataset: str, credentials: str
@@ -207,11 +210,19 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             # Todays date
             date = datetime.today().strftime("%Y-%m-%d")
             payload.insert(0, "date", date)
+            self.LOGGER.info(f"Saving {len(payload)} records to: {self.tablename}")
             pandas_gbq.to_gbq(
-                payload, self._tablename, if_exists="append", table_schema=self._table,
+                payload,
+                self._tablename,
+                if_exists="append",
+                table_schema=self._table,
+                progress_bar=False,
+            )
+            self.LOGGER.info(
+                f"{len(payload)} records saved successfully to: {self.tablename}"
             )
         except Exception as sql_exp:
-            print(f"Exception in {self.tablename}")
+            self.LOGGER.exception(str(sql_exp))
             raise DaoError(sql_exp)
 
     def delete_all(self):
@@ -242,7 +253,8 @@ class GbqRepository(BaseRepository):  # pragma: no cover
             raise DaoError
         try:
             if exact:
-                response_df = pandas_gbq.read_gbq(query)
+                self.LOGGER.info(f"Querying {self.tablename}: {query}")
+                response_df = pandas_gbq.read_gbq(query, progress_bar_type=None)
                 yield response_df
             if not exact:
                 offset = 0
@@ -253,10 +265,12 @@ class GbqRepository(BaseRepository):  # pragma: no cover
                         f" ORDER BY {self._pkey} LIMIT {chunksize} OFFSET {offset};"
                     )
                     gbq_query = query + add_query
+                    self.LOGGER.info(f"Querying {self.tablename}: {gbq_query}")
                     response_df = pandas_gbq.read_gbq(gbq_query)
                     if response_df.empty:
                         return
                     offset += chunksize
                     yield response_df
         except Exception as gbq_exp:
+            self.LOGGER.exception(str(gbq_exp))
             raise DaoError(gbq_exp)
