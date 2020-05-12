@@ -1,4 +1,5 @@
 """Scraping module to fetch data from online sources."""
+from contextlib import redirect_stdout
 import binascii
 from pathlib import Path
 from typing import Generator
@@ -82,7 +83,8 @@ class PubtatorGeneScraper(BaseScraper):
         """Download records from online sources."""
         print(f"Downloading {self.SOURCE_NAME} records...")
         if not self.download_path.exists():
-            wget.download(self.FTP_URL, str(self.download_path))
+            with redirect_stdout(None):
+                wget.download(self.FTP_URL, str(self.download_path), bar=None)
         if self.is_gzip(self.download_path):
             with gzip.open(self.download_path, "rb") as f_in:
                 with open(self.csv_path, "wb") as f_out:
@@ -261,7 +263,7 @@ class PubMedScraper(BaseScraper):
                     PubMedScraper.LOGGER.info("Scrape mode: Baseline")
             except Exception as e:
                 BASELINE_SCRAPE_MODE = PubMedScraper.DEFAULT_PUBMED_BASELINE_SCRAPE_MODE
-                PubMedScraper.LOGGER.exception(e.msg())
+                PubMedScraper.LOGGER.exception(str(e))
                 PubMedScraper.LOGGER.info("Scrape mode: Daily Update")
         else:
             PubMedScraper.LOGGER.info("Scrape mode: Daily Update")
@@ -443,6 +445,9 @@ class PubMedScraper(BaseScraper):
 
             # downlad file
             download_filepath = os.path.join(download_path, ftp_file)
+            PubMedScraper.LOGGER.info(
+                f"Attempt to download PubMed file to: {download_filepath}"
+            )
             ftp.retrbinary("RETR " + ftp_file, open(download_filepath, "wb").write)
             return True
         except Exception as e:
