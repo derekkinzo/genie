@@ -49,7 +49,7 @@ TEST_DATA = [
             article_title="Formate assay in body fluids: \
 application in methanol poisoning.",
             abstract="",
-            authors=["Makar, A B", "McMartin, K E", "Palese, M", "Tephly, T R"],
+            authors=["A B Makar", "K E McMartin", "M Palese", "T R Tephly"],
             language="eng",
             chemicals=[
                 "Formates",
@@ -86,7 +86,7 @@ cultivars. Myrcene, beta-caryophyllene, alpha-humulene and beta-farnesene \
 (E) were major constituents in the essential oils. The differences in the \
 content of other essential oil constituents were determined. Some cultivars \
 were rich in esters and ketones.',
-            authors=["Obelevicius, Kestutis", "Venskutonis, Rimantas"],
+            authors=["Kestutis Obelevicius", "Rimantas Venskutonis"],
             language="lit",
             chemicals=[
                 "Monocyclic Sesquiterpenes",

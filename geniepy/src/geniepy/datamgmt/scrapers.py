@@ -356,10 +356,13 @@ class PubMedScraper(BaseScraper):
                 # yield articles to generator
                 while True:
                     articles_chunk = []
+                    SAMPLE_CITATION_CNT = 10
                     for i in range(chunk_size):
                         if len(articles) > 0:
                             article = articles.pop()
-                            if not IS_SAMPLE or (IS_SAMPLE and i <= 1000):
+                            if not IS_SAMPLE or (
+                                IS_SAMPLE and i <= SAMPLE_CITATION_CNT
+                            ):
                                 # scrape citation metadata
                                 # in is_sample mode only scrape first 1000 citations
                                 citations = self._citationScrape(article.pmid)
