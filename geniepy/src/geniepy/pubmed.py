@@ -109,7 +109,8 @@ class PubMedArticle:
             forename_el = author.find("ForeName")
             author_forename = "" if forename_el is None else forename_el.text
 
-            authors.append(author_lastname + ", " + author_forename)
+            # authors.append(author_lastname + ", " + author_forename)
+            authors.append(author_forename + " " + author_lastname)
         return authors
 
     @property
