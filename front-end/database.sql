@@ -59,9 +59,13 @@ CREATE TABLE relationships(
 CREATE INDEX index_relationships_on_id ON relationships USING GIN(id gin_trgm_ops);
 CREATE INDEX index_relationships_on_p2_prob ON relationships USING btree (p2_prob);
 CREATE INDEX index_relationships_on_mesh_id ON relationships USING GIN(mesh_id gin_trgm_ops);
+CREATE INDEX index_relationships_on_mesh_id_btree ON relationships USING btree(mesh_id);
 CREATE INDEX index_relationships_on_gene_id ON relationships USING GIN(gene_id gin_trgm_ops);
+CREATE INDEX index_relationships_on_gene_id_btree ON relationships USING btree(gene_id);
 CREATE INDEX index_relationships_on_disease_name ON relationships USING GIN(disease_name gin_trgm_ops);
+CREATE INDEX index_relationships_on_disease_name_btree ON relationships USING btree(disease_name);
 CREATE INDEX index_relationships_on_gene_name ON relationships USING GIN(gene_name gin_trgm_ops);
+CREATE INDEX index_relationships_on_gene_name_btree ON relationships USING btree(gene_name);
 CREATE INDEX index_relationships_on_change_recent ON relationships USING btree (change_recent);
 CREATE INDEX index_relationships_on_recent_prob_change ON relationships USING btree (recent_prob_change);
 CREATE INDEX index_relationships_on_previous_prob ON relationships USING btree (previous_prob);
