@@ -1,6 +1,8 @@
 """Scraping module to fetch data from online sources."""
 from contextlib import redirect_stdout
 import binascii
+from concurrent.futures import ProcessPoolExecutor
+from multiprocessing import Process
 from pathlib import Path
 from typing import Generator
 from abc import ABC, abstractmethod
@@ -261,6 +263,7 @@ class PubMedScraper(BaseScraper):
                 if kwargs.get("baseline") == True:
                     BASELINE_SCRAPE_MODE = True
                     PubMedScraper.LOGGER.info("Scrape mode: Baseline")
+
             except Exception as e:
                 BASELINE_SCRAPE_MODE = PubMedScraper.DEFAULT_PUBMED_BASELINE_SCRAPE_MODE
                 PubMedScraper.LOGGER.exception(str(e))
@@ -307,6 +310,12 @@ class PubMedScraper(BaseScraper):
 
         PubMedScraper.LOGGER.info(f"Number of files in FTP: {len(pubmed_files)}")
         PubMedScraper.LOGGER.info(f"Number of files in History: {len(pubmed_history)}")
+
+        if BASELINE_SCRAPE_MODE and not IS_SAMPLE:
+            pcitation = Process(
+                target=self.scrape_concurrent, args=(len(pubmed_files),)
+            )
+            pcitation.start()
 
         # determine new files to parse
         # in BASELINE_SCRAPE_MODE parse all files
@@ -525,6 +534,21 @@ class PubMedScraper(BaseScraper):
             PubMedScraper.LOGGER.exception(e)
             return []
 
+    def scrape_concurrent(self, files_cnt):
+        """Start parallel processes to speed up scraping citations."""
+        articles_per_file = 30000
+        max_pmid = files_cnt * articles_per_file
+        PubMedScraper.LOGGER.info(
+            f"Start concurrent citation scraping for {max_pmid} articles"
+        )
+        start = 0
+        for chunk in range(0, max_pmid, articles_per_file):
+            max_workers = config.get_max_workers()
+            if max_workers > 0:
+                with ProcessPoolExecutor(max_workers=max_workers) as executor:
+                    executor.map(self._citationScrape, range(start, chunk))
+            start = chunk
+
     def _citationScrape(self, pmid: int) -> []:
         """Scrape citation metadata from PubMed API"""
         null_citation = [pmid, 0, ""]
@@ -532,6 +556,7 @@ class PubMedScraper(BaseScraper):
         # fire PubMed API request
         try:
             req = requests.get(PubMedScraper._citationApiUrl(pmid))
+            PubMedScraper.LOGGER.info(f"Scraped citations for article: {pmid}")
             tree = ET.fromstring(req.text)
         except Exception as e:
             PubMedScraper.LOGGER.exception(e)
