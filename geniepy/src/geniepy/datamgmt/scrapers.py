@@ -274,7 +274,7 @@ class PubMedScraper(BaseScraper):
             FTP_SERVER = config.get_pubmed_ftp_server()
         except Exception as e:
             FTP_SERVER = PubMedScraper.DEFAULT_PUBMED_FTP_SERVER
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
 
         PubMedScraper.LOGGER.info(f"FTP_SERVER: {FTP_SERVER}")
 
@@ -286,14 +286,14 @@ class PubMedScraper(BaseScraper):
                 FTP_DIR = config.get_pubmed_baseline_dir()
             except Exception as e:
                 FTP_DIR = PubMedScraper.DEFAULT_PUBMED_BASELINE_DIR
-                PubMedScraper.LOGGER.exception(e.msg())
+                PubMedScraper.LOGGER.exception(e)
         else:
             # we are in update scrape mode. get baseline dataset directory
             try:
                 FTP_DIR = config.get_pubmed_update_dir()
             except Exception as e:
                 FTP_DIR = PubMedScraper.DEFAULT_PUBMED_UPDATE_DIR
-                PubMedScraper.LOGGER.exception(e.msg())
+                PubMedScraper.LOGGER.exception(e)
 
         PubMedScraper.LOGGER.info(f"FTP_DIR: {FTP_DIR}")
 
@@ -301,6 +301,9 @@ class PubMedScraper(BaseScraper):
         pubmed_ftp = self._ftp_connect(FTP_SERVER, FTP_DIR)
         pubmed_files = self._ftp_file_list(pubmed_ftp)  # list of files from ftp
         pubmed_history = self._read_history()  # list of historically scraped files
+
+        # close ftp connection
+        self._ftp_disconnect(pubmed_ftp)
 
         PubMedScraper.LOGGER.info(f"Number of files in FTP: {len(pubmed_files)}")
         PubMedScraper.LOGGER.info(f"Number of files in History: {len(pubmed_history)}")
@@ -321,6 +324,8 @@ class PubMedScraper(BaseScraper):
         # main scraping block
         try:
             for pubmed_file in pubmed_new_files:
+                # connect to ftp
+                pubmed_ftp = self._ftp_connect(FTP_SERVER, FTP_DIR)
                 # download pubmed data file
                 retries = 0
                 while retries <= PubMedScraper.DEFAULT_DOWNLOAD_RETRIES:
@@ -330,6 +335,8 @@ class PubMedScraper(BaseScraper):
                         )
                         break
                     retries += 1
+                # close ftp connection
+                self._ftp_disconnect(pubmed_ftp)
 
                 # scrape downloaded PubMed data file
                 articles = self._pubmedScrape(pubmed_file)
@@ -359,7 +366,7 @@ class PubMedScraper(BaseScraper):
                                 article.set_citationCount(citations[1])
                                 article.set_citationPmid(citations[2])
                                 PubMedScraper.LOGGER.info(
-                                    f"Get citations for PMID: {article.pmid} [{i} of {chunk_size}]"
+                                    f"Get citations for PMID: {article.pmid} [{i+1} of {chunk_size}]"
                                 )
                             articles_chunk.append(article)
                         else:
@@ -379,10 +386,6 @@ class PubMedScraper(BaseScraper):
             pass
 
         finally:
-            # close ftp connection
-            self._ftp_disconnect(pubmed_ftp)
-            PubMedScraper.LOGGER.info("FTP disconnected")
-
             # clean up downloaded files
             self._clean_up()
             PubMedScraper.LOGGER.info("PubMed Scraper: Clean-up")
@@ -408,7 +411,7 @@ class PubMedScraper(BaseScraper):
             ftp.cwd(ftp_dir)
             return ftp
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return None
 
     def _ftp_disconnect(self, ftp: FTP):
@@ -417,7 +420,7 @@ class PubMedScraper(BaseScraper):
             ftp.close()
             return
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return
 
     def _ftp_file_list(self, ftp: FTP) -> []:
@@ -432,7 +435,7 @@ class PubMedScraper(BaseScraper):
             ]  # transform filenames
             return ftp_files
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return ftp_files
 
     def _ftp_download(self, ftp: FTP, ftp_file: str) -> bool:
@@ -451,7 +454,7 @@ class PubMedScraper(BaseScraper):
             ftp.retrbinary("RETR " + ftp_file, open(download_filepath, "wb").write)
             return True
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return False
 
     def _read_history(self) -> []:
@@ -476,7 +479,7 @@ class PubMedScraper(BaseScraper):
             with open(self._get_history_filepath(), "a+") as f:
                 f.writelines(map(lambda x: x + "\n", file_list))
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return
 
     def _clear_history(self):
@@ -492,7 +495,7 @@ class PubMedScraper(BaseScraper):
             history_file_path = os.path.expanduser(config.get_pubmed_data_file())
             return history_file_path
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return PubMedScraper.DEFAULT_PUBMED_BASELINE_DIR
 
     def _get_download_dir(self) -> str:
@@ -500,7 +503,7 @@ class PubMedScraper(BaseScraper):
         try:
             return config.get_pubmed_download_dir()
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return PubMedScraper.DEFAULT_DOWNLOAD_DIR
 
     def _pubmedScrape(self, pubmed_file) -> []:
@@ -516,7 +519,7 @@ class PubMedScraper(BaseScraper):
                     pubmed_articles.append(PubMedArticle(article_xml))
             return pubmed_articles
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return []
 
     def _citationScrape(self, pmid: int) -> []:
@@ -528,7 +531,7 @@ class PubMedScraper(BaseScraper):
             req = requests.get(PubMedScraper._citationApiUrl(pmid))
             tree = ET.fromstring(req.text)
         except Exception as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return null_citation
 
         # scrape citation data from API response
@@ -548,7 +551,7 @@ class PubMedScraper(BaseScraper):
             shutil.rmtree(clean_up_path)
             return
         except OSError as e:
-            PubMedScraper.LOGGER.exception(e.msg())
+            PubMedScraper.LOGGER.exception(e)
             return
 
     @classmethod
