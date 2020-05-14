@@ -77,7 +77,7 @@ Here are the steps for completing this task. Please use python3 to run the pytho
 1. If you want to store the results in postgresql instead, run pubmed_ranks.sql in your local postgresql database to setup a table to store results. Refer to https://www.postgresql.org/ or the internet to setup postgresql on your machine. Run `python3 load_pubmed_ranks.py` to load results from `rankings` to a local psql table named `pubmed_ranks`
 
 <!-- Dev commands
-scp -i ~/.ssh/google_compute_engine geraldding@35.221.27.216:/home/geraldding/genie/article_rank/data/citations.csv data/
+scp -i ~/.ssh/google_compute_engine geraldding@35.212.88.75:/home/geraldding/genie/article_rank/data/citations.csv data/
 ssh -i ~/.ssh/google_compute_engine geraldding@35.221.27.216 -->
 
 <!-- Debugging commands for ranker.code

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 <link rel="stylesheet" href="/static/css/genie.css">
 
 <div id="loading-indicator" style="display:none"><div></div></div>
@@ -11,23 +11,30 @@
       <img height="100%" src="/static/logo.png" />
       <div style="width:100%;height:100%;display:flex;justify-content:flex-end;align-items:center">
         <div style="margin-right:20px"><a id="export" class="btn btn-light">Export <span class="badge badge-dark"></span></a></div>
-        <div><input id="search" autocomplete="off" placeholder="search" style="height:50%;border-style:none;color:white;background-color:#888888"></div>
       </div>
     </div>
     <table id="table" class="table" style="width:100%;height:85%;background-color:#6c757d;font-size:2vh">
-      <thead style="height:20%;">
+      <thead style="height:30%;">
         <tr>
           {%for i in range(1, column_names | length)%}
             <th>
-              {{column_names[i]}}
-              {%if sorts[i]%}
+              <div style="display:flex;align-items:center">
+                <div>{{column_names[i]}}</div>
                 <i class="fa fa-fw fa-sort" state=0 column={{i}} style="cursor:pointer"></i>
-              {%endif%}
+              </div>
+              <div style="display:flex;width:100%">
+                {% if column_types[i] == "text" %}
+                  <input column={{i}} autocomplete="off" placeholder="search" style="width:85px">
+                {% elif column_types[i] == "numeric" %}
+                  <input type="number" step="any" column={{i}} autocomplete="off" placeholder="min" style="width:40px;margin-right:5px">
+                  <input type="number" step="any" column={{i}} autocomplete="off" placeholder="max" style="width:40px">
+                {% endif %}
+              </div>
             </th>
           {%endfor%}
         </tr>
       </thead>
-      <tbody style="height:70%"></tbody>
+      <tbody style="height:60%"></tbody>
       <tfoot style="height:10%">
         <tr>
           <th style="text-align:left"><i class="fa fa-fw fa-step-backward disabled"></i></th>
@@ -82,8 +89,8 @@
   </div>
 </div>
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/plotly-latest.min.js"></script>
 <script type="text/javascript">genie = {columns: JSON.parse('{{column_names | tojson}}')};</script>
 <script type="text/javascript" src="/static/js/throttle-debounce.min.js"></script>
 <script type="text/javascript" src="/static/js/fetcher.js"></script>

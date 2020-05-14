@@ -1,4 +1,4 @@
-$("#search").keyup($.debounce(250, (event) => {
+$("#table thead th input").keyup($.debounce(250, (event) => {
   genie.updatePage(0)
   genie.updateTotalPages(0)
   genie.fetch()
