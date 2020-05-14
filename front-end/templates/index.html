@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" href="/static/css/genie.css">
 
 <div id="loading-indicator" style="display:none"><div></div></div>
 
-<div style="display:flex;width:100%;height:60%;border-bottom:2px solid grey">
+<div style="display:flex;width:100%;height:65%;border-bottom:2px solid grey">
   <div style="width:65%;height:100%;background-color:#6c757d">
     <div style="width:100%;height:15%;display:flex;background-color:#666666">
       <img height="100%" src="/static/logo.png" />
@@ -14,27 +14,29 @@
       </div>
     </div>
     <table id="table" class="table" style="width:100%;height:85%;background-color:#6c757d;font-size:2vh">
-      <thead style="height:30%;">
+      <thead style="height:25%;">
         <tr>
           {%for i in range(1, column_names | length)%}
             <th>
-              <div style="display:flex;align-items:center">
-                <div>{{column_names[i]}}</div>
-                <i class="fa fa-fw fa-sort" state=0 column={{i}} style="cursor:pointer"></i>
-              </div>
-              <div style="display:flex;width:100%">
-                {% if column_types[i] == "text" %}
-                  <input column={{i}} autocomplete="off" placeholder="search" style="width:85px">
-                {% elif column_types[i] == "numeric" %}
-                  <input type="number" step="any" column={{i}} autocomplete="off" placeholder="min" style="width:40px;margin-right:5px">
-                  <input type="number" step="any" column={{i}} autocomplete="off" placeholder="max" style="width:40px">
-                {% endif %}
+              <div style="display:flex;flex-direction:column;justify-content:space-between;height:100%">
+                <div style="display:flex;justify-content:space-between">
+                  <span>{{column_names[i]}}</span>
+                  <i class="fa fa-fw fa-sort" state=0 column={{i}} style="cursor:pointer"></i>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  {% if column_types[i] == "text" %}
+                    <input class="search" column={{i}} autocomplete="off" placeholder="search" style="width:85px">
+                  {% elif column_types[i] == "numeric" %}
+                    <input class="search" type="number" step="any" column={{i}} autocomplete="off" placeholder="min" style="width:40px">
+                    <input class="search" type="number" step="any" column={{i}} autocomplete="off" placeholder="max" style="width:40px">
+                  {% endif %}
+                </div>
               </div>
             </th>
           {%endfor%}
         </tr>
       </thead>
-      <tbody style="height:60%"></tbody>
+      <tbody style="height:65%"></tbody>
       <tfoot style="height:10%">
         <tr>
           <th style="text-align:left"><i class="fa fa-fw fa-step-backward disabled"></i></th>
@@ -49,7 +51,7 @@
     <div id="stats-plot" style="width:100%;height:85%"></div>
   </div>
 </div>
-<div id="vs" style="display:flex;width:100%;height:40%;background-color:#222222">
+<div id="vs" style="display:flex;width:100%;height:35%;background-color:#222222">
   <div style="width:50%;height:100%;border-right:2px solid grey">
     <div style="display:flex;justify-content:center;align-items:center;width:100%;height:10%;overflow:auto"><div style="margin:0"><span style="text-transform:uppercase" id="gene-name"></span> Gene Details</div></div>
     <div style="display:flex;width:100%;height:90%">
