@@ -1,8 +1,8 @@
-.fa-sort[state="1"] {
+.table-sort[state="1"] {
   color: black;
 }
 
-.fa-sort[state="2"] {
+.table-sort[state="2"] {
   color: black;
 }
 
@@ -78,6 +78,10 @@
   margin-bottom: 0;
 }
 
+.table-sort {
+  font-size: 20px;
+}
+
 .search {
   cursor: text;
   margin: 5px 0;
@@ -140,11 +144,11 @@
   background-color: grey;
 }
 
-.fa-step-forward.disabled, .fa-step-backward.disabled {
+#next-page.disabled, #prev-page.disabled {
   color: grey;
 }
 
-.fa-step-forward:not(.disabled), .fa-step-backward:not(.disabled) {
+#next-page:not(.disabled), #prev-page:not(.disabled) {
   cursor: pointer;
 }
 

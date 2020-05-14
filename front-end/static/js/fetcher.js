@@ -7,7 +7,7 @@ genie.fetch = (format) => {
     params.search[$input.attr("column")] = values.join(":")
   })
 
-  let sort = $(".fa-sort[state=1]")[0] || $(".fa-sort[state=2]")[0]
+  let sort = $(".table-sort[state=1]")[0] || $(".table-sort[state=2]")[0]
   if (sort) {
     params.sortcolumn = $(sort).attr("column")
     params.sortstate = $(sort).attr("state")

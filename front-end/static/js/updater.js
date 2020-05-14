@@ -18,12 +18,12 @@ genie.update = (data) => {
   $($(tbody).find("tr")[0]).trigger("click")
 
   genie.updateTotalPages(data.total_pages)
-  $(".fa-step-backward").removeClass("disabled")
+  $("#prev-page").removeClass("disabled")
   if (genie.getPage() - 1 < 0)
-    $(".fa-step-backward").addClass("disabled")
-  $(".fa-step-forward").removeClass("disabled")
+    $("#prev-page").addClass("disabled")
+  $("#next-page").removeClass("disabled")
   if (genie.getPage() + 1 >= data.total_pages)
-    $(".fa-step-forward").addClass("disabled")
+    $("#next-page").addClass("disabled")
 
   let a = document.getElementById("export")
   a.getElementsByTagName("span")[0].innerText = data.items.length

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="static/css/bootstrap.min.css">
 <link rel="stylesheet" href="/static/css/genie.css">
 
 <div id="loading-indicator" style="display:none"><div></div></div>
@@ -20,8 +19,8 @@
             <th>
               <div style="display:flex;flex-direction:column;justify-content:space-between;height:100%">
                 <div style="display:flex;justify-content:space-between">
-                  <span>{{column_names[i]}}</span>
-                  <i class="fa fa-fw fa-sort" state=0 column={{i}} style="cursor:pointer"></i>
+                  <div>{{column_names[i]}}</div>
+                  <div class="table-sort" state=0 column={{i}} style="cursor:pointer">⬍</div>
                 </div>
                 <div style="display:flex;justify-content:space-between">
                   {% if column_types[i] == "text" %}
@@ -39,9 +38,9 @@
       <tbody style="height:65%"></tbody>
       <tfoot style="height:10%">
         <tr>
-          <th style="text-align:left"><i class="fa fa-fw fa-step-backward disabled"></i></th>
+          <th style="text-align:left"><div id="prev-page" class="disabled" style="font-size:20px">◄</div></th>
           <th>page <span id="current-page" page="0">1</span> out of <span id="total-pages"></span></th>
-          <th style="text-align:right"><i class="fa fa-fw fa-step-forward disabled"></i></th>
+          <th style="text-align:right"><div id="next-page" class="disabled" style="font-size:20px">►</div></th>
         </tr>
       </tfoot>
     </table>
