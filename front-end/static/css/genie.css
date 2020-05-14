@@ -1,9 +1,9 @@
 .table-sort[state="1"] {
-  color: black;
+  color: #333333;
 }
 
 .table-sort[state="2"] {
-  color: black;
+  color: #333333;
 }
 
 @keyframes spin {
