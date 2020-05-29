@@ -14,30 +14,34 @@ import os
 
 genie = Blueprint("genie", __name__)
 orders = [None, "DESC", "ASC"]
-num_columns = 10
 column_names = ["Id", "Mesh Id", "Disease", "Gene", "P2 Prob", "Change Recent", "Probability Change", "Previous Probability", "Publications", "Citations"]
-assert(len(column_names) == num_columns)
 columns = ["id", "mesh_id", "disease_name", "gene_name", "p2_prob", "change_recent", "recent_prob_change", "previous_prob", "num_pubs", "num_citations"]
-assert(len(columns) == num_columns)
-sorts = [False, False, False, False, True, True, True, True, True, True]
-assert(len(sorts) == num_columns)
-searches = [True, True, True, True, False, False, False, False, False, False]
-assert(len(searches) == num_columns)
+column_types = ["text", "text", "text", "text", "numeric", "boolean", "numeric", "numeric", "numeric", "numeric"]
 
 @genie.route("/")
 def view():
-    return render_template("index.html", column_names = column_names, sorts = sorts)
+    return render_template("index.html", column_names = column_names, column_types = column_types)
 
 @genie.route("/relationships")
 def index():
-    where_sql = None
-    if request.args.get("search") and len(request.args.get("search")) >= 3:
-        where_sql = "WHERE "
-        for i in range(num_columns):
-            if searches[i]:
-                where_sql += "{} ILIKE %(query)s OR ".format(columns[i])
-        where_sql = where_sql[:-3]
+    where_statements = []
+    where_values = dict()
+    for i in range(1, len(column_types)):
+        search = request.args.get("search[{}]".format(i))
+        if column_types[i] == "text":
+            if len(search) >= 3:
+                where_statements.append("{} ILIKE %(where{})s".format(columns[i], i))
+                where_values["where{}".format(i)] = "%{}%".format(search)
+        elif column_types[i] == "numeric":
+            min, max = search.split(":")
+            min = min and float(min)
+            max = max and float(max)
+            if min:
+                where_statements.append("{} >= {}".format(columns[i], min))
+            if max:
+                where_statements.append("{} <= {}".format(columns[i], max))
 
+    where_sql = "WHERE " + " AND ".join(where_statements) if where_statements else ""
     order = "p2_prob DESC, id"
     page = int(request.args.get("page"))
 
@@ -53,7 +57,8 @@ def index():
                 ORDER BY {}
                 LIMIT {}
                 OFFSET {};
-            """.format(", ".join(columns), where_sql, order, 50, page * 50), {"query": "%{}%".format(request.args.get("search"))})
+            """.format(", ".join(columns), where_sql, order, 50, page * 50), where_values)
+
             relationships = cur.fetchall()
             results = []
             for relationship in relationships:
@@ -80,13 +85,13 @@ def index():
                 SELECT count(1)
                 FROM relationships
                 {};
-            """.format(where_sql), {"query": "%{}%".format(request.args.get("search"))})
+            """.format(where_sql), where_values)
 
             cur.execute("""
                 SELECT count(1)
                 FROM relationships
                 {};
-            """.format(where_sql), {"query": "%{}%".format(request.args.get("search"))})
+            """.format(where_sql), where_values)
             count = cur.fetchone()[0]
 
             return jsonify({"items": results, "total_pages": math.ceil(count / 50)})

@@ -1,7 +1,13 @@
 genie.fetch = (format) => {
-  let params = {search: $("#search").val()}
+  let params = {search: {}}
 
-  let sort = $(".fa-sort[state=1]")[0] || $(".fa-sort[state=2]")[0]
+  $("#table thead th").each((index, th) => {
+    let $input = $(th).find("input")
+    let values = $input.map((index, input) => input.value).get()
+    params.search[$input.attr("column")] = values.join(":")
+  })
+
+  let sort = $(".table-sort[state=1]")[0] || $(".table-sort[state=2]")[0]
   if (sort) {
     params.sortcolumn = $(sort).attr("column")
     params.sortstate = $(sort).attr("state")
