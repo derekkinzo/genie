@@ -70,7 +70,7 @@ pytest-integration==0.2.2
 python-dateutil==2.8.1
 pytz==2019.3
 pywin32-ctypes==0.2.0
-PyYAML==5.3.1
+PyYAML==5.4
 readme-renderer==25.0
 regex==2020.4.4
 requests==2.23.0
